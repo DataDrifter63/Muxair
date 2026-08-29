@@ -2,21 +2,19 @@ import { defineConfig } from "vite";
 import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
-import { nitro } from "nitro/vite";
+import netlify from "@netlify/vite-plugin-tanstack-start";
 
-export default defineConfig(({ command }) => ({
+export default defineConfig({
   server: {
-  port: 8080,
-  allowedHosts: true,
-},
+    port: 8080,
+    allowedHosts: true,
+  },
   resolve: {
     tsconfigPaths: true,
   },
   plugins: [
     tailwindcss(),
     tanstackStart({
-      // src/server.ts wraps the generated server entry with our own
-      // error handling, so point TanStack Start at it explicitly.
       server: { entry: "server" },
       importProtection: {
         behavior: "error",
@@ -26,11 +24,7 @@ export default defineConfig(({ command }) => ({
         },
       },
     }),
-    // Universal Node.js server build — works on any host that can run
-    // Node (VPS, Render, Railway, cPanel with Node, etc). Not tied to
-    // any single platform. Swap the preset later if you pick a specific
-    // host (e.g. "vercel", "netlify", "cloudflare-module").
-    ...(command === "build" ? [nitro({ preset: "node-server" })] : []),
+    netlify(),
     viteReact(),
   ],
-}));
+});
