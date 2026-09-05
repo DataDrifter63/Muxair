@@ -2,7 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
-import { MagneticButton, Reveal, SectionHeading, TechBackdrop } from "@/components/site/primitives";
+import {
+  MagneticButton,
+  Reveal,
+  SectionHeading,
+  TechBackdrop,
+  Counter,
+} from "@/components/site/primitives";
 import {
   Accordion,
   AccordionContent,
@@ -18,6 +24,12 @@ const PAGE_URL = "https://muxair.com/pricing";
 const title = "HVAC Website & Marketing Pricing | Transparent Packages, No Hidden Fees";
 const description =
   "See exactly what our HVAC website, SEO, and ads packages cost — starting at £1,500. No hidden fees, no surprise quotes.";
+
+const trustStats = [
+  { to: 0, suffix: "", display: "£0", label: "Hidden setup fees" },
+  { to: 2, suffix: "", display: "", label: "Revision rounds included" },
+  { to: 1, suffix: " day", display: "", label: "Average response time" },
+];
 
 const websitePlans = [
   {
@@ -284,17 +296,35 @@ function PricingPage() {
                 Every price on this page is what you'll actually pay. No &ldquo;request a
                 quote&rdquo; games, no surprise line items after you've signed.
               </p>
+              <span className="mx-auto mt-6 inline-flex max-w-xl items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-foreground">
+                Most agencies hide their pricing. We don't think that builds trust — so here it is.
+              </span>
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
+                <MagneticButton href="/contact" size="lg">
+                  Get a Free Strategy Call
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </MagneticButton>
+                <MagneticButton href="/services" variant="ghost" size="lg">
+                  Compare Services
+                </MagneticButton>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.15}>
+              <div className="mx-auto mt-14 grid max-w-3xl grid-cols-3 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
+                {trustStats.map((s) => (
+                  <div key={s.label} className="text-center">
+                    <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+                      {s.display ? s.display : <Counter to={s.to} suffix={s.suffix} />}
+                    </p>
+                    <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
+                      {s.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </Reveal>
           </div>
-        </section>
-
-        {/* Honesty banner */}
-        <section className="pb-16 text-center">
-          <Reveal>
-            <span className="mx-auto inline-flex max-w-xl items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-foreground">
-              Most agencies hide their pricing. We don't think that builds trust — so here it is.
-            </span>
-          </Reveal>
         </section>
 
         {/* Website packages */}
@@ -377,7 +407,7 @@ function PricingPage() {
           </div>
         </section>
 
-        {/* Ongoing services */}
+        {/* Ongoing services + not sure what fits / differentiators */}
         <section className="section-shell">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <SectionHeading
@@ -426,37 +456,36 @@ function PricingPage() {
                 management fee.
               </p>
             </Reveal>
+
+            <Reveal delay={0.25}>
+              <div className="relative mt-14 overflow-hidden rounded-2xl border border-primary/25 bg-primary/[0.04] px-6 py-10 backdrop-blur-md sm:px-10">
+                <div
+                  className="pointer-events-none absolute inset-0 grid-tech opacity-15"
+                  aria-hidden
+                />
+                <div className="pointer-events-none absolute -top-20 left-1/2 h-56 w-72 -translate-x-1/2 rounded-full bg-primary/15 blur-[100px]" />
+
+                <p className="relative text-center text-base leading-relaxed text-foreground/90">
+                  Not sure which package fits?{" "}
+                  <Link to="/contact" className="font-semibold text-primary hover:underline">
+                    Book a free call
+                  </Link>{" "}
+                  and we'll recommend a starting point — no pressure.
+                </p>
+
+                <div className="relative mt-9 grid gap-6 border-t border-border/70 pt-8 sm:grid-cols-2 lg:grid-cols-4">
+                  {differentiators.map((item) => (
+                    <div key={item} className="flex items-start gap-3">
+                      <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
+                        <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
+                      </span>
+                      <p className="text-sm leading-snug text-foreground/90">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           </div>
-        </section>
-
-        {/* Helper strip */}
-        <section className="pb-6 text-center">
-          <Reveal>
-            <p className="text-sm text-muted-foreground">
-              Not sure which package fits?{" "}
-              <Link to="/contact" className="font-semibold text-primary hover:underline">
-                Book a free call
-              </Link>{" "}
-              and we'll recommend a starting point — no pressure.
-            </p>
-          </Reveal>
-        </section>
-
-        {/* Differentiators strip */}
-        <section className="pb-16">
-          <Reveal>
-            <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-6 gap-y-3 px-5 text-center lg:px-8">
-              {differentiators.map((item) => (
-                <span
-                  key={item}
-                  className="inline-flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                  <span className="h-1.5 w-1.5 flex-none rounded-full bg-primary" />
-                  {item}
-                </span>
-              ))}
-            </div>
-          </Reveal>
         </section>
 
         {/* FAQ */}
