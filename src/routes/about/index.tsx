@@ -8,12 +8,7 @@
 //   return <div>Hello "/about/"!</div>
 // }
 
-
-
-
-
-
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import {
   ArrowRight,
@@ -23,7 +18,6 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import { CTASection } from "@/components/site/CTASection";
 import {
   Counter,
   MagneticButton,
@@ -31,6 +25,7 @@ import {
   SectionHeading,
   TechBackdrop,
 } from "@/components/site/primitives";
+import { CTASection } from "@/components/site/CTASection";
 import { SITE_URL } from "@/lib/site-data";
 
 const title = "About Us | The HVAC-Specialist Web Design Agency";
@@ -136,6 +131,14 @@ const founders = [
   },
 ];
 
+const proof = {
+  quoteStart: "First agency that didn't need HVAC explained to them. They planned the whole build around",
+  highlight: "our winter demand peak",
+  quoteEnd: "— and I always knew exactly who I was talking to.",
+  name: "Sarah Doyle",
+  detail: "Yorkshire Boiler Specialists",
+};
+
 function AboutPage() {
   return (
     <div className="relative min-h-screen bg-background">
@@ -160,12 +163,12 @@ function AboutPage() {
               </p>
               <div className="mt-9 flex flex-col items-center gap-3">
                 <MagneticButton href="/contact" size="lg">
-                  Book a Free Strategy Call
+                  Get a Free Strategy Call
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
                 <p className="text-xs text-muted-foreground">
-                  30 minutes &middot; No sales pressure &middot; We'll audit your current site live
-                  on the call
+                  Takes about a minute &middot; No sales pressure &middot; We call you within 4
+                  hours
                 </p>
               </div>
             </Reveal>
@@ -246,6 +249,13 @@ function AboutPage() {
                 every layout decision we make is built around how homeowners and facilities
                 managers actually search for and choose an HVAC company.
               </p>
+              <Link
+                to="/services"
+                className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
+              >
+                See everything we offer
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+              </Link>
             </Reveal>
           </div>
         </section>
@@ -369,7 +379,56 @@ function AboutPage() {
           </Reveal>
         </section>
 
-        <CTASection />
+        {/* Social proof */}
+        <section className="section-shell border-b border-border bg-surface/25">
+          <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
+          <div className="relative mx-auto max-w-3xl px-5 lg:px-8">
+            <Reveal>
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-background/70 p-8 text-center backdrop-blur-md sm:p-12">
+                <div
+                  className="pointer-events-none absolute -top-20 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-primary/12 blur-[100px]"
+                  aria-hidden
+                />
+                <p className="relative text-balance font-display text-xl leading-snug sm:text-2xl">
+                  <span
+                    className="mr-1.5 font-display text-3xl leading-none text-primary/40 sm:text-4xl"
+                    aria-hidden
+                  >
+                    &ldquo;
+                  </span>
+                  {proof.quoteStart} <span className="text-primary">{proof.highlight}</span>{" "}
+                  {proof.quoteEnd}
+                  <span
+                    className="ml-1.5 font-display text-3xl leading-none text-primary/40 sm:text-4xl"
+                    aria-hidden
+                  >
+                    &rdquo;
+                  </span>
+                </p>
+                <p className="relative mt-6 text-sm text-muted-foreground">
+                  <span className="font-semibold text-foreground">{proof.name}</span> —{" "}
+                  {proof.detail}
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <CTASection
+          title={
+            <>
+              Ready to Work With Someone Who Gets{" "}
+              <span className="text-gradient-cool">HVAC</span>?
+            </>
+          }
+          description="Fill out a quick form and we'll call you within 4 hours — we'll review your current site and Google presence before we even pick up the phone."
+          primaryLabel="Get a Free Strategy Call"
+          primaryHref="/contact"
+          secondaryLabel="See Our Work"
+          secondaryHref="/work"
+          footnote="We reply within 4 hours · No obligation"
+        />
       </main>
     </div>
   );

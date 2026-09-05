@@ -1,34 +1,141 @@
-// 
-
-
-
-
-
-
-
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { ArrowRight, Check, Sparkles, X } from "lucide-react";
+import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
-import {
-  Counter,
-  MagneticButton,
-  Reveal,
-  SectionHeading,
-  TechBackdrop,
-} from "@/components/site/primitives";
+import { MagneticButton, Reveal, SectionHeading, TechBackdrop } from "@/components/site/primitives";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Link } from "@tanstack/react-router";
-import { SITE_URL } from "@/lib/site-data";
 
-const title = "HVAC Website & Marketing Pricing | Ductwork Studio";
+// Canonical is hardcoded to the Muxair domain per the SEO checklist for new
+// pages, rather than the shared SITE_URL constant (which still points at
+// the old Ductwork Studio domain used elsewhere in the codebase).
+const PAGE_URL = "https://muxair.com/pricing";
+
+const title = "HVAC Website & Marketing Pricing | Transparent Packages, No Hidden Fees";
 const description =
-  "Transparent pricing for HVAC website design, local SEO, Google Ads, Meta Ads and website maintenance. No hidden fees, no lock-in contracts on most plans.";
+  "See exactly what our HVAC website, SEO, and ads packages cost — starting at £1,500. No hidden fees, no surprise quotes.";
+
+const websitePlans = [
+  {
+    name: "Starter Site",
+    tone: "cool" as const,
+    tagline: "For businesses that need a solid foundation",
+    price: "£1,500",
+    priceSuffix: "–£2,500",
+    priceNote: "One-time project cost",
+    popular: false,
+    ctaLabel: "Get Started",
+    features: [
+      "5 custom-designed pages",
+      "Mobile-first, fast-loading build",
+      "Local SEO foundations included",
+      "Contact form + click-to-call button",
+      "Live in ~30 days",
+    ],
+  },
+  {
+    name: "Growth Site",
+    tone: "heat" as const,
+    tagline: "For businesses ready to actually compete online",
+    price: "£3,000",
+    priceSuffix: "–£5,000",
+    priceNote: "One-time project cost",
+    popular: true,
+    ctaLabel: "Get Started",
+    features: [
+      "Everything in Starter Site",
+      "8–12 custom-designed pages",
+      "Full HVAC-specific copywriting",
+      "Blog setup for ongoing content",
+      "Google Analytics + conversion tracking",
+      "CRO-focused layout, built to convert",
+    ],
+  },
+  {
+    name: "Full Digital",
+    tone: "cool" as const,
+    tagline: "For businesses ready for a complete growth system",
+    price: "£5,000",
+    priceSuffix: "+",
+    priceNote: "One-time build + ongoing services below",
+    popular: false,
+    ctaLabel: "Talk to Us",
+    features: [
+      "Everything in Growth Site",
+      "SEO retainer included",
+      "Ad management included (Google or Meta)",
+      "Monthly performance reporting",
+      "Dedicated point of contact",
+    ],
+  },
+];
+
+const growthPlans = [
+  {
+    name: "SEO Retainer",
+    tone: "cool" as const,
+    price: "From £500",
+    priceNote: "/mo",
+    description:
+      "Google Business Profile optimisation, on-page SEO, monthly content, and reporting.",
+    href: "/services/seo",
+  },
+  {
+    name: "Ads Management",
+    tone: "heat" as const,
+    price: "From £400",
+    priceNote: "/mo + ad spend",
+    description: "Google or Meta ad management with monthly optimisation.",
+    href: "/services/google-ads",
+  },
+  {
+    name: "Maintenance",
+    tone: "cool" as const,
+    price: "£79",
+    priceNote: "–£199/mo",
+    description: "Hosting, security, updates, and priority support.",
+    href: "/services/maintenance",
+  },
+];
+
+const differentiators = [
+  "Fixed price, agreed before work starts",
+  "No hidden fees or surprise line items",
+  "No lock-in on most services",
+  "One point of contact for every project",
+];
+
+const faqs = [
+  {
+    question: "Do you require a deposit?",
+    answer:
+      "Yes, typically 50% upfront to begin work, with the balance due at launch. This is laid out clearly in your proposal before you commit to anything.",
+  },
+  {
+    question: "Can I combine services for a better rate?",
+    answer:
+      "Yes — Full Digital bundles a website with SEO and ad management at a better combined rate than booking each separately. We'll always tell you if bundling saves you money for your situation.",
+  },
+  {
+    question: "What's not included in these prices?",
+    answer:
+      "Domain registration and any paid stock photography or premium plugins, if needed, are billed at cost. For Ads Management, your actual ad spend to Google or Meta is separate from our management fee.",
+  },
+  {
+    question: "Do you offer payment plans?",
+    answer:
+      "For larger projects, yes — we can split the balance across milestones instead of a single payment at launch. Ask on your strategy call.",
+  },
+  {
+    question: "Are monthly plans a long-term contract?",
+    answer:
+      "No lock-in on most services. SEO and Ads Management work best with a minimum 3-month commitment since results take time to show, but Maintenance is cancel-anytime.",
+  },
+];
 
 export const Route = createFileRoute("/pricing/")({
   component: PricingPage,
@@ -39,19 +146,94 @@ export const Route = createFileRoute("/pricing/")({
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: `${SITE_URL}/pricing` },
+      { property: "og:url", content: PAGE_URL },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/pricing` }],
+    links: [{ rel: "canonical", href: PAGE_URL }],
+    // Schema taken as-is from the approved pricing-page.html reference —
+    // Service + per-package Offers, plus the FAQPage entity.
     scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-            { "@type": "ListItem", position: 2, name: "Pricing", item: `${SITE_URL}/pricing` },
+          "@type": "Service",
+          serviceType: "HVAC Website Design & Digital Marketing",
+          provider: { "@type": "ProfessionalService", name: "Muxair" },
+          areaServed: { "@type": "Country", name: "United Kingdom" },
+          offers: [
+            {
+              "@type": "Offer",
+              name: "Starter Site",
+              description:
+                "5-page website, mobile-first, local SEO foundations, contact form and click-to-call.",
+              priceSpecification: {
+                "@type": "PriceSpecification",
+                minPrice: 1500,
+                maxPrice: 2500,
+                priceCurrency: "GBP",
+              },
+            },
+            {
+              "@type": "Offer",
+              name: "Growth Site",
+              description:
+                "8-12 page website, full copywriting, blog setup, Google Analytics, CRO-focused layout.",
+              priceSpecification: {
+                "@type": "PriceSpecification",
+                minPrice: 3000,
+                maxPrice: 5000,
+                priceCurrency: "GBP",
+              },
+            },
+            {
+              "@type": "Offer",
+              name: "Full Digital",
+              description: "Website plus SEO retainer and ad management, with monthly reporting.",
+              priceSpecification: {
+                "@type": "PriceSpecification",
+                minPrice: 5000,
+                priceCurrency: "GBP",
+              },
+            },
+            {
+              "@type": "Offer",
+              name: "SEO Retainer",
+              description:
+                "Google Business Profile optimisation, on-page SEO, monthly content, reporting.",
+              priceSpecification: {
+                "@type": "UnitPriceSpecification",
+                price: 500,
+                priceCurrency: "GBP",
+                unitCode: "MON",
+                minPrice: 500,
+              },
+            },
+            {
+              "@type": "Offer",
+              name: "Ads Management",
+              description:
+                "Google or Meta ad management, monthly optimisation. Ad spend billed separately.",
+              priceSpecification: {
+                "@type": "UnitPriceSpecification",
+                price: 400,
+                priceCurrency: "GBP",
+                unitCode: "MON",
+                minPrice: 400,
+              },
+            },
+            {
+              "@type": "Offer",
+              name: "Website Maintenance",
+              description: "Hosting, security, updates, priority support.",
+              priceSpecification: {
+                "@type": "PriceSpecification",
+                minPrice: 79,
+                maxPrice: 199,
+                priceCurrency: "GBP",
+                unitCode: "MON",
+              },
+            },
           ],
         }),
       },
@@ -70,122 +252,6 @@ export const Route = createFileRoute("/pricing/")({
     ],
   }),
 });
-
-const trustStats = [
-  { to: 0, prefix: "", suffix: "£0", label: "Hidden setup fees" },
-  { to: 2, suffix: "", label: "Revision rounds included" },
-  { to: 1, suffix: " day", label: "Average response time" },
-];
-
-const websitePlans = [
-  {
-    name: "Starter Site",
-    tone: "cool" as const,
-    price: "£1,500",
-    priceNote: "one-time",
-    tagline: "For a single-location business that needs a fast, credible online home.",
-    popular: false,
-    features: [
-      { label: "Up to 5 pages", included: true },
-      { label: "Mobile-first custom design", included: true },
-      { label: "Quote form & click-to-call setup", included: true },
-      { label: "Core Web Vitals optimization", included: true },
-      { label: "Service-area landing pages", included: false },
-      { label: "Blog / content setup", included: false },
-    ],
-  },
-  {
-    name: "Growth Site",
-    tone: "heat" as const,
-    price: "£2,900",
-    priceNote: "one-time",
-    tagline: "For companies actively covering multiple towns and wanting to rank locally.",
-    popular: true,
-    features: [
-      { label: "Up to 12 pages", included: true },
-      { label: "Mobile-first custom design", included: true },
-      { label: "Quote form & click-to-call setup", included: true },
-      { label: "Core Web Vitals optimization", included: true },
-      { label: "Service-area landing pages (up to 8)", included: true },
-      { label: "Blog / content setup", included: true },
-    ],
-  },
-  {
-    name: "Pro / Multi-Location",
-    tone: "cool" as const,
-    price: "From £4,500",
-    priceNote: "one-time",
-    tagline: "For multi-branch or franchise-style HVAC businesses with complex needs.",
-    popular: false,
-    features: [
-      { label: "Unlimited pages", included: true },
-      { label: "Mobile-first custom design", included: true },
-      { label: "Quote form & click-to-call setup", included: true },
-      { label: "Core Web Vitals optimization", included: true },
-      { label: "Unlimited service-area pages", included: true },
-      { label: "Blog / content setup", included: true },
-    ],
-  },
-];
-
-const growthPlans = [
-  {
-    name: "Local SEO",
-    tone: "cool" as const,
-    price: "From £650",
-    priceNote: "/month",
-    description: "Google Business optimization, local content and citation building.",
-  },
-  {
-    name: "Google Ads Management",
-    tone: "heat" as const,
-    price: "From £450",
-    priceNote: "/month + ad spend",
-    description: "Campaign build, ongoing optimization and call-tracked reporting.",
-  },
-  {
-    name: "Meta Ads Management",
-    tone: "cool" as const,
-    price: "From £400",
-    priceNote: "/month + ad spend",
-    description: "Offer-led Facebook & Instagram campaigns for installs and upgrades.",
-  },
-  {
-    name: "Website Maintenance",
-    tone: "heat" as const,
-    price: "From £120",
-    priceNote: "/month",
-    description: "Updates, monitoring, backups and small edits — hands-off for you.",
-  },
-];
-
-const faqs = [
-  {
-    question: "Is ad spend included in the management fee?",
-    answer:
-      "No — the management fee covers our strategy, setup and optimization work. Your ad spend goes directly to Google or Meta, separately, so you always know exactly where your budget is going.",
-  },
-  {
-    question: "Are there long-term contracts?",
-    answer:
-      "Website builds are a one-time project fee. Ongoing plans (SEO, ads, maintenance) run month-to-month with no lock-in — we'd rather earn your business every month than trap you in a contract.",
-  },
-  {
-    question: "What if my business needs something custom?",
-    answer:
-      "These packages cover most HVAC businesses, but multi-location groups, franchises or unusual scopes often need a tailored quote. Book a free strategy call and we'll put together a plan specific to you.",
-  },
-  {
-    question: "Do you offer bundle discounts?",
-    answer:
-      "Yes. Most clients combine a website build with an ongoing SEO or ads plan, and we offer preferential pricing when services are bundled together — ask on your discovery call.",
-  },
-  {
-    question: "What payment methods do you accept?",
-    answer:
-      "Bank transfer and card payments, with website projects typically split into a deposit and a completion payment, and monthly plans billed automatically at the start of each cycle.",
-  },
-];
 
 function toneClasses(tone: "cool" | "heat") {
   return {
@@ -211,39 +277,24 @@ function PricingPage() {
                 Pricing
               </span>
               <h1 className="mt-5 text-balance font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
-                Simple, Transparent{" "}
-                <span className="text-gradient-cool">Pricing</span>
+                Straightforward Pricing for HVAC{" "}
+                <span className="text-gradient-cool">Websites &amp; Marketing</span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                No vague "get a quote" forms and no hidden fees. Here's exactly what our website
-                packages and ongoing growth plans cost — built specifically for HVAC companies.
+                Every price on this page is what you'll actually pay. No &ldquo;request a
+                quote&rdquo; games, no surprise line items after you've signed.
               </p>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <MagneticButton href="/contact" size="lg">
-                  Book a Free Strategy Call
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </MagneticButton>
-                <MagneticButton href="/services" variant="ghost" size="lg">
-                  Compare Services
-                </MagneticButton>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.15}>
-              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
-                {trustStats.map((s) => (
-                  <div key={s.label} className="text-center">
-                    <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-                      {s.to === 0 ? s.suffix : <Counter to={s.to} suffix={s.suffix} />}
-                    </p>
-                    <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
-                      {s.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
             </Reveal>
           </div>
+        </section>
+
+        {/* Honesty banner */}
+        <section className="pb-16 text-center">
+          <Reveal>
+            <span className="mx-auto inline-flex max-w-xl items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-foreground">
+              Most agencies hide their pricing. We don't think that builds trust — so here it is.
+            </span>
+          </Reveal>
         </section>
 
         {/* Website packages */}
@@ -251,13 +302,9 @@ function PricingPage() {
           <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <SectionHeading
-              eyebrow="Website packages"
-              title={
-                <>
-                  Pick the Build That <span className="text-gradient-cool">Fits Your Business</span>
-                </>
-              }
-              subtitle="A one-time project fee — the site is yours to keep, with no monthly platform fees attached."
+              eyebrow="One-Time Projects"
+              title="Website Packages"
+              subtitle="A fixed price agreed before work starts — not a “starting from” figure that grows once you're committed."
             />
 
             <div className="mt-14 grid gap-6 lg:grid-cols-3">
@@ -279,35 +326,33 @@ function PricingPage() {
                           className={`absolute right-6 top-6 inline-flex items-center gap-1 rounded-full border ${c.border} ${c.bg} px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] ${c.text}`}
                         >
                           <Sparkles className="h-3 w-3" />
-                          Most popular
+                          Most Chosen
                         </span>
                       ) : null}
 
                       <h3 className="font-display text-xl">{plan.name}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      <p className="mt-2 min-h-[2.5rem] text-sm leading-relaxed text-muted-foreground">
                         {plan.tagline}
                       </p>
 
-                      <div className="mt-6 flex items-baseline gap-2">
+                      <div className="mt-6 flex items-baseline gap-1.5">
                         <span className="font-display text-3xl font-bold text-foreground sm:text-4xl">
                           {plan.price}
                         </span>
-                        <span className="text-sm text-muted-foreground">{plan.priceNote}</span>
+                        <span className="text-lg font-semibold text-muted-foreground">
+                          {plan.priceSuffix}
+                        </span>
                       </div>
+                      <p className="mt-1 text-xs text-muted-foreground">{plan.priceNote}</p>
 
                       <ul className="mt-7 flex-1 space-y-3">
                         {plan.features.map((f) => (
-                          <li key={f.label} className="flex items-start gap-2.5 text-sm">
-                            {f.included ? (
-                              <Check className={`mt-0.5 h-4 w-4 flex-none ${c.text}`} strokeWidth={2.5} />
-                            ) : (
-                              <X className="mt-0.5 h-4 w-4 flex-none text-muted-foreground/50" strokeWidth={2.5} />
-                            )}
-                            <span
-                              className={f.included ? "text-foreground/90" : "text-muted-foreground/60"}
-                            >
-                              {f.label}
-                            </span>
+                          <li key={f} className="flex items-start gap-2.5 text-sm">
+                            <Check
+                              className={`mt-0.5 h-4 w-4 flex-none ${c.text}`}
+                              strokeWidth={2.5}
+                            />
+                            <span className="text-foreground/90">{f}</span>
                           </li>
                         ))}
                       </ul>
@@ -315,10 +360,12 @@ function PricingPage() {
                       <div className="mt-8">
                         <MagneticButton
                           href="/contact"
-                          variant={plan.popular ? (plan.tone === "cool" ? "cool" : "heat") : "ghost"}
+                          variant={
+                            plan.popular ? (plan.tone === "cool" ? "cool" : "heat") : "ghost"
+                          }
                           className="w-full justify-center"
                         >
-                          Get Started
+                          {plan.ctaLabel}
                           <ArrowRight className="h-4 w-4" />
                         </MagneticButton>
                       </div>
@@ -330,38 +377,43 @@ function PricingPage() {
           </div>
         </section>
 
-        {/* Ongoing growth plans */}
+        {/* Ongoing services */}
         <section className="section-shell">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <SectionHeading
-              eyebrow="Ongoing plans"
-              title={
-                <>
-                  Keep the Leads <span className="text-gradient-cool">Coming In</span>
-                </>
-              }
-              subtitle="Month-to-month growth plans, run alongside your new site or your existing one. No lock-in contracts."
+              eyebrow="Ongoing Services"
+              title="Monthly Plans"
+              subtitle="Can be booked on their own, or added to any website package above."
             />
 
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-14 grid gap-5 sm:grid-cols-3">
               {growthPlans.map((plan, i) => {
                 const c = toneClasses(plan.tone);
                 return (
-                  <Reveal key={plan.name} delay={i * 0.06} className="h-full">
+                  <Reveal key={plan.name} delay={i * 0.08} className="h-full">
                     <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface/40 p-6 backdrop-blur-md transition-colors hover:border-border/80">
                       <div
                         className={`pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent ${c.via} to-transparent opacity-40 transition-opacity duration-500 group-hover:opacity-100`}
                       />
                       <h3 className="font-display text-base leading-snug">{plan.name}</h3>
-                      <div className="mt-3 flex items-baseline gap-1.5">
-                        <span className="font-display text-2xl font-bold text-foreground">
-                          {plan.price}
+                      <div
+                        className={`mt-3 flex items-baseline gap-1.5 font-display text-2xl font-bold ${c.text}`}
+                      >
+                        {plan.price}
+                        <span className="text-xs font-medium text-muted-foreground">
+                          {plan.priceNote}
                         </span>
-                        <span className="text-xs text-muted-foreground">{plan.priceNote}</span>
                       </div>
-                      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
                         {plan.description}
                       </p>
+                      <Link
+                        to={plan.href}
+                        className={`mt-5 inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}
+                      >
+                        Learn more
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5" />
+                      </Link>
                     </div>
                   </Reveal>
                 );
@@ -369,19 +421,42 @@ function PricingPage() {
             </div>
 
             <Reveal delay={0.2}>
-              <div className="relative mt-6 overflow-hidden rounded-2xl border border-primary/30 bg-primary/[0.05] px-7 py-8 text-center backdrop-blur-md sm:px-10">
-                <div className="pointer-events-none absolute -top-16 left-1/2 h-40 w-72 -translate-x-1/2 rounded-full bg-primary/18 blur-[100px]" />
-                <p className="relative text-sm text-muted-foreground">
-                  Bundling a website with an ongoing plan? Most clients save when services are
-                  combined —{" "}
-                  <Link to="/contact" className="font-semibold text-primary hover:underline">
-                    ask us for a bundled quote
-                  </Link>
-                  .
-                </p>
-              </div>
+              <p className="mx-auto mt-8 max-w-md text-center text-xs text-muted-foreground">
+                Ad spend is paid directly to Google or Meta and is separate from our monthly
+                management fee.
+              </p>
             </Reveal>
           </div>
+        </section>
+
+        {/* Helper strip */}
+        <section className="pb-6 text-center">
+          <Reveal>
+            <p className="text-sm text-muted-foreground">
+              Not sure which package fits?{" "}
+              <Link to="/contact" className="font-semibold text-primary hover:underline">
+                Book a free call
+              </Link>{" "}
+              and we'll recommend a starting point — no pressure.
+            </p>
+          </Reveal>
+        </section>
+
+        {/* Differentiators strip */}
+        <section className="pb-16">
+          <Reveal>
+            <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-6 gap-y-3 px-5 text-center lg:px-8">
+              {differentiators.map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-2 text-sm text-muted-foreground"
+                >
+                  <span className="h-1.5 w-1.5 flex-none rounded-full bg-primary" />
+                  {item}
+                </span>
+              ))}
+            </div>
+          </Reveal>
         </section>
 
         {/* FAQ */}
@@ -389,7 +464,7 @@ function PricingPage() {
           <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
           <div className="relative mx-auto max-w-3xl px-5 lg:px-8">
             <SectionHeading
-              eyebrow="FAQs"
+              eyebrow="FAQ"
               title={
                 <>
                   Questions About <span className="text-gradient-cool">Pricing</span>
@@ -397,7 +472,7 @@ function PricingPage() {
               }
             />
             <Reveal delay={0.1}>
-              <Accordion type="single" collapsible className="mt-12">
+              <Accordion type="single" collapsible className="mt-12" defaultValue="faq-0">
                 {faqs.map((f, i) => (
                   <AccordionItem key={f.question} value={`faq-${i}`}>
                     <AccordionTrigger className="text-base">{f.question}</AccordionTrigger>
@@ -411,7 +486,18 @@ function PricingPage() {
           </div>
         </section>
 
-        <CTASection />
+        <CTASection
+          badgeLabel="Free 30-Minute Call"
+          title={
+            <>
+              Still Not Sure What You <span className="text-gradient-cool">Need?</span>
+            </>
+          }
+          description="Book a free strategy call and we'll recommend a starting point based on your actual business, not the biggest package we sell."
+          primaryLabel="Get a Free Strategy Call"
+          primaryHref="/contact"
+          footnote="We reply within 4 hours · No obligation"
+        />
       </main>
     </div>
   );
