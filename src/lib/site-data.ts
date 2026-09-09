@@ -158,24 +158,43 @@ export const services: ServiceItem[] = [
   },
 ];
 
+export type WorkService = "website" | "seo" | "google-ads" | "meta-ads";
+
+export const workServiceLabels: Record<WorkService, string> = {
+  website: "Website Design",
+  seo: "Local SEO",
+  "google-ads": "Google Ads",
+  "meta-ads": "Meta Ads",
+};
+
 export interface WorkItem {
   slug: string;
   name: string;
   tone: Tone;
-  category: string;
-  result: string;
-  summary: string;
-  metrics: { label: string; value: string }[];
-  challenge: string;
-  approach: string[];
-  outcome: string;
+  location: string;
+  services: WorkService[];
+  badge: string;
+  category?: string;
+  result?: string;
+  summary?: string;
+  metrics?: { label: string; value: string }[];
+  challenge?: string;
+  approach?: string[];
+  outcome?: string;
 }
 
+// NOTE: /work now loads live data from the Supabase `case_studies` table
+// (see src/lib/supabase.ts → WorkItemRow). This array is no longer read by
+// any route — it's kept only as seed/reference data matching the shape and
+// content of the work-page blueprint, in case the table needs re-seeding.
 export const workItems: WorkItem[] = [
   {
     slug: "midlands-hvac-co",
     name: "Midlands HVAC Co.",
     tone: "cool",
+    location: "Birmingham, West Midlands",
+    services: ["website", "seo"],
+    badge: "+300% enquiries",
     category: "Residential heating & cooling",
     result: "300% increase in organic enquiries",
     summary:
@@ -199,6 +218,9 @@ export const workItems: WorkItem[] = [
     slug: "yorkshire-boiler-specialists",
     name: "Yorkshire Boiler Specialists",
     tone: "heat",
+    location: "Leeds, Yorkshire",
+    services: ["seo"],
+    badge: "Page 1 in 4mo",
     category: "Boiler installation & repair",
     result: "First page Google in 4 months",
     summary:
@@ -222,6 +244,9 @@ export const workItems: WorkItem[] = [
     slug: "london-ac-installer",
     name: "London AC Installer",
     tone: "cool",
+    location: "London",
+    services: ["website", "google-ads"],
+    badge: "40 quotes/30d",
     category: "Commercial & residential AC",
     result: "40 quote requests in 30 days",
     summary:
@@ -240,6 +265,22 @@ export const workItems: WorkItem[] = [
     ],
     outcome:
       "40 quote requests landed in the first 30 days of the campaign, at a cost per lead 35% below the client's previous agency.",
+  },
+  {
+    slug: "home-counties-heating",
+    name: "Home Counties Heating",
+    tone: "heat",
+    location: "St Albans, Home Counties",
+    services: ["website", "meta-ads"],
+    badge: "+284% calls",
+  },
+  {
+    slug: "coastal-cooling",
+    name: "Coastal Cooling Ltd.",
+    tone: "cool",
+    location: "Brighton, South Coast",
+    services: ["website"],
+    badge: "4% → 19% booking rate",
   },
 ];
 

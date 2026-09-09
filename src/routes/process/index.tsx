@@ -1,37 +1,7 @@
-// import { createFileRoute } from '@tanstack/react-router'
-
-// export const Route = createFileRoute('/process/')({
-//   component: RouteComponent,
-// })
-
-// function RouteComponent() {
-//   return <div>Hello "/process/"!</div>
-// }
-
-
-
-
-
-
-
-
-
-
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef } from "react";
-import {
-  ArrowRight,
-  ClipboardCheck,
-  Compass,
-  LineChart,
-  MessagesSquare,
-  PenTool,
-  Rocket,
-  ShieldCheck,
-  Sparkles,
-  Users,
-} from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
 import {
   Counter,
@@ -48,9 +18,10 @@ import {
 } from "@/components/ui/accordion";
 import { SITE_URL } from "@/lib/site-data";
 
-const title = "Our Process | How We Build HVAC Websites & Marketing Systems";
+// Per the site's per-page SEO checklist for /process.
+const title = "How We Work | Our 5-Step Process for HVAC Website Projects";
 const description =
-  "From discovery call to booked jobs — see the exact 30-day process we follow to design, build and launch marketing systems for HVAC companies.";
+  "From discovery call to live site, here's exactly how we work with HVAC companies. Clear stages, clear timelines, zero surprises.";
 
 export const Route = createFileRoute("/process/")({
   component: ProcessPage,
@@ -77,6 +48,45 @@ export const Route = createFileRoute("/process/")({
           ],
         }),
       },
+      // HowTo + FAQPage schema — kept exactly as specified in the process-page blueprint.
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: "How Muxair Builds an HVAC Website: Our 5-Step Process",
+          description:
+            "From discovery call to live site, here's exactly how we work with HVAC companies.",
+          totalTime: "P30D",
+          step: [
+            {
+              "@type": "HowToStep",
+              name: "Discovery Call",
+              text: "A free 30-minute call to learn your business, service area, seasonal peaks, and goals.",
+            },
+            {
+              "@type": "HowToStep",
+              name: "Strategy & Proposal",
+              text: "A custom plan with scope, timeline, and fixed-price quote sent within 48 hours.",
+            },
+            {
+              "@type": "HowToStep",
+              name: "Design",
+              text: "Wireframes and visual design sent for your approval before a single line of code is written.",
+            },
+            {
+              "@type": "HowToStep",
+              name: "Build & Content",
+              text: "We build the site and write HVAC-specific copy. You review and approve at each stage.",
+            },
+            {
+              "@type": "HowToStep",
+              name: "Launch & Handover",
+              text: "Live site, a training session, and 30 days of post-launch support included.",
+            },
+          ],
+        }),
+      },
       {
         type: "application/ld+json",
         children: JSON.stringify({
@@ -94,142 +104,115 @@ export const Route = createFileRoute("/process/")({
 });
 
 const stats = [
-  { to: 30, suffix: " days", label: "Average kickoff-to-launch time" },
-  { to: 2, suffix: "", label: "Included revision rounds" },
-  { to: 1, suffix: "", label: "Point of contact, start to finish" },
+  { to: 5, suffix: "", label: "Clear stages" },
+  { to: 30, suffix: " days", label: "Average time to launch" },
+  { to: 48, suffix: " hrs", label: "Proposal turnaround" },
+  { to: 30, suffix: " days", label: "Post-launch support included" },
 ];
 
 const steps = [
   {
-    number: "01",
-    icon: MessagesSquare,
+    number: "1",
     title: "Discovery Call",
-    day: "Day 1–2",
+    tag: "30 min · Free",
     tone: "cool" as const,
     description:
-      "We start with a 30-minute call to understand your business — the towns you cover, the services you push hardest, who you're really competing with, and what a 'good result' looks like to you. No generic questionnaires; just the questions that actually matter for an HVAC company.",
-    deliverables: [
-      "Service-area map agreed",
-      "Competitor shortlist",
-      "Goals and success metrics defined",
-      "Right package confirmed",
+      "We learn your business properly before recommending anything — your service area, your seasonal peaks, what's working, and what isn't.",
+    checklist: [
+      "Live look at your current website and Google presence",
+      "Understand your busiest and slowest months",
+      "No pitch — just an honest assessment",
     ],
   },
   {
-    number: "02",
-    icon: Compass,
-    title: "Research & Strategy",
-    day: "Day 3–7",
+    number: "2",
+    title: "Strategy & Proposal",
+    tag: "Within 48 hours",
     tone: "heat" as const,
     description:
-      "Before anything gets designed, we audit your current site (if you have one), research the exact keywords homeowners in your area search when something breaks, and tear down what your top three local competitors are doing well — and badly.",
-    deliverables: [
-      "Local keyword research",
-      "Competitor teardown report",
-      "Site map and page structure",
-      "Content and conversion plan",
+      "We send a custom plan built around what we learned on the call — not a generic package.",
+    checklist: [
+      "Clear scope of exactly what's included",
+      "A realistic timeline, not an optimistic one",
+      "Fixed-price quote — no hourly surprises later",
     ],
   },
   {
-    number: "03",
-    icon: PenTool,
+    number: "3",
     title: "Design",
-    day: "Day 8–15",
+    tag: "Your approval required",
     tone: "cool" as const,
     description:
-      "You'll see real design mockups of your homepage and key service pages before a single line of code is written. This is where your brand comes through — not a recycled template with your logo swapped in. Two rounds of revisions are built into every project.",
-    deliverables: [
-      "Custom homepage mockup",
-      "Service page templates",
-      "Mobile-first layouts",
-      "Two revision rounds included",
+      "Wireframes and visual design come to you for sign-off before a single line of code gets written.",
+    checklist: [
+      "See the full layout and look before build starts",
+      "Request changes here for free — this is the cheapest stage to adjust",
+      "No code committed until you're happy with the direction",
     ],
   },
   {
-    number: "04",
-    icon: ClipboardCheck,
-    title: "Build & Test",
-    day: "Day 16–25",
+    number: "4",
+    title: "Build & Content",
+    tag: "You review as we go",
     tone: "heat" as const,
     description:
-      "Approved designs get built into a fast, mobile-first site. We wire up quote forms, click-to-call buttons and booking widgets, then test everything — load speed, form submissions, mobile behaviour and Core Web Vitals — before it ever reaches a homeowner.",
-    deliverables: [
-      "Full site build",
-      "Forms and call tracking wired up",
-      "Speed and Core Web Vitals pass",
-      "Cross-device testing",
+      "We build the approved design and write HVAC-specific copy for every page — not filler text waiting for you to rewrite it.",
+    checklist: [
+      "Content written by our in-house HVAC copywriter",
+      "Staging link so you can watch progress, not just wait",
+      "You review and approve before we move to launch",
     ],
   },
   {
-    number: "05",
-    icon: Rocket,
-    title: "Launch",
-    day: "Day 26–30",
+    number: "5",
+    title: "Launch & Handover",
+    tag: "Live + supported",
     tone: "cool" as const,
     description:
-      "We handle the technical side of going live — domain and hosting setup, Google Search Console, analytics and call tracking — then walk you through the finished site so you know exactly how it works before it starts taking enquiries.",
-    deliverables: [
-      "Domain, hosting & SSL configured",
-      "Search Console & analytics live",
-      "Walkthrough call with your team",
-      "Site fully indexed and submitted",
-    ],
-  },
-  {
-    number: "06",
-    icon: LineChart,
-    title: "Grow & Support",
-    day: "Day 30+",
-    tone: "heat" as const,
-    description:
-      "Launch is the start, not the finish line. If you've added SEO, Google Ads or Meta Ads, we start actively managing and reporting on those from week one — and every client gets ongoing monitoring, so small issues get fixed before they cost you enquiries.",
-    deliverables: [
-      "Monthly performance reporting",
-      "Uptime & security monitoring",
-      "Seasonal content updates",
-      "Direct line to your account contact",
+      "Your site goes live, and we make sure you're never stuck figuring it out alone afterward.",
+    checklist: [
+      "A training session so you can make basic edits yourself",
+      "30 days of post-launch support included, no extra cost",
+      "Direct line to the person who built it — not a support ticket",
     ],
   },
 ];
 
-const expectations = [
-  {
-    icon: Users,
-    title: "One point of contact",
-    text: "You'll work with the same person throughout your project — not a rotating cast of account managers who don't know your business.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "No surprise costs",
-    text: "Everything is scoped and agreed before we start. If something extra comes up, you'll hear about it before it happens, not on an invoice.",
-  },
-  {
-    icon: Sparkles,
-    title: "Built for HVAC, not generic",
-    text: "Every recommendation is filtered through what actually works for heating and cooling companies — because it's the only industry we work in.",
-  },
+const proof = {
+  quote:
+    "They kept us updated at every stage — no surprises, no chasing for updates. We knew exactly where things stood the whole way through.",
+  highlight: "no surprises, no chasing for updates",
+  name: "Emily Marsh",
+  role: "Home Counties Heating",
+};
+
+const differentiators = [
+  "Fixed price, agreed before work starts",
+  "You approve design before any code is written",
+  "30 days of post-launch support included",
+  "One point of contact from call to launch",
 ];
 
 const faqs = [
   {
-    question: "What do you need from me during the process?",
+    question: "What if I don't have my content or photos ready?",
     answer:
-      "Mainly your time on two calls (discovery and the launch walkthrough) and quick feedback during design reviews. We handle the research, writing, design and build — you stay informed without it eating your week.",
+      "That's normal — our content writer handles HVAC-specific copy for you, and we can work with stock or placeholder imagery until you send real photos, then swap them in before launch.",
   },
   {
-    question: "What if I need changes after launch?",
+    question: "Can I request changes during the build?",
     answer:
-      "Small edits are included if you're on a maintenance plan. Bigger changes — new pages, a rebrand, added services — are scoped and quoted separately, and we're always happy to help.",
+      "Yes. You approve design before any code is written, so major changes at that stage are expected and free. Changes after build has started are still possible, just scoped so they don't push your launch date without a conversation first.",
   },
   {
-    question: "Can the timeline move faster or slower than 30 days?",
+    question: "What happens after launch?",
     answer:
-      "Yes. 30 days is our average for a full website build. Simpler projects can move faster; larger multi-location sites or projects bundled with SEO and ad campaigns can take longer. We'll give you a realistic timeline on the discovery call.",
+      "You get a training session so you're comfortable making basic edits, plus 30 days of post-launch support included at no extra cost for any bugs or tweaks.",
   },
   {
-    question: "Do I need to already have a website?",
+    question: "What if my project needs more than 30 days?",
     answer:
-      "No — we work with HVAC companies starting from scratch just as often as ones replacing an existing site. Either way, the process is the same.",
+      "30 days is our average for a standard site. Larger builds (e-commerce, multi-location sites) get a realistic timeline in your proposal — we'd rather tell you upfront than miss a promised date.",
   },
 ];
 
@@ -255,27 +238,26 @@ function ProcessPage() {
                 Our Process
               </span>
               <h1 className="mt-5 text-balance font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
-                A Clear Path From First Call to{" "}
-                <span className="text-gradient-cool">Booked Jobs</span>
+                From Discovery Call to <span className="text-gradient-cool">Live Site</span> in 30
+                Days
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                No black boxes and no guessing where your project stands. Here's exactly what
-                happens, step by step, from the moment you reach out to the day your site starts
-                taking calls.
+                Clear stages, clear timelines, zero surprises. Here's exactly how we work with HVAC
+                companies, from the first call to the day your site goes live.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
                 <MagneticButton href="/contact" size="lg">
-                  Book a Free Strategy Call
+                  Get a Free Strategy Call
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
-                <MagneticButton href="/services" variant="ghost" size="lg">
-                  See Our Services
+                <MagneticButton href="/work" variant="ghost" size="lg">
+                  See Our Work
                 </MagneticButton>
               </div>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
+              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:grid-cols-4 sm:px-10">
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
                     <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
@@ -296,13 +278,13 @@ function ProcessPage() {
           <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <SectionHeading
-              eyebrow="Step by step"
+              eyebrow="How It Works"
               title={
                 <>
-                  Six Stages, <span className="text-gradient-cool">Zero Guesswork</span>
+                  Five Steps. <span className="text-gradient-cool">No Guesswork.</span>
                 </>
               }
-              subtitle="Every project moves through the same six stages. You'll always know what's happening, what's next, and what we need from you."
+              subtitle="Every project follows the same structure — so you always know what's happening and what's next."
             />
 
             <div ref={timelineRef} className="relative mt-14">
@@ -333,30 +315,18 @@ function ProcessPage() {
                         }`}
                       />
 
-                      <div className="relative flex flex-none items-center gap-4 sm:flex-col sm:items-center sm:gap-2">
-                        <span
-                          className={`relative z-10 flex h-14 w-14 flex-none items-center justify-center rounded-xl border backdrop-blur-md ${
-                            step.tone === "cool"
-                              ? "border-primary/30 bg-background text-primary"
-                              : "border-heat/30 bg-background text-heat"
-                          }`}
-                        >
-                          <step.icon className="h-5.5 w-5.5" strokeWidth={2} />
-                        </span>
-                        <span className="font-display text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground sm:hidden">
-                          Step {step.number}
-                        </span>
-                      </div>
+                      <span
+                        className={`relative z-10 flex h-14 w-14 flex-none items-center justify-center rounded-xl border font-display text-xl font-bold backdrop-blur-md ${
+                          step.tone === "cool"
+                            ? "border-primary/30 bg-background text-primary"
+                            : "border-heat/30 bg-background text-heat"
+                        }`}
+                      >
+                        {step.number}
+                      </span>
 
                       <div className="relative min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                          <span
-                            className={`font-display text-sm font-extrabold ${
-                              step.tone === "cool" ? "text-primary" : "text-heat"
-                            }`}
-                          >
-                            {step.number}
-                          </span>
                           <h3 className="text-lg text-foreground sm:text-xl">{step.title}</h3>
                           <span
                             className={`rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.14em] ${
@@ -365,7 +335,7 @@ function ProcessPage() {
                                 : "border-heat/30 bg-heat/10 text-heat"
                             }`}
                           >
-                            {step.day}
+                            {step.tag}
                           </span>
                         </div>
 
@@ -373,16 +343,22 @@ function ProcessPage() {
                           {step.description}
                         </p>
 
-                        <div className="mt-4 flex flex-wrap gap-2">
-                          {step.deliverables.map((tag) => (
-                            <span
-                              key={tag}
-                              className="rounded-full border border-border bg-surface/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground"
+                        <ul className="mt-4 space-y-1.5">
+                          {step.checklist.map((item) => (
+                            <li
+                              key={item}
+                              className="flex items-start gap-2 text-[13.5px] leading-relaxed text-muted-foreground"
                             >
-                              {tag}
-                            </span>
+                              <Check
+                                className={`mt-0.5 h-3.5 w-3.5 flex-none ${
+                                  step.tone === "cool" ? "text-primary" : "text-heat"
+                                }`}
+                                strokeWidth={2.5}
+                              />
+                              {item}
+                            </li>
                           ))}
-                        </div>
+                        </ul>
                       </div>
                     </motion.div>
                   </Reveal>
@@ -392,33 +368,50 @@ function ProcessPage() {
           </div>
         </section>
 
-        {/* What you can expect */}
+        {/* Proof / testimonial spotlight */}
+        <section className="section-shell border-b border-border">
+          <div className="pointer-events-none absolute inset-0 grid-tech opacity-15" aria-hidden />
+          <div className="relative mx-auto max-w-4xl px-5 text-center lg:px-8">
+            <Reveal>
+              <p className="mx-auto max-w-3xl text-balance font-display text-xl leading-snug sm:text-2xl lg:text-3xl">
+                <span
+                  className="mr-1.5 font-display text-3xl leading-none text-primary/40 sm:text-4xl"
+                  aria-hidden
+                >
+                  &ldquo;
+                </span>
+                They kept us updated at every stage —{" "}
+                <span className="text-gradient-cool">{proof.highlight}</span>. We knew exactly where
+                things stood the whole way through.
+                <span
+                  className="ml-1.5 font-display text-3xl leading-none text-primary/40 sm:text-4xl"
+                  aria-hidden
+                >
+                  &rdquo;
+                </span>
+              </p>
+              <p className="mt-6 text-sm text-muted-foreground">
+                <span className="font-semibold text-foreground">{proof.name}</span> — {proof.role}
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Differentiators strip */}
         <section className="section-shell">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
-            <SectionHeading
-              eyebrow="Working with us"
-              title={
-                <>
-                  What You Can <span className="text-gradient-cool">Expect</span>
-                </>
-              }
-              subtitle="Beyond the steps themselves, here's how we run every project."
-            />
-            <div className="mt-14 grid gap-6 sm:grid-cols-3">
-              {expectations.map((item, i) => (
-                <Reveal key={item.title} delay={i * 0.08}>
-                  <div className="relative h-full overflow-hidden rounded-2xl border border-border bg-surface/40 p-7 backdrop-blur-md">
-                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-primary/30 bg-primary/10 text-primary">
-                      <item.icon className="h-5.5 w-5.5" strokeWidth={1.8} />
+            <Reveal>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {differentiators.map((item) => (
+                  <div key={item} className="flex items-start gap-3">
+                    <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
+                      <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
                     </span>
-                    <h3 className="mt-6 font-display text-lg leading-snug">{item.title}</h3>
-                    <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
-                      {item.text}
-                    </p>
+                    <p className="text-sm leading-snug text-foreground/90">{item}</p>
                   </div>
-                </Reveal>
-              ))}
-            </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -427,10 +420,10 @@ function ProcessPage() {
           <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
           <div className="relative mx-auto max-w-3xl px-5 lg:px-8">
             <SectionHeading
-              eyebrow="FAQs"
+              eyebrow="FAQ"
               title={
                 <>
-                  Questions About the <span className="text-gradient-cool">Process</span>
+                  Questions About Our <span className="text-gradient-cool">Process</span>
                 </>
               }
             />
@@ -449,7 +442,18 @@ function ProcessPage() {
           </div>
         </section>
 
-        <CTASection />
+        <CTASection
+          badgeLabel="Free 30-Minute Call"
+          title={
+            <>
+              Ready to Start With a <span className="text-gradient-cool">Discovery Call?</span>
+            </>
+          }
+          description="No pressure, no obligation — just an honest look at your website and what step 1 would look like for your business."
+          primaryLabel="Get a Free Strategy Call"
+          primaryHref="/contact"
+          footnote="We reply within 4 hours · No obligation"
+        />
       </main>
     </div>
   );

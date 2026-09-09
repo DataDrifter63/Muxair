@@ -26,3 +26,25 @@ export interface BlogPostRow {
   published: boolean;
   created_at: string;
 }
+
+// Matches the `case_studies` table columns (see README for the SQL to
+// create this table in Supabase).
+export interface WorkItemRow {
+  id: string;
+  slug: string;
+  name: string;
+  tone: "cool" | "heat";
+  location: string;
+  services: string[];
+  badge: string;
+  category: string | null;
+  result: string | null;
+  summary: string | null;
+  metrics: { label: string; value: string }[] | null;
+  challenge: string | null;
+  approach: string[] | null;
+  outcome: string | null;
+  cover_image: string | null;
+  published: boolean;
+  created_at: string;
+}

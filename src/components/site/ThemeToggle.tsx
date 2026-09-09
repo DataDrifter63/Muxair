@@ -12,8 +12,9 @@ export function ThemeToggle({ className }: { className?: string }) {
       onClick={toggleTheme}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      style={{ cursor: "pointer" }}
       className={cn(
-        "relative flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface/60 text-foreground transition-colors hover:bg-surface",
+        "relative flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface/60 text-foreground transition-colors hover:bg-surface cursor-pointer",
         className,
       )}
     >

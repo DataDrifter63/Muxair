@@ -28,6 +28,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -67,6 +68,16 @@ export const Route = createFileRoute("/contact/")({
           ],
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          name: title,
+          description,
+          url: `${SITE_URL}/contact`,
+        }),
+      },
     ],
   }),
 });
@@ -87,6 +98,7 @@ const contactSchema = z.object({
   need: z.string().min(1, "Select what you need help with"),
   bizName: z.string().trim().min(2, "Enter your business name"),
   serviceArea: z.string().trim().min(2, "Enter your service area"),
+  otherInfo: z.string().trim().optional(),
   fullName: z.string().trim().min(2, "Enter your name"),
   email: z.string().trim().email("Enter a valid email address"),
   phone: z.string().trim().min(7, "Enter a valid phone number"),
@@ -144,17 +156,32 @@ const faqs = [
   {
     question: "What happens after I submit the form?",
     answer:
-      "We'll call you within 4 business hours to find a time that works for a free 30-minute strategy call — no calendar links, no bots, just a quick chat about your business.",
+      "We'll get back to you within 4 business hours to book a free 30-minute strategy call. No pitch decks, no pressure — just an honest look at your online presence and what's holding you back.",
   },
   {
     question: "Do I need to know which service I want first?",
     answer:
-      "No — pick \"Not Sure Yet\" on step one. Most clients don't know exactly what they need until we've looked at their numbers together.",
+      "Not at all. Just tell us where you're at and what you're trying to fix. We'll figure out the right approach together on the call.",
   },
   {
     question: "Do you work with HVAC companies outside the UK?",
     answer:
-      "Our team is UK-based, but we've worked with heating and cooling companies internationally. Mention your location and we'll let you know if we're a fit.",
+      "Yes. We work with heating and cooling businesses across the UK, US, Canada, and Australia. Local SEO and ad strategy is adapted to your specific market.",
+  },
+  {
+    question: "Is the strategy call really free?",
+    answer:
+      "Completely. No invoice, no hidden catch. If we're a good fit we'll talk next steps. If not, you'll still walk away knowing exactly what your website needs.",
+  },
+  {
+    question: "How quickly can you start on a project?",
+    answer:
+      "Typically within 1 to 2 weeks of agreeing scope. We keep our client load intentionally small so you're never waiting months to get started.",
+  },
+  {
+    question: "What information should I have ready for the call?",
+    answer:
+      "Nothing formal. It helps to roughly know your service area, your busiest seasons, and what you feel isn't working right now. That's it — we handle the rest.",
   },
 ];
 
@@ -170,6 +197,7 @@ function ContactPage() {
       need: "",
       bizName: "",
       serviceArea: "",
+      otherInfo: "",
       fullName: "",
       email: "",
       phone: "",
@@ -371,6 +399,21 @@ function ContactPage() {
                               value={values.serviceArea}
                               onChange={(e) =>
                                 setValue("serviceArea", e.target.value, { shouldValidate: true })
+                              }
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="otherInfo">
+                              Anything else you'd like to tell us?{" "}
+                              <span className="text-muted-foreground">(optional)</span>
+                            </Label>
+                            <Textarea
+                              id="otherInfo"
+                              placeholder="Share anything else about your business, your goals, or a specific challenge you'd like us to help with."
+                              rows={4}
+                              value={values.otherInfo}
+                              onChange={(e) =>
+                                setValue("otherInfo", e.target.value, { shouldValidate: true })
                               }
                             />
                           </div>
