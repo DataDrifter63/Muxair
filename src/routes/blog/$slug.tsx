@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, CalendarDays } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays } from "lucide-react";
 import { MagneticButton, Reveal } from "@/components/site/primitives";
 import { CTASection } from "@/components/site/CTASection";
 import { supabase, type BlogPostRow } from "@/lib/supabase";
-import { SITE_URL } from "@/lib/site-data";
+import { services, SITE_URL } from "@/lib/site-data";
 
 export const Route = createFileRoute("/blog/$slug")({
   component: BlogPostPage,
@@ -45,6 +45,7 @@ export const Route = createFileRoute("/blog/$slug")({
             headline: post.title,
             description: post.excerpt,
             datePublished: post.created_at,
+            author: { "@type": "Organization", name: "Ductwork Studio", url: SITE_URL },
             image: post.cover_image ?? undefined,
             url: `${SITE_URL}/blog/${post.slug}`,
           }),
@@ -53,6 +54,14 @@ export const Route = createFileRoute("/blog/$slug")({
     };
   },
 });
+
+const serviceHrefs = {
+  websites: "/services/websites",
+  seo: "/services/seo",
+  "google-ads": "/services/google-ads",
+  "meta-ads": "/services/meta-ads",
+  maintenance: "/services/maintenance",
+} as const;
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -88,6 +97,21 @@ function BlogPostPage() {
   // each paragraph renders as its own <p>. Swap in a markdown renderer
   // later if you want bold/links/headings inside posts.
   const paragraphs = post.content.split(/\n\s*\n/).filter(Boolean);
+
+  // Every post must link to at least one relevant /services/* page (SEO
+  // checklist rule). Match the post's category against a service title,
+  // falling back to the website design page — every HVAC business needs a
+  // site, so it's a safe default when the category doesn't map cleanly.
+  const relatedService =
+    services.find((s) => post.category.toLowerCase().includes(s.title.toLowerCase())) ??
+    services.find((s) =>
+      s.title
+        .toLowerCase()
+        .split(" ")
+        .some((word) => post.category.toLowerCase().includes(word)),
+    ) ??
+    services.find((s) => s.slug === "websites") ??
+    services[0];
 
   return (
     <div className="relative min-h-screen bg-background">
@@ -136,6 +160,25 @@ function BlogPostPage() {
                 ))}
               </div>
             </Reveal>
+
+            {relatedService ? (
+              <Reveal delay={0.2}>
+                <Link
+                  to={serviceHrefs[relatedService.slug as keyof typeof serviceHrefs]}
+                  className="group mt-10 flex items-center justify-between gap-4 rounded-2xl border border-primary/25 bg-primary/[0.04] p-6 transition-colors hover:border-primary/45"
+                >
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+                      Related Service
+                    </p>
+                    <p className="mt-1 font-display text-base text-foreground">
+                      {relatedService.title}
+                    </p>
+                  </div>
+                  <ArrowRight className="h-4 w-4 flex-none text-primary transition-transform duration-300 group-hover:translate-x-1.5" />
+                </Link>
+              </Reveal>
+            ) : null}
           </div>
         </article>
 
