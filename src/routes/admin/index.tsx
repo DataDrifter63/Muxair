@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { FileText, LogOut, MessageSquare, Newspaper } from "lucide-react";
-import { requireAuth, signOut } from "@/lib/auth";
+import { MessageSquare, Newspaper } from "lucide-react";
+import { requireAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 export const Route = createFileRoute("/admin/")({
   beforeLoad: requireAuth,
@@ -9,11 +10,8 @@ export const Route = createFileRoute("/admin/")({
   loader: async () => {
     const [posts, leads] = await Promise.all([
       supabase.from("blog_posts").select("id", { count: "exact", head: true }),
-      // These two tables may not exist yet — fail quietly until they're created.
       supabase.from("leads").select("id", { count: "exact", head: true }),
-    ]).then((results) =>
-      results.map((r) => (r.error ? 0 : (r.count ?? 0))),
-    );
+    ]).then((results) => results.map((r) => (r.error ? 0 : (r.count ?? 0))));
     return { postCount: posts, leadCount: leads };
   },
   head: () => ({
@@ -31,42 +29,24 @@ function AdminHome() {
   const counts = { postCount, leadCount };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <header className="flex items-center justify-between border-b border-slate-800 px-6 py-4">
-        <h1 className="text-lg font-semibold">Ductwork Studio — Admin</h1>
-        <button
-          onClick={() => signOut().then(() => window.location.assign("/admin/login"))}
-          className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white"
-        >
-          <LogOut className="h-4 w-4" />
-          Log out
-        </button>
-      </header>
-
-      <main className="mx-auto max-w-5xl px-6 py-10">
-        <div className="grid gap-4 sm:grid-cols-2">
-          {cards.map((c) => (
-            <Link
-              key={c.label}
-              to={c.to}
-              className="flex items-center gap-4 rounded-xl border border-slate-800 bg-slate-900 p-6 transition-colors hover:border-slate-700"
-            >
-              <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-800">
-                <c.icon className="h-5 w-5 text-slate-300" />
-              </span>
-              <div>
-                <p className="text-2xl font-semibold">{counts[c.key]}</p>
-                <p className="text-sm text-slate-400">{c.label}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        <p className="mt-10 text-sm text-slate-500">
-          Case studies manager and the leads/case_studies tables are next — see the plan
-          in ADMIN-DASHBOARD-PROMPT.md.
-        </p>
-      </main>
-    </div>
+    <AdminLayout title="Dashboard">
+      <div className="grid gap-4 sm:grid-cols-2">
+        {cards.map((c) => (
+          <Link
+            key={c.label}
+            to={c.to}
+            className="flex items-center gap-4 rounded-2xl border border-border bg-surface/40 p-6 transition-colors hover:border-primary/30"
+          >
+            <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 text-primary">
+              <c.icon className="h-5 w-5" />
+            </span>
+            <div>
+              <p className="font-display text-2xl font-bold">{counts[c.key]}</p>
+              <p className="text-sm text-muted-foreground">{c.label}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </AdminLayout>
   );
 }

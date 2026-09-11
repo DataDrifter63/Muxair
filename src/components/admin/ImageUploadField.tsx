@@ -29,12 +29,12 @@ export function ImageUploadField({
   return (
     <div>
       {value ? (
-        <div className="relative w-full max-w-xs overflow-hidden rounded-lg border border-slate-700">
+        <div className="relative w-full max-w-xs overflow-hidden rounded-lg border border-border">
           <img src={value} alt="" className="aspect-[16/9] w-full object-cover" />
           <button
             type="button"
             onClick={() => onChange(null)}
-            className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-slate-950/80 text-white hover:bg-red-600"
+            className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-background/80 text-foreground transition-colors hover:bg-destructive hover:text-destructive-foreground"
           >
             <X className="h-4 w-4" />
           </button>
@@ -44,7 +44,7 @@ export function ImageUploadField({
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="flex h-32 w-full max-w-xs flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-300"
+          className="flex h-32 w-full max-w-xs flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
         >
           {uploading ? (
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -65,7 +65,7 @@ export function ImageUploadField({
           e.target.value = "";
         }}
       />
-      {error ? <p className="mt-1.5 text-xs text-red-400">{error}</p> : null}
+      {error ? <p className="mt-1.5 text-xs text-destructive">{error}</p> : null}
     </div>
   );
 }

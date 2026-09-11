@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Loader2 } from "lucide-react";
+import { Loader2, Wind } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,24 +27,31 @@ function AdminLogin() {
     try {
       await signIn(email, password);
       navigate({ to: "/admin" });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
+    } catch {
+      // Generic message on purpose — don't reveal whether the email exists
+      // or the password was wrong, which makes account enumeration harder.
+      setError("Invalid email or password.");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4">
-      <div className="w-full max-w-sm rounded-xl border border-slate-800 bg-slate-900 p-8">
-        <h1 className="text-lg font-semibold text-white">Admin Login</h1>
-        <p className="mt-1 text-sm text-slate-400">Ductwork Studio dashboard</p>
+    <div className="flex min-h-screen items-center justify-center bg-background px-4 text-foreground">
+      <div className="w-full max-w-sm rounded-2xl border border-border bg-surface/60 p-8">
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface">
+            <Wind className="h-4.5 w-4.5 text-primary" strokeWidth={2.2} />
+          </span>
+          <span className="font-display text-lg font-bold">
+            Muxair<span className="text-primary">.</span>
+          </span>
+        </div>
+        <p className="mt-4 text-sm text-muted-foreground">Sign in to manage the site's content.</p>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4" autoComplete="on">
           <div className="space-y-1.5">
-            <Label htmlFor="email" className="text-slate-300">
-              Email
-            </Label>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
@@ -52,13 +59,10 @@ function AdminLogin() {
               onChange={(e) => setEmail(e.target.value)}
               required
               autoComplete="email"
-              className="border-slate-700 bg-slate-950 text-white"
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="password" className="text-slate-300">
-              Password
-            </Label>
+            <Label htmlFor="password">Password</Label>
             <Input
               id="password"
               type="password"
@@ -66,11 +70,14 @@ function AdminLogin() {
               onChange={(e) => setPassword(e.target.value)}
               required
               autoComplete="current-password"
-              className="border-slate-700 bg-slate-950 text-white"
             />
           </div>
 
-          {error ? <p className="text-sm text-red-400">{error}</p> : null}
+          {error ? (
+            <p role="alert" className="text-sm text-destructive">
+              {error}
+            </p>
+          ) : null}
 
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Log In"}

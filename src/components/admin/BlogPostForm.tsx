@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import MDEditor from "@uiw/react-md-editor";
 import { Loader2, Save } from "lucide-react";
 import { supabase, type BlogPostRow } from "@/lib/supabase";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 import { ImageUploadField } from "./ImageUploadField";
+import { MarkdownEditor } from "./MarkdownEditor";
 
 type FormState = {
   title: string;
@@ -37,7 +42,6 @@ function slugify(text: string) {
 
 export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
   const navigate = useNavigate();
-  const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState<FormState>(
     existing
       ? {
@@ -55,9 +59,6 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
   const [slugTouched, setSlugTouched] = useState(!!existing);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  // MDEditor touches the DOM directly — only mount it client-side.
-  useEffect(() => setMounted(true), []);
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -78,129 +79,137 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
       meta_description: form.meta_description || null,
     };
 
-    const { error } = existing
-      ? await supabase.from("blog_posts").update(payload).eq("id", existing.id)
-      : await supabase.from("blog_posts").insert(payload);
+    // .select().single() makes a silent failure loud: if Supabase's Row
+    // Level Security blocks the write (e.g. a missing INSERT/UPDATE policy),
+    // .update()/.insert() alone can report success with zero rows actually
+    // changed. Asking for the row back means a blocked write surfaces as a
+    // real, visible error instead of quietly doing nothing.
+    const { data, error: dbError } = existing
+      ? await supabase.from("blog_posts").update(payload).eq("id", existing.id).select().single()
+      : await supabase.from("blog_posts").insert(payload).select().single();
 
     setSaving(false);
-    if (error) {
-      setError(error.message);
+
+    if (dbError) {
+      setError(dbError.message);
+      return;
+    }
+    if (!data) {
+      setError(
+        "The save didn't go through — this usually means a database permission (RLS policy) is blocking it. Check that blog_posts has insert/update policies for authenticated users.",
+      );
       return;
     }
     navigate({ to: "/admin/blog" });
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label className="mb-1.5 block text-sm text-slate-300">Title</label>
-        <input
+    <form onSubmit={handleSubmit} className="max-w-3xl space-y-6">
+      <div className="space-y-1.5">
+        <Label htmlFor="title">Title</Label>
+        <Input
+          id="title"
           value={form.title}
           onChange={(e) => handleTitleChange(e.target.value)}
           required
-          className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white"
         />
       </div>
 
-      <div>
-        <label className="mb-1.5 block text-sm text-slate-300">Slug</label>
-        <input
+      <div className="space-y-1.5">
+        <Label htmlFor="slug">Slug</Label>
+        <Input
+          id="slug"
           value={form.slug}
           onChange={(e) => {
             setSlugTouched(true);
             set("slug", e.target.value);
           }}
           required
-          className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white"
         />
-        <p className="mt-1 text-xs text-slate-500">URL: /blog/{form.slug || "..."}</p>
+        <p className="text-xs text-muted-foreground">URL: /blog/{form.slug || "..."}</p>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label className="mb-1.5 block text-sm text-slate-300">Category</label>
-          <input
+        <div className="space-y-1.5">
+          <Label htmlFor="category">Category</Label>
+          <Input
+            id="category"
             value={form.category}
             onChange={(e) => set("category", e.target.value)}
             required
-            className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white"
           />
         </div>
-        <div className="flex items-end pb-2">
-          <label className="flex items-center gap-2 text-sm text-slate-300">
-            <input
-              type="checkbox"
-              checked={form.published}
-              onChange={(e) => set("published", e.target.checked)}
-              className="h-4 w-4"
-            />
+        <div className="flex items-center gap-2.5 pt-6">
+          <Switch
+            id="published"
+            checked={form.published}
+            onCheckedChange={(v) => set("published", v)}
+          />
+          <Label htmlFor="published" className="cursor-pointer">
             Published (visible on the site)
-          </label>
+          </Label>
         </div>
       </div>
 
-      <div>
-        <label className="mb-1.5 block text-sm text-slate-300">
-          Excerpt <span className="text-slate-500">(short preview text on the blog list)</span>
-        </label>
-        <textarea
+      <div className="space-y-1.5">
+        <Label htmlFor="excerpt">
+          Excerpt{" "}
+          <span className="font-normal text-muted-foreground">
+            (short preview text on the blog list)
+          </span>
+        </Label>
+        <Textarea
+          id="excerpt"
           value={form.excerpt}
           onChange={(e) => set("excerpt", e.target.value)}
           rows={2}
           required
-          className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white"
         />
       </div>
 
-      <div>
-        <label className="mb-1.5 block text-sm text-slate-300">
+      <div className="space-y-1.5">
+        <Label htmlFor="meta_description">
           Meta Description{" "}
-          <span className="text-slate-500">(for Google search results — leave blank to reuse excerpt)</span>
-        </label>
-        <textarea
+          <span className="font-normal text-muted-foreground">
+            (for Google search results — leave blank to reuse excerpt)
+          </span>
+        </Label>
+        <Textarea
+          id="meta_description"
           value={form.meta_description}
           onChange={(e) => set("meta_description", e.target.value)}
           rows={2}
-          className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white"
         />
       </div>
 
-      <div>
-        <label className="mb-1.5 block text-sm text-slate-300">Cover Image</label>
-        <ImageUploadField
-          value={form.cover_image}
-          onChange={(url) => set("cover_image", url)}
-        />
+      <div className="space-y-1.5">
+        <Label>Cover Image</Label>
+        <ImageUploadField value={form.cover_image} onChange={(url) => set("cover_image", url)} />
       </div>
 
-      <div>
-        <label className="mb-1.5 block text-sm text-slate-300">
-          Content <span className="text-slate-500">(Markdown — use the toolbar for formatting)</span>
-        </label>
-        {mounted ? (
-          <div data-color-mode="dark">
-            <MDEditor
-              value={form.content}
-              onChange={(v) => set("content", v ?? "")}
-              height={420}
-              preview="live"
-            />
-          </div>
-        ) : (
-          <div className="h-[420px] rounded-lg border border-slate-700 bg-slate-900" />
-        )}
+      <div className="space-y-1.5">
+        <Label>
+          Content{" "}
+          <span className="font-normal text-muted-foreground">
+            (Markdown — use the toolbar for formatting)
+          </span>
+        </Label>
+        <MarkdownEditor value={form.content} onChange={(v) => set("content", v)} />
       </div>
 
-      {error ? <p className="text-sm text-red-400">{error}</p> : null}
+      {error ? (
+        <p
+          role="alert"
+          className="rounded-lg border border-destructive/30 bg-destructive/10 px-3.5 py-2.5 text-sm text-destructive"
+        >
+          {error}
+        </p>
+      ) : null}
 
-      <button
-        type="submit"
-        disabled={saving}
-        className="flex items-center gap-2 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-orange-600 disabled:opacity-60"
-      >
+      <Button type="submit" disabled={saving} className="gap-2">
         {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
         {existing ? "Save Changes" : "Create Post"}
-      </button>
+      </Button>
     </form>
   );
 }

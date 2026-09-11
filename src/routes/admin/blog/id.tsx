@@ -1,8 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 import { requireAuth } from "@/lib/auth";
 import { supabase, type BlogPostRow } from "@/lib/supabase";
 import { BlogPostForm } from "@/components/admin/BlogPostForm";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 export const Route = createFileRoute("/admin/blog/id")({
   beforeLoad: requireAuth,
@@ -25,16 +25,12 @@ function EditBlogPost() {
   const { post } = Route.useLoaderData();
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <header className="flex items-center gap-3 border-b border-slate-800 px-6 py-4">
-        <Link to="/admin/blog" className="text-slate-400 hover:text-white">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <h1 className="text-lg font-semibold">Edit Blog Post</h1>
-      </header>
-      <main className="mx-auto max-w-3xl px-6 py-10">
-        {post ? <BlogPostForm existing={post} /> : <p className="text-slate-400">Post not found.</p>}
-      </main>
-    </div>
+    <AdminLayout title="Edit Blog Post">
+      {post ? (
+        <BlogPostForm existing={post} />
+      ) : (
+        <p className="text-muted-foreground">Post not found.</p>
+      )}
+    </AdminLayout>
   );
 }
