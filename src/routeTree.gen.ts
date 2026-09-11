@@ -14,13 +14,10 @@ import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ThankYouRouteImport } from './routes/thank-you'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
-import { Route as AdminAdminIndexRouteImport } from './routes/admin/admin-index'
-import { Route as AdminAdminLoginRouteImport } from './routes/admin/admin-login'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
-import { Route as BlogAdminBlogIdRouteImport } from './routes/blog/admin-blog-id'
-import { Route as BlogAdminBlogIndexRouteImport } from './routes/blog/admin-blog-index'
-import { Route as BlogAdminBlogNewRouteImport } from './routes/blog/admin-blog-new'
 import { Route as ContactIndexRouteImport } from './routes/contact/index'
 import { Route as PricingIndexRouteImport } from './routes/pricing/index'
 import { Route as ProcessIndexRouteImport } from './routes/process/index'
@@ -32,6 +29,9 @@ import { Route as ServicesSeoRouteImport } from './routes/services/seo'
 import { Route as ServicesWebsitesRouteImport } from './routes/services/websites'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
 import { Route as WorkSlugRouteImport } from './routes/work/$slug'
+import { Route as AdminBlogIndexRouteImport } from './routes/admin/blog/index'
+import { Route as AdminBlogIdRouteImport } from './routes/admin/blog/id'
+import { Route as AdminBlogNewRouteImport } from './routes/admin/blog/new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,14 +58,14 @@ const AboutIndexRoute = AboutIndexRouteImport.update({
   path: '/about/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
-  id: '/admin/admin-index',
-  path: '/admin/admin-index',
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminAdminLoginRoute = AdminAdminLoginRouteImport.update({
-  id: '/admin/admin-login',
-  path: '/admin/admin-login',
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -76,21 +76,6 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogAdminBlogIdRoute = BlogAdminBlogIdRouteImport.update({
-  id: '/blog/admin-blog-id',
-  path: '/blog/admin-blog-id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogAdminBlogIndexRoute = BlogAdminBlogIndexRouteImport.update({
-  id: '/blog/admin-blog-index',
-  path: '/blog/admin-blog-index',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogAdminBlogNewRoute = BlogAdminBlogNewRouteImport.update({
-  id: '/blog/admin-blog-new',
-  path: '/blog/admin-blog-new',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactIndexRoute = ContactIndexRouteImport.update({
@@ -148,18 +133,29 @@ const WorkSlugRoute = WorkSlugRouteImport.update({
   path: '/work/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminBlogIndexRoute = AdminBlogIndexRouteImport.update({
+  id: '/admin/blog/',
+  path: '/admin/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminBlogIdRoute = AdminBlogIdRouteImport.update({
+  id: '/admin/blog/id',
+  path: '/admin/blog/id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminBlogNewRoute = AdminBlogNewRouteImport.update({
+  id: '/admin/blog/new',
+  path: '/admin/blog/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms': typeof TermsRoute
   '/thank-you': typeof ThankYouRoute
-  '/admin/admin-index': typeof AdminAdminIndexRoute
-  '/admin/admin-login': typeof AdminAdminLoginRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/blog/admin-blog-id': typeof BlogAdminBlogIdRoute
-  '/blog/admin-blog-index': typeof BlogAdminBlogIndexRoute
-  '/blog/admin-blog-new': typeof BlogAdminBlogNewRoute
   '/services/google-ads': typeof ServicesGoogleAdsRoute
   '/services/maintenance': typeof ServicesMaintenanceRoute
   '/services/meta-ads': typeof ServicesMetaAdsRoute
@@ -167,24 +163,24 @@ export interface FileRoutesByFullPath {
   '/services/websites': typeof ServicesWebsitesRoute
   '/work/$slug': typeof WorkSlugRoute
   '/about/': typeof AboutIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/contact/': typeof ContactIndexRoute
   '/pricing/': typeof PricingIndexRoute
   '/process/': typeof ProcessIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/work/': typeof WorkIndexRoute
+  '/admin/blog/id': typeof AdminBlogIdRoute
+  '/admin/blog/new': typeof AdminBlogNewRoute
+  '/admin/blog/': typeof AdminBlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms': typeof TermsRoute
   '/thank-you': typeof ThankYouRoute
-  '/admin/admin-index': typeof AdminAdminIndexRoute
-  '/admin/admin-login': typeof AdminAdminLoginRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/blog/admin-blog-id': typeof BlogAdminBlogIdRoute
-  '/blog/admin-blog-index': typeof BlogAdminBlogIndexRoute
-  '/blog/admin-blog-new': typeof BlogAdminBlogNewRoute
   '/services/google-ads': typeof ServicesGoogleAdsRoute
   '/services/maintenance': typeof ServicesMaintenanceRoute
   '/services/meta-ads': typeof ServicesMetaAdsRoute
@@ -192,12 +188,16 @@ export interface FileRoutesByTo {
   '/services/websites': typeof ServicesWebsitesRoute
   '/work/$slug': typeof WorkSlugRoute
   '/about': typeof AboutIndexRoute
+  '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/contact': typeof ContactIndexRoute
   '/pricing': typeof PricingIndexRoute
   '/process': typeof ProcessIndexRoute
   '/services': typeof ServicesIndexRoute
   '/work': typeof WorkIndexRoute
+  '/admin/blog/id': typeof AdminBlogIdRoute
+  '/admin/blog/new': typeof AdminBlogNewRoute
+  '/admin/blog': typeof AdminBlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -205,12 +205,8 @@ export interface FileRoutesById {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms': typeof TermsRoute
   '/thank-you': typeof ThankYouRoute
-  '/admin/admin-index': typeof AdminAdminIndexRoute
-  '/admin/admin-login': typeof AdminAdminLoginRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/blog/admin-blog-id': typeof BlogAdminBlogIdRoute
-  '/blog/admin-blog-index': typeof BlogAdminBlogIndexRoute
-  '/blog/admin-blog-new': typeof BlogAdminBlogNewRoute
   '/services/google-ads': typeof ServicesGoogleAdsRoute
   '/services/maintenance': typeof ServicesMaintenanceRoute
   '/services/meta-ads': typeof ServicesMetaAdsRoute
@@ -218,12 +214,16 @@ export interface FileRoutesById {
   '/services/websites': typeof ServicesWebsitesRoute
   '/work/$slug': typeof WorkSlugRoute
   '/about/': typeof AboutIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/contact/': typeof ContactIndexRoute
   '/pricing/': typeof PricingIndexRoute
   '/process/': typeof ProcessIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/work/': typeof WorkIndexRoute
+  '/admin/blog/id': typeof AdminBlogIdRoute
+  '/admin/blog/new': typeof AdminBlogNewRoute
+  '/admin/blog/': typeof AdminBlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -232,12 +232,8 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/terms'
     | '/thank-you'
-    | '/admin/admin-index'
-    | '/admin/admin-login'
+    | '/admin/login'
     | '/blog/$slug'
-    | '/blog/admin-blog-id'
-    | '/blog/admin-blog-index'
-    | '/blog/admin-blog-new'
     | '/services/google-ads'
     | '/services/maintenance'
     | '/services/meta-ads'
@@ -245,24 +241,24 @@ export interface FileRouteTypes {
     | '/services/websites'
     | '/work/$slug'
     | '/about/'
+    | '/admin/'
     | '/blog/'
     | '/contact/'
     | '/pricing/'
     | '/process/'
     | '/services/'
     | '/work/'
+    | '/admin/blog/id'
+    | '/admin/blog/new'
+    | '/admin/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/privacy-policy'
     | '/terms'
     | '/thank-you'
-    | '/admin/admin-index'
-    | '/admin/admin-login'
+    | '/admin/login'
     | '/blog/$slug'
-    | '/blog/admin-blog-id'
-    | '/blog/admin-blog-index'
-    | '/blog/admin-blog-new'
     | '/services/google-ads'
     | '/services/maintenance'
     | '/services/meta-ads'
@@ -270,24 +266,24 @@ export interface FileRouteTypes {
     | '/services/websites'
     | '/work/$slug'
     | '/about'
+    | '/admin'
     | '/blog'
     | '/contact'
     | '/pricing'
     | '/process'
     | '/services'
     | '/work'
+    | '/admin/blog/id'
+    | '/admin/blog/new'
+    | '/admin/blog'
   id:
     | '__root__'
     | '/'
     | '/privacy-policy'
     | '/terms'
     | '/thank-you'
-    | '/admin/admin-index'
-    | '/admin/admin-login'
+    | '/admin/login'
     | '/blog/$slug'
-    | '/blog/admin-blog-id'
-    | '/blog/admin-blog-index'
-    | '/blog/admin-blog-new'
     | '/services/google-ads'
     | '/services/maintenance'
     | '/services/meta-ads'
@@ -295,12 +291,16 @@ export interface FileRouteTypes {
     | '/services/websites'
     | '/work/$slug'
     | '/about/'
+    | '/admin/'
     | '/blog/'
     | '/contact/'
     | '/pricing/'
     | '/process/'
     | '/services/'
     | '/work/'
+    | '/admin/blog/id'
+    | '/admin/blog/new'
+    | '/admin/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -308,12 +308,8 @@ export interface RootRouteChildren {
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   TermsRoute: typeof TermsRoute
   ThankYouRoute: typeof ThankYouRoute
-  AdminAdminIndexRoute: typeof AdminAdminIndexRoute
-  AdminAdminLoginRoute: typeof AdminAdminLoginRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   BlogSlugRoute: typeof BlogSlugRoute
-  BlogAdminBlogIdRoute: typeof BlogAdminBlogIdRoute
-  BlogAdminBlogIndexRoute: typeof BlogAdminBlogIndexRoute
-  BlogAdminBlogNewRoute: typeof BlogAdminBlogNewRoute
   ServicesGoogleAdsRoute: typeof ServicesGoogleAdsRoute
   ServicesMaintenanceRoute: typeof ServicesMaintenanceRoute
   ServicesMetaAdsRoute: typeof ServicesMetaAdsRoute
@@ -321,12 +317,16 @@ export interface RootRouteChildren {
   ServicesWebsitesRoute: typeof ServicesWebsitesRoute
   WorkSlugRoute: typeof WorkSlugRoute
   AboutIndexRoute: typeof AboutIndexRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ContactIndexRoute: typeof ContactIndexRoute
   PricingIndexRoute: typeof PricingIndexRoute
   ProcessIndexRoute: typeof ProcessIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
   WorkIndexRoute: typeof WorkIndexRoute
+  AdminBlogIdRoute: typeof AdminBlogIdRoute
+  AdminBlogNewRoute: typeof AdminBlogNewRoute
+  AdminBlogIndexRoute: typeof AdminBlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -366,18 +366,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/admin-index': {
-      id: '/admin/admin-index'
-      path: '/admin/admin-index'
-      fullPath: '/admin/admin-index'
-      preLoaderRoute: typeof AdminAdminIndexRouteImport
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/admin-login': {
-      id: '/admin/admin-login'
-      path: '/admin/admin-login'
-      fullPath: '/admin/admin-login'
-      preLoaderRoute: typeof AdminAdminLoginRouteImport
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -392,27 +392,6 @@ declare module '@tanstack/react-router' {
       path: '/blog/$slug'
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/admin-blog-id': {
-      id: '/blog/admin-blog-id'
-      path: '/blog/admin-blog-id'
-      fullPath: '/blog/admin-blog-id'
-      preLoaderRoute: typeof BlogAdminBlogIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/admin-blog-index': {
-      id: '/blog/admin-blog-index'
-      path: '/blog/admin-blog-index'
-      fullPath: '/blog/admin-blog-index'
-      preLoaderRoute: typeof BlogAdminBlogIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/admin-blog-new': {
-      id: '/blog/admin-blog-new'
-      path: '/blog/admin-blog-new'
-      fullPath: '/blog/admin-blog-new'
-      preLoaderRoute: typeof BlogAdminBlogNewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact/': {
@@ -492,6 +471,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/blog/': {
+      id: '/admin/blog/'
+      path: '/admin/blog'
+      fullPath: '/admin/blog/'
+      preLoaderRoute: typeof AdminBlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/blog/id': {
+      id: '/admin/blog/id'
+      path: '/admin/blog/id'
+      fullPath: '/admin/blog/id'
+      preLoaderRoute: typeof AdminBlogIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/blog/new': {
+      id: '/admin/blog/new'
+      path: '/admin/blog/new'
+      fullPath: '/admin/blog/new'
+      preLoaderRoute: typeof AdminBlogNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -500,12 +500,8 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   TermsRoute: TermsRoute,
   ThankYouRoute: ThankYouRoute,
-  AdminAdminIndexRoute: AdminAdminIndexRoute,
-  AdminAdminLoginRoute: AdminAdminLoginRoute,
+  AdminLoginRoute: AdminLoginRoute,
   BlogSlugRoute: BlogSlugRoute,
-  BlogAdminBlogIdRoute: BlogAdminBlogIdRoute,
-  BlogAdminBlogIndexRoute: BlogAdminBlogIndexRoute,
-  BlogAdminBlogNewRoute: BlogAdminBlogNewRoute,
   ServicesGoogleAdsRoute: ServicesGoogleAdsRoute,
   ServicesMaintenanceRoute: ServicesMaintenanceRoute,
   ServicesMetaAdsRoute: ServicesMetaAdsRoute,
@@ -513,12 +509,16 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesWebsitesRoute: ServicesWebsitesRoute,
   WorkSlugRoute: WorkSlugRoute,
   AboutIndexRoute: AboutIndexRoute,
+  AdminIndexRoute: AdminIndexRoute,
   BlogIndexRoute: BlogIndexRoute,
   ContactIndexRoute: ContactIndexRoute,
   PricingIndexRoute: PricingIndexRoute,
   ProcessIndexRoute: ProcessIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
   WorkIndexRoute: WorkIndexRoute,
+  AdminBlogIdRoute: AdminBlogIdRoute,
+  AdminBlogNewRoute: AdminBlogNewRoute,
+  AdminBlogIndexRoute: AdminBlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

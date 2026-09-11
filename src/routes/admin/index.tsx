@@ -3,7 +3,7 @@ import { FileText, LogOut, MessageSquare, Newspaper } from "lucide-react";
 import { requireAuth, signOut } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 
-export const Route = createFileRoute("/admin/admin-index")({
+export const Route = createFileRoute("/admin/")({
   beforeLoad: requireAuth,
   component: AdminHome,
   loader: async () => {

@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { requireAuth } from "@/lib/auth";
 import { BlogPostForm } from "@/components/admin/BlogPostForm";
 
-export const Route = createFileRoute("/blog/admin-blog-new")({
+export const Route = createFileRoute("/admin/blog/new")({
   beforeLoad: requireAuth,
   component: NewBlogPost,
   head: () => ({

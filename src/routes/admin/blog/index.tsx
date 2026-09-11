@@ -4,7 +4,7 @@ import { requireAuth } from "@/lib/auth";
 import { supabase, type BlogPostRow } from "@/lib/supabase";
 import { useState } from "react";
 
-export const Route = createFileRoute("/blog/admin-blog-index")({
+export const Route = createFileRoute("/admin/blog/")({
   beforeLoad: requireAuth,
   component: AdminBlogList,
   loader: async () => {
