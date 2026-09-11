@@ -23,9 +23,8 @@ function parseCtaBlock(raw: string): CtaBlock {
   const fields: CtaBlock = {};
   for (const line of raw.split("\n")) {
     const match = line.match(/^(title|text|button|href):\s*(.*)$/);
-    if (match) {
-      const [, key, value] = match;
-      (fields as Record<string, string>)[key] = value.trim();
+    if (match && match[1] && match[2] !== undefined) {
+      (fields as Record<string, string>)[match[1]] = match[2].trim();
     }
   }
   return fields;

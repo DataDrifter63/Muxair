@@ -12,6 +12,27 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl ?? "", supabaseAnonKey ?? "");
 
+// Matches the `case_studies` table columns — used by /work and /work/$slug.
+export interface WorkItemRow {
+  id: string;
+  slug: string;
+  name: string;
+  tone: "cool" | "heat";
+  location: string;
+  services: ("website" | "seo" | "google-ads" | "meta-ads")[];
+  badge: string;
+  category: string | null;
+  result: string | null;
+  summary: string | null;
+  cover_image: string | null;
+  metrics: { label: string; value: string }[] | null;
+  challenge: string | null;
+  approach: string[] | null;
+  outcome: string | null;
+  published: boolean;
+  created_at: string;
+}
+
 // Matches the `blog_posts` table columns.
 export interface BlogPostRow {
   id: string;

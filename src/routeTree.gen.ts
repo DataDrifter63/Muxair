@@ -14,15 +14,18 @@ import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ThankYouRouteImport } from './routes/thank-you'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
+import { Route as AdminAdminIndexRouteImport } from './routes/admin/admin-index'
+import { Route as AdminAdminLoginRouteImport } from './routes/admin/admin-login'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as BlogAdminBlogIdRouteImport } from './routes/blog/admin-blog-id'
+import { Route as BlogAdminBlogIndexRouteImport } from './routes/blog/admin-blog-index'
+import { Route as BlogAdminBlogNewRouteImport } from './routes/blog/admin-blog-new'
 import { Route as ContactIndexRouteImport } from './routes/contact/index'
-import { Route as ContactPokkaRouteImport } from './routes/contact/pokka'
 import { Route as PricingIndexRouteImport } from './routes/pricing/index'
 import { Route as ProcessIndexRouteImport } from './routes/process/index'
 import { Route as ServicesIndexRouteImport } from './routes/services/index'
 import { Route as ServicesGoogleAdsRouteImport } from './routes/services/google-ads'
-import { Route as ServicesIndex_pokaRouteImport } from './routes/services/index_poka'
 import { Route as ServicesMaintenanceRouteImport } from './routes/services/maintenance'
 import { Route as ServicesMetaAdsRouteImport } from './routes/services/meta-ads'
 import { Route as ServicesSeoRouteImport } from './routes/services/seo'
@@ -55,6 +58,16 @@ const AboutIndexRoute = AboutIndexRouteImport.update({
   path: '/about/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
+  id: '/admin/admin-index',
+  path: '/admin/admin-index',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAdminLoginRoute = AdminAdminLoginRouteImport.update({
+  id: '/admin/admin-login',
+  path: '/admin/admin-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -65,14 +78,24 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogAdminBlogIdRoute = BlogAdminBlogIdRouteImport.update({
+  id: '/blog/admin-blog-id',
+  path: '/blog/admin-blog-id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogAdminBlogIndexRoute = BlogAdminBlogIndexRouteImport.update({
+  id: '/blog/admin-blog-index',
+  path: '/blog/admin-blog-index',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogAdminBlogNewRoute = BlogAdminBlogNewRouteImport.update({
+  id: '/blog/admin-blog-new',
+  path: '/blog/admin-blog-new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactIndexRoute = ContactIndexRouteImport.update({
   id: '/contact/',
   path: '/contact/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactPokkaRoute = ContactPokkaRouteImport.update({
-  id: '/contact/pokka',
-  path: '/contact/pokka',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingIndexRoute = PricingIndexRouteImport.update({
@@ -93,11 +116,6 @@ const ServicesIndexRoute = ServicesIndexRouteImport.update({
 const ServicesGoogleAdsRoute = ServicesGoogleAdsRouteImport.update({
   id: '/services/google-ads',
   path: '/services/google-ads',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ServicesIndex_pokaRoute = ServicesIndex_pokaRouteImport.update({
-  id: '/services/index_poka',
-  path: '/services/index_poka',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesMaintenanceRoute = ServicesMaintenanceRouteImport.update({
@@ -136,10 +154,13 @@ export interface FileRoutesByFullPath {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms': typeof TermsRoute
   '/thank-you': typeof ThankYouRoute
+  '/admin/admin-index': typeof AdminAdminIndexRoute
+  '/admin/admin-login': typeof AdminAdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/contact/pokka': typeof ContactPokkaRoute
+  '/blog/admin-blog-id': typeof BlogAdminBlogIdRoute
+  '/blog/admin-blog-index': typeof BlogAdminBlogIndexRoute
+  '/blog/admin-blog-new': typeof BlogAdminBlogNewRoute
   '/services/google-ads': typeof ServicesGoogleAdsRoute
-  '/services/index_poka': typeof ServicesIndex_pokaRoute
   '/services/maintenance': typeof ServicesMaintenanceRoute
   '/services/meta-ads': typeof ServicesMetaAdsRoute
   '/services/seo': typeof ServicesSeoRoute
@@ -158,10 +179,13 @@ export interface FileRoutesByTo {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms': typeof TermsRoute
   '/thank-you': typeof ThankYouRoute
+  '/admin/admin-index': typeof AdminAdminIndexRoute
+  '/admin/admin-login': typeof AdminAdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/contact/pokka': typeof ContactPokkaRoute
+  '/blog/admin-blog-id': typeof BlogAdminBlogIdRoute
+  '/blog/admin-blog-index': typeof BlogAdminBlogIndexRoute
+  '/blog/admin-blog-new': typeof BlogAdminBlogNewRoute
   '/services/google-ads': typeof ServicesGoogleAdsRoute
-  '/services/index_poka': typeof ServicesIndex_pokaRoute
   '/services/maintenance': typeof ServicesMaintenanceRoute
   '/services/meta-ads': typeof ServicesMetaAdsRoute
   '/services/seo': typeof ServicesSeoRoute
@@ -181,10 +205,13 @@ export interface FileRoutesById {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms': typeof TermsRoute
   '/thank-you': typeof ThankYouRoute
+  '/admin/admin-index': typeof AdminAdminIndexRoute
+  '/admin/admin-login': typeof AdminAdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/contact/pokka': typeof ContactPokkaRoute
+  '/blog/admin-blog-id': typeof BlogAdminBlogIdRoute
+  '/blog/admin-blog-index': typeof BlogAdminBlogIndexRoute
+  '/blog/admin-blog-new': typeof BlogAdminBlogNewRoute
   '/services/google-ads': typeof ServicesGoogleAdsRoute
-  '/services/index_poka': typeof ServicesIndex_pokaRoute
   '/services/maintenance': typeof ServicesMaintenanceRoute
   '/services/meta-ads': typeof ServicesMetaAdsRoute
   '/services/seo': typeof ServicesSeoRoute
@@ -205,10 +232,13 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/terms'
     | '/thank-you'
+    | '/admin/admin-index'
+    | '/admin/admin-login'
     | '/blog/$slug'
-    | '/contact/pokka'
+    | '/blog/admin-blog-id'
+    | '/blog/admin-blog-index'
+    | '/blog/admin-blog-new'
     | '/services/google-ads'
-    | '/services/index_poka'
     | '/services/maintenance'
     | '/services/meta-ads'
     | '/services/seo'
@@ -227,10 +257,13 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/terms'
     | '/thank-you'
+    | '/admin/admin-index'
+    | '/admin/admin-login'
     | '/blog/$slug'
-    | '/contact/pokka'
+    | '/blog/admin-blog-id'
+    | '/blog/admin-blog-index'
+    | '/blog/admin-blog-new'
     | '/services/google-ads'
-    | '/services/index_poka'
     | '/services/maintenance'
     | '/services/meta-ads'
     | '/services/seo'
@@ -249,10 +282,13 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/terms'
     | '/thank-you'
+    | '/admin/admin-index'
+    | '/admin/admin-login'
     | '/blog/$slug'
-    | '/contact/pokka'
+    | '/blog/admin-blog-id'
+    | '/blog/admin-blog-index'
+    | '/blog/admin-blog-new'
     | '/services/google-ads'
-    | '/services/index_poka'
     | '/services/maintenance'
     | '/services/meta-ads'
     | '/services/seo'
@@ -272,10 +308,13 @@ export interface RootRouteChildren {
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   TermsRoute: typeof TermsRoute
   ThankYouRoute: typeof ThankYouRoute
+  AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+  AdminAdminLoginRoute: typeof AdminAdminLoginRoute
   BlogSlugRoute: typeof BlogSlugRoute
-  ContactPokkaRoute: typeof ContactPokkaRoute
+  BlogAdminBlogIdRoute: typeof BlogAdminBlogIdRoute
+  BlogAdminBlogIndexRoute: typeof BlogAdminBlogIndexRoute
+  BlogAdminBlogNewRoute: typeof BlogAdminBlogNewRoute
   ServicesGoogleAdsRoute: typeof ServicesGoogleAdsRoute
-  ServicesIndex_pokaRoute: typeof ServicesIndex_pokaRoute
   ServicesMaintenanceRoute: typeof ServicesMaintenanceRoute
   ServicesMetaAdsRoute: typeof ServicesMetaAdsRoute
   ServicesSeoRoute: typeof ServicesSeoRoute
@@ -327,6 +366,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/admin-index': {
+      id: '/admin/admin-index'
+      path: '/admin/admin-index'
+      fullPath: '/admin/admin-index'
+      preLoaderRoute: typeof AdminAdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/admin-login': {
+      id: '/admin/admin-login'
+      path: '/admin/admin-login'
+      fullPath: '/admin/admin-login'
+      preLoaderRoute: typeof AdminAdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
@@ -341,18 +394,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/admin-blog-id': {
+      id: '/blog/admin-blog-id'
+      path: '/blog/admin-blog-id'
+      fullPath: '/blog/admin-blog-id'
+      preLoaderRoute: typeof BlogAdminBlogIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/admin-blog-index': {
+      id: '/blog/admin-blog-index'
+      path: '/blog/admin-blog-index'
+      fullPath: '/blog/admin-blog-index'
+      preLoaderRoute: typeof BlogAdminBlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/admin-blog-new': {
+      id: '/blog/admin-blog-new'
+      path: '/blog/admin-blog-new'
+      fullPath: '/blog/admin-blog-new'
+      preLoaderRoute: typeof BlogAdminBlogNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact/': {
       id: '/contact/'
       path: '/contact'
       fullPath: '/contact/'
       preLoaderRoute: typeof ContactIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact/pokka': {
-      id: '/contact/pokka'
-      path: '/contact/pokka'
-      fullPath: '/contact/pokka'
-      preLoaderRoute: typeof ContactPokkaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing/': {
@@ -381,13 +448,6 @@ declare module '@tanstack/react-router' {
       path: '/services/google-ads'
       fullPath: '/services/google-ads'
       preLoaderRoute: typeof ServicesGoogleAdsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services/index_poka': {
-      id: '/services/index_poka'
-      path: '/services/index_poka'
-      fullPath: '/services/index_poka'
-      preLoaderRoute: typeof ServicesIndex_pokaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services/maintenance': {
@@ -440,10 +500,13 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   TermsRoute: TermsRoute,
   ThankYouRoute: ThankYouRoute,
+  AdminAdminIndexRoute: AdminAdminIndexRoute,
+  AdminAdminLoginRoute: AdminAdminLoginRoute,
   BlogSlugRoute: BlogSlugRoute,
-  ContactPokkaRoute: ContactPokkaRoute,
+  BlogAdminBlogIdRoute: BlogAdminBlogIdRoute,
+  BlogAdminBlogIndexRoute: BlogAdminBlogIndexRoute,
+  BlogAdminBlogNewRoute: BlogAdminBlogNewRoute,
   ServicesGoogleAdsRoute: ServicesGoogleAdsRoute,
-  ServicesIndex_pokaRoute: ServicesIndex_pokaRoute,
   ServicesMaintenanceRoute: ServicesMaintenanceRoute,
   ServicesMetaAdsRoute: ServicesMetaAdsRoute,
   ServicesSeoRoute: ServicesSeoRoute,
