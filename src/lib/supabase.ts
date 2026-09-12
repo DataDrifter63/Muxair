@@ -50,17 +50,18 @@ export interface BlogPostRow {
   created_at: string;
 }
 
-// Matches the `leads` table columns — filled in by the /contact form.
+// Matches the actual `leads` table columns in Supabase (see table editor —
+// this table has no `status`, `other_info`, or `heard_about` columns; extra
+// notes go into `message`).
 export interface LeadRow {
   id: string;
-  name: string;
+  full_name: string;
   email: string;
   phone: string;
   business_name: string;
   service_area: string;
   need: string;
-  other_info: string | null;
-  heard_about: string | null;
-  status: "new" | "contacted" | "won" | "lost";
+  message: string | null;
+  deleted_at: string | null;
   created_at: string;
 }

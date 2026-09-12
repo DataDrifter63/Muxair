@@ -39,6 +39,8 @@ import {
 import { Reveal, SectionHeading, TechBackdrop } from "@/components/site/primitives";
 import { SITE_URL } from "@/lib/site-data";
 import { supabase } from "@/lib/supabase";
+import { sendLeadEmails } from "@/lib/send-lead-emails.server";
+import { syncLeadToSheet } from "@/lib/sync-lead-to-sheet.server";
 
 const title = "Get a Free HVAC Website Quote | Talk to Our HVAC Web Design Specialists";
 const description =
@@ -227,21 +229,46 @@ function ContactPage() {
   async function onSubmit(values: ContactFormValues) {
     setSubmitError(null);
 
+    const message = [
+      values.otherInfo?.trim() ? values.otherInfo.trim() : null,
+      values.heard ? `Heard about us via: ${values.heard}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n\n");
+
     const { error } = await supabase.from("leads").insert({
-      name: values.fullName,
+      full_name: values.fullName,
       email: values.email,
       phone: values.phone,
       business_name: values.bizName,
       service_area: values.serviceArea,
       need: values.need,
-      other_info: values.otherInfo || null,
-      heard_about: values.heard || null,
+      message: message || null,
     });
 
     if (error) {
       setSubmitError("Couldn't send that — please try again, or call/WhatsApp us directly.");
       return;
     }
+
+    // Best-effort: the lead is already saved above, so an email/sheet hiccup
+    // here should never block the thank-you page or make the submission
+    // look like it failed.
+    const leadPayload = {
+      fullName: values.fullName,
+      email: values.email,
+      phone: values.phone,
+      bizName: values.bizName,
+      serviceArea: values.serviceArea,
+      need: values.need,
+      message: message || null,
+    };
+    sendLeadEmails({ data: leadPayload }).catch((err) =>
+      console.error("[contact] lead emails failed:", err),
+    );
+    syncLeadToSheet({ data: leadPayload }).catch((err) =>
+      console.error("[contact] Google Sheets sync failed:", err),
+    );
 
     navigate({ to: "/thank-you" });
   }

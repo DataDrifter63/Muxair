@@ -32,6 +32,8 @@ import { Route as WorkSlugRouteImport } from './routes/work/$slug'
 import { Route as AdminBlogIndexRouteImport } from './routes/admin/blog/index'
 import { Route as AdminBlogIdRouteImport } from './routes/admin/blog/$id'
 import { Route as AdminBlogNewRouteImport } from './routes/admin/blog/new'
+import { Route as AdminLeadsIndexRouteImport } from './routes/admin/leads/index'
+import { Route as AdminLeadsTrashRouteImport } from './routes/admin/leads/trash'
 import { Route as AdminWorkIndexRouteImport } from './routes/admin/work/index'
 import { Route as AdminWorkIdRouteImport } from './routes/admin/work/$id'
 import { Route as AdminWorkNewRouteImport } from './routes/admin/work/new'
@@ -151,6 +153,16 @@ const AdminBlogNewRoute = AdminBlogNewRouteImport.update({
   path: '/admin/blog/new',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLeadsIndexRoute = AdminLeadsIndexRouteImport.update({
+  id: '/admin/leads/',
+  path: '/admin/leads/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLeadsTrashRoute = AdminLeadsTrashRouteImport.update({
+  id: '/admin/leads/trash',
+  path: '/admin/leads/trash',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminWorkIndexRoute = AdminWorkIndexRouteImport.update({
   id: '/admin/work/',
   path: '/admin/work/',
@@ -190,9 +202,11 @@ export interface FileRoutesByFullPath {
   '/work/': typeof WorkIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
+  '/admin/leads/trash': typeof AdminLeadsTrashRoute
   '/admin/work/$id': typeof AdminWorkIdRoute
   '/admin/work/new': typeof AdminWorkNewRoute
   '/admin/blog/': typeof AdminBlogIndexRoute
+  '/admin/leads/': typeof AdminLeadsIndexRoute
   '/admin/work/': typeof AdminWorkIndexRoute
 }
 export interface FileRoutesByTo {
@@ -218,9 +232,11 @@ export interface FileRoutesByTo {
   '/work': typeof WorkIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
+  '/admin/leads/trash': typeof AdminLeadsTrashRoute
   '/admin/work/$id': typeof AdminWorkIdRoute
   '/admin/work/new': typeof AdminWorkNewRoute
   '/admin/blog': typeof AdminBlogIndexRoute
+  '/admin/leads': typeof AdminLeadsIndexRoute
   '/admin/work': typeof AdminWorkIndexRoute
 }
 export interface FileRoutesById {
@@ -247,9 +263,11 @@ export interface FileRoutesById {
   '/work/': typeof WorkIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
+  '/admin/leads/trash': typeof AdminLeadsTrashRoute
   '/admin/work/$id': typeof AdminWorkIdRoute
   '/admin/work/new': typeof AdminWorkNewRoute
   '/admin/blog/': typeof AdminBlogIndexRoute
+  '/admin/leads/': typeof AdminLeadsIndexRoute
   '/admin/work/': typeof AdminWorkIndexRoute
 }
 export interface FileRouteTypes {
@@ -277,9 +295,11 @@ export interface FileRouteTypes {
     | '/work/'
     | '/admin/blog/$id'
     | '/admin/blog/new'
+    | '/admin/leads/trash'
     | '/admin/work/$id'
     | '/admin/work/new'
     | '/admin/blog/'
+    | '/admin/leads/'
     | '/admin/work/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -305,9 +325,11 @@ export interface FileRouteTypes {
     | '/work'
     | '/admin/blog/$id'
     | '/admin/blog/new'
+    | '/admin/leads/trash'
     | '/admin/work/$id'
     | '/admin/work/new'
     | '/admin/blog'
+    | '/admin/leads'
     | '/admin/work'
   id:
     | '__root__'
@@ -333,9 +355,11 @@ export interface FileRouteTypes {
     | '/work/'
     | '/admin/blog/$id'
     | '/admin/blog/new'
+    | '/admin/leads/trash'
     | '/admin/work/$id'
     | '/admin/work/new'
     | '/admin/blog/'
+    | '/admin/leads/'
     | '/admin/work/'
   fileRoutesById: FileRoutesById
 }
@@ -362,9 +386,11 @@ export interface RootRouteChildren {
   WorkIndexRoute: typeof WorkIndexRoute
   AdminBlogIdRoute: typeof AdminBlogIdRoute
   AdminBlogNewRoute: typeof AdminBlogNewRoute
+  AdminLeadsTrashRoute: typeof AdminLeadsTrashRoute
   AdminWorkIdRoute: typeof AdminWorkIdRoute
   AdminWorkNewRoute: typeof AdminWorkNewRoute
   AdminBlogIndexRoute: typeof AdminBlogIndexRoute
+  AdminLeadsIndexRoute: typeof AdminLeadsIndexRoute
   AdminWorkIndexRoute: typeof AdminWorkIndexRoute
 }
 
@@ -531,6 +557,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBlogNewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/leads/': {
+      id: '/admin/leads/'
+      path: '/admin/leads'
+      fullPath: '/admin/leads/'
+      preLoaderRoute: typeof AdminLeadsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/leads/trash': {
+      id: '/admin/leads/trash'
+      path: '/admin/leads/trash'
+      fullPath: '/admin/leads/trash'
+      preLoaderRoute: typeof AdminLeadsTrashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/work/': {
       id: '/admin/work/'
       path: '/admin/work'
@@ -578,9 +618,11 @@ const rootRouteChildren: RootRouteChildren = {
   WorkIndexRoute: WorkIndexRoute,
   AdminBlogIdRoute: AdminBlogIdRoute,
   AdminBlogNewRoute: AdminBlogNewRoute,
+  AdminLeadsTrashRoute: AdminLeadsTrashRoute,
   AdminWorkIdRoute: AdminWorkIdRoute,
   AdminWorkNewRoute: AdminWorkNewRoute,
   AdminBlogIndexRoute: AdminBlogIndexRoute,
+  AdminLeadsIndexRoute: AdminLeadsIndexRoute,
   AdminWorkIndexRoute: AdminWorkIndexRoute,
 }
 export const routeTree = rootRouteImport

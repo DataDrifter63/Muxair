@@ -11,7 +11,7 @@ export const Route = createFileRoute("/admin/")({
     const [posts, work, leads] = await Promise.all([
       supabase.from("blog_posts").select("id", { count: "exact", head: true }),
       supabase.from("case_studies").select("id", { count: "exact", head: true }),
-      supabase.from("leads").select("id", { count: "exact", head: true }),
+      supabase.from("leads").select("id", { count: "exact", head: true }).is("deleted_at", null),
     ]).then((results) => results.map((r) => (r.error ? 0 : (r.count ?? 0))));
     return { postCount: posts, workCount: work, leadCount: leads };
   },
