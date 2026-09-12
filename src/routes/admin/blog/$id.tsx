@@ -4,7 +4,7 @@ import { supabase, type BlogPostRow } from "@/lib/supabase";
 import { BlogPostForm } from "@/components/admin/BlogPostForm";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 
-export const Route = createFileRoute("/admin/blog/id")({
+export const Route = createFileRoute("/admin/blog/$id")({
   beforeLoad: requireAuth,
   component: EditBlogPost,
   loader: async ({ params }) => {
