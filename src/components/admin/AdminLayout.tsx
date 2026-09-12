@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, LogOut, MessageSquare, Newspaper } from "lucide-react";
+import { Briefcase, LayoutDashboard, LogOut, MessageSquare, Newspaper } from "lucide-react";
 import type { ReactNode } from "react";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
 import { signOut } from "@/lib/auth";
@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { label: "Dashboard", to: "/admin" as const, icon: LayoutDashboard },
   { label: "Blog", to: "/admin/blog" as const, icon: Newspaper },
+  { label: "Work", to: "/admin/work" as const, icon: Briefcase },
   { label: "Leads", to: "/admin/leads" as const, icon: MessageSquare },
 ];
 

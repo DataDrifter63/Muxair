@@ -32,6 +32,9 @@ import { Route as WorkSlugRouteImport } from './routes/work/$slug'
 import { Route as AdminBlogIndexRouteImport } from './routes/admin/blog/index'
 import { Route as AdminBlogIdRouteImport } from './routes/admin/blog/$id'
 import { Route as AdminBlogNewRouteImport } from './routes/admin/blog/new'
+import { Route as AdminWorkIndexRouteImport } from './routes/admin/work/index'
+import { Route as AdminWorkIdRouteImport } from './routes/admin/work/$id'
+import { Route as AdminWorkNewRouteImport } from './routes/admin/work/new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -148,6 +151,21 @@ const AdminBlogNewRoute = AdminBlogNewRouteImport.update({
   path: '/admin/blog/new',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminWorkIndexRoute = AdminWorkIndexRouteImport.update({
+  id: '/admin/work/',
+  path: '/admin/work/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminWorkIdRoute = AdminWorkIdRouteImport.update({
+  id: '/admin/work/$id',
+  path: '/admin/work/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminWorkNewRoute = AdminWorkNewRouteImport.update({
+  id: '/admin/work/new',
+  path: '/admin/work/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -172,7 +190,10 @@ export interface FileRoutesByFullPath {
   '/work/': typeof WorkIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
+  '/admin/work/$id': typeof AdminWorkIdRoute
+  '/admin/work/new': typeof AdminWorkNewRoute
   '/admin/blog/': typeof AdminBlogIndexRoute
+  '/admin/work/': typeof AdminWorkIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -197,7 +218,10 @@ export interface FileRoutesByTo {
   '/work': typeof WorkIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
+  '/admin/work/$id': typeof AdminWorkIdRoute
+  '/admin/work/new': typeof AdminWorkNewRoute
   '/admin/blog': typeof AdminBlogIndexRoute
+  '/admin/work': typeof AdminWorkIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -223,7 +247,10 @@ export interface FileRoutesById {
   '/work/': typeof WorkIndexRoute
   '/admin/blog/$id': typeof AdminBlogIdRoute
   '/admin/blog/new': typeof AdminBlogNewRoute
+  '/admin/work/$id': typeof AdminWorkIdRoute
+  '/admin/work/new': typeof AdminWorkNewRoute
   '/admin/blog/': typeof AdminBlogIndexRoute
+  '/admin/work/': typeof AdminWorkIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -250,7 +277,10 @@ export interface FileRouteTypes {
     | '/work/'
     | '/admin/blog/$id'
     | '/admin/blog/new'
+    | '/admin/work/$id'
+    | '/admin/work/new'
     | '/admin/blog/'
+    | '/admin/work/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -275,7 +305,10 @@ export interface FileRouteTypes {
     | '/work'
     | '/admin/blog/$id'
     | '/admin/blog/new'
+    | '/admin/work/$id'
+    | '/admin/work/new'
     | '/admin/blog'
+    | '/admin/work'
   id:
     | '__root__'
     | '/'
@@ -300,7 +333,10 @@ export interface FileRouteTypes {
     | '/work/'
     | '/admin/blog/$id'
     | '/admin/blog/new'
+    | '/admin/work/$id'
+    | '/admin/work/new'
     | '/admin/blog/'
+    | '/admin/work/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -326,7 +362,10 @@ export interface RootRouteChildren {
   WorkIndexRoute: typeof WorkIndexRoute
   AdminBlogIdRoute: typeof AdminBlogIdRoute
   AdminBlogNewRoute: typeof AdminBlogNewRoute
+  AdminWorkIdRoute: typeof AdminWorkIdRoute
+  AdminWorkNewRoute: typeof AdminWorkNewRoute
   AdminBlogIndexRoute: typeof AdminBlogIndexRoute
+  AdminWorkIndexRoute: typeof AdminWorkIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -492,6 +531,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBlogNewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/work/': {
+      id: '/admin/work/'
+      path: '/admin/work'
+      fullPath: '/admin/work/'
+      preLoaderRoute: typeof AdminWorkIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/work/$id': {
+      id: '/admin/work/$id'
+      path: '/admin/work/$id'
+      fullPath: '/admin/work/$id'
+      preLoaderRoute: typeof AdminWorkIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/work/new': {
+      id: '/admin/work/new'
+      path: '/admin/work/new'
+      fullPath: '/admin/work/new'
+      preLoaderRoute: typeof AdminWorkNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -518,7 +578,10 @@ const rootRouteChildren: RootRouteChildren = {
   WorkIndexRoute: WorkIndexRoute,
   AdminBlogIdRoute: AdminBlogIdRoute,
   AdminBlogNewRoute: AdminBlogNewRoute,
+  AdminWorkIdRoute: AdminWorkIdRoute,
+  AdminWorkNewRoute: AdminWorkNewRoute,
   AdminBlogIndexRoute: AdminBlogIndexRoute,
+  AdminWorkIndexRoute: AdminWorkIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

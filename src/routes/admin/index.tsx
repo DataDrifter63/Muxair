@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MessageSquare, Newspaper } from "lucide-react";
+import { Briefcase, MessageSquare, Newspaper } from "lucide-react";
 import { requireAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { AdminLayout } from "@/components/admin/AdminLayout";
@@ -8,11 +8,12 @@ export const Route = createFileRoute("/admin/")({
   beforeLoad: requireAuth,
   component: AdminHome,
   loader: async () => {
-    const [posts, leads] = await Promise.all([
+    const [posts, work, leads] = await Promise.all([
       supabase.from("blog_posts").select("id", { count: "exact", head: true }),
+      supabase.from("case_studies").select("id", { count: "exact", head: true }),
       supabase.from("leads").select("id", { count: "exact", head: true }),
     ]).then((results) => results.map((r) => (r.error ? 0 : (r.count ?? 0))));
-    return { postCount: posts, leadCount: leads };
+    return { postCount: posts, workCount: work, leadCount: leads };
   },
   head: () => ({
     meta: [{ title: "Admin Dashboard" }, { name: "robots", content: "noindex, nofollow" }],
@@ -21,16 +22,17 @@ export const Route = createFileRoute("/admin/")({
 
 const cards = [
   { label: "Blog Posts", icon: Newspaper, to: "/admin/blog" as const, key: "postCount" as const },
+  { label: "Case Studies", icon: Briefcase, to: "/admin/work" as const, key: "workCount" as const },
   { label: "Leads", icon: MessageSquare, to: "/admin/leads" as const, key: "leadCount" as const },
 ];
 
 function AdminHome() {
-  const { postCount, leadCount } = Route.useLoaderData();
-  const counts = { postCount, leadCount };
+  const { postCount, workCount, leadCount } = Route.useLoaderData();
+  const counts = { postCount, workCount, leadCount };
 
   return (
     <AdminLayout title="Dashboard">
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((c) => (
           <Link
             key={c.label}

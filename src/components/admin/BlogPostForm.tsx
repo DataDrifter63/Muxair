@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Loader2, Save } from "lucide-react";
 import { supabase, type BlogPostRow } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
@@ -42,6 +42,7 @@ function slugify(text: string) {
 
 export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
   const navigate = useNavigate();
+  const router = useRouter();
   const [form, setForm] = useState<FormState>(
     existing
       ? {
@@ -100,6 +101,10 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
       );
       return;
     }
+    // The /admin/blog list route loads its posts via a route loader, which
+    // TanStack Router caches — without invalidating it, a freshly
+    // created/edited post wouldn't show up until a hard refresh.
+    await router.invalidate();
     navigate({ to: "/admin/blog" });
   }
 

@@ -49,3 +49,18 @@ export interface BlogPostRow {
   published: boolean;
   created_at: string;
 }
+
+// Matches the `leads` table columns — filled in by the /contact form.
+export interface LeadRow {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  business_name: string;
+  service_area: string;
+  need: string;
+  other_info: string | null;
+  heard_about: string | null;
+  status: "new" | "contacted" | "won" | "lost";
+  created_at: string;
+}

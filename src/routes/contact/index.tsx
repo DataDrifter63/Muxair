@@ -38,6 +38,7 @@ import {
 } from "@/components/ui/select";
 import { Reveal, SectionHeading, TechBackdrop } from "@/components/site/primitives";
 import { SITE_URL } from "@/lib/site-data";
+import { supabase } from "@/lib/supabase";
 
 const title = "Get a Free HVAC Website Quote | Talk to Our HVAC Web Design Specialists";
 const description =
@@ -188,6 +189,7 @@ const faqs = [
 function ContactPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const totalSteps = 3;
 
   const form = useForm<ContactFormValues>({
@@ -223,10 +225,24 @@ function ContactPage() {
   }
 
   async function onSubmit(values: ContactFormValues) {
-    // TODO: wire this up to a real backend — e.g. a TanStack Start server
-    // function that emails the team or forwards to a CRM.
-    console.info("Contact form submission", values);
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    setSubmitError(null);
+
+    const { error } = await supabase.from("leads").insert({
+      name: values.fullName,
+      email: values.email,
+      phone: values.phone,
+      business_name: values.bizName,
+      service_area: values.serviceArea,
+      need: values.need,
+      other_info: values.otherInfo || null,
+      heard_about: values.heard || null,
+    });
+
+    if (error) {
+      setSubmitError("Couldn't send that — please try again, or call/WhatsApp us directly.");
+      return;
+    }
+
     navigate({ to: "/thank-you" });
   }
 
@@ -247,8 +263,8 @@ function ContactPage() {
                 <span className="text-gradient-cool">Booked Jobs</span>
               </h1>
               <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Takes about a minute. Tell us a bit about your business and we'll call you — no
-                live calendar, no bot, an actual person.
+                Takes about a minute. Tell us a bit about your business and we'll call you — no live
+                calendar, no bot, an actual person.
               </p>
             </Reveal>
           </div>
@@ -268,10 +284,7 @@ function ContactPage() {
                 {/* Progress bar */}
                 <div className="relative mb-8 flex gap-2">
                   {Array.from({ length: totalSteps }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-1 flex-1 overflow-hidden rounded-full bg-border"
-                    >
+                    <div key={i} className="h-1 flex-1 overflow-hidden rounded-full bg-border">
                       <motion.div
                         className="h-full bg-primary"
                         initial={false}
@@ -302,9 +315,7 @@ function ContactPage() {
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                           Step 1 of 3
                         </p>
-                        <h2 className="mt-2 font-display text-2xl">
-                          What do you need help with?
-                        </h2>
+                        <h2 className="mt-2 font-display text-2xl">What do you need help with?</h2>
                         <p className="mt-1.5 text-sm text-muted-foreground">
                           Pick what's closest — we'll tailor the call around it.
                         </p>
@@ -316,9 +327,7 @@ function ContactPage() {
                               <button
                                 key={n.value}
                                 type="button"
-                                onClick={() =>
-                                  setValue("need", n.value, { shouldValidate: true })
-                                }
+                                onClick={() => setValue("need", n.value, { shouldValidate: true })}
                                 className={`flex items-center justify-between gap-3 rounded-xl border p-4 text-left text-sm font-semibold transition-colors ${
                                   selected
                                     ? "border-primary/60 bg-primary/10 text-foreground"
@@ -372,9 +381,7 @@ function ContactPage() {
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                           Step 2 of 3
                         </p>
-                        <h2 className="mt-2 font-display text-2xl">
-                          Tell us about your business
-                        </h2>
+                        <h2 className="mt-2 font-display text-2xl">Tell us about your business</h2>
                         <p className="mt-1.5 text-sm text-muted-foreground">
                           So we can look you up before the call, not during it.
                         </p>
@@ -521,6 +528,15 @@ function ContactPage() {
                             </Select>
                           </div>
                         </div>
+
+                        {submitError ? (
+                          <p
+                            role="alert"
+                            className="mt-4 rounded-lg border border-destructive/30 bg-destructive/10 px-3.5 py-2.5 text-sm text-destructive"
+                          >
+                            {submitError}
+                          </p>
+                        ) : null}
 
                         <div className="mt-8 flex items-center justify-between">
                           <Button

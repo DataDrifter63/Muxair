@@ -2,105 +2,103 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { requireAuth } from "@/lib/auth";
-import { supabase, type BlogPostRow } from "@/lib/supabase";
+import { supabase, type WorkItemRow } from "@/lib/supabase";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 
-export const Route = createFileRoute("/admin/blog/")({
+export const Route = createFileRoute("/admin/work/")({
   beforeLoad: requireAuth,
-  component: AdminBlogList,
+  component: AdminWorkList,
   loader: async () => {
     const { data, error } = await supabase
-      .from("blog_posts")
+      .from("case_studies")
       .select("*")
       .order("created_at", { ascending: false });
     if (error) console.error(error);
-    return { posts: (data ?? []) as BlogPostRow[] };
+    return { items: (data ?? []) as WorkItemRow[] };
   },
   head: () => ({
-    meta: [{ title: "Manage Blog Posts" }, { name: "robots", content: "noindex, nofollow" }],
+    meta: [{ title: "Manage Case Studies" }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
 
-function AdminBlogList() {
-  const { posts: initialPosts } = Route.useLoaderData();
+function AdminWorkList() {
+  const { items: initialItems } = Route.useLoaderData();
   const router = useRouter();
-  const [posts, setPosts] = useState(initialPosts);
+  const [items, setItems] = useState(initialItems);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   async function handleDelete(id: string) {
-    if (!confirm("Delete this post? This can't be undone.")) return;
+    if (!confirm("Delete this case study? This can't be undone.")) return;
     setDeletingId(id);
-    const { error } = await supabase.from("blog_posts").delete().eq("id", id);
+    const { error } = await supabase.from("case_studies").delete().eq("id", id);
     setDeletingId(null);
     if (error) {
       alert(`Failed to delete: ${error.message}`);
       return;
     }
-    setPosts((p) => p.filter((post) => post.id !== id));
-    // Keep the route loader's cache in sync too, or the deleted post would
-    // reappear next time this list is (re)loaded from cache.
+    setItems((p) => p.filter((item) => item.id !== id));
     router.invalidate();
   }
 
   return (
     <AdminLayout
-      title="Blog Posts"
+      title="Case Studies"
       actions={
         <Button asChild size="sm" className="gap-1.5">
-          <Link to="/admin/blog/new">
+          <Link to="/admin/work/new">
             <Plus className="h-4 w-4" />
-            New Post
+            New Case Study
           </Link>
         </Button>
       }
     >
-      {posts.length === 0 ? (
-        <p className="text-muted-foreground">No posts yet — create your first one.</p>
+      {items.length === 0 ? (
+        <p className="text-muted-foreground">No case studies yet — create your first one.</p>
       ) : (
         <div className="overflow-hidden rounded-2xl border border-border">
           <table className="w-full text-sm">
             <thead className="bg-surface/60 text-left text-muted-foreground">
               <tr>
-                <th className="px-4 py-3 font-medium">Title</th>
-                <th className="px-4 py-3 font-medium">Category</th>
+                <th className="px-4 py-3 font-medium">Name</th>
+                <th className="px-4 py-3 font-medium">Location</th>
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">Date</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
             <tbody>
-              {posts.map((post) => (
-                <tr key={post.id} className="border-t border-border">
-                  <td className="px-4 py-3 font-medium">{post.title}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{post.category}</td>
+              {items.map((item) => (
+                <tr key={item.id} className="border-t border-border">
+                  <td className="px-4 py-3 font-medium">{item.name}</td>
+                  <td className="px-4 py-3 text-muted-foreground">{item.location}</td>
                   <td className="px-4 py-3">
                     <span
                       className={
-                        post.published
+                        item.published
                           ? "rounded-full bg-primary/15 px-2 py-0.5 text-xs text-primary"
                           : "rounded-full bg-surface px-2 py-0.5 text-xs text-muted-foreground"
                       }
                     >
-                      {post.published ? "Published" : "Draft"}
+                      {item.published ? "Published" : "Draft"}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">
-                    {new Date(post.created_at).toLocaleDateString("en-GB")}
+                    {new Date(item.created_at).toLocaleDateString("en-GB")}
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-3">
                       <Link
-                        to="/admin/blog/$id"
-                        params={{ id: post.id }}
+                        to="/admin/work/$id"
+                        params={{ id: item.id }}
                         className="text-muted-foreground transition-colors hover:text-primary"
                       >
                         <Pencil className="h-4 w-4" />
                       </Link>
                       <button
                         type="button"
-                        onClick={() => handleDelete(post.id)}
-                        disabled={deletingId === post.id}
+                        onClick={() => handleDelete(item.id)}
+                        disabled={deletingId === item.id}
                         className="text-muted-foreground transition-colors hover:text-destructive disabled:opacity-50"
                       >
                         <Trash2 className="h-4 w-4" />

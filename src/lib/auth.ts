@@ -21,6 +21,14 @@ export async function signOut() {
  *   });
  */
 export async function requireAuth() {
+  // beforeLoad runs on the server too (SSR / hard refresh). The server has
+  // no access to the browser's localStorage, so supabase.auth.getSession()
+  // always comes back empty there — even when the browser genuinely has a
+  // valid session — which was bouncing every refresh to /admin/login.
+  // Only enforce the redirect client-side; the client immediately
+  // re-validates against the real session on hydration.
+  if (typeof window === "undefined") return {};
+
   const { data } = await supabase.auth.getSession();
   if (!data.session) {
     throw redirect({ to: "/admin/login" });
