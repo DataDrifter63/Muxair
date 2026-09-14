@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Linkedin, Mail, Phone, Wind } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
+import logoLight from "@/assets/logo-black.png";
+import logoDark from "@/assets/logo-white.png";
 
 const pageLinks = [
   { label: "Home", to: "/" },
@@ -32,13 +34,9 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[2fr_1fr_1fr_1fr]">
           {/* Brand — 40% */}
           <div>
-            <Link to="/" className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface">
-                <Wind className="h-4.5 w-4.5 text-primary" strokeWidth={2.2} />
-              </span>
-              <span className="font-display text-lg font-extrabold">
-                Ductwork<span className="text-primary">.</span>
-              </span>
+            <Link to="/" className="flex items-center">
+              <img src={logoLight} alt="Muxair" className="h-8 w-auto dark:hidden" />
+              <img src={logoDark} alt="Muxair" className="hidden h-8 w-auto dark:block" />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Built exclusively for HVAC companies. Websites and marketing systems that book
@@ -96,11 +94,11 @@ export function Footer() {
             <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
               <li>
                 <a
-                  href="mailto:hello@ductworkstudio.com"
+                  href="mailto:hello@muxair.com"
                   className="inline-flex items-center gap-2 transition-colors hover:text-primary"
                 >
                   <Mail className="h-3.5 w-3.5 shrink-0" />
-                  hello@ductworkstudio.com
+                  hello@muxair.com
                 </a>
               </li>
               <li>
@@ -137,7 +135,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col gap-3 border-t border-border pt-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>
-            Ductwork Studio Ltd &middot; Company No. 00000000 &middot; Registered in England &amp;
+            Muxair Ltd &middot; Company No. 00000000 &middot; Registered in England &amp;
             Wales
           </p>
           <ul className="flex items-center gap-5">

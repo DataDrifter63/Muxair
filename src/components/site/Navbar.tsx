@@ -1,9 +1,11 @@
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "motion/react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ChevronDown, Menu, Wind, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { services } from "@/lib/site-data";
+import logoLight from "@/assets/logo-black.png";
+import logoDark from "@/assets/logo-white.png";
 import { MagneticButton } from "./primitives";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -83,14 +85,9 @@ export function Navbar() {
           className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 py-4 lg:px-8"
           aria-label="Main"
         >
-          <Link to="/" className="group flex items-center gap-2.5">
-            <span className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface">
-              <Wind className="h-4.5 w-4.5 text-primary" strokeWidth={2.2} />
-              <span className="absolute inset-0 rounded-lg bg-primary/15 opacity-0 blur-md transition-opacity group-hover:opacity-100" />
-            </span>
-            <span className="font-display text-lg font-extrabold tracking-tight">
-              MUXAIR<span className="text-primary">.</span>
-            </span>
+          <Link to="/" className="flex items-center">
+            <img src={logoLight} alt="Muxair" className="h-8 w-auto dark:hidden" />
+            <img src={logoDark} alt="Muxair" className="hidden h-8 w-auto dark:block" />
           </Link>
 
           {/* Desktop nav */}

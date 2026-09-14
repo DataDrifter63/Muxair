@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, CalendarDays } from "lucide-react";
 import { MagneticButton, Reveal } from "@/components/site/primitives";
+import { MarkdownContent } from "@/components/site/MarkdownContent";
 import { CTASection } from "@/components/site/CTASection";
 import { supabase, type BlogPostRow } from "@/lib/supabase";
 import { services, SITE_URL } from "@/lib/site-data";
@@ -25,12 +26,15 @@ export const Route = createFileRoute("/blog/$slug")({
     if (!post) {
       return { meta: [{ title: "Post Not Found | Ductwork Studio" }] };
     }
+    // meta_description is the SEO-specific field (can differ from the
+    // card-preview excerpt) — falls back to excerpt if not set.
+    const metaDescription = post.meta_description || post.excerpt;
     return {
       meta: [
         { title: `${post.title} | Ductwork Studio Blog` },
-        { name: "description", content: post.excerpt },
+        { name: "description", content: metaDescription },
         { property: "og:title", content: post.title },
-        { property: "og:description", content: post.excerpt },
+        { property: "og:description", content: metaDescription },
         { property: "og:type", content: "article" },
         { property: "og:url", content: `${SITE_URL}/blog/${post.slug}` },
         ...(post.cover_image ? [{ property: "og:image", content: post.cover_image }] : []),
@@ -43,7 +47,7 @@ export const Route = createFileRoute("/blog/$slug")({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
             headline: post.title,
-            description: post.excerpt,
+            description: metaDescription,
             datePublished: post.created_at,
             author: { "@type": "Organization", name: "Ductwork Studio", url: SITE_URL },
             image: post.cover_image ?? undefined,
@@ -92,11 +96,6 @@ function BlogPostPage() {
       </div>
     );
   }
-
-  // Content is stored as plain text in Supabase — split on blank lines so
-  // each paragraph renders as its own <p>. Swap in a markdown renderer
-  // later if you want bold/links/headings inside posts.
-  const paragraphs = post.content.split(/\n\s*\n/).filter(Boolean);
 
   // Every post must link to at least one relevant /services/* page (SEO
   // checklist rule). Match the post's category against a service title,
@@ -154,10 +153,19 @@ function BlogPostPage() {
             ) : null}
 
             <Reveal delay={0.15}>
-              <div className="prose-invert mt-10 space-y-5 text-base leading-relaxed text-foreground/90">
-                {paragraphs.map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
+              <MarkdownContent content={post.content} />
+            </Reveal>
+
+            {/* Author box */}
+            <Reveal delay={0.18}>
+              <div className="mt-12 flex items-center gap-3.5 border-t border-border pt-8">
+                <span className="flex h-11 w-11 flex-none items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-xs font-bold text-primary">
+                  DS
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">Ductwork Studio Team</p>
+                  <p className="text-xs text-muted-foreground">HVAC-specialist web design agency</p>
+                </div>
               </div>
             </Reveal>
 
