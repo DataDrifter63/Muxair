@@ -46,6 +46,20 @@ export interface BlogPostRow {
   content: string;
   category: string;
   cover_image: string | null;
+  // Which /services/* page this post links to at the bottom (SEO checklist:
+  // every post must link to a relevant service page). Chosen explicitly by
+  // the admin when writing the post — nullable so older rows without it
+  // still fall back to auto-matching against `category` on the public page.
+  related_service: "websites" | "seo" | "google-ads" | "meta-ads" | "maintenance" | null;
+  // Optional per-post override for the final CTA section at the bottom of
+  // the post. Any field left blank falls back to the site's default
+  // CTASection copy — these don't need to be filled in together.
+  cta_badge_label: string | null;
+  cta_title: string | null;
+  cta_description: string | null;
+  cta_button_label: string | null;
+  cta_button_href: string | null;
+  cta_footnote: string | null;
   published: boolean;
   created_at: string;
 }

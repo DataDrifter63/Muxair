@@ -24,14 +24,14 @@ export const Route = createFileRoute("/blog/$slug")({
   head: ({ loaderData }) => {
     const post = loaderData?.post;
     if (!post) {
-      return { meta: [{ title: "Post Not Found | Ductwork Studio" }] };
+      return { meta: [{ title: "Post Not Found | Muxair" }] };
     }
     // meta_description is the SEO-specific field (can differ from the
     // card-preview excerpt) — falls back to excerpt if not set.
     const metaDescription = post.meta_description || post.excerpt;
     return {
       meta: [
-        { title: `${post.title} | Ductwork Studio Blog` },
+        { title: `${post.title} | Muxair Blog` },
         { name: "description", content: metaDescription },
         { property: "og:title", content: post.title },
         { property: "og:description", content: metaDescription },
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/blog/$slug")({
             headline: post.title,
             description: metaDescription,
             datePublished: post.created_at,
-            author: { "@type": "Organization", name: "Ductwork Studio", url: SITE_URL },
+            author: { "@type": "Organization", name: "Muxair", url: SITE_URL },
             image: post.cover_image ?? undefined,
             url: `${SITE_URL}/blog/${post.slug}`,
           }),
@@ -97,20 +97,20 @@ function BlogPostPage() {
     );
   }
 
-  // Every post must link to at least one relevant /services/* page (SEO
-  // checklist rule). Match the post's category against a service title,
-  // falling back to the website design page — every HVAC business needs a
-  // site, so it's a safe default when the category doesn't map cleanly.
-  const relatedService =
-    services.find((s) => post.category.toLowerCase().includes(s.title.toLowerCase())) ??
-    services.find((s) =>
-      s.title
-        .toLowerCase()
-        .split(" ")
-        .some((word) => post.category.toLowerCase().includes(word)),
-    ) ??
-    services.find((s) => s.slug === "websites") ??
-    services[0];
+  // The admin can pick a specific related service per post; if they leave it
+  // on "Auto-detect", fall back to matching the post's category text against
+  // a service title (SEO checklist: every post must link to a service page).
+  const relatedService = post.related_service
+    ? services.find((s) => s.slug === post.related_service)
+    : (services.find((s) => post.category.toLowerCase().includes(s.title.toLowerCase())) ??
+      services.find((s) =>
+        s.title
+          .toLowerCase()
+          .split(" ")
+          .some((word) => post.category.toLowerCase().includes(word)),
+      ) ??
+      services.find((s) => s.slug === "websites") ??
+      services[0]);
 
   return (
     <div className="relative min-h-screen bg-background">
@@ -160,10 +160,10 @@ function BlogPostPage() {
             <Reveal delay={0.18}>
               <div className="mt-12 flex items-center gap-3.5 border-t border-border pt-8">
                 <span className="flex h-11 w-11 flex-none items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-xs font-bold text-primary">
-                  DS
+                  M
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Ductwork Studio Team</p>
+                  <p className="text-sm font-semibold text-foreground">Muxair Team</p>
                   <p className="text-xs text-muted-foreground">HVAC-specialist web design agency</p>
                 </div>
               </div>
@@ -190,7 +190,14 @@ function BlogPostPage() {
           </div>
         </article>
 
-        <CTASection />
+        <CTASection
+          {...(post.cta_badge_label ? { badgeLabel: post.cta_badge_label } : {})}
+          {...(post.cta_title ? { title: post.cta_title } : {})}
+          {...(post.cta_description ? { description: post.cta_description } : {})}
+          {...(post.cta_button_label ? { primaryLabel: post.cta_button_label } : {})}
+          {...(post.cta_button_href ? { primaryHref: post.cta_button_href } : {})}
+          {...(post.cta_footnote ? { footnote: post.cta_footnote } : {})}
+        />
       </main>
     </div>
   );

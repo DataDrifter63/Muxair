@@ -2,13 +2,23 @@ import { useState } from "react";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Loader2, Save } from "lucide-react";
 import { supabase, type BlogPostRow } from "@/lib/supabase";
+import { services } from "@/lib/site-data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
+
+type RelatedService = BlogPostRow["related_service"];
 
 type FormState = {
   title: string;
@@ -18,6 +28,13 @@ type FormState = {
   category: string;
   cover_image: string | null;
   content: string;
+  related_service: RelatedService;
+  cta_badge_label: string;
+  cta_title: string;
+  cta_description: string;
+  cta_button_label: string;
+  cta_button_href: string;
+  cta_footnote: string;
   published: boolean;
 };
 
@@ -29,6 +46,13 @@ const emptyForm: FormState = {
   category: "",
   cover_image: null,
   content: "",
+  related_service: null,
+  cta_badge_label: "",
+  cta_title: "",
+  cta_description: "",
+  cta_button_label: "",
+  cta_button_href: "",
+  cta_footnote: "",
   published: true,
 };
 
@@ -53,6 +77,13 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
           category: existing.category,
           cover_image: existing.cover_image,
           content: existing.content,
+          related_service: existing.related_service,
+          cta_badge_label: existing.cta_badge_label ?? "",
+          cta_title: existing.cta_title ?? "",
+          cta_description: existing.cta_description ?? "",
+          cta_button_label: existing.cta_button_label ?? "",
+          cta_button_href: existing.cta_button_href ?? "",
+          cta_footnote: existing.cta_footnote ?? "",
           published: existing.published,
         }
       : emptyForm,
@@ -78,6 +109,12 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
     const payload = {
       ...form,
       meta_description: form.meta_description || null,
+      cta_badge_label: form.cta_badge_label || null,
+      cta_title: form.cta_title || null,
+      cta_description: form.cta_description || null,
+      cta_button_label: form.cta_button_label || null,
+      cta_button_href: form.cta_button_href || null,
+      cta_footnote: form.cta_footnote || null,
     };
 
     // .select().single() makes a silent failure loud: if Supabase's Row
@@ -157,6 +194,31 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
       </div>
 
       <div className="space-y-1.5">
+        <Label>
+          Related Service{" "}
+          <span className="font-normal text-muted-foreground">
+            (shown as a link at the end of the post)
+          </span>
+        </Label>
+        <Select
+          value={form.related_service ?? "none"}
+          onValueChange={(v) => set("related_service", v === "none" ? null : (v as RelatedService))}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Choose a service..." />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="none">Auto-detect from category</SelectItem>
+            {services.map((s) => (
+              <SelectItem key={s.slug} value={s.slug}>
+                {s.title}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-1.5">
         <Label htmlFor="excerpt">
           Excerpt{" "}
           <span className="font-normal text-muted-foreground">
@@ -200,6 +262,78 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
           </span>
         </Label>
         <MarkdownEditor value={form.content} onChange={(v) => set("content", v)} />
+      </div>
+
+      <div className="rounded-xl border border-border p-5">
+        <p className="font-display text-base text-foreground">Final CTA (optional)</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          The orange card at the bottom of every post, before the footer. Leave any field blank to
+          use the site's default copy — you don't need to fill in all of them together.
+        </p>
+
+        <div className="mt-5 space-y-5">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="cta_badge_label">Badge label</Label>
+              <Input
+                id="cta_badge_label"
+                placeholder="Free 30-minute call"
+                value={form.cta_badge_label}
+                onChange={(e) => set("cta_badge_label", e.target.value)}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="cta_button_label">Button text</Label>
+              <Input
+                id="cta_button_label"
+                placeholder="Get a Free Strategy Call"
+                value={form.cta_button_label}
+                onChange={(e) => set("cta_button_label", e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="cta_title">Heading</Label>
+            <Input
+              id="cta_title"
+              placeholder="Ready to Get More Booked Jobs?"
+              value={form.cta_title}
+              onChange={(e) => set("cta_title", e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="cta_description">Description</Label>
+            <Textarea
+              id="cta_description"
+              rows={2}
+              value={form.cta_description}
+              onChange={(e) => set("cta_description", e.target.value)}
+            />
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="cta_button_href">Button link</Label>
+              <Input
+                id="cta_button_href"
+                placeholder="/contact"
+                value={form.cta_button_href}
+                onChange={(e) => set("cta_button_href", e.target.value)}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="cta_footnote">Footnote</Label>
+              <Input
+                id="cta_footnote"
+                placeholder="We reply within 4 hours · No obligation"
+                value={form.cta_footnote}
+                onChange={(e) => set("cta_footnote", e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
       {error ? (

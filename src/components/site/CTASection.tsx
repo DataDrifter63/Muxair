@@ -28,7 +28,7 @@ export function CTASection({
   ),
   description = "Book a free 30-minute strategy call. We'll review your current website, your Google presence, and show you exactly what's costing you leads.",
   primaryLabel = "Book Your Free Call",
-  primaryHref = "#contact",
+  primaryHref = "/contact",
   secondaryLabel,
   secondaryHref,
   footnote,
@@ -91,9 +91,7 @@ export function CTASection({
                   </MagneticButton>
                 ) : null}
               </div>
-              {footnote ? (
-                <p className="mt-6 text-xs text-muted-foreground">{footnote}</p>
-              ) : null}
+              {footnote ? <p className="mt-6 text-xs text-muted-foreground">{footnote}</p> : null}
             </div>
           </div>
         </Reveal>
