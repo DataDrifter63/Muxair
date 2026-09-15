@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, CalendarDays } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Clock } from "lucide-react";
 import { MagneticButton, Reveal } from "@/components/site/primitives";
 import { MarkdownContent } from "@/components/site/MarkdownContent";
 import { CTASection } from "@/components/site/CTASection";
@@ -75,6 +75,11 @@ function formatDate(iso: string) {
   });
 }
 
+function readingTime(content: string) {
+  const words = content.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
 function BlogPostPage() {
   const { post } = Route.useLoaderData();
 
@@ -116,29 +121,41 @@ function BlogPostPage() {
     <div className="relative min-h-screen bg-background">
       <main>
         <article className="section-shell pt-36 sm:pt-40">
-          <div className="mx-auto max-w-3xl px-5 lg:px-8">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <Reveal>
-              <Link
-                to="/blog"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back to Blog
-              </Link>
+              <div>
+                <Link
+                  to="/blog"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to Blog
+                </Link>
+              </div>
 
               {post.category ? (
-                <span className="mt-6 inline-flex rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
-                  {post.category}
-                </span>
+                <div className="mt-6">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                    {post.category}
+                  </span>
+                </div>
               ) : null}
 
-              <h1 className="mt-4 text-balance font-display text-3xl leading-tight sm:text-4xl lg:text-5xl">
+              <h1 className="mt-5 text-balance font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
                 {post.title}
               </h1>
 
-              <div className="mt-5 flex items-center gap-1.5 text-sm text-muted-foreground">
-                <CalendarDays className="h-4 w-4" />
-                {formatDate(post.created_at)}
+              <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-muted-foreground">
+                <span className="flex items-center gap-1.5">
+                  <CalendarDays className="h-4 w-4" />
+                  {formatDate(post.created_at)}
+                </span>
+                <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
+                <span className="flex items-center gap-1.5">
+                  <Clock className="h-4 w-4" />
+                  {readingTime(post.content)} min read
+                </span>
               </div>
             </Reveal>
 
@@ -147,7 +164,7 @@ function BlogPostPage() {
                 <img
                   src={post.cover_image}
                   alt=""
-                  className="mt-10 aspect-[16/9] w-full rounded-2xl border border-border object-cover"
+                  className="mt-10 aspect-[21/9] w-full rounded-2xl border border-border object-cover"
                 />
               </Reveal>
             ) : null}
@@ -173,7 +190,7 @@ function BlogPostPage() {
               <Reveal delay={0.2}>
                 <Link
                   to={serviceHrefs[relatedService.slug as keyof typeof serviceHrefs]}
-                  className="group mt-10 flex items-center justify-between gap-4 rounded-2xl border border-primary/25 bg-primary/[0.04] p-6 transition-colors hover:border-primary/45"
+                  className="group mt-8 flex items-center justify-between gap-4 rounded-2xl border border-primary/25 bg-primary/[0.04] p-6 transition-colors hover:border-primary/45"
                 >
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
