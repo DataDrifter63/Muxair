@@ -323,4 +323,4 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-export const SITE_URL = "https://www.ductworkstudio.com";
+export const SITE_URL = "https://muxair.com";
