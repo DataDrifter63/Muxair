@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
   Calendar,
+  ChevronLeft,
+  ChevronRight,
   type LucideIcon,
   MonitorSmartphone,
   Newspaper,
@@ -139,7 +141,10 @@ function PostCover({ post, size = "md" }: { post: BlogPostRow; size?: "md" | "lg
   if (post.cover_image) {
     return (
       <div
-        className={cn("relative overflow-hidden", size === "lg" ? "aspect-[21/9]" : "aspect-[16/9]")}
+        className={cn(
+          "relative overflow-hidden",
+          size === "lg" ? "aspect-[21/9]" : "aspect-[16/9]",
+        )}
       >
         <img
           src={post.cover_image}
@@ -170,7 +175,27 @@ function BlogIndex() {
     return posts.filter((p) => p.category === category);
   }, [category, posts]);
 
-  const [featured, ...rest] = filtered;
+  // Page 1: 1 featured post + a 2-col grid of 6 (7 total). Every page after
+  // that: no featured post, just a 2-col grid of 8 (4 rows).
+  const FIRST_PAGE_SIZE = 7;
+  const OTHER_PAGE_SIZE = 8;
+
+  const [page, setPage] = useState(1);
+  useEffect(() => setPage(1), [category]);
+
+  const totalPages =
+    filtered.length <= FIRST_PAGE_SIZE
+      ? 1
+      : 1 + Math.ceil((filtered.length - FIRST_PAGE_SIZE) / OTHER_PAGE_SIZE);
+
+  const pageItems = useMemo(() => {
+    if (page === 1) return filtered.slice(0, FIRST_PAGE_SIZE);
+    const start = FIRST_PAGE_SIZE + (page - 2) * OTHER_PAGE_SIZE;
+    return filtered.slice(start, start + OTHER_PAGE_SIZE);
+  }, [filtered, page]);
+
+  const featured = page === 1 ? pageItems[0] : undefined;
+  const rest = page === 1 ? pageItems.slice(1) : pageItems;
 
   return (
     <div className="relative min-h-screen bg-background">
@@ -310,6 +335,46 @@ function BlogIndex() {
                         </Link>
                       </Reveal>
                     ))}
+                  </div>
+                ) : null}
+
+                {totalPages > 1 ? (
+                  <div className="mt-12 flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      disabled={page === 1}
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+                      aria-label="Previous page"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                      <button
+                        key={p}
+                        type="button"
+                        onClick={() => setPage(p)}
+                        className={cn(
+                          "flex h-9 w-9 items-center justify-center rounded-full border text-sm font-medium transition-colors",
+                          p === page
+                            ? "border-primary/40 bg-primary/10 text-primary"
+                            : "border-border text-muted-foreground hover:border-primary/30 hover:text-foreground",
+                        )}
+                      >
+                        {p}
+                      </button>
+                    ))}
+
+                    <button
+                      type="button"
+                      disabled={page === totalPages}
+                      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+                      aria-label="Next page"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
                   </div>
                 ) : null}
               </>
