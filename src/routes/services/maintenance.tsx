@@ -32,6 +32,29 @@ const title =
 const description =
   "Keep your HVAC website fast, secure, and up to date. Monthly maintenance plans with priority support, updates, and performance monitoring.";
 
+const timeline = [
+  {
+    week: "Week 1",
+    title: "Onboarding & Site Audit",
+    desc: "We review your current site, set up monitoring, and flag anything urgent right away.",
+  },
+  {
+    week: "Week 1–2",
+    title: "Monitoring Setup",
+    desc: "Uptime, security, and Core Web Vitals tracking configured so nothing slips through unnoticed.",
+  },
+  {
+    week: "Ongoing",
+    title: "Regular Maintenance & Updates",
+    desc: "Backups, software updates, and small content edits handled on a rolling basis.",
+  },
+  {
+    week: "Monthly",
+    title: "Reporting & Review",
+    desc: "A plain-English summary of what was done, what's changed, and what's coming up next.",
+  },
+];
+
 const faqs = [
   {
     question: "Is maintenance required after you build my site?",
@@ -84,7 +107,11 @@ export const Route = createFileRoute("/services/maintenance")({
           description:
             "Ongoing website maintenance, hosting, security, and support for HVAC business websites.",
           provider: { "@type": "ProfessionalService", name: "Muxair" },
-          areaServed: { "@type": "Country", name: "United Kingdom" },
+          areaServed: [
+            { "@type": "Country", name: "United States" },
+            { "@type": "Country", name: "United Kingdom" },
+            { "@type": "Country", name: "Canada" },
+          ],
           offers: {
             "@type": "Offer",
             name: "Website Maintenance",
@@ -92,8 +119,7 @@ export const Route = createFileRoute("/services/maintenance")({
             priceSpecification: {
               "@type": "PriceSpecification",
               minPrice: 79,
-              maxPrice: 199,
-              priceCurrency: "GBP",
+              priceCurrency: "USD",
               unitCode: "MON",
             },
           },
@@ -134,7 +160,7 @@ export const Route = createFileRoute("/services/maintenance")({
 const stats = [
   { to: 99, suffix: ".9%", prefix: "", label: "Uptime monitored" },
   { to: 0, suffix: "", prefix: "", label: "Minimum term — cancel anytime" },
-  { to: 79, suffix: "+", prefix: "£", label: "Starting price per month" },
+  { to: 79, suffix: "+", prefix: "$", label: "Starting price per month" },
 ];
 
 const features = [
@@ -290,6 +316,108 @@ function MaintenancePage() {
           </div>
         </section>
 
+        {/* Timeline */}
+        <section className="section-shell">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <SectionHeading
+              eyebrow="How it works"
+              title={
+                <>
+                  Set Up Once, <span className="text-gradient-cool">Watched All Year</span>
+                </>
+              }
+              align="left"
+            />
+            <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {timeline.map((step, i) => (
+                <Reveal key={step.title} delay={i * 0.08} className="h-full">
+                  <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface/40 p-6 backdrop-blur-md">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+                      {step.week}
+                    </p>
+                    <h3 className="mt-3 font-display text-base leading-snug">{step.title}</h3>
+                    <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground">
+                      {step.desc}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Case studies */}
+        <section className="section-shell border-y border-border bg-surface/25">
+          <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
+          <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+              <SectionHeading
+                eyebrow="Recent results"
+                title="Maintenance Case Studies"
+                align="left"
+              />
+              <Reveal delay={0.1}>
+                <Link
+                  to="/work"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
+                >
+                  See all work
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Reveal>
+            </div>
+
+            <div className="mt-12 grid gap-6 sm:grid-cols-2">
+              <Reveal delay={0.05}>
+                <Link
+                  to="/work"
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background/70 backdrop-blur-md transition-colors hover:border-primary/40"
+                >
+                  <div className="flex aspect-[3/2] items-center justify-center bg-surface/60 text-center text-xs text-muted-foreground">
+                    Case study in progress
+                  </div>
+                  <div className="flex flex-1 flex-col p-7">
+                    <h3 className="text-lg">Maintenance case study coming soon</h3>
+                    <p className="mt-2 flex-1 text-sm text-muted-foreground">
+                      We're onboarding HVAC companies for ongoing site maintenance this quarter.
+                    </p>
+                    <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                      View All Work
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
+
+              <Reveal delay={0.1}>
+                <Link
+                  to="/contact"
+                  className="group flex h-full flex-col items-center justify-center rounded-2xl border border-primary/40 bg-primary/[0.05] p-8 text-center backdrop-blur-md glow-cool"
+                >
+                  <h3 className="font-display text-lg">Become Our Next Case Study</h3>
+                  <p className="mt-2.5 max-w-xs text-sm text-muted-foreground">
+                    We're onboarding a small number of HVAC companies this quarter for ongoing
+                    maintenance — be featured here.
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                    Get in Touch
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                  </span>
+                </Link>
+              </Reveal>
+            </div>
+
+            <Reveal delay={0.15}>
+              <p className="mt-10 text-center text-sm text-muted-foreground">
+                Want peace of mind like this for your own site?{" "}
+                <Link to="/contact" className="font-semibold text-primary hover:underline">
+                  Book a Free Strategy Call →
+                </Link>
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
         {/* Pricing teaser */}
         <section className="section-shell">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
@@ -299,7 +427,7 @@ function MaintenancePage() {
                 <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
                   <div>
                     <h3 className="font-display text-xl sm:text-2xl">
-                      Maintenance starts at £79/mo
+                      Maintenance starts at $79/mo
                     </h3>
                     <p className="mt-2 max-w-lg text-sm text-muted-foreground">
                       No minimum term — cancel anytime. Full tier breakdown on the pricing page.

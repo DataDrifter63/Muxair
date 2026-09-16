@@ -21,8 +21,8 @@ const serviceLinks = [
 ];
 
 const socials = [
-  { label: "Instagram", icon: Instagram, href: "https://instagram.com" },
-  { label: "Facebook", icon: Facebook, href: "https://facebook.com" },
+  { label: "Instagram", icon: Instagram, href: "https://www.instagram.com/muxair.hvac" },
+  { label: "Facebook", icon: Facebook, href: "https://www.facebook.com/muxair.hvac" },
   { label: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
 ];
 

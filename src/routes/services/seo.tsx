@@ -85,7 +85,11 @@ export const Route = createFileRoute("/services/seo")({
           description:
             "Local SEO built specifically around how homeowners and businesses search for HVAC services in their area.",
           provider: { "@type": "ProfessionalService", name: "Muxair" },
-          areaServed: { "@type": "Country", name: "United Kingdom" },
+          areaServed: [
+            { "@type": "Country", name: "United States" },
+            { "@type": "Country", name: "United Kingdom" },
+            { "@type": "Country", name: "Canada" },
+          ],
           offers: {
             "@type": "Offer",
             name: "SEO Retainer",
@@ -94,7 +98,7 @@ export const Route = createFileRoute("/services/seo")({
             priceSpecification: {
               "@type": "UnitPriceSpecification",
               price: 500,
-              priceCurrency: "GBP",
+              priceCurrency: "USD",
               unitCode: "MON",
               minPrice: 500,
             },
@@ -173,7 +177,8 @@ const features = [
   {
     icon: LineChart,
     title: "Monthly Ranking & Traffic Reporting",
-    description: "A plain-English report on where you rank, what's changed, and what we're doing next.",
+    description:
+      "A plain-English report on where you rank, what's changed, and what we're doing next.",
   },
 ];
 
@@ -324,7 +329,8 @@ function SeoPage() {
               eyebrow="How it works"
               title={
                 <>
-                  What Local SEO Looks Like <span className="text-gradient-cool">Month by Month</span>
+                  What Local SEO Looks Like{" "}
+                  <span className="text-gradient-cool">Month by Month</span>
                 </>
               }
               align="left"
@@ -473,7 +479,7 @@ function SeoPage() {
                 <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
                   <div>
                     <h3 className="font-display text-xl sm:text-2xl">
-                      SEO Retainer starts at £500/mo
+                      SEO Retainer starts at $500/mo
                     </h3>
                     <p className="mt-2 max-w-lg text-sm text-muted-foreground">
                       No lock-in beyond the initial 3-month minimum. Full breakdown on the pricing

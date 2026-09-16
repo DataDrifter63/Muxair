@@ -27,8 +27,7 @@ import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/websites";
 
-const title =
-  "HVAC Website Design | Custom Sites Built to Convert for Heating & Cooling Companies";
+const title = "HVAC Website Design | Custom Sites Built to Convert for Heating & Cooling Companies";
 const description =
   "We design and build custom websites exclusively for HVAC businesses. Fast, mobile-first, conversion-optimised, and built to rank on Google.";
 
@@ -85,17 +84,20 @@ export const Route = createFileRoute("/services/websites")({
           description:
             "Custom, mobile-first websites built exclusively for HVAC businesses, optimised to convert and rank on Google.",
           provider: { "@type": "ProfessionalService", name: "Muxair" },
-          areaServed: { "@type": "Country", name: "United Kingdom" },
+          areaServed: [
+            { "@type": "Country", name: "United States" },
+            { "@type": "Country", name: "United Kingdom" },
+            { "@type": "Country", name: "Canada" },
+          ],
           offers: {
             "@type": "Offer",
-            name: "Starter Site",
+            name: "Foundation",
             description:
               "5-page website, mobile-first, local SEO foundations, contact form and click-to-call.",
             priceSpecification: {
               "@type": "PriceSpecification",
-              minPrice: 1500,
-              maxPrice: 2500,
-              priceCurrency: "GBP",
+              minPrice: 1200,
+              priceCurrency: "USD",
             },
           },
         }),
@@ -160,7 +162,7 @@ const features = [
     icon: MapPin,
     title: "Service-Area Landing Pages",
     description:
-      "Dedicated pages targeting your actual towns and service areas — not one generic \"areas we cover\" list.",
+      'Dedicated pages targeting your actual towns and service areas — not one generic "areas we cover" list.',
   },
   {
     icon: Gauge,
@@ -192,8 +194,7 @@ const timeline = [
   {
     week: "Step 2",
     title: "Strategy & Proposal",
-    description:
-      "A custom plan with scope, timeline, and fixed-price quote, sent within 48 hours.",
+    description: "A custom plan with scope, timeline, and fixed-price quote, sent within 48 hours.",
   },
   {
     week: "Step 3",
@@ -240,10 +241,13 @@ function WebsitesPage() {
                 HVAC Website Design
               </span>
               <h1 className="mt-5 text-balance font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
-                Websites Built to Turn <span className="text-gradient-cool">Visitors Into Booked Jobs</span>
+                Websites Built to Turn{" "}
+                <span className="text-gradient-cool">Visitors Into Booked Jobs</span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Fast, mobile-first sites designed specifically for how homeowners and property managers search for and choose an HVAC company — not a recycled template with your logo dropped in.
+                Fast, mobile-first sites designed specifically for how homeowners and property
+                managers search for and choose an HVAC company — not a recycled template with your
+                logo dropped in.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
                 <MagneticButton href="/contact" size="lg">
@@ -431,7 +435,8 @@ function WebsitesPage() {
                 >
                   <h3 className="font-display text-lg">Become Our Next Case Study</h3>
                   <p className="mt-2.5 max-w-xs text-sm text-muted-foreground">
-                    We're onboarding a small number of HVAC companies this quarter for new website builds — be featured here.
+                    We're onboarding a small number of HVAC companies this quarter for new website
+                    builds — be featured here.
                   </p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
                     Get in Touch
@@ -460,9 +465,10 @@ function WebsitesPage() {
                 <div className="pointer-events-none absolute -top-16 left-1/2 h-40 w-72 -translate-x-1/2 rounded-full bg-primary/18 blur-[100px]" />
                 <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
                   <div>
-                    <h3 className="font-display text-xl sm:text-2xl">Websites start at £1,500</h3>
+                    <h3 className="font-display text-xl sm:text-2xl">Websites start at $1,200</h3>
                     <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-                      Fixed price, agreed before work starts. Full package breakdown on the pricing page.
+                      Fixed price, agreed before work starts. Full package breakdown on the pricing
+                      page.
                     </p>
                   </div>
                   <MagneticButton href="/pricing" className="flex-none">
@@ -548,7 +554,8 @@ function WebsitesPage() {
           badgeLabel="Free 30-Minute Call"
           title={
             <>
-              Ready for a Website That Actually <span className="text-gradient-cool">Books Jobs?</span>
+              Ready for a Website That Actually{" "}
+              <span className="text-gradient-cool">Books Jobs?</span>
             </>
           }
           description="Book a free strategy call and we'll show you what's realistically possible for your business — including a live look at your current site."
@@ -562,4 +569,3 @@ function WebsitesPage() {
     </div>
   );
 }
-

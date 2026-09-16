@@ -48,6 +48,16 @@ const faqs = [
     answer:
       "Most self-managed campaigns waste budget on broad keywords and irrelevant clicks. We build around your specific services, service areas, and call tracking from day one — and manage it daily rather than checking in once a month.",
   },
+  {
+    question: "Do you manage Meta Ads too, or just Google?",
+    answer:
+      "Both — many clients run Google Ads and Meta Ads together once Google Ads is performing well.",
+  },
+  {
+    question: "How much of my budget goes to Google vs your fee?",
+    answer:
+      "Your ad spend goes directly to Google — we never touch it. Our management fee is separate and billed by us, so you always know exactly what's going where.",
+  },
 ];
 
 export const Route = createFileRoute("/services/google-ads")({
@@ -75,7 +85,11 @@ export const Route = createFileRoute("/services/google-ads")({
           description:
             "Google Ads campaigns built around seasonal demand spikes, service-specific keywords, and cost per booked job.",
           provider: { "@type": "ProfessionalService", name: "Muxair" },
-          areaServed: { "@type": "Country", name: "United Kingdom" },
+          areaServed: [
+            { "@type": "Country", name: "United States" },
+            { "@type": "Country", name: "United Kingdom" },
+            { "@type": "Country", name: "Canada" },
+          ],
           offers: {
             "@type": "Offer",
             name: "Ads Management",
@@ -84,7 +98,7 @@ export const Route = createFileRoute("/services/google-ads")({
             priceSpecification: {
               "@type": "UnitPriceSpecification",
               price: 400,
-              priceCurrency: "GBP",
+              priceCurrency: "USD",
               unitCode: "MON",
               minPrice: 400,
             },
