@@ -35,8 +35,8 @@ export function Footer() {
           {/* Brand — 40% */}
           <div>
             <Link to="/" className="flex items-center">
-              <img src={logoLight} alt="Muxair" className="h-8 w-auto dark:hidden" />
-              <img src={logoDark} alt="Muxair" className="hidden h-8 w-auto dark:block" />
+              <img src={logoLight} alt="Muxair" className="h-9 w-auto dark:hidden" />
+              <img src={logoDark} alt="Muxair" className="hidden h-9 w-auto dark:block" />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Built exclusively for HVAC companies. Websites and marketing systems that book
@@ -135,8 +135,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col gap-3 border-t border-border pt-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>
-            Muxair Ltd &middot; Company No. 00000000 &middot; Registered in England &amp;
-            Wales
+            © 2026 Muxair
           </p>
           <ul className="flex items-center gap-5">
             <li>
