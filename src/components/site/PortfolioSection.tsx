@@ -1,14 +1,119 @@
-import { ArrowUpRight } from "lucide-react";
-import work1 from "@/assets/work-1.jpg";
-import work2 from "@/assets/work-2.jpg";
-import work3 from "@/assets/work-3.jpg";
-import { BeforeAfterSlider } from "./BeforeAfterSlider";
+import { ArrowUpRight, BadgeCheck, TrendingUp } from "lucide-react";
 import { MagneticButton, Reveal, SectionHeading } from "./primitives";
-import type { WorkItemRow } from "@/lib/supabase";
 
-// Local fallback photos, used only until a case study has its own
-// cover_image (a Cloudinary URL) set in the admin dashboard.
-const fallbackImages = [work1, work2, work3];
+/**
+ * Static, in-file portfolio highlights for the homepage teaser section.
+ * Deliberately NOT wired to the `case_studies` Supabase table — those are
+ * real client case studies shown on /work; this section is example/sample
+ * proof content maintained directly here.
+ *
+ * `chartImage`: paste a hosted image URL (a screenshot of the traffic/rank
+ * graph, matching the reference design). Leave it "" to hide the visual
+ * side gracefully until you have one.
+ */
+
+
+
+
+
+
+type PortfolioHighlight = {
+  name: string;
+  tone: "cool" | "heat";
+  headline: string; // e.g. "We helped Acme HVAC grow annual revenue +167% in 12 months (client-reported)"
+  before: { label: string; stats: string[] };
+  after: { label: string; stats: string[] };
+  pills: { value: string; label: string }[];
+  chartImage: string;
+  chartCaption: string; // e.g. "5669.23% increase in real visitors"
+  verifiedLabel: string; // e.g. "Rank #1 for \"boiler repair leeds\""
+};
+
+
+
+
+
+
+
+
+const highlights: PortfolioHighlight[] = [
+  {
+    name: "Midlands HVAC Co.",
+    tone: "cool",
+    headline:
+      "We helped Midlands HVAC Co. grow annual revenue +167% in 12 months (client-reported)",
+    before: {
+      label: "Before (Jun 2024)",
+      stats: ["26 site visits/week", "8x keywords on Page 1"],
+    },
+    after: {
+      label: "After (Aug 2025)",
+      stats: ["1,500 site visits/week", "89x keywords on Page 1", "75% increase in new enquiries"],
+    },
+    pills: [
+      { value: "+5,669%", label: "Increase in high-value website visits" },
+      { value: "Top 3", label: 'Position for "boiler repair Birmingham"' },
+    ],
+    chartImage: "",
+    chartCaption: "5,669% increase in real visitors",
+    verifiedLabel: 'Rank #1 for "emergency boiler repair"',
+  },
+  {
+    name: "Yorkshire Boiler Specialists",
+    tone: "heat",
+    headline: "We delivered 2x+ new booked jobs for Yorkshire Boiler Specialists in Month 1",
+    before: {
+      label: "Before (Jul 2024)",
+      stats: ["10 site visits/week", "Page 2+ on Google"],
+    },
+    after: {
+      label: "After (Aug 2025)",
+      stats: [
+        "244 site visits/week",
+        'Position 2 for "boiler repair Leeds"',
+        "206% increase in leads/month",
+      ],
+    },
+    pills: [
+      { value: "+3,540%", label: "Increase in high-value website visits" },
+      { value: "Top 2", label: 'Position for "boiler repair Leeds"' },
+    ],
+    chartImage: "",
+    chartCaption: "2,340% increase in real visitors",
+    verifiedLabel: 'Rank #2 for "boiler repair Leeds"',
+  },
+
+  {
+  name: "Company Name",
+  tone: "cool", // ya "heat"
+  headline: "We helped X grow annual revenue +Y% in Z months",
+  before: { label: "Before (Month Year)", stats: ["stat 1", "stat 2"] },
+  after: { label: "After (Month Year)", stats: ["stat 1", "stat 2", "stat 3"] },
+  pills: [
+    { value: "+5,669%", label: "Increase in high-value website visits" },
+    { value: "Top 3", label: 'Position for "keyword"' },
+  ],
+  chartImage: "https://plus.unsplash.com/premium_photo-1737182592549-0c83f93e2903?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bHV4dXJ5JTIwY2FyfGVufDB8fDB8fHww", // apna image link yahan
+  chartCaption: "5,669% increase in real visitors",
+  verifiedLabel: 'Rank #1 for "keyword"',
+},
+
+
+{
+  name: "Company Name",
+  tone: "cool", // ya "heat"
+  headline: "We helped X grow annual revenue +Y% in Z months",
+  before: { label: "Before (Month Year)", stats: ["stat 1", "stat 2"] },
+  after: { label: "After (Month Year)", stats: ["stat 1", "stat 2", "stat 3"] },
+  pills: [
+    { value: "+5,669%", label: "Increase in high-value website visits" },
+    { value: "Top 3", label: 'Position for "keyword"' },
+  ],
+  chartImage: "https://...", // apna image link yahan
+  chartCaption: "5,669% increase in real visitors",
+  verifiedLabel: 'Rank #1 for "keyword"',
+}
+];
 
 function toneClasses(tone: "cool" | "heat") {
   return tone === "cool"
@@ -16,9 +121,7 @@ function toneClasses(tone: "cool" | "heat") {
     : { text: "text-heat", border: "border-heat/30", bg: "bg-heat/10" };
 }
 
-export function PortfolioSection({ items }: { items: WorkItemRow[] }) {
-  if (items.length === 0) return null;
-
+export function PortfolioSection() {
   return (
     <section id="work" className="section-shell relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 grid-tech opacity-15" aria-hidden />
@@ -33,13 +136,12 @@ export function PortfolioSection({ items }: { items: WorkItemRow[] }) {
         </div>
 
         <div className="mt-16 space-y-16 sm:space-y-24">
-          {items.map((item, i) => {
+          {highlights.map((item, i) => {
             const c = toneClasses(item.tone);
             const reversed = i % 2 === 1;
-            const image = item.cover_image || fallbackImages[i % fallbackImages.length] || work1;
 
             return (
-              <Reveal key={item.slug} delay={0.05}>
+              <Reveal key={item.name} delay={0.05}>
                 <div
                   className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-14 ${
                     reversed ? "lg:[&>*:first-child]:order-2" : ""
@@ -47,50 +149,81 @@ export function PortfolioSection({ items }: { items: WorkItemRow[] }) {
                 >
                   {/* Text side */}
                   <div>
-                    {item.category ? (
-                      <span
-                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] ${c.border} ${c.bg} ${c.text}`}
-                      >
-                        {item.category}
-                      </span>
-                    ) : null}
-                    <h3 className="mt-4 font-display text-2xl leading-snug sm:text-3xl">
+                    <span
+                      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] ${c.border} ${c.bg} ${c.text}`}
+                    >
                       {item.name}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{item.location}</p>
-                    {item.summary ? (
-                      <p className="mt-4 max-w-md text-base leading-relaxed text-foreground/90">
-                        {item.summary}
-                      </p>
-                    ) : null}
+                    </span>
 
-                    {/* Stat chips — the proof: concrete, verifiable numbers */}
-                    {item.metrics && item.metrics.length > 0 ? (
-                      <div className="mt-7 flex flex-wrap gap-3">
-                        {item.metrics.map((m) => (
-                          <div
-                            key={m.label}
-                            className="flex items-center gap-2 rounded-xl border border-border bg-surface/50 px-3.5 py-2.5 backdrop-blur-md"
-                          >
-                            <ArrowUpRight
-                              className={`h-4 w-4 flex-none ${c.text}`}
-                              strokeWidth={2.4}
-                            />
-                            <div>
-                              <p className="font-display text-sm font-bold leading-none text-foreground">
-                                {m.value}
-                              </p>
-                              <p className="mt-1 text-[11px] leading-none text-muted-foreground">
-                                {m.label}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
+                    <h3 className="mt-4 max-w-lg text-balance font-display text-xl leading-snug sm:text-2xl">
+                      {item.headline}
+                    </h3>
+
+                    {/* Before / After comparison */}
+                    <div className="mt-7 grid grid-cols-2 gap-5 border-t border-border pt-6">
+                      <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                          {item.before.label}
+                        </p>
+                        <ul className="mt-2.5 space-y-1.5">
+                          {item.before.stats.map((s) => (
+                            <li
+                              key={s}
+                              className="flex items-start gap-2 text-sm leading-snug text-muted-foreground"
+                            >
+                              <span className="mt-1.5 h-1 w-1 flex-none rounded-full bg-muted-foreground" />
+                              {s}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    ) : null}
+                      <div>
+                        <p
+                          className={`text-[11px] font-semibold uppercase tracking-[0.14em] ${c.text}`}
+                        >
+                          {item.after.label}
+                        </p>
+                        <ul className="mt-2.5 space-y-1.5">
+                          {item.after.stats.map((s) => (
+                            <li
+                              key={s}
+                              className="flex items-start gap-2 text-sm font-medium leading-snug text-foreground"
+                            >
+                              <span
+                                className={`mt-1.5 h-1 w-1 flex-none rounded-full ${c.text.replace("text-", "bg-")}`}
+                              />
+                              {s}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* Stat pills */}
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      {item.pills.map((p) => (
+                        <div
+                          key={p.label}
+                          className="flex items-center gap-2 rounded-xl border border-border bg-surface/50 px-3.5 py-2.5 backdrop-blur-md"
+                        >
+                          <ArrowUpRight
+                            className={`h-4 w-4 flex-none ${c.text}`}
+                            strokeWidth={2.4}
+                          />
+                          <div>
+                            <p className="font-display text-sm font-bold leading-none text-foreground">
+                              {p.value}
+                            </p>
+                            <p className="mt-1 text-[11px] leading-none text-muted-foreground">
+                              {p.label}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
 
                     <a
-                      href={`/work/${item.slug}`}
+                      href="/work"
                       className={`mt-7 inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}
                     >
                       View Full Case Study
@@ -98,12 +231,34 @@ export function PortfolioSection({ items }: { items: WorkItemRow[] }) {
                     </a>
                   </div>
 
-                  {/* Visual side — before/after proof */}
-                  <BeforeAfterSlider
-                    image={image}
-                    location={item.location}
-                    {...(item.result ? { caption: item.result } : {})}
-                  />
+                  {/* Visual side — verified growth chart only (no search-result mockup) */}
+                  <div className="relative overflow-hidden rounded-2xl border border-border bg-surface/40 p-5 backdrop-blur-md sm:p-6">
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                      <BadgeCheck className={`h-3.5 w-3.5 ${c.text}`} />
+                      Verified
+                      <span className="text-foreground">{item.verifiedLabel}</span>
+                    </div>
+
+                    {item.chartImage ? (
+                      <img
+                        src={item.chartImage}
+                        alt={item.chartCaption}
+                        className="mt-4 aspect-[4/3] w-full rounded-xl border border-border object-cover"
+                      />
+                    ) : (
+                      <div className="mt-4 flex aspect-[4/3] w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border text-muted-foreground">
+                        <TrendingUp className="h-6 w-6" />
+                        <p className="text-xs">Growth chart image goes here</p>
+                      </div>
+                    )}
+
+                    <div
+                      className={`mt-4 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold ${c.border} ${c.bg} ${c.text}`}
+                    >
+                      <TrendingUp className="h-3.5 w-3.5" />
+                      {item.chartCaption}
+                    </div>
+                  </div>
                 </div>
               </Reveal>
             );
