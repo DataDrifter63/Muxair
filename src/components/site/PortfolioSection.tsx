@@ -1,5 +1,6 @@
 import { ArrowUpRight, BadgeCheck, TrendingUp } from "lucide-react";
 import { MagneticButton, Reveal, SectionHeading } from "./primitives";
+import { BeforeAfterSlider } from "./BeforeAfterSlider";
 
 /**
  * Static, in-file portfolio highlights for the homepage teaser section.
@@ -7,15 +8,10 @@ import { MagneticButton, Reveal, SectionHeading } from "./primitives";
  * real client case studies shown on /work; this section is example/sample
  * proof content maintained directly here.
  *
- * `chartImage`: paste a hosted image URL (a screenshot of the traffic/rank
- * graph, matching the reference design). Leave it "" to hide the visual
- * side gracefully until you have one.
+ * `beforeImage` / `afterImage`: paste two hosted photo URLs (same job, one
+ * before the work and one after). Leave both "" to show a placeholder
+ * instead of a broken slider.
  */
-
-
-
-
-
 
 type PortfolioHighlight = {
   name: string;
@@ -24,17 +20,11 @@ type PortfolioHighlight = {
   before: { label: string; stats: string[] };
   after: { label: string; stats: string[] };
   pills: { value: string; label: string }[];
-  chartImage: string;
+  beforeImage: string;
+  afterImage: string;
   chartCaption: string; // e.g. "5669.23% increase in real visitors"
   verifiedLabel: string; // e.g. "Rank #1 for \"boiler repair leeds\""
 };
-
-
-
-
-
-
-
 
 const highlights: PortfolioHighlight[] = [
   {
@@ -54,7 +44,8 @@ const highlights: PortfolioHighlight[] = [
       { value: "+5,669%", label: "Increase in high-value website visits" },
       { value: "Top 3", label: 'Position for "boiler repair Birmingham"' },
     ],
-    chartImage: "",
+    beforeImage: "",
+    afterImage: "",
     chartCaption: "5,669% increase in real visitors",
     verifiedLabel: 'Rank #1 for "emergency boiler repair"',
   },
@@ -78,41 +69,45 @@ const highlights: PortfolioHighlight[] = [
       { value: "+3,540%", label: "Increase in high-value website visits" },
       { value: "Top 2", label: 'Position for "boiler repair Leeds"' },
     ],
-    chartImage: "",
+    beforeImage: "",
+    afterImage: "",
     chartCaption: "2,340% increase in real visitors",
     verifiedLabel: 'Rank #2 for "boiler repair Leeds"',
   },
-
   {
-  name: "Company Name",
-  tone: "cool", // ya "heat"
-  headline: "We helped X grow annual revenue +Y% in Z months",
-  before: { label: "Before (Month Year)", stats: ["stat 1", "stat 2"] },
-  after: { label: "After (Month Year)", stats: ["stat 1", "stat 2", "stat 3"] },
-  pills: [
-    { value: "+5,669%", label: "Increase in high-value website visits" },
-    { value: "Top 3", label: 'Position for "keyword"' },
-  ],
-  chartImage: "https://plus.unsplash.com/premium_photo-1737182592549-0c83f93e2903?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bHV4dXJ5JTIwY2FyfGVufDB8fDB8fHww", // apna image link yahan
-  chartCaption: "5,669% increase in real visitors",
-  verifiedLabel: 'Rank #1 for "keyword"',
-},
-
-
-{
-  name: "Company Name",
-  tone: "cool", // ya "heat"
-  headline: "We helped X grow annual revenue +Y% in Z months",
-  before: { label: "Before (Month Year)", stats: ["stat 1", "stat 2"] },
-  after: { label: "After (Month Year)", stats: ["stat 1", "stat 2", "stat 3"] },
-  pills: [
-    { value: "+5,669%", label: "Increase in high-value website visits" },
-    { value: "Top 3", label: 'Position for "keyword"' },
-  ],
-  chartImage: "https://...", // apna image link yahan
-  chartCaption: "5,669% increase in real visitors",
-  verifiedLabel: 'Rank #1 for "keyword"',
-}
+    name: "Company Name",
+    tone: "cool", // ya "heat"
+    headline: "We helped X grow annual revenue +Y% in Z months",
+    before: { label: "Before (Month Year)", stats: ["stat 1", "stat 2"] },
+    after: { label: "After (Month Year)", stats: ["stat 1", "stat 2", "stat 3"] },
+    pills: [
+      { value: "+5,669%", label: "Increase in high-value website visits" },
+      { value: "Top 3", label: 'Position for "keyword"' },
+    ],
+    // TODO: replace with two real job photos (before the work / after the work)
+    beforeImage:
+      "https://plus.unsplash.com/premium_photo-1737182592549-0c83f93e2903?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bHV4dXJ5JTIwY2FyfGVufDB8fDB8fHww",
+    afterImage:
+      "https://static.vecteezy.com/system/resources/thumbnails/053/733/048/small/modern-car-captured-in-close-upgraphy-with-precision-and-innovation-free-photo.jpg",
+    chartCaption: "5,669% increase in real visitors",
+    verifiedLabel: 'Rank #1 for "keyword"',
+  },
+  {
+    name: "Company Name",
+    tone: "cool", // ya "heat"
+    headline: "We helped X grow annual revenue +Y% in Z months",
+    before: { label: "Before (Month Year)", stats: ["stat 1", "stat 2"] },
+    after: { label: "After (Month Year)", stats: ["stat 1", "stat 2", "stat 3"] },
+    pills: [
+      { value: "+5,669%", label: "Increase in high-value website visits" },
+      { value: "Top 3", label: 'Position for "keyword"' },
+    ],
+    // TODO: replace with two real job photos (before the work / after the work)
+    beforeImage: "",
+    afterImage: "",
+    chartCaption: "5,669% increase in real visitors",
+    verifiedLabel: 'Rank #1 for "keyword"',
+  },
 ];
 
 function toneClasses(tone: "cool" | "heat") {
@@ -231,7 +226,7 @@ export function PortfolioSection() {
                     </a>
                   </div>
 
-                  {/* Visual side — verified growth chart only (no search-result mockup) */}
+                  {/* Visual side — before/after slider, or a placeholder until real photos are added */}
                   <div className="relative overflow-hidden rounded-2xl border border-border bg-surface/40 p-5 backdrop-blur-md sm:p-6">
                     <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
                       <BadgeCheck className={`h-3.5 w-3.5 ${c.text}`} />
@@ -239,16 +234,17 @@ export function PortfolioSection() {
                       <span className="text-foreground">{item.verifiedLabel}</span>
                     </div>
 
-                    {item.chartImage ? (
-                      <img
-                        src={item.chartImage}
-                        alt={item.chartCaption}
-                        className="mt-4 aspect-[4/3] w-full rounded-xl border border-border object-cover"
+                    {item.beforeImage && item.afterImage ? (
+                      <BeforeAfterSlider
+                        beforeImage={item.beforeImage}
+                        afterImage={item.afterImage}
+                        caption={item.name}
+                        className="mt-4"
                       />
                     ) : (
                       <div className="mt-4 flex aspect-[4/3] w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border text-muted-foreground">
                         <TrendingUp className="h-6 w-6" />
-                        <p className="text-xs">Growth chart image goes here</p>
+                        <p className="text-xs">Before/after photos go here</p>
                       </div>
                     )}
 

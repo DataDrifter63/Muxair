@@ -48,6 +48,12 @@ const description =
 
 export const Route = createFileRoute("/contact/")({
   component: ContactPage,
+  // Lets pricing plan buttons link here as /contact?plan=Growth%20Site so
+  // the chosen plan carries through into the lead automatically.
+  validateSearch: (search: Record<string, unknown>): { plan?: string } => {
+    const plan = search["plan"];
+    return typeof plan === "string" ? { plan } : {};
+  },
   head: () => ({
     meta: [
       { title },
@@ -190,15 +196,21 @@ const faqs = [
 
 function ContactPage() {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1);
+  const { plan } = Route.useSearch();
+  const [step, setStep] = useState(plan ? 2 : 1);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  // Arriving with a plan already picked means step 1 ("what do you need
+  // help with") is redundant — they just told us on /pricing. Skip
+  // straight to step 2 and renumber what's shown accordingly.
   const totalSteps = 3;
+  const visibleTotalSteps = plan ? 2 : 3;
+  const visibleStep = plan ? step - 1 : step;
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
     mode: "onChange",
     defaultValues: {
-      need: "",
+      need: plan ? "Website Design" : "",
       bizName: "",
       serviceArea: "",
       otherInfo: "",
@@ -223,13 +235,14 @@ function ContactPage() {
   }
 
   function handleBack() {
-    setStep((s) => Math.max(s - 1, 1));
+    setStep((s) => Math.max(s - 1, plan ? 2 : 1));
   }
 
   async function onSubmit(values: ContactFormValues) {
     setSubmitError(null);
 
     const message = [
+      plan ? `Selected plan: ${plan}` : null,
       values.otherInfo?.trim() ? values.otherInfo.trim() : null,
       values.heard ? `Heard about us via: ${values.heard}` : null,
     ]
@@ -293,6 +306,11 @@ function ContactPage() {
                 Takes about a minute. Tell us a bit about your business and we'll call you — no live
                 calendar, no bot, an actual person.
               </p>
+              {plan ? (
+                <p className="mx-auto mt-5 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
+                  Selected plan: {plan}
+                </p>
+              ) : null}
             </Reveal>
           </div>
         </section>
@@ -310,12 +328,15 @@ function ContactPage() {
 
                 {/* Progress bar */}
                 <div className="relative mb-8 flex gap-2">
-                  {Array.from({ length: totalSteps }).map((_, i) => (
+                  {Array.from({ length: visibleTotalSteps }).map((_, i) => (
                     <div key={i} className="h-1 flex-1 overflow-hidden rounded-full bg-border">
                       <motion.div
                         className="h-full bg-primary"
                         initial={false}
-                        animate={{ width: i < step - 1 ? "100%" : i === step - 1 ? "50%" : "0%" }}
+                        animate={{
+                          width:
+                            i < visibleStep - 1 ? "100%" : i === visibleStep - 1 ? "50%" : "0%",
+                        }}
                         transition={{ duration: 0.35, ease: "easeOut" }}
                       />
                     </div>
@@ -340,7 +361,7 @@ function ContactPage() {
                         transition={{ duration: 0.25 }}
                       >
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                          Step 1 of 3
+                          Step {visibleStep} of {visibleTotalSteps}
                         </p>
                         <h2 className="mt-2 font-display text-2xl">What do you need help with?</h2>
                         <p className="mt-1.5 text-sm text-muted-foreground">
@@ -406,7 +427,7 @@ function ContactPage() {
                         transition={{ duration: 0.25 }}
                       >
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                          Step 2 of 3
+                          Step {visibleStep} of {visibleTotalSteps}
                         </p>
                         <h2 className="mt-2 font-display text-2xl">Tell us about your business</h2>
                         <p className="mt-1.5 text-sm text-muted-foreground">
@@ -454,15 +475,19 @@ function ContactPage() {
                         </div>
 
                         <div className="mt-8 flex items-center justify-between">
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            onClick={handleBack}
-                            className="text-muted-foreground hover:text-foreground"
-                          >
-                            <ArrowLeft className="h-4 w-4" />
-                            Back
-                          </Button>
+                          {plan ? (
+                            <span />
+                          ) : (
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              onClick={handleBack}
+                              className="text-muted-foreground hover:text-foreground"
+                            >
+                              <ArrowLeft className="h-4 w-4" />
+                              Back
+                            </Button>
+                          )}
                           <Button
                             type="button"
                             onClick={handleContinue}
@@ -485,7 +510,7 @@ function ContactPage() {
                         transition={{ duration: 0.25 }}
                       >
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                          Step 3 of 3
+                          Step {visibleStep} of {visibleTotalSteps}
                         </p>
                         <h2 className="mt-2 font-display text-2xl">Where should we send this?</h2>
                         <p className="mt-1.5 text-sm text-muted-foreground">
