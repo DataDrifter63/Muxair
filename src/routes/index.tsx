@@ -9,7 +9,7 @@ import { PortfolioSection } from "@/components/site/PortfolioSection";
 import { ProcessSection } from "@/components/site/ProcessSection";
 import { Results } from "@/components/site/Results";
 import { CTASection } from "@/components/site/CTASection";
-
+import { supabase, type WorkItemRow } from "@/lib/supabase";
 
 // TODO: replace with the real production domain before launch — it also
 // drives the canonical/OG URLs below and public/sitemap.xml + robots.txt.
@@ -21,6 +21,16 @@ const description =
 
 export const Route = createFileRoute("/")({
   component: Index,
+  loader: async () => {
+    const { data, error } = await supabase
+      .from("case_studies")
+      .select("*")
+      .eq("published", true)
+      .order("created_at", { ascending: false })
+      .limit(3);
+    if (error) console.error("[home] failed to load case studies:", error.message);
+    return { caseStudies: (data ?? []) as WorkItemRow[] };
+  },
   head: () => ({
     meta: [
       { title },
@@ -55,6 +65,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const { caseStudies } = Route.useLoaderData();
   return (
     <div className="relative min-h-screen bg-background">
       <main>
@@ -64,9 +75,9 @@ function Index() {
         <Results />
         <ServicesSection />
         <WhyUsSection />
-        <PortfolioSection />
+        <PortfolioSection items={caseStudies} />
         <ProcessSection />
-        < TestimonialsSection />
+        <TestimonialsSection />
         <CTASection />
       </main>
     </div>
