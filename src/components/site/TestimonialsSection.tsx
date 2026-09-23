@@ -136,8 +136,6 @@
 //   );
 // }
 
-
-
 import { useState } from "react";
 import { motion } from "motion/react";
 import { Play } from "lucide-react";
@@ -158,14 +156,13 @@ type VideoTestimonial = {
 
 const testimonials: VideoTestimonial[] = [
   {
-  name: "Tom Larson",
-  role: "Owner, Comfort Zone HVAC",
-  category: "Residential HVAC",
-  duration: "0:24",
-  tone: "heat",
-  videoSrc: "/videos/tom-larson.mp4",   // 👈 ye add karo
-  poster: "/videos/tom-larson.jpg",      // 👈 optional — thumbnail image (chahiye to)
-
+    name: "Tom Larson",
+    role: "Owner, Comfort Zone HVAC",
+    category: "Residential HVAC",
+    duration: "0:24",
+    tone: "heat",
+    videoSrc: "/videos/tom-larson.mp4", // 👈 ye add karo
+    poster: "/videos/tom-larson.jpg", // 👈 optional — thumbnail image (chahiye to)
   },
   {
     name: "Sarah Rodriguez",
@@ -173,8 +170,8 @@ const testimonials: VideoTestimonial[] = [
     category: "AC Installation",
     duration: "0:31",
     tone: "cool",
-     videoSrc: "/videos/tom-larson.mp4",   // 👈 ye add karo
-  poster: "/videos/tom-larson.jpg", 
+    videoSrc: "/videos/tom-larson.mp4", // 👈 ye add karo
+    poster: "/videos/tom-larson.jpg",
   },
   {
     name: "James Mitchell",

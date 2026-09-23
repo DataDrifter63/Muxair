@@ -15,7 +15,7 @@ const solutions = [
     icon: Zap,
     title: "High-Converting Design",
     description:
-      "Built specifically for HVAC buyers \u2014 urgent, trust-building layouts that turn visitors into phone calls within seconds.",
+      "Built specifically for HVAC buyers, with urgent, trust-building layouts that turn visitors into phone calls within seconds.",
     stat: "Avg. 47% higher conversion rate",
     tone: "heat" as const,
   },
@@ -55,7 +55,7 @@ const solutions = [
     icon: Headphones,
     title: "Ongoing Support & Updates",
     description:
-      "We're not a one-and-done agency. Seasonal promotions, new service pages, emergency updates \u2014 we're your digital team.",
+      "We're not a one-and-done agency. Seasonal promotions, new service pages, emergency updates, we're your digital team.",
     stat: "Dedicated account manager",
     tone: "cool" as const,
   },

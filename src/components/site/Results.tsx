@@ -20,7 +20,7 @@ const testimonials = [
     location: "Denver, CO",
     initials: "JM",
     quote:
-      "Inbound calls jumped almost overnight. Homeowners tell us the site is the reason they picked us over three other quotes — it just looks like we know what we're doing.",
+      "Inbound calls jumped almost overnight. Homeowners tell us the site is the reason they picked us over three other quotes. It just looks like we know what we're doing.",
     stat: "+284% inbound calls",
   },
   {
@@ -29,7 +29,7 @@ const testimonials = [
     location: "Minneapolis, MN",
     initials: "SR",
     quote:
-      "Our old site barely converted. The new booking flow alone paid for the whole project — we're closing way more jobs straight from the website now.",
+      "Our old site barely converted. The new booking flow alone paid for the whole project. We're closing way more jobs straight from the website now.",
     stat: "4x booking rate",
   },
   {

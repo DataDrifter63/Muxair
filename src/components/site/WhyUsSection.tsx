@@ -100,8 +100,6 @@
 //   );
 // }
 
-
-
 import { motion } from "motion/react";
 import { Check, X } from "lucide-react";
 import { Reveal, SectionHeading } from "./primitives";

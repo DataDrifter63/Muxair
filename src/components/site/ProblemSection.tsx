@@ -7,14 +7,14 @@ const problems = [
     icon: TrendingDown,
     title: "Your competitors are stealing your calls",
     description:
-      "While you're running service calls, your competitors' websites are ranking on Google and capturing every lead in your area — leads that should be yours.",
+      "While you're running service calls, your competitors' websites are ranking on Google and capturing every lead in your area, leads that should be yours.",
     tone: "heat" as const,
   },
   {
     icon: XCircle,
     title: "Your current site looks like it's from 2010",
     description:
-      "Homeowners judge your professionalism in 3 seconds. An outdated, slow, or generic website signals \u2018amateur operation\u2019 \u2014 and they call someone else.",
+      "Homeowners judge your professionalism in 3 seconds. An outdated, slow, or generic website signals ‘amateur operation’, and they call someone else.",
     tone: "cool" as const,
   },
   {
