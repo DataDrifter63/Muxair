@@ -78,7 +78,7 @@ export const Route = createFileRoute("/work/")({
 });
 
 const stats = [
-  { to: 300, suffix: "%", label: "Best organic enquiry increase" },
+  { to: 100, suffix: "%", label: "Best organic enquiry increase" },
   { to: 30, suffix: " days", label: "Average time to launch" },
   { to: 100, suffix: "%", label: "HVAC-only clients" },
 ];

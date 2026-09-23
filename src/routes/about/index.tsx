@@ -30,7 +30,7 @@ import { SITE_URL } from "@/lib/site-data";
 
 const title = "About Us | The HVAC-Specialist Web Design Agency";
 const description =
-  "We're a small team that works exclusively with HVAC companies. Meet the specialists behind Ductwork Studio, and why we chose this niche.";
+  "We're a small team that works exclusively with HVAC companies. Meet the specialists behind Muxair, and why we chose this niche.";
 
 const team = [
   { name: "Noah Ferris", role: "Developer" },
@@ -70,7 +70,7 @@ export const Route = createFileRoute("/about/")({
           "@type": "AboutPage",
           mainEntity: {
             "@type": "Organization",
-            name: "Ductwork Studio",
+            name: "Muxair",
             description:
               "A small specialist web design agency working exclusively with HVAC (heating, cooling and air quality) companies.",
             url: SITE_URL,
@@ -92,7 +92,8 @@ const differentiators = [
   {
     icon: Users,
     title: "You never have to guess",
-    description: "Five names, five faces — you know exactly who's doing what on your project, always.",
+    description:
+      "Five names, five faces — you know exactly who's doing what on your project, always.",
   },
   {
     icon: Sparkles,
@@ -104,7 +105,7 @@ const differentiators = [
     icon: MessageCircleQuestion,
     title: "Direct line, every time",
     description:
-      "Questions go straight to the person who can answer them. No support ticket, no \"I'll check and get back to you.\"",
+      'Questions go straight to the person who can answer them. No support ticket, no "I\'ll check and get back to you."',
   },
   {
     icon: Compass,
@@ -132,7 +133,8 @@ const founders = [
 ];
 
 const proof = {
-  quoteStart: "First agency that didn't need HVAC explained to them. They planned the whole build around",
+  quoteStart:
+    "First agency that didn't need HVAC explained to them. They planned the whole build around",
   highlight: "our winter demand peak",
   quoteEnd: "— and I always knew exactly who I was talking to.",
   name: "Sarah Doyle",
@@ -150,7 +152,7 @@ function AboutPage() {
             <Reveal className="mx-auto max-w-3xl text-center">
               <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                About Ductwork Studio
+                About Muxair
               </span>
               <h1 className="mt-5 text-balance font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
                 The Web Studio That Actually{" "}
@@ -161,33 +163,33 @@ function AboutPage() {
                 engineer explained to them. Just a small team that works on your site personally,
                 start to finish.
               </p>
-              <div className="mt-9 flex flex-col items-center gap-3">
+              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
                 <MagneticButton href="/contact" size="lg">
                   Get a Free Strategy Call
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
-                <p className="text-xs text-muted-foreground">
-                  Takes about a minute &middot; No sales pressure &middot; We call you within 4
-                  hours
-                </p>
+                <MagneticButton href="/services" variant="ghost" size="lg">
+                  See Our Services
+                </MagneticButton>
               </div>
+              <p className="mt-4 text-xs text-muted-foreground">
+                Takes about a minute &middot; No sales pressure &middot; We call you within 4 hours
+              </p>
             </Reveal>
           </div>
         </section>
 
         {/* Pain recap */}
-        <section className="section-shell border-y border-border bg-surface/25">
+        <section className="section-shell bg-[#F77036] text-white">
           <div className="mx-auto max-w-3xl px-5 text-center lg:px-8">
             <Reveal>
-              <h2 className="text-balance font-display text-2xl leading-snug sm:text-3xl">
+              <h2 className="text-balance font-display text-2xl leading-snug text-white sm:text-3xl">
                 You've probably worked with an agency before. It probably didn't go well.
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+              <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/85">
                 A junior you never spoke to built your site. Your account manager didn't know the
                 difference between an installer and an engineer. Follow-up emails took a week.{" "}
-                <span className="font-semibold text-foreground">
-                  That's not how this works with us.
-                </span>
+                <span className="font-semibold text-white">That's not how this works with us.</span>
               </p>
             </Reveal>
           </div>
@@ -198,7 +200,10 @@ function AboutPage() {
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
             <Reveal>
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border bg-surface/40 p-8 backdrop-blur-md">
-                <div className="pointer-events-none absolute inset-0 grid-tech opacity-25" aria-hidden />
+                <div
+                  className="pointer-events-none absolute inset-0 grid-tech opacity-25"
+                  aria-hidden
+                />
                 <div
                   className="pointer-events-none absolute -top-16 right-0 h-56 w-56 rounded-full bg-primary/18 blur-[100px]"
                   aria-hidden
@@ -246,8 +251,8 @@ function AboutPage() {
               </p>
               <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                 So we stopped taking on other industries. Every case study, every line of copy,
-                every layout decision we make is built around how homeowners and facilities
-                managers actually search for and choose an HVAC company.
+                every layout decision we make is built around how homeowners and facilities managers
+                actually search for and choose an HVAC company.
               </p>
               <Link
                 to="/services"
@@ -306,8 +311,8 @@ function AboutPage() {
             </div>
 
             <p className="mx-auto mt-12 max-w-xl text-center text-xs uppercase tracking-[0.14em] text-muted-foreground">
-              Backed by a small team of specialists — so every part of your project has a
-              dedicated expert
+              Backed by a small team of specialists — so every part of your project has a dedicated
+              expert
             </p>
 
             <div className="mt-6 grid gap-4 sm:grid-cols-3">
@@ -338,7 +343,8 @@ function AboutPage() {
               eyebrow="Why It Matters to You"
               title={
                 <>
-                  What "Small on Purpose" Actually <span className="text-gradient-cool">Gets You</span>
+                  What "Small on Purpose" Actually{" "}
+                  <span className="text-gradient-cool">Gets You</span>
                 </>
               }
             />
@@ -418,8 +424,7 @@ function AboutPage() {
         <CTASection
           title={
             <>
-              Ready to Work With Someone Who Gets{" "}
-              <span className="text-gradient-cool">HVAC</span>?
+              Ready to Work With Someone Who Gets <span className="text-gradient-cool">HVAC</span>?
             </>
           }
           description="Fill out a quick form and we'll call you within 4 hours — we'll review your current site and Google presence before we even pick up the phone."

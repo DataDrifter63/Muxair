@@ -13,7 +13,7 @@ import {
   Target,
 } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
-import { Reveal, TechBackdrop } from "@/components/site/primitives";
+import { MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
 import { cn } from "@/lib/utils";
 import { supabase, type BlogPostRow } from "@/lib/supabase";
 import { SITE_URL } from "@/lib/site-data";
@@ -216,6 +216,16 @@ function BlogIndex() {
                 No jargon, no filler — practical advice on websites, SEO, and ads written
                 specifically for HVAC business owners.
               </p>
+
+              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+                <MagneticButton href="/contact" size="lg">
+                  Get a Free Strategy Call
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </MagneticButton>
+                <MagneticButton href="/services" variant="ghost" size="lg">
+                  See Our Services
+                </MagneticButton>
+              </div>
             </Reveal>
           </div>
         </section>
