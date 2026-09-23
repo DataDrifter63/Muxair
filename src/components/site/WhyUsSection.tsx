@@ -18,7 +18,7 @@
 
 // export function WhyUsSection() {
 //   return (
-//     <section id="why-us" className="section-shell border-y border-border bg-surface/25">
+//     <section id="why-us" className="section-shell border-y border-border bg-surface">
 //       <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
 //       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
 //         <SectionHeading
@@ -120,7 +120,7 @@ const ours = [
 
 export function WhyUsSection() {
   return (
-    <section id="why-us" className="section-shell border-y border-border bg-surface/25">
+    <section id="why-us" className="section-shell border-y border-border bg-surface">
       <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeading

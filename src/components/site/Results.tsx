@@ -20,7 +20,7 @@ const testimonials = [
     location: "Denver, CO",
     initials: "JM",
     quote:
-      "Inbound calls jumped almost overnight. Homeowners tell us the site is the reason they picked us over three other quotes. It just looks like we know what we're doing.",
+      "Inbound calls jumped almost overnight. Homeowners tell us the site is the reason they picked us over three other quotes — it just looks like we know what we're doing.",
     stat: "+284% inbound calls",
   },
   {
@@ -29,7 +29,7 @@ const testimonials = [
     location: "Minneapolis, MN",
     initials: "SR",
     quote:
-      "Our old site barely converted. The new booking flow alone paid for the whole project. We're closing way more jobs straight from the website now.",
+      "Our old site barely converted. The new booking flow alone paid for the whole project — we're closing way more jobs straight from the website now.",
     stat: "4x booking rate",
   },
   {
@@ -71,15 +71,13 @@ export function Results() {
   const active = testimonials[index]!;
 
   return (
-    <section id="testimonials" className="section-shell">
+    <section id="testimonials" className="section-shell border-y border-border bg-surface">
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeading
           eyebrow="Results"
           title={
             <>
-              Real Results for Real {" "}
-              <span className="text-gradient-cool">HVAC Companies</span>
-            
+              Real Results for Real <span className="text-gradient-cool">HVAC Companies</span>
             </>
           }
           subtitle="Every website we build is measured against one thing: does it bring your phone more qualified HVAC calls. Here's what that's looked like for clients so far."

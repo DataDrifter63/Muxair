@@ -70,7 +70,7 @@ export function ProcessSection() {
   const scaleY = useTransform(lineProgress, [0, 1], [0, 1]);
 
   return (
-    <section id="process" className="section-shell border-y border-border bg-surface/25">
+    <section id="process" className="section-shell border-y border-border bg-surface">
       <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeading

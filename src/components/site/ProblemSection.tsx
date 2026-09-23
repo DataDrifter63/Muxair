@@ -7,14 +7,14 @@ const problems = [
     icon: TrendingDown,
     title: "Your competitors are stealing your calls",
     description:
-      "While you're running service calls, your competitors' websites are ranking on Google and capturing every lead in your area, leads that should be yours.",
+      "While you're running service calls, your competitors' websites are ranking on Google and capturing every lead in your area — leads that should be yours.",
     tone: "heat" as const,
   },
   {
     icon: XCircle,
     title: "Your current site looks like it's from 2010",
     description:
-      "Homeowners judge your professionalism in 3 seconds. An outdated, slow, or generic website signals ‘amateur operation’, and they call someone else.",
+      "Homeowners judge your professionalism in 3 seconds. An outdated, slow, or generic website signals \u2018amateur operation\u2019 \u2014 and they call someone else.",
     tone: "cool" as const,
   },
   {
@@ -44,12 +44,12 @@ const problems = [
     description:
       "They don't know what a heat pump is. You spend half the call explaining your own business, and get a cookie-cutter site back anyway.",
     tone: "heat" as const,
-},
+  },
 ];
 
 export function ProblemSection() {
   return (
-    <section id="problems" className="section-shell">
+    <section id="problems" className="section-shell border-y border-border bg-surface">
       <TechBackdrop />
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeading
@@ -105,8 +105,8 @@ export function ProblemSection() {
               </span>
               Every month you delay fixing your website, you're handing paying customers to your
               competitors. The average HVAC company loses{" "}
-              <span className="font-display font-bold text-heat">$8,000 - $15,000</span> per
-              month in potential revenue from a poor online presence.
+              <span className="font-display font-bold text-heat">$8,000 - $15,000</span> per month
+              in potential revenue from a poor online presence.
             </p>
           </div>
         </Reveal>

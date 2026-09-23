@@ -34,7 +34,7 @@ export function CTASection({
   footnote,
 }: CTASectionProps) {
   return (
-    <section id="contact" className="section-shell border-t border-border bg-surface/25">
+    <section id="contact" className="section-shell border-t border-border bg-surface">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl border border-border bg-surface/50 px-6 py-20 text-center backdrop-blur-xl sm:px-12">
