@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "motion/react";
 import { useMemo, useState } from "react";
-import { ArrowRight, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
 import { Counter, MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
+import { WorkCarousel } from "@/components/site/WorkCarousel";
 import { cn } from "@/lib/utils";
 import { supabase, type WorkItemRow } from "@/lib/supabase";
-import { SITE_URL, workServiceLabels, type WorkService } from "@/lib/site-data";
+import { SITE_URL, type WorkService } from "@/lib/site-data";
 
 // Per the site's per-page SEO checklist for /work.
 const title = "HVAC Website Design Portfolio | Case Studies for Heating & Cooling Companies";
@@ -78,7 +78,7 @@ export const Route = createFileRoute("/work/")({
 });
 
 const stats = [
-  { to: 100, suffix: "%", label: "Best organic enquiry increase" },
+  { to: 300, suffix: "%", label: "Best organic enquiry increase" },
   { to: 30, suffix: " days", label: "Average time to launch" },
   { to: 100, suffix: "%", label: "HVAC-only clients" },
 ];
@@ -186,108 +186,35 @@ function WorkIndex() {
               </div>
             </Reveal>
 
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((project, i) => (
-                <Reveal key={project.id} delay={i * 0.08} className="h-full">
-                  <motion.div
-                    whileHover={{ y: -8 }}
-                    transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                    className="h-full"
-                  >
-                    <Link
-                      to="/work/$slug"
-                      params={{ slug: project.slug }}
-                      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background/70 backdrop-blur-md transition-colors hover:border-primary/40"
-                    >
-                      <div className="relative aspect-[4/3] overflow-hidden bg-background/60">
-                        {project.cover_image ? (
-                          <motion.img
-                            src={project.cover_image}
-                            alt={`Website design preview for ${project.name}`}
-                            loading="lazy"
-                            initial={{ scale: 1.12, opacity: 0 }}
-                            whileInView={{ scale: 1, opacity: 1 }}
-                            viewport={{ once: true, margin: "-60px" }}
-                            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                            className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                          />
-                        ) : (
-                          <div
-                            className="pointer-events-none absolute inset-0 grid-tech opacity-30"
-                            aria-hidden
-                          />
-                        )}
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/25 to-transparent opacity-90" />
-                        <span
-                          className={cn(
-                            "absolute right-3 top-3 rounded-full border px-2.5 py-1 text-[11px] font-bold backdrop-blur-md",
-                            project.tone === "cool"
-                              ? "border-primary/40 bg-background/80 text-primary"
-                              : "border-heat/40 bg-background/80 text-heat",
-                          )}
-                        >
-                          {project.badge}
-                        </span>
-                      </div>
+            <WorkCarousel items={filtered} />
 
-                      <div className="flex flex-1 flex-col p-6">
-                        <h3 className="font-display text-lg leading-snug">{project.name}</h3>
-                        <p className="mt-0.5 text-xs text-muted-foreground">{project.location}</p>
-
-                        <div className="mt-4 flex flex-wrap gap-1.5">
-                          {project.services.map((s) => (
-                            <span
-                              key={s}
-                              className="rounded-full border border-border bg-surface/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground"
-                            >
-                              {workServiceLabels[s as WorkService] ?? s}
-                            </span>
-                          ))}
-                        </div>
-
-                        <span
-                          className={cn(
-                            "mt-auto flex items-center gap-1.5 pt-5 text-sm font-semibold",
-                            project.tone === "cool" ? "text-primary" : "text-heat",
-                          )}
-                        >
-                          View Case Study
-                          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                        </span>
-                      </div>
-                    </Link>
-                  </motion.div>
-                </Reveal>
-              ))}
-
-              {/* Become our next case study */}
-              <Reveal delay={filtered.length * 0.08} className="h-full">
-                <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-primary/40 bg-primary/[0.04] p-8 text-center shadow-[0_0_0_1px_rgba(232,98,44,0.15)]">
-                  <h3 className="font-display text-lg leading-snug">Become Our Next Case Study</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    We're onboarding a small number of HVAC companies this quarter to work directly
-                    with our whole team — and be featured here.
-                  </p>
-                  <MagneticButton href="/contact" className="mt-5">
-                    Get in Touch
-                  </MagneticButton>
-                </div>
+            {items.length === 0 ? (
+              <Reveal>
+                <p className="mt-8 rounded-2xl border border-border bg-surface/40 px-6 py-10 text-center text-sm text-muted-foreground">
+                  No case studies published yet — check back soon.
+                </p>
               </Reveal>
+            ) : filtered.length === 0 ? (
+              <Reveal>
+                <p className="mt-8 rounded-2xl border border-border bg-surface/40 px-6 py-10 text-center text-sm text-muted-foreground">
+                  No projects in this category yet — check back soon.
+                </p>
+              </Reveal>
+            ) : null}
 
-              {items.length === 0 ? (
-                <Reveal className="col-span-full">
-                  <p className="rounded-2xl border border-border bg-surface/40 px-6 py-10 text-center text-sm text-muted-foreground">
-                    No case studies published yet — check back soon.
-                  </p>
-                </Reveal>
-              ) : filtered.length === 0 ? (
-                <Reveal className="col-span-full">
-                  <p className="rounded-2xl border border-border bg-surface/40 px-6 py-10 text-center text-sm text-muted-foreground">
-                    No projects in this category yet — check back soon.
-                  </p>
-                </Reveal>
-              ) : null}
-            </div>
+            {/* Become our next case study */}
+            <Reveal delay={0.15}>
+              <div className="mx-auto mt-10 flex max-w-xl flex-col items-center justify-center rounded-2xl border border-primary/40 bg-primary/[0.04] p-8 text-center shadow-[0_0_0_1px_rgba(232,98,44,0.15)]">
+                <h3 className="font-display text-lg leading-snug">Become Our Next Case Study</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  We're onboarding a small number of HVAC companies this quarter to work directly
+                  with our whole team — and be featured here.
+                </p>
+                <MagneticButton href="/contact" className="mt-5">
+                  Get in Touch
+                </MagneticButton>
+              </div>
+            </Reveal>
           </div>
         </section>
 

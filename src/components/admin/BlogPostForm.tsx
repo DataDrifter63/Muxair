@@ -28,6 +28,7 @@ type FormState = {
   category: string;
   cover_image: string | null;
   content: string;
+  author_name: string;
   related_service: RelatedService;
   cta_badge_label: string;
   cta_title: string;
@@ -46,6 +47,7 @@ const emptyForm: FormState = {
   category: "",
   cover_image: null,
   content: "",
+  author_name: "",
   related_service: null,
   cta_badge_label: "",
   cta_title: "",
@@ -77,6 +79,7 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
           category: existing.category,
           cover_image: existing.cover_image,
           content: existing.content,
+          author_name: existing.author_name ?? "",
           related_service: existing.related_service,
           cta_badge_label: existing.cta_badge_label ?? "",
           cta_title: existing.cta_title ?? "",
@@ -109,6 +112,7 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
     const payload = {
       ...form,
       meta_description: form.meta_description || null,
+      author_name: form.author_name || null,
       cta_badge_label: form.cta_badge_label || null,
       cta_title: form.cta_title || null,
       cta_description: form.cta_description || null,
@@ -169,6 +173,21 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
           required
         />
         <p className="text-xs text-muted-foreground">URL: /blog/{form.slug || "..."}</p>
+      </div>
+
+      <div className="space-y-1.5">
+        <Label htmlFor="author_name">
+          Author / Publisher Name{" "}
+          <span className="font-normal text-muted-foreground">
+            (leave blank to show "Muxair Team")
+          </span>
+        </Label>
+        <Input
+          id="author_name"
+          placeholder="Muxair Team"
+          value={form.author_name}
+          onChange={(e) => set("author_name", e.target.value)}
+        />
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">

@@ -49,7 +49,9 @@ export const Route = createFileRoute("/blog/$slug")({
             headline: post.title,
             description: metaDescription,
             datePublished: post.created_at,
-            author: { "@type": "Organization", name: "Muxair", url: SITE_URL },
+            author: post.author_name
+              ? { "@type": "Person", name: post.author_name }
+              : { "@type": "Organization", name: "Muxair", url: SITE_URL },
             image: post.cover_image ?? undefined,
             url: `${SITE_URL}/blog/${post.slug}`,
           }),
@@ -177,10 +179,12 @@ function BlogPostPage() {
             <Reveal delay={0.18}>
               <div className="mt-12 flex items-center gap-3.5 border-t border-border pt-8">
                 <span className="flex h-11 w-11 flex-none items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-xs font-bold text-primary">
-                  M
+                  {(post.author_name?.trim()?.[0] ?? "M").toUpperCase()}
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Muxair Team</p>
+                  <p className="text-sm font-semibold text-foreground">
+                    {post.author_name?.trim() || "Muxair Team"}
+                  </p>
                   <p className="text-xs text-muted-foreground">HVAC-specialist web design agency</p>
                 </div>
               </div>

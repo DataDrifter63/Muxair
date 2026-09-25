@@ -139,7 +139,7 @@ export const Route = createFileRoute("/services/seo")({
 
 const stats = [
   { to: 4, suffix: " months", prefix: "", label: "Avg. time to first page" },
-  { to: 300, suffix: "%", prefix: "", label: "Best organic enquiry increase" },
+  { to: 100, suffix: "%", prefix: "", label: "Best organic enquiry increase" },
   { to: 3, suffix: " months", prefix: "", label: "Minimum commitment, stated upfront" },
 ];
 

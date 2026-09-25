@@ -141,7 +141,7 @@ export const Route = createFileRoute("/services/websites")({
 
 const stats = [
   { to: 30, suffix: " days", prefix: "", label: "Average time to launch" },
-  { to: 300, suffix: "%", prefix: "+", label: "Best organic enquiry increase" },
+  { to: 100, suffix: "%", prefix: "+", label: "Best organic enquiry increase" },
   { to: 100, suffix: "%", prefix: "", label: "Mobile-first builds" },
 ];
 
@@ -410,14 +410,14 @@ function WebsitesPage() {
                     <div className="relative flex aspect-[3/2] items-center justify-center overflow-hidden border-b border-border bg-surface/60 px-6 text-center text-xs text-muted-foreground">
                       <span>[ Site screenshot / mockup ]</span>
                       <span className="absolute right-3 top-3 rounded-full border border-primary/40 bg-background/85 px-2.5 py-1 text-[11px] font-semibold text-primary">
-                        +300% enquiries
+                        +100% enquiries
                       </span>
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent opacity-90" />
                     </div>
                     <div className="flex flex-1 flex-col p-6">
                       <h3 className="text-base">Midlands HVAC Co.</h3>
                       <p className="mt-2 flex-1 text-sm text-muted-foreground">
-                        “300% increase in organic enquiries” — Birmingham
+                        “100% increase in organic enquiries” — Birmingham
                       </p>
                       <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
                         View Case Study

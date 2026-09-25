@@ -24,11 +24,13 @@ export default defineConfig({
         },
       },
     }),
-    // "node-server" builds a plain, self-starting Node HTTP server to
-    // .output/server/index.mjs (matches `npm start`) — works on hPanel, a
-    // VPS, or any host that can run `node`, unlike the old Netlify-only
-    // Functions build.
-    nitro({ preset: "node-server" }),
+    // "node-server" (default) builds a plain, self-starting Node HTTP
+    // server to .output/server/index.mjs — works on hPanel, a VPS, or any
+    // host that can run `node`. Set NITRO_PRESET=netlify (e.g. in Netlify's
+    // site environment variables) to build Netlify Functions instead, for
+    // quick Netlify-hosted testing without changing this file back and
+    // forth. Leave it unset for the normal hPanel/VPS build.
+    nitro({ preset: (process.env["NITRO_PRESET"] as never) || "node-server" }),
     viteReact(),
   ],
 });
