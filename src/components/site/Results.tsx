@@ -6,49 +6,49 @@ import { Reveal, SectionHeading } from "./primitives";
 
 const testimonials = [
   {
-    name: "Tom Larson",
+    name: "Sam T",
     role: "Owner, Comfort Zone HVAC",
     location: "Nashville, TN",
-    initials: "TL",
+    initials: "ST",
     quote:
-      "30-day delivery seemed too good to be true. They delivered in 28 days, and the quality blew me away. The site is fast, looks incredible on phones.",
-    stat: "200+ calls in first month",
+      "Couldn't be happier with Musab's work. The communication was very prompt and clear. I never had to explain anything twice and he delivered on everything we discussed. I would highly recommend his services and wouldn't hesitate to utilise his skills again in the future.",
+    stat: "New Website Design",
   },
   {
-    name: "James Mitchell",
-    role: "Owner",
-    location: "Denver, CO",
-    initials: "JM",
+    name: "Raymond C",
+    role: "CEO",
+    location: "New York, US",
+    initials: "RC",
     quote:
-      "Inbound calls jumped almost overnight. Homeowners tell us the site is the reason they picked us over three other quotes — it just looks like we know what we're doing.",
-    stat: "+284% inbound calls",
+      "Helped up with completely revamping one site and updating another. Very communicative and easy to work with. Such a pleasure collaborating on these projects, thank you Musab !",
+    stat: "SEO & Website Revamp",
   },
   {
-    name: "Sarah Rodriguez",
-    role: "Owner",
-    location: "Minneapolis, MN",
-    initials: "SR",
+    name: "Alan W",
+    role: "Director",
+    location: "Olympia, US",
+    initials: "AW",
     quote:
-      "Our old site barely converted. The new booking flow alone paid for the whole project — we're closing way more jobs straight from the website now.",
-    stat: "4x booking rate",
+      "Musab did a great job! Paid close attention to detail and delivered what he promised. Spent considerable time after the initial site was completed getting page speed insights score to 100. Will hire Musab for any other web development project I have. Thanks again!",
+    stat: "Website Design & Performance Optimization",
   },
   {
-    name: "Alex Kim",
-    role: "Owner",
-    location: "Phoenix, AZ",
-    initials: "AK",
+    name: "Rachel W",
+    role: "Business Owner",
+    location: "London, UK",
+    initials: "RW",
     quote:
-      "We went from invisible on Google to ranking on page one for the searches that actually matter. My phone rings with local jobs almost every day now.",
-    stat: "#1 for 23 local keywords",
+      "Isbah is very professional. He pays attention to details, carefully asks about changes, and executes them professionally. I would gladly work with him again in the future. I can recommend him to anyone.",
+    stat: "Website Design & Local SEO",
   },
   {
-    name: "Maria Chen",
-    role: "Owner",
-    location: "Seattle, WA",
-    initials: "MC",
+    name: "Summit M",
+    role: "Agency Owner",
+    location: "Colorado, US",
+    initials: "US",
     quote:
-      "They treated our HVAC business like a real business, not a generic template job. The return on what we spent has been obvious within months.",
-    stat: "3.1x ROI in 6 months",
+      "Working with Muhammad was great! He was easy to communicate with, understood our requests perfectly, and went above and beyond to try to help us with our timeline and budget.",
+    stat: "Website Launch in 14 days",
   },
 ];
 
@@ -77,10 +77,10 @@ export function Results() {
           eyebrow="Results"
           title={
             <>
-              Real Results for Real <span className="text-gradient-cool">HVAC Companies</span>
+              Trusted by Business Owners <span className="text-gradient-cool">Like You</span>
             </>
           }
-          subtitle="Every website we build is measured against one thing: does it bring your phone more qualified HVAC calls. Here's what that's looked like for clients so far."
+          subtitle="We hold every project to the same standard: clear communication, fast execution, and a site that actually performs. Here's what clients have said about working with us."
         />
 
         <div

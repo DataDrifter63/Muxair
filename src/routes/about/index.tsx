@@ -93,25 +93,25 @@ const differentiators = [
     icon: Users,
     title: "You never have to guess",
     description:
-      "Five names, five faces — you know exactly who's doing what on your project, always.",
+      "Five names, five faces, you know exactly who's doing what on your project, always.",
   },
   {
     icon: Sparkles,
     title: "A specialist for everything",
     description:
-      "Design, development, content and sales each have a dedicated person — not one generalist stretched across all four.",
+      "Design, development, content, and sales each have a dedicated person, not one generalist stretched across all four.",
   },
   {
     icon: MessageCircleQuestion,
     title: "Direct line, every time",
     description:
-      'Questions go straight to the person who can answer them. No support ticket, no "I\'ll check and get back to you."',
+      'Questions go straight to the person who can answer them. No support ticket, no "I\'ll check and get back to you.',
   },
   {
     icon: Compass,
     title: "We say no to other industries",
     description:
-      "Every hour this team spends is spent getting better at HVAC specifically — not split across twenty niches.",
+      "Every hour this team spends is spent getting better at HVAC specifically, not split across twenty niches.",
   },
 ];
 
@@ -134,11 +134,11 @@ const founders = [
 
 const proof = {
   quoteStart:
-    "First agency that didn't need HVAC explained to them. They planned the whole build around",
+    "Helped up with completely revamping one site and updating another. Very communicative and easy to work with. Such a pleasure collaborating on these projects, thank you Musab !",
   highlight: "our winter demand peak",
   quoteEnd: "— and I always knew exactly who I was talking to.",
-  name: "Sarah Doyle",
-  detail: "Yorkshire Boiler Specialists",
+  name: "Raymond C",
+  detail: "New York, US",
 };
 
 function AboutPage() {
@@ -155,13 +155,11 @@ function AboutPage() {
                 About Muxair
               </span>
               <h1 className="mt-5 text-balance font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
-                The Web Studio That Actually{" "}
+                The Web Design Agency That Actually{" "}
                 <span className="text-gradient-cool">Understands HVAC</span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                No account managers, no outsourced developers, no agency that needs a Gas Safe
-                engineer explained to them. Just a small team that works on your site personally,
-                start to finish.
+                We're the HVAC web design agency behind Muxair. No account managers, no outsourced developers, no agency that needs a Gas Safe engineer explained to them. Just a small team that works on your site personally, start to finish.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
                 <MagneticButton href="/contact" size="lg">
@@ -173,7 +171,7 @@ function AboutPage() {
                 </MagneticButton>
               </div>
               <p className="mt-4 text-xs text-muted-foreground">
-                Takes about a minute &middot; No sales pressure &middot; We call you within 4 hours
+                Takes about a minute &middot; No sales pressure 
               </p>
             </Reveal>
           </div>
@@ -242,17 +240,13 @@ function AboutPage() {
                 websites.
               </h2>
               <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-                Most HVAC companies are stuck choosing between generic agencies who've never heard
-                of an F-Gas certification, and expensive marketing firms who treat a boiler
-                installer's website the same as a law firm's.{" "}
+                Most HVAC companies are stuck choosing between generic agencies who've never heard of an F-Gas certification, and expensive marketing firms who treat a boiler installer's website the same as a law firm's. Neither actually understands the business. So we stopped taking on other industries. Every case study, every line of copy, every layout decision we make is built around how homeowners and facilities managers actually search for and choose an HVAC company.{" "}
                 <span className="font-semibold text-foreground">
-                  Neither actually understands the business.
+                  
                 </span>
               </p>
               <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                So we stopped taking on other industries. Every case study, every line of copy,
-                every layout decision we make is built around how homeowners and facilities managers
-                actually search for and choose an HVAC company.
+                
               </p>
               <Link
                 to="/services"
@@ -373,14 +367,14 @@ function AboutPage() {
             <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-4 px-5 text-center lg:px-8">
               <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground/90">
                 <ShieldCheck className="h-4 w-4 text-primary" />
-                Top-Rated on Upwork
+                Top-Rated on Upwork 50+
               </span>
               <span className="h-1 w-1 rounded-full bg-border" aria-hidden />
               <span className="text-sm font-semibold text-foreground/90">
-                50+ Projects Delivered
+                Projects Delivered
               </span>
               <span className="h-1 w-1 rounded-full bg-border" aria-hidden />
-              <span className="text-sm font-semibold text-foreground/90">HVAC-Only Studio</span>
+              <span className="text-sm font-semibold text-foreground/90">HVAC-Only Agency</span>
             </div>
           </Reveal>
         </section>
@@ -427,14 +421,15 @@ function AboutPage() {
               Ready to Work With Someone Who Gets <span className="text-gradient-cool">HVAC</span>?
             </>
           }
-          description="Fill out a quick form and we'll call you within 4 hours — we'll review your current site and Google presence before we even pick up the phone."
+          description="Book a free 30-minute strategy call. We'll review your current website, your Google presence, and show you exactly what's costing you leads."
           primaryLabel="Get a Free Strategy Call"
           primaryHref="/contact"
           secondaryLabel="See Our Work"
           secondaryHref="/work"
-          footnote="We reply within 4 hours · No obligation"
+          footnote="No sales pressure · No obligation"
         />
       </main>
     </div>
   );
+  
 }

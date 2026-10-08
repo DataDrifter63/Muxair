@@ -16,7 +16,7 @@ const solutions = [
     title: "High-Converting Design",
     description:
       "Built specifically for HVAC buyers, with urgent, trust-building layouts that turn visitors into phone calls within seconds.",
-    stat: "Avg. 47% higher conversion rate",
+    stat: "DESIGNED FOR MORE PHONE CALLS",
     tone: "heat" as const,
   },
   {
@@ -24,7 +24,7 @@ const solutions = [
     title: "Local SEO Optimized",
     description:
       "Every page is architected to rank for your service areas. We build sites that Google loves and local customers find.",
-    stat: "Rank in your city's top 3",
+    stat: "BUILT TO RANK LOCALLY",
     tone: "cool" as const,
   },
   {

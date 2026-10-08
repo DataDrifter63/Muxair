@@ -25,49 +25,50 @@ type PortfolioHighlight = {
 
 const highlights: PortfolioHighlight[] = [
   {
-    name: "Midlands HVAC Co.",
+    name: "EEP Plumbing",
     tone: "cool",
     headline:
-      "We helped Midlands HVAC Co. grow annual revenue +167% in 12 months (client-reported)",
+      "A Website Rebuilt for Modern HVAC Customers",
     before: {
       label: "Before (Jun 2024)",
-      stats: ["26 site visits/week", "8x keywords on Page 1"],
+      stats: ["Outdated design, hard to navigate", "Not optimized for mobile", "No clear path to contact or book a call"],
     },
     after: {
       label: "After (Aug 2025)",
-      stats: ["1,500 site visits/week", "89x keywords on Page 1", "75% increase in new enquiries"],
+      stats: ["Modern, conversion-focused layout", "Mobile-first, fast-loading design", "SEO structure built for local search visibility", "Clear calls-to-action throughout"],
     },
     pills: [
-      { value: "+5,669%", label: "Increase in high-value website visits" },
-      { value: "Top 3", label: 'Position for "boiler repair Birmingham"' },
+      { value: "+5,669%", label: "Full Website Redesign" },
+      { value: "Top 3", label: 'SEO-Structured From the Ground Up"' },
     ],
     chartImage: "",
-    chartCaption: "5,669% increase in real visitors",
-    verifiedLabel: 'Rank #1 for "emergency boiler repair"',
+    chartCaption: "From an outdated, hard-to-navigate site to a fast, modern design built to convert.",
+    verifiedLabel: 'BEFORE & AFTER · FULL REDESIGN"',
   },
   {
-    name: "Yorkshire Boiler Specialists",
+    name: "Ruzz Global",
     tone: "heat",
-    headline: "We delivered 2x+ new booked jobs for Yorkshire Boiler Specialists in Month 1",
+    headline: "We Helped Midlands HVAC 6x Their Website Clicks in 4 Weeks",
     before: {
-      label: "Before (Jul 2024)",
-      stats: ["10 site visits/week", "Page 2+ on Google"],
+      label: " BEFORE (7/25 to 8/21)",
+      stats: ["261 total clicks", "62.4K total impressions","0.4% average CTR","Average position 8"],
     },
     after: {
-      label: "After (Aug 2025)",
+      label: "AFTER (8/22 to 9/17)",
       stats: [
-        "244 site visits/week",
-        'Position 2 for "boiler repair Leeds"',
-        "206% increase in leads/month",
+        "1.66K total clicks",
+        '215K total impressions',
+        "0.8% average CTR",
+        "Average position 5.9",
       ],
     },
     pills: [
-      { value: "+3,540%", label: "Increase in high-value website visits" },
-      { value: "Top 2", label: 'Position for "boiler repair Leeds"' },
+      { value: "+536%", label: "Increase in Website Clicks" },
+      { value: "Top 2", label: 'CTR Doubled from 0.4% to 0.8%' },
     ],
     chartImage: "",
-    chartCaption: "2,340% increase in real visitors",
-    verifiedLabel: 'Rank #2 for "boiler repair Leeds"',
+    chartCaption: "Source: Google Search Console",
+    verifiedLabel: 'SEO CAMPAIGN RESULTS · 4 WEEKS',
   },
 ];
 
@@ -83,7 +84,7 @@ export function PortfolioSection() {
       <div className="pointer-events-none absolute inset-0 grid-tech opacity-15" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-          <SectionHeading eyebrow="Results" title="Real HVAC Results" align="left" />
+          <SectionHeading eyebrow="Case-studies" title="Work That Speaks for Itself" align="left" />
           <Reveal delay={0.1}>
             <MagneticButton href="/work" variant="ghost">
               See All Work
@@ -224,3 +225,11 @@ export function PortfolioSection() {
     </section>
   );
 }
+
+
+
+
+
+
+
+

@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ImageUploadField } from "./ImageUploadField";
+import { MarkdownEditor } from "./MarkdownEditor";
 
 type Metric = { label: string; value: string };
 
@@ -35,6 +36,7 @@ type FormState = {
   challenge: string;
   approach: string[];
   outcome: string;
+  content: string;
   published: boolean;
 };
 
@@ -53,6 +55,7 @@ const emptyForm: FormState = {
   challenge: "",
   approach: [],
   outcome: "",
+  content: "",
   published: true,
 };
 
@@ -86,6 +89,7 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
           challenge: existing.challenge ?? "",
           approach: existing.approach ?? [],
           outcome: existing.outcome ?? "",
+          content: existing.content ?? "",
           published: existing.published,
         }
       : emptyForm,
@@ -135,6 +139,7 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
       summary: form.summary || null,
       challenge: form.challenge || null,
       outcome: form.outcome || null,
+      content: form.content || null,
       metrics: form.metrics.filter((m) => m.label.trim() || m.value.trim()),
       approach: form.approach.filter((step) => step.trim()),
     };
@@ -241,11 +246,7 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
           <Label htmlFor="category">
             Category <span className="font-normal text-muted-foreground">(optional)</span>
           </Label>
-          <Input
-            id="category"
-            value={form.category}
-            onChange={(e) => set("category", e.target.value)}
-          />
+          <Input id="category" value={form.category} onChange={(e) => set("category", e.target.value)} />
         </div>
         <div className="flex items-center gap-2.5 pt-6">
           <Switch
@@ -297,12 +298,7 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
             />
             <button
               type="button"
-              onClick={() =>
-                set(
-                  "metrics",
-                  form.metrics.filter((_, idx) => idx !== i),
-                )
-              }
+              onClick={() => set("metrics", form.metrics.filter((_, idx) => idx !== i))}
               className="text-muted-foreground transition-colors hover:text-destructive"
             >
               <Trash2 className="h-4 w-4" />
@@ -322,7 +318,12 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="challenge">Challenge</Label>
+        <Label htmlFor="challenge">
+          Challenge{" "}
+          <span className="font-normal text-muted-foreground">
+            (short version — shown on the homepage highlight card)
+          </span>
+        </Label>
         <Textarea
           id="challenge"
           value={form.challenge}
@@ -332,18 +333,16 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
       </div>
 
       <div className="space-y-2">
-        <Label>Approach Steps</Label>
+        <Label>
+          Approach Steps{" "}
+          <span className="font-normal text-muted-foreground">(short version)</span>
+        </Label>
         {form.approach.map((step, i) => (
           <div key={i} className="flex items-center gap-2">
             <Input value={step} onChange={(e) => updateApproach(i, e.target.value)} />
             <button
               type="button"
-              onClick={() =>
-                set(
-                  "approach",
-                  form.approach.filter((_, idx) => idx !== i),
-                )
-              }
+              onClick={() => set("approach", form.approach.filter((_, idx) => idx !== i))}
               className="text-muted-foreground transition-colors hover:text-destructive"
             >
               <Trash2 className="h-4 w-4" />
@@ -363,13 +362,27 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="outcome">Outcome</Label>
+        <Label htmlFor="outcome">
+          Outcome{" "}
+          <span className="font-normal text-muted-foreground">(short version)</span>
+        </Label>
         <Textarea
           id="outcome"
           value={form.outcome}
           onChange={(e) => set("outcome", e.target.value)}
           rows={3}
         />
+      </div>
+
+      <div className="space-y-1.5 border-t border-border pt-6">
+        <Label>
+          Full Case Study{" "}
+          <span className="font-normal text-muted-foreground">
+            (Markdown, optional — section headings + images, like a blog post. When filled in,
+            this replaces the short Challenge/Approach/Outcome text above on the case study page.)
+          </span>
+        </Label>
+        <MarkdownEditor value={form.content} onChange={(v) => set("content", v)} />
       </div>
 
       {error ? (

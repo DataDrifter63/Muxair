@@ -26,7 +26,7 @@ export function CTASection({
       Ready to Get More <span className="text-gradient-cool">Booked Jobs?</span>
     </>
   ),
-  description = "Book a free 30-minute strategy call. We'll review your current website, your Google presence, and show you exactly what's costing you leads.",
+  description = " Book a free 30-minute strategy call. We'll review your current website, your Google presence, and show you exactly what's costing you leads.",
   primaryLabel = "Book Your Free Call",
   primaryHref = "/contact",
   secondaryLabel,

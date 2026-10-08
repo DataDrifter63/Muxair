@@ -107,7 +107,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.95 }}
             className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground"
           >
-            {["Top-Rated on Upwork", "50+ Projects", "HVAC-Only Studio"].map((t, i) => (
+            {["Top-Rated on Upwork ", "7 Years Experience", " HVAC-Only Studio "].map((t, i) => (
               <li key={t} className="flex items-center gap-4">
                 {i > 0 ? <span className="h-1 w-1 rounded-full bg-primary/70" /> : null}
                 <span>{t}</span>
@@ -142,8 +142,8 @@ export function Hero() {
           >
             <TrendingUp className="h-4 w-4 text-primary" />
             <div className="leading-tight">
-              <p className="text-xs font-semibold">Rank #1 · "boiler repair"</p>
-              <p className="text-[11px] text-muted-foreground">Local pack, 4 months</p>
+              <p className="text-xs font-semibold">Made for local service businesses</p>
+              <p className="text-[11px] text-muted-foreground"></p>
             </div>
           </motion.div>
 
@@ -154,8 +154,8 @@ export function Hero() {
           >
             <Flame className="h-4 w-4 text-heat" />
             <div className="leading-tight">
-              <p className="text-xs font-semibold">+38 quote requests</p>
-              <p className="text-[11px] text-muted-foreground">This month</p>
+              <p className="text-xs font-semibold">Optimized for 'near me' searches</p>
+              <p className="text-[11px] text-muted-foreground"></p>
             </div>
           </motion.div>
         </motion.div>

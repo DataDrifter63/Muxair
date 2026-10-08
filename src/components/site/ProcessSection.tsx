@@ -8,17 +8,17 @@ const steps = [
     number: "01",
     icon: MessagesSquare,
     title: "Discovery Call",
-    day: "Day 1–2",
-    tags: ["Service area mapping", "Competitor analysis", "Goal setting", "Package recommendation"],
+    day: "Day 1–3",
+    tags: ["Goal Setting", "Service Area Mapping", "Competitor Analysis", "Package Recommendation"],
     description:
-      "We start with a 30-minute call to understand your business, service areas, competitors, and goals — no generic questionnaires, just the questions that actually matter for HVAC.",
+      "We start with a 30-minute call to understand your business, service areas, competitors, and goals. No generic questionnaires, just the questions that actually matter for HVAC.",
     tone: "cool" as const,
   },
   {
     number: "02",
     icon: Search,
     title: "Research & Strategy",
-    day: "Day 3–7",
+    day: "Day 4–10",
     tags: ["Keyword research", "Competitor teardown", "Conversion strategy", "Content planning"],
     description:
       "We audit your current site, research local keywords, break down your top competitors, and build a conversion strategy tailored to your market.",
@@ -28,7 +28,7 @@ const steps = [
     number: "03",
     icon: PenTool,
     title: "Design & Build",
-    day: "Day 8–25",
+    day: "Day 11–25",
     tags: [
       "Custom design mockups",
       "Mobile-first development",
@@ -36,7 +36,7 @@ const steps = [
       "Speed optimization",
     ],
     description:
-      "Our designers and developers build your site from the ground up — every page and section crafted around how homeowners actually search for and book HVAC work.",
+      "Our designers and developers build your site from the ground up. Every page and section is crafted around how homeowners actually search for and book HVAC work.",
     tone: "cool" as const,
   },
   {
@@ -46,12 +46,12 @@ const steps = [
     day: "Day 26–30",
     tags: [
       "Google Search Console",
-      "Call tracking setup",
-      "Analytics dashboard",
-      "Ongoing support",
+      "Contact Form Live",
+      "Click-to-Call Setup",
+      "30-Day Support Window",
     ],
     description:
-      "We launch your site, set up tracking, submit to Google, and hand everything over ready to go. Then we stay on to support your growth.",
+      "We launch your site, set up Google Search Console, submit it, and hand everything over, ready to go. Then we stay on to support your growth.",
     tone: "heat" as const,
   },
 ];
@@ -77,10 +77,10 @@ export function ProcessSection() {
           eyebrow="How It Works"
           title={
             <>
-              From Kickoff to Live Site <span className="text-gradient-cool">in 30 Days</span>
+              From Kickoff to Live Site in<span className="text-gradient-cool"> as Little as 30 Days</span>
             </>
           }
-          subtitle="A proven process built around your schedule. You stay in the loop without being overwhelmed — we handle the heavy lifting."
+          subtitle="A proven process built around your schedule. You stay in the loop without being overwhelmed, we handle the heavy lifting."
         />
 
         <div ref={timelineRef} className="relative mt-14">
@@ -177,13 +177,12 @@ export function ProcessSection() {
             <div className="relative">
               <h3 className="text-xl text-foreground sm:text-2xl">Ready to get started?</h3>
               <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                Book a free 30-minute discovery call. No pressure, no pitch — just a real
-                conversation about your business.
+                Book a free 30-minute discovery call. No pressure, no pitch, just a real conversation about your business.
               </p>
             </div>
             <div className="relative flex-none">
               <MagneticButton href="#contact" size="lg">
-                Book Discovery Call
+                Book Strategy Call 
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </MagneticButton>
             </div>
