@@ -19,37 +19,53 @@ import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/meta-ads";
 
-const title = "Facebook & Instagram Ads for HVAC Companies | More Leads, More Booked Jobs";
+const title = "Meta Ads Management for HVAC | Facebook & Instagram";
 const description =
-  "Run targeted Meta ad campaigns that put your HVAC business in front of homeowners and property managers in your area. Managed by HVAC specialists.";
+  "Facebook and Instagram ad management built exclusively for HVAC companies. Reach homeowners before they search and stay in front of them after. Free call.";
 
 const faqs = [
   {
     question: "Does Meta advertising work for HVAC?",
     answer:
-      "It works differently than Google Ads — Meta builds awareness before someone's actively searching, which pairs well with search ads rather than replacing them.",
+      "Yes, but it plays a different role than Google Ads. Meta builds awareness before someone is actively searching, and keeps you in front of people who already visited your site. It pairs well with search ads rather than replacing them.",
+  },
+  {
+    question: "Should I run Meta Ads or Google Ads?",
+    answer:
+      "They do different jobs. Google Ads catches people already searching for help. Meta Ads reaches people who aren't searching yet and follows up with those who visited your site. If you're choosing one first, we usually start with Google Ads, and many clients add Meta Ads once it's performing well.",
   },
   {
     question: "What's a typical starting budget?",
     answer:
-      "This varies by service area competition — we'll give you a realistic number on the strategy call once we know your market.",
+      "This varies by market and competition. We'll give you a realistic number on the strategy call once we know your service area.",
   },
   {
     question: "Do you charge a management fee on top of ad spend?",
     answer:
-      "Yes, this is standard across the industry and we're upfront about the fee structure before you commit to anything.",
+      "Yes. Our management fee starts at $400/mo and is separate from your ad spend, which you pay directly to Meta. This is standard across the industry, and we're upfront about it before you commit to anything.",
+  },
+  {
+    question: "What's included in the monthly fee, and what costs extra?",
+    answer:
+      "Included: campaign setup and management, up to 4 custom ad creatives at launch, retargeting and lookalike audience setup, and a monthly report. Not included: your ad spend, which you pay directly to Meta, and any additional ad creative beyond the first 4, which we quote before starting.",
   },
   {
     question: "How is this different from boosting a post myself?",
     answer:
-      "A boosted post reaches whoever's nearby with no targeting logic. We build proper campaigns around service areas, retargeting, and lookalike audiences based on your actual customers.",
+      "A boosted post shows your content to whoever's nearby, with very little targeting. We build proper campaigns around your service areas, retargeting, and lookalike audiences based on your actual customers.",
   },
   {
     question: "Do you need access to my Facebook or Instagram account?",
     answer:
-      "Yes, we'll need admin access to your Meta Business account to set up and run campaigns — we'll walk you through exactly what to grant on the strategy call.",
+      "Yes, we'll need admin access to your Meta Business account to set up and run campaigns. We'll walk you through exactly what to grant on the strategy call.",
+  },
+  {
+    question: "Is there a minimum commitment?",
+    answer:
+      "Yes, 3 months. Campaigns need time to collect data and be optimised, so we ask for a minimum of 3 months. After that, it continues month to month.",
   },
 ];
+
 
 export const Route = createFileRoute("/services/meta-ads")({
   component: MetaAdsPage,
@@ -124,24 +140,25 @@ export const Route = createFileRoute("/services/meta-ads")({
   }),
 });
 
-const stats = [
-  { to: 284, suffix: "%", prefix: "+", label: "Best increase in inbound calls" },
-  { to: 2, suffix: " weeks", prefix: "", label: "Avg. time to launch" },
-  { to: 100, suffix: "%", prefix: "", label: "Retargeting-enabled campaigns" },
+const stats: { to?: number; suffix?: string; text?: string; label: string }[] = [
+  { to: 3, suffix: " months", label: "Minimum commitment, stated upfront" },
+  { text: "Monthly", label: "Plain-English performance report" },
+  { to: 100, suffix: "%", label: "Of your ad spend goes straight to Meta" },
 ];
+
 
 const features = [
   {
     icon: Target,
     title: "Search-Intent-Led Campaigns",
     description:
-      "Meta reach combined with the same intent-driven thinking behind our Google Ads work — not random boosted posts.",
+      "Meta reach combined with the same intent-driven thinking behind our Google Ads work, not random boosted posts.",
   },
   {
     icon: Facebook,
     title: "Custom Creative for Your Brand",
     description:
-      "Ad creative built around your brand and service area, not a generic stock-photo template.",
+      "Up to 4 custom ads at launch, built around your brand and service area, not a generic stock-photo template.",
   },
   {
     icon: Repeat,
@@ -165,7 +182,7 @@ const features = [
     icon: CalendarClock,
     title: "Monthly Performance Reporting",
     description:
-      "A plain-English report on reach, engagement, and leads — not a wall of vanity metrics.",
+      "A plain-English report on reach, engagement, and leads, not a wall of vanity metrics.",
   },
 ];
 
@@ -178,7 +195,7 @@ const timeline = [
   {
     week: "Week 1–2",
     title: "Ad Creative Production",
-    desc: "Custom ad creative and copy produced and prepared for launch across Facebook and Instagram.",
+    desc: "Up to 4 custom ads and copy produced and prepared for launch across Facebook and Instagram.",
   },
   {
     week: "Week 2–3",
@@ -227,7 +244,7 @@ function MetaAdsPage() {
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Targeted Facebook and Instagram campaigns that put your HVAC business in front of
-                homeowners and property managers in your area — before they've typed a single word
+                homeowners and property managers in your area, before they've typed a single word
                 into Google.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
@@ -246,7 +263,7 @@ function MetaAdsPage() {
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
                     <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-                      <Counter to={s.to} suffix={s.suffix} prefix={s.prefix} />
+                      {s.to !== undefined ? <Counter to={s.to} suffix={s.suffix ?? ""} /> : s.text}
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
                       {s.label}
@@ -270,7 +287,7 @@ function MetaAdsPage() {
                   <span className="text-gradient-heat">Awareness &amp; Retargeting</span>
                 </>
               }
-              subtitle="Meta Ads plays a different role than search — this is about staying visible before and after someone's ready to call."
+              subtitle="Meta Ads plays a different role than search. This is about staying visible before and after someone's ready to call."
             />
 
             <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -313,10 +330,11 @@ function MetaAdsPage() {
               eyebrow="How it works"
               title={
                 <>
-                  From Strategy to{" "}
-                  <span className="text-gradient-heat">Live Campaigns in 2 Weeks</span>
+                  From Strategy to Live Campaigns in{" "}
+                  <span className="text-gradient-heat">2 to 3 Weeks</span>
                 </>
               }
+              subtitle="Timing depends on how quickly we get access to your accounts and your approvals."
               align="left"
             />
             <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -354,8 +372,36 @@ function MetaAdsPage() {
               </Reveal>
             </div>
 
-            <div className="mt-12 grid gap-6 sm:grid-cols-2">
-              <Reveal delay={0.05}>
+            <div className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <Reveal delay={0} className="h-full">
+                <Link to="/work/$slug" params={{ slug: "home-counties-heating" }}>
+                  <motion.article
+                    whileHover={{ y: -8 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background/70 backdrop-blur-md transition-colors hover:border-heat/40"
+                  >
+                    <div className="relative flex aspect-[3/2] items-center justify-center overflow-hidden border-b border-border bg-surface/60 px-6 text-center text-xs text-muted-foreground">
+                      <span>[ Campaign screenshot / mockup ]</span>
+                      <span className="absolute right-3 top-3 rounded-full border border-heat/40 bg-background/85 px-2.5 py-1 text-[11px] font-semibold text-heat">
+                        +284% calls
+                      </span>
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent opacity-90" />
+                    </div>
+                    <div className="flex flex-1 flex-col p-6">
+                      <h3 className="text-base">Home Counties Heating</h3>
+                      <p className="mt-2 flex-1 text-sm text-muted-foreground">
+                        &ldquo;Inbound calls jumped fast after launch.&rdquo; — St Albans
+                      </p>
+                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-heat">
+                        View Case Study
+                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                      </span>
+                    </div>
+                  </motion.article>
+                </Link>
+              </Reveal>
+
+              <Reveal delay={0.06} className="h-full">
                 <Link
                   to="/work"
                   className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background/70 backdrop-blur-md transition-colors hover:border-heat/40"
@@ -363,12 +409,12 @@ function MetaAdsPage() {
                   <div className="flex aspect-[3/2] items-center justify-center bg-surface/60 text-center text-xs text-muted-foreground">
                     Case study in progress
                   </div>
-                  <div className="flex flex-1 flex-col p-7">
-                    <h3 className="text-lg">Meta Ads case study coming soon</h3>
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="text-base">Meta Ads Case Study, Coming Soon</h3>
                     <p className="mt-2 flex-1 text-sm text-muted-foreground">
-                      We're onboarding HVAC companies for Meta Ads management this quarter.
+                      Our next campaign results will be featured here.
                     </p>
-                    <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-heat">
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-heat">
                       View All Work
                       <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                     </span>
@@ -376,7 +422,7 @@ function MetaAdsPage() {
                 </Link>
               </Reveal>
 
-              <Reveal delay={0.1}>
+              <Reveal delay={0.12} className="h-full">
                 <Link
                   to="/contact"
                   className="group flex h-full flex-col items-center justify-center rounded-2xl border border-heat/40 bg-heat/[0.05] p-8 text-center backdrop-blur-md glow-heat"
@@ -384,10 +430,10 @@ function MetaAdsPage() {
                   <h3 className="font-display text-lg">Become Our Next Ads Case Study</h3>
                   <p className="mt-2.5 max-w-xs text-sm text-muted-foreground">
                     We're onboarding a small number of HVAC companies this quarter for Meta Ads
-                    management — be featured here.
+                    management, and featuring each one here.
                   </p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-heat">
-                    Get in Touch
+                    Claim Your Spot
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                   </span>
                 </Link>
@@ -414,11 +460,12 @@ function MetaAdsPage() {
                 <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
                   <div>
                     <h3 className="font-display text-xl sm:text-2xl">
-                      Meta Ads Management starts at £400/mo + ad spend
+                      Meta Ads management starts at $400/mo + ad spend
                     </h3>
                     <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-                      Ad spend is paid directly to Meta, separate from our management fee. Full
-                      breakdown on the pricing page.
+                      Ad spend is paid directly to Meta, separate from our management fee. Your
+                      exact monthly price is confirmed with you before you commit, with a 3-month
+                      minimum. Full breakdown on the pricing page.
                     </p>
                   </div>
                   <MagneticButton href="/pricing" variant="heat" className="flex-none">
@@ -484,7 +531,9 @@ function MetaAdsPage() {
                     to={serviceHrefs[s.slug as keyof typeof serviceHrefs]}
                     className="group flex h-full flex-col rounded-2xl border border-border bg-surface/40 p-5 backdrop-blur-md transition-colors hover:border-primary/40"
                   >
-                    <h3 className="font-display text-sm leading-snug">{s.shortTitle}</h3>
+                    <h3 className="font-display text-sm leading-snug">
+                      {s.slug === "websites" ? "Website Design" : s.shortTitle}
+                    </h3>
                     <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground">
                       {s.tagline}
                     </p>
@@ -511,7 +560,7 @@ function MetaAdsPage() {
           primaryHref="/contact"
           secondaryLabel="See Pricing"
           secondaryHref="/pricing"
-          footnote="We reply within 4 hours · No obligation"
+          footnote="No sales pitch · No obligation"
         />
       </main>
     </div>

@@ -23,30 +23,28 @@ export const services: ServiceItem[] = [
     tone: "cool",
     tagline: "Fast, mobile-first sites built to turn visitors into booked jobs.",
     description:
-      "Your website is the first impression most homeowners get of your business. We design and build fast, mobile-first sites engineered around quote forms, service-area pages and emergency call-outs — not generic templates.",
+      "Fast, mobile-first sites designed specifically for how homeowners and property managers search for and choose an HVAC company, not a recycled template with your logo dropped in.",
     features: [
-      "Custom design for your brand, not a recycled template",
-      "Mobile-first build tested for one-thumb navigation",
-      "Service-area landing pages that target every town you cover",
-      "Speed-optimized for Core Web Vitals and fast 3G load times",
-      "Built-in quote forms, click-to-call and booking widgets",
-      "Analytics and call tracking wired up from day one",
+      "Custom Design for Your Brand",
+      "Mobile-First Build",
+      "Service-Area Landing Pages",
+      "Speed-Optimised Build",
     ],
     faqs: [
       {
         question: "How long does a new website take?",
         answer:
-          "Most HVAC websites are designed, built and launched within 30 days, following the process outlined on our Process page.",
+          "Most Foundation sites launch in about 30 days from kickoff. Larger builds like Growth and Complete take 30 to 45 days, and we confirm your exact timeline in your proposal. Timing also depends on how quickly we get your content and approvals back.",
       },
       {
         question: "Will it work on mobile?",
         answer:
-          "Yes — every site is designed mobile-first, since most emergency HVAC searches happen on a phone.",
+          "Every site is built mobile-first, since the majority of HVAC searches happen on a phone.",
       },
       {
         question: "Do you write the content too?",
         answer:
-          "We can. We handle copywriting for every page, written specifically around how homeowners search for heating and cooling help.",
+          "Yes. Every package includes copywriting from our in-house HVAC content writer. Foundation covers your core pages, and Growth and Complete cover every page, plus 5 launch blog posts. You review and approve everything before launch.",
       },
     ],
   },
@@ -57,25 +55,23 @@ export const services: ServiceItem[] = [
     tone: "cool",
     tagline: "Own the map pack for every service you offer, in every town you cover.",
     description:
-      "We run local SEO campaigns built specifically around HVAC search behaviour — seasonal demand, service-area targeting and the exact phrases homeowners use when their furnace dies at 11pm.",
+      "Local SEO built specifically around how homeowners and businesses search for HVAC services, not generic SEO advice recycled from a different industry.",
     features: [
-      "Google Business Profile optimization and review strategy",
-      "Service-area and service-specific landing pages",
-      "Local citation building and NAP consistency clean-up",
-      "Technical SEO audits and Core Web Vitals fixes",
-      "Seasonal content calendar built around your demand curve",
-      "Monthly ranking and traffic reporting",
+      "Google Business Profile Optimisation",
+      "Service-Area Landing Pages",
+      "Local Citation Building",
+      "Technical SEO Audits",
     ],
     faqs: [
       {
         question: "How long until we see rankings improve?",
         answer:
-          "Most clients see movement in local pack rankings within 3–4 months, with compounding gains after that as authority builds.",
+          "Most clients see meaningful movement within 3 to 6 months. We'll give you an honest month-by-month outlook, not a guaranteed timeline nobody can promise.",
       },
       {
         question: "Do you guarantee rankings?",
         answer:
-          "No agency can honestly guarantee a #1 ranking — we're transparent about that. What we do guarantee is a documented, HVAC-specific strategy and monthly reporting on progress.",
+          "No agency honestly can. What we guarantee is the work: technical fixes, content, and citations done properly and on schedule.",
       },
     ],
   },
@@ -86,25 +82,23 @@ export const services: ServiceItem[] = [
     tone: "heat",
     tagline: "High-intent search campaigns built around cost-per-booked-job, not clicks.",
     description:
-      "We manage Google Ads campaigns built around seasonal demand spikes, service-specific keywords and — most importantly — cost per booked job, not vanity click metrics.",
+      "We manage Google Ads campaigns built around seasonal demand spikes, service-specific keywords, and most importantly, cost per booked job, not vanity click metrics.",
     features: [
-      "Campaign structure built around your services and service areas",
-      "Call tracking so you know exactly which ads book jobs",
-      "Negative keyword lists to cut wasted spend fast",
-      "Seasonal budget shifts around heating and cooling peaks",
-      "Landing pages matched to each ad group",
-      "Transparent monthly spend and performance reporting",
+      "Campaigns Built Around Your Services",
+      "Call Tracking on Every Campaign",
+      "Aggressive Negative Keywords",
+      "Seasonal Budget Shifts",
     ],
     faqs: [
       {
         question: "What's a typical starting budget?",
         answer:
-          "It depends on your market size, but most HVAC companies start seeing a solid lead flow from a few thousand pounds a month in ad spend — we'll recommend a number based on your service areas during the strategy call.",
+          "Our Google Ads management starts at $400/mo, plus your ad spend, which you pay directly to Google. How much ad spend makes sense varies by market and competition, so we'll give you a realistic number on the strategy call once we know your service area.",
       },
       {
         question: "Do you charge a management fee on top of ad spend?",
         answer:
-          "Yes, a flat management fee separate from your ad budget — full pricing is on the Pricing page.",
+          "Yes. Our management fee starts at $400/mo and is separate from your ad spend, which you pay directly to Google. This is standard across the industry, and we're upfront about it before you commit to anything.",
       },
     ],
   },
@@ -113,22 +107,20 @@ export const services: ServiceItem[] = [
     title: "Meta Ads (Facebook & Instagram)",
     shortTitle: "Meta Ads",
     tone: "heat",
-    tagline: "Offer-led creative that fills quiet months with installs and service plans.",
+    tagline: "Get seen before homeowners even know they need you.",
     description:
-      "Search ads capture demand — Meta ads create it. We build offer-led Facebook and Instagram campaigns to fill your quiet months with installs, maintenance plans and system upgrades.",
+      "Targeted Facebook and Instagram campaigns that put your HVAC business in front of homeowners and property managers in your area, before they've typed a single word into Google.",
     features: [
-      "Seasonal offer campaigns (tune-ups, financing, upgrades)",
-      "Custom creative built around your brand and service area",
-      "Retargeting for people who visited your site but didn't call",
-      "Lookalike audiences based on your best existing customers",
-      "Lead-form ads for low-friction quote requests",
-      "Monthly performance reporting tied to booked jobs",
+      "Search-Intent-Led Campaigns",
+      "Custom Creative for Your Brand",
+      "Retargeting Visitors Who Didn't Call",
+      "Lookalike Audiences",
     ],
     faqs: [
       {
         question: "Does Meta advertising work for HVAC?",
         answer:
-          "It works best for demand generation — maintenance plans, financing offers and system upgrades — rather than emergency repair, where search intent is stronger.",
+          "Yes, but it plays a different role than Google Ads. Meta builds awareness before someone is actively searching, and keeps you in front of people who already visited your site. It pairs well with search ads rather than replacing them.",
       },
     ],
   },
@@ -137,22 +129,20 @@ export const services: ServiceItem[] = [
     title: "Website Care & Maintenance",
     shortTitle: "Maintenance",
     tone: "cool",
-    tagline: "Ongoing updates, monitoring and support so your site stays fast and secure.",
+    tagline: "Ongoing updates, monitoring, and support so your site never lets you down.",
     description:
-      "A website is never really 'done.' We handle ongoing updates, uptime and security monitoring, seasonal content refreshes and small edits, so your site keeps performing after launch.",
+      "A website is never really \u201cdone,\u201d ongoing updates, monitoring, and support so it keeps working for you long after launch, instead of quietly degrading.",
     features: [
-      "Uptime and security monitoring",
-      "Regular backups and update management",
-      "Core Web Vitals monitoring",
-      "Seasonal content and offer updates",
-      "Small design and copy edits included",
-      "Priority support response times",
+      "Uptime & Security Monitoring",
+      "Regular Backups",
+      "Core Web Vitals Monitoring",
+      "Software & Plugin Updates",
     ],
     faqs: [
       {
         question: "Is maintenance required after you build my site?",
         answer:
-          "It's optional, but recommended — most clients keep it so their site stays fast, secure and current without hiring an in-house webmaster.",
+          "Not required, but recommended. Most sites that skip maintenance see slow performance and security issues creep in within a year.",
       },
     ],
   },

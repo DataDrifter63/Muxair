@@ -35,7 +35,7 @@ const faqs = [
   {
     question: "How long does a new website take?",
     answer:
-      "Most sites launch within 30 days of kickoff, depending on how quickly we get your content and approvals back.",
+      "Most Foundation sites launch in about 30 days from kickoff. Larger builds like Growth and Complete take 30 to 45 days, and we confirm your exact timeline in your proposal. Timing also depends on how quickly we get your content and approvals back.",
   },
   {
     question: "Will it work on mobile?",
@@ -45,17 +45,17 @@ const faqs = [
   {
     question: "Do you write the content too?",
     answer:
-      "Yes — our in-house content writer handles HVAC-specific copywriting as part of the build. You review and approve before launch.",
+      "Yes. Every package includes copywriting from our in-house HVAC content writer. Foundation covers your core pages, and Growth and Complete cover every page, plus 5 launch blog posts. You review and approve everything before launch.",
   },
   {
     question: "Can I update the site myself after launch?",
     answer:
-      "Yes, we include a training session so you're comfortable making basic edits. For anything bigger, our maintenance plans cover ongoing changes.",
+      "Yes, we include a training session so you're comfortable making basic edits. For ongoing updates, our Maintenance plans have it covered.",
   },
   {
     question: "What if I don't like the design?",
     answer:
-      "You approve the design before any code is written, so this is the stage to request changes — for free. We'd rather get it right before build starts than after.",
+      "You approve the design before any code is written, so this is the stage to request changes, for free. We'd rather get it right before build starts than after.",
   },
 ];
 
@@ -140,9 +140,9 @@ export const Route = createFileRoute("/services/websites")({
 });
 
 const stats = [
-  { to: 30, suffix: " days", prefix: "", label: "Average time to launch" },
-  { to: 100, suffix: "%", prefix: "+", label: "Best organic enquiry increase" },
-  { to: 100, suffix: "%", prefix: "", label: "Mobile-first builds" },
+  { from: 30, to: 45, suffix: " days", label: "Typical time to launch" },
+  { from: 5, to: 15, suffix: "", label: "Custom-designed pages, depending on package" },
+  { to: 100, suffix: "%", label: "Mobile-first builds" },
 ];
 
 const features = [
@@ -150,7 +150,7 @@ const features = [
     icon: LayoutTemplate,
     title: "Custom Design for Your Brand",
     description:
-      "Not a recycled template — a design built around your actual business, not a generic HVAC theme.",
+      "Not a recycled template. A design built around your actual business, not a generic HVAC theme.",
   },
   {
     icon: Smartphone,
@@ -162,7 +162,7 @@ const features = [
     icon: MapPin,
     title: "Service-Area Landing Pages",
     description:
-      'Dedicated pages targeting your actual towns and service areas — not one generic "areas we cover" list.',
+      'Dedicated pages targeting your actual towns and service areas, not one generic "areas we cover" list. Included with Growth and Complete.',
   },
   {
     icon: Gauge,
@@ -174,13 +174,13 @@ const features = [
     icon: PenLine,
     title: "HVAC-Specific Copywriting",
     description:
-      "Written by our in-house content writer around how HVAC customers actually search and decide — not filler text.",
+      "Written by our in-house content writer around how HVAC customers actually search and decide, not filler text. Core pages on Foundation, every page on Growth and Complete.",
   },
   {
     icon: Search,
     title: "Local SEO Foundations Included",
     description:
-      "Technical SEO basics and schema markup built in from day one, so you're not starting from zero on Google.",
+      "Google Search Console setup and basic on-page SEO built in from day one, so you're not starting from zero on Google.",
   },
 ];
 
@@ -189,12 +189,13 @@ const timeline = [
     week: "Step 1",
     title: "Discovery Call",
     description:
-      "A free 30-minute call to learn your business, service area, and goals — no pitch, just an honest assessment.",
+      "A free 30-minute call to learn your business, service area, and goals. No pitch, just an honest assessment.",
   },
   {
     week: "Step 2",
     title: "Strategy & Proposal",
-    description: "A custom plan with scope, timeline, and fixed-price quote, sent within 48 hours.",
+    description:
+      "A custom plan with scope, timeline, and a fixed-price quote, sent within 48 hours.",
   },
   {
     week: "Step 3",
@@ -204,9 +205,15 @@ const timeline = [
   },
   {
     week: "Step 4",
-    title: "Build, Launch & Handover",
+    title: "Build & Content",
     description:
-      "We build, you review, we launch — plus a training session and 30 days of support included.",
+      "We build the approved design and write your HVAC-specific copy. You review as we go.",
+  },
+  {
+    week: "Step 5",
+    title: "Launch & Handover",
+    description:
+      "Your site goes live, with a training session and 30 days of post-launch support included.",
   },
 ];
 
@@ -246,7 +253,7 @@ function WebsitesPage() {
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Fast, mobile-first sites designed specifically for how homeowners and property
-                managers search for and choose an HVAC company — not a recycled template with your
+                managers search for and choose an HVAC company, not a recycled template with your
                 logo dropped in.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
@@ -265,7 +272,13 @@ function WebsitesPage() {
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
                     <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-                      <Counter to={s.to} suffix={s.suffix} prefix={s.prefix} />
+                      {s.from !== undefined ? (
+                        <>
+                          <Counter to={s.from} />-<Counter to={s.to} suffix={s.suffix} />
+                        </>
+                      ) : (
+                        <Counter to={s.to} suffix={s.suffix} />
+                      )}
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
                       {s.label}
@@ -331,12 +344,13 @@ function WebsitesPage() {
               eyebrow="How It Works"
               title={
                 <>
-                  From Kickoff to <span className="text-gradient-cool">Live Site in 30 Days</span>
+                  From Kickoff to <span className="text-gradient-cool">Live Site</span>
                 </>
               }
+              subtitle="Most Foundation sites go live in about 30 days. Larger builds take 30 to 45 days, and we confirm your exact timeline in your proposal."
               align="left"
             />
-            <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               {timeline.map((step, i) => (
                 <Reveal key={step.title} delay={i * 0.08} className="h-full">
                   <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface/40 p-6 backdrop-blur-md">
@@ -436,10 +450,10 @@ function WebsitesPage() {
                   <h3 className="font-display text-lg">Become Our Next Case Study</h3>
                   <p className="mt-2.5 max-w-xs text-sm text-muted-foreground">
                     We're onboarding a small number of HVAC companies this quarter for new website
-                    builds — be featured here.
+                    builds, and featuring each one here.
                   </p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                    Get in Touch
+                    Claim Your Spot
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                   </span>
                 </Link>
@@ -467,8 +481,8 @@ function WebsitesPage() {
                   <div>
                     <h3 className="font-display text-xl sm:text-2xl">Websites start at $1,200</h3>
                     <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-                      Fixed price, agreed before work starts. Full package breakdown on the pricing
-                      page.
+                      Your final price is a fixed quote, agreed with you before any work begins. Full
+                      package breakdown on the pricing page.
                     </p>
                   </div>
                   <MagneticButton href="/pricing" className="flex-none">
@@ -558,12 +572,12 @@ function WebsitesPage() {
               <span className="text-gradient-cool">Books Jobs?</span>
             </>
           }
-          description="Book a free strategy call and we'll show you what's realistically possible for your business — including a live look at your current site."
+          description="Book a free strategy call and we'll show you what's realistically possible for your business, including a live look at your current site."
           primaryLabel="Book a Free Strategy Call"
           primaryHref="/contact"
           secondaryLabel="See Pricing"
           secondaryHref="/pricing"
-          footnote="We reply within 4 hours · No obligation"
+          footnote="No sales pitch · No obligation"
         />
       </main>
     </div>

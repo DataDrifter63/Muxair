@@ -95,15 +95,15 @@ const serviceHrefs = {
 
 const stats = [
   { to: 5, suffix: "", label: "Specialist services, one team" },
-  { to: 30, suffix: " days", label: "Average time to a live site" },
-  { to: 300, suffix: "%+", label: "Avg. increase in enquiries" },
+  { to: 72, suffix: " hrs", label: "Proposal turnaround" },
+  { to: 0, suffix: "", label: "Long-term lock-in on most services" },
 ];
 
 const included = [
-  "No lock-in contracts on most services",
-  "One point of contact for every project",
-  "Reporting you can actually understand",
-  "Built and run exclusively for HVAC companies",
+  "No lock-in on most services",
+  "One point of contact per project",
+  "Reporting you can understand",
+  "Built only for HVAC companies",
 ];
 
 const startingPoints = [
@@ -111,7 +111,8 @@ const startingPoints = [
     tag: "New / No Website Yet",
     title: "Get the Foundation Right",
     description:
-      "If you don't have a site — or yours is actively hurting you — start here. Everything else depends on this being solid first.",
+      "If you don't have a site, or yours is actively hurting you, start here. Everything else depends on this being solid first.",
+    note: "Most new businesses start with our Foundation package.",
     chips: [{ label: "Website Design", slug: "websites" as const }],
     featured: false,
   },
@@ -128,23 +129,23 @@ const startingPoints = [
   },
   {
     tag: "Scaling Across Areas",
-    title: "Full Growth System",
+    title: "Complete Growth System",
     description:
       "Multiple vans, multiple service areas, and you need every channel working together with reporting you can actually act on.",
     chips: [
       { label: "SEO", slug: "seo" as const },
       { label: "Google Ads", slug: "google-ads" as const },
       { label: "Meta Ads", slug: "meta-ads" as const },
-      { label: "Maintenance", slug: "maintenance" as const },
     ],
     featured: false,
   },
 ];
 
 const proof = {
-  highlight: "40 quote requests",
-  name: "Aaron Price",
-  role: "London AC Installer · Website Design + Google Ads",
+  quote:
+    "They communicated clearly throughout, worked consistently, and kept me regularly updated on their progress. Their team was reliable, easy to work with, and delivered everything that was needed. I would happily work with them again and would recommend their services to others.",
+  name: "Sean C.",
+  role: "Primrose Projects · Website Design + Ads",
 };
 
 function toneClasses(tone: Tone) {
@@ -245,9 +246,15 @@ function ServicesIndex() {
                     <h3 className="relative mt-5 font-display text-xl leading-snug sm:text-2xl">
                       {point.title}
                     </h3>
-                    <p className="relative mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                    <p className="relative mt-3 text-sm leading-relaxed text-muted-foreground">
                       {point.description}
                     </p>
+                    <div className="flex-1" />
+                    {"note" in point && point.note ? (
+                      <p className="relative mt-4 text-xs font-medium leading-relaxed text-foreground/80">
+                        {point.note}
+                      </p>
+                    ) : null}
                     <div className="relative mt-6 flex flex-wrap gap-2">
                       {point.chips.map((chip) => (
                         <Link
@@ -277,7 +284,7 @@ function ServicesIndex() {
                   Five Services, <span className="text-gradient-cool">One Growth System</span>
                 </>
               }
-              subtitle="Each service is built to work on its own — or stack together for a full pipeline from search to booked job."
+              subtitle="Each service is built to work on its own, or stack together for a full pipeline from search to booked job."
             />
 
             <div className="mt-14 grid gap-6 lg:grid-cols-2">
@@ -356,7 +363,7 @@ function ServicesIndex() {
                       Not sure what you need?
                     </h3>
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                      Most clients don't buy one service in isolation — they bundle a website with
+                      Most clients don't buy one service in isolation, they bundle a website with
                       SEO and ads for a complete pipeline. Tell us where jobs are falling short and
                       we'll recommend a starting point, no pressure.
                     </p>
@@ -380,10 +387,8 @@ function ServicesIndex() {
           <div className="relative mx-auto max-w-4xl px-5 text-center lg:px-8">
             <Reveal>
               <Quote className="mx-auto h-8 w-8 text-primary" strokeWidth={1.6} />
-              <p className="mx-auto mt-6 max-w-3xl text-balance font-display text-xl leading-snug sm:text-2xl lg:text-3xl">
-                &ldquo;They set us up with a new site and Google Ads together.{" "}
-                <span className="text-gradient-cool">{proof.highlight}</span> in the first month
-                alone — more than the whole previous quarter.&rdquo;
+              <p className="mx-auto mt-6 max-w-3xl text-balance font-display text-lg leading-snug sm:text-xl lg:text-2xl">
+                &ldquo;{proof.quote}&rdquo;
               </p>
               <p className="mt-6 text-sm text-muted-foreground">
                 <span className="font-semibold text-foreground">{proof.name}</span> — {proof.role}
@@ -401,7 +406,7 @@ function ServicesIndex() {
                   className="pointer-events-none absolute inset-0 grid-tech opacity-15"
                   aria-hidden
                 />
-                <div className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="relative grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
                   {included.map((item) => (
                     <div key={item} className="flex items-start gap-3">
                       <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
@@ -452,7 +457,17 @@ function ServicesIndex() {
           </div>
         </section>
 
-        <CTASection />
+        <CTASection
+          badgeLabel="Free 30-minute call"
+          title={
+            <>
+              Let&apos;s Build Your <span className="text-gradient-cool">Growth System</span>
+            </>
+          }
+          description="Book a free 30-minute call and we'll map out which combination of services actually fits your business, not a generic package."
+          primaryLabel="Book Your Free Call"
+          primaryHref="/contact"
+        />
       </main>
     </div>
   );

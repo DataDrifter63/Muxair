@@ -28,37 +28,53 @@ import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/google-ads";
 
-const title = "Google Ads Management for HVAC Companies | More Enquiries, Less Wasted Spend";
+const title = "Google Ads Management for HVAC | Booked Jobs, Not Clicks";
 const description =
-  "We manage Google Ads campaigns exclusively for HVAC businesses. Targeted, seasonal, and optimised to get you more booked jobs at the lowest cost per lead.";
+  "Google Ads management built exclusively for HVAC companies. Seasonal, service-specific campaigns focused on cost per booked job, not clicks. Free call.";
 
 const faqs = [
   {
     question: "What's a typical starting budget?",
     answer:
-      "This varies by service area competition — we'll give you a realistic number on the strategy call once we know your market.",
+      "This varies by market and competition. We'll give you a realistic number on the strategy call once we know your service area.",
   },
   {
     question: "Do you charge a management fee on top of ad spend?",
     answer:
-      "Yes, this is standard across the industry and we're upfront about the fee structure before you commit to anything.",
+      "Yes. Our management fee starts at $400/mo and is separate from your ad spend, which you pay directly to Google. This is standard across the industry, and we're upfront about it before you commit to anything.",
+  },
+  {
+    question: "What's included in the monthly fee, and what costs extra?",
+    answer:
+      "Included: campaign setup and management, call tracking through Google's call reporting, up to 3 landing pages at setup, and a monthly report. Not included: your ad spend, which you pay directly to Google, and any landing pages beyond the first 3, which we quote before starting. Optional tools like call recording are billed directly by the provider.",
   },
   {
     question: "How is this different from running Google Ads myself?",
     answer:
-      "Most self-managed campaigns waste budget on broad keywords and irrelevant clicks. We build around your specific services, service areas, and call tracking from day one — and manage it daily rather than checking in once a month.",
+      "Most self-managed campaigns waste budget on broad keywords and irrelevant clicks. We build around your specific services and service areas, with call tracking from day one, and keep optimising throughout the month, not just at a monthly check-in.",
   },
   {
     question: "Do you manage Meta Ads too, or just Google?",
     answer:
-      "Both — many clients run Google Ads and Meta Ads together once Google Ads is performing well.",
+      "Both. Each is its own monthly plan, and many clients add Meta Ads once Google Ads is performing well.",
   },
   {
     question: "How much of my budget goes to Google vs your fee?",
     answer:
-      "Your ad spend goes directly to Google — we never touch it. Our management fee is separate and billed by us, so you always know exactly what's going where.",
+      "Your ad spend goes directly to Google, and we never touch it. Our management fee is separate and billed by us, so you always know exactly where your money is going.",
+  },
+  {
+    question: "Is there a minimum commitment?",
+    answer:
+      "Yes, 3 months. Ads need time to collect data and be optimised, so we ask for a minimum of 3 months. After that, it continues month to month.",
+  },
+  {
+    question: "What if I don't have a website?",
+    answer:
+      "Ads work best when they send people to a site built to convert. If yours isn't ready, we'd recommend starting with a Foundation or Growth website, or the Complete package, which includes ads, rather than sending paid traffic to a weak site.",
   },
 ];
+
 
 export const Route = createFileRoute("/services/google-ads")({
   component: GoogleAdsPage,
@@ -137,57 +153,80 @@ export const Route = createFileRoute("/services/google-ads")({
   }),
 });
 
-const stats = [
-  { to: 9, suffix: " days", prefix: "", label: "Avg. time to first lead" },
-  { to: 35, suffix: "%", prefix: "", label: "Avg. reduction in wasted spend" },
-  { to: 100, suffix: "%", prefix: "", label: "Call-tracked campaigns" },
+const stats: { to?: number; suffix?: string; text?: string; label: string }[] = [
+  { to: 3, suffix: " months", label: "Minimum commitment, stated upfront" },
+  { text: "Monthly", label: "Plain-English performance report" },
+  { to: 100, suffix: "%", label: "Call-tracked campaigns" },
 ];
+
 
 const features = [
   {
     icon: Target,
     title: "Campaigns Built Around Your Services",
     description:
-      'Ad groups structured by service and service area — not one generic "HVAC" campaign lumping everything together.',
+      "Ad groups structured by service and service area, not one generic \u201cHVAC\u201d campaign lumping everything together.",
   },
   {
     icon: PhoneCall,
     title: "Call Tracking on Every Campaign",
     description:
-      "Every lead and call is tracked back to the exact keyword and ad that generated it — no guessing what's working.",
+      "Every call from your ads is tracked back to the exact keyword and ad that generated it. Included, at no extra cost.",
   },
   {
     icon: ThumbsDown,
     title: "Aggressive Negative Keywords",
     description:
-      'We exclude searches like "DIY," "jobs," and "how to" upfront, so budget only goes toward people ready to hire.',
+      "We exclude searches like \u201cDIY,\u201d \u201cjobs,\u201d and \u201chow to\u201d upfront, so your budget only goes toward people ready to hire.",
   },
   {
     icon: CalendarClock,
     title: "Seasonal Budget Shifts",
     description:
-      "Budgets shift automatically around your AC season versus your boiler season, instead of a flat spend all year.",
+      "We shift budgets with demand, spending more in your AC and heating peaks instead of a flat amount all year.",
   },
   {
     icon: MapPin,
     title: "Landing Pages Matched to Ad Groups",
     description:
-      "Each ad group sends traffic to a page built for that exact search intent — never your generic homepage.",
+      "We build up to 3 landing pages at setup, each matched to a service and its search intent, never your generic homepage.",
   },
   {
     icon: BarChart3,
     title: "Transparent Monthly Reporting",
     description:
-      "A plain-English report on spend, leads, and cost-per-booked-job — not a dashboard full of vanity metrics.",
+      "A plain-English report on spend, leads, and cost per booked job, not a dashboard full of vanity metrics.",
   },
 ];
 
+
 const timeline = [
-  { week: "Week 1", title: "Account & Keyword Build" },
-  { week: "Week 1–2", title: "Landing Pages + Tracking Setup" },
-  { week: "Week 2–3", title: "Launch & Early Optimisation" },
-  { week: "Ongoing", title: "Ongoing Optimisation & Reporting" },
+  {
+    week: "Week 1",
+    title: "Account & Keyword Build",
+    description:
+      "We structure your account by service and area, research the exact keywords your customers search, and set up conversion tracking.",
+  },
+  {
+    week: "Week 1–2",
+    title: "Landing Pages + Tracking Setup",
+    description:
+      "Up to 3 landing pages built for your highest-value services, with call tracking wired in from day one.",
+  },
+  {
+    week: "Week 2–3",
+    title: "Launch & Early Optimisation",
+    description:
+      "Campaigns go live. We monitor closely and cut anything wasting budget in the first few weeks.",
+  },
+  {
+    week: "Ongoing",
+    title: "Optimisation & Reporting",
+    description:
+      "Monthly adjustments based on real booked-job data, with a plain-English report every month.",
+  },
 ];
+
 
 const relatedServices = services.filter((s) => s.slug !== "google-ads");
 
@@ -225,7 +264,7 @@ function GoogleAdsPage() {
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                 We manage Google Ads campaigns built around seasonal demand spikes, service-specific
-                keywords, and — most importantly — cost per booked job, not vanity click metrics.
+                keywords, and, most importantly, cost per booked job, not vanity click metrics.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
                 <MagneticButton href="/contact" size="lg" variant="heat">
@@ -243,7 +282,7 @@ function GoogleAdsPage() {
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
                     <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-                      <Counter to={s.to} suffix={s.suffix} prefix={s.prefix} />
+                      {s.to !== undefined ? <Counter to={s.to} suffix={s.suffix ?? ""} /> : s.text}
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
                       {s.label}
@@ -266,7 +305,7 @@ function GoogleAdsPage() {
                   Ads Built Around <span className="text-gradient-heat">Cost Per Booked Job</span>
                 </>
               }
-              subtitle="Not clicks, not impressions — the number that actually matters to your business."
+              subtitle="Not clicks, not impressions. The number that actually matters to your business."
             />
 
             <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -309,9 +348,11 @@ function GoogleAdsPage() {
               eyebrow="How it works"
               title={
                 <>
-                  From Launch to Leads in <span className="text-gradient-heat">Under 2 Weeks</span>
+                  From Kickoff to Live Campaigns in{" "}
+                  <span className="text-gradient-heat">2 to 3 Weeks</span>
                 </>
               }
+              subtitle="Timing depends on how quickly we get access to your accounts and your approvals."
               align="left"
             />
             <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -322,6 +363,9 @@ function GoogleAdsPage() {
                       {step.week}
                     </p>
                     <h3 className="mt-3 font-display text-base leading-snug">{step.title}</h3>
+                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                      {step.description}
+                    </p>
                   </div>
                 </Reveal>
               ))}
@@ -391,9 +435,9 @@ function GoogleAdsPage() {
                     Case study in progress
                   </div>
                   <div className="flex flex-1 flex-col p-6">
-                    <h3 className="text-base">Google Ads case study coming soon</h3>
+                    <h3 className="text-base">Google Ads Case Study, Coming Soon</h3>
                     <p className="mt-2 flex-1 text-sm text-muted-foreground">
-                      We're onboarding HVAC companies for Google Ads management this quarter.
+                      Our next campaign results will be featured here.
                     </p>
                     <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-heat">
                       View All Work
@@ -411,10 +455,10 @@ function GoogleAdsPage() {
                   <h3 className="font-display text-lg">Become Our Next Ads Case Study</h3>
                   <p className="mt-2.5 max-w-xs text-sm text-muted-foreground">
                     We're onboarding a small number of HVAC companies this quarter for Google Ads
-                    management — be featured here.
+                    management, and featuring each one here.
                   </p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-heat">
-                    Get in Touch
+                    Claim Your Spot
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                   </span>
                 </Link>
@@ -441,11 +485,12 @@ function GoogleAdsPage() {
                 <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
                   <div>
                     <h3 className="font-display text-xl sm:text-2xl">
-                      Ads Management starts at £400/mo + ad spend
+                      Google Ads management starts at $400/mo + ad spend
                     </h3>
                     <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-                      Ad spend is paid directly to Google, separate from our management fee. Full
-                      breakdown on the pricing page.
+                      Ad spend is paid directly to Google, separate from our management fee. Your
+                      exact monthly price is confirmed with you before you commit, with a 3-month
+                      minimum. Full breakdown on the pricing page.
                     </p>
                   </div>
                   <MagneticButton href="/pricing" variant="heat" className="flex-none">
@@ -511,7 +556,9 @@ function GoogleAdsPage() {
                     to={serviceHrefs[s.slug as keyof typeof serviceHrefs]}
                     className="group flex h-full flex-col rounded-2xl border border-border bg-surface/40 p-5 backdrop-blur-md transition-colors hover:border-primary/40"
                   >
-                    <h3 className="font-display text-sm leading-snug">{s.shortTitle}</h3>
+                    <h3 className="font-display text-sm leading-snug">
+                      {s.slug === "websites" ? "Website Design" : s.shortTitle}
+                    </h3>
                     <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground">
                       {s.tagline}
                     </p>
@@ -539,7 +586,7 @@ function GoogleAdsPage() {
           primaryHref="/contact"
           secondaryLabel="See Pricing"
           secondaryHref="/pricing"
-          footnote="We reply within 4 hours · No obligation"
+          footnote="No sales pitch · No obligation"
         />
       </main>
     </div>

@@ -24,20 +24,19 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import work1 from "@/assets/work-1.jpg";
-import work2 from "@/assets/work-2.jpg";
 import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/seo";
 
-const title = "HVAC Local SEO Services | Rank Higher on Google for Heating & Cooling Searches";
+const title = "HVAC Local SEO Services | Rank Higher on Google";
 const description =
-  "Get your HVAC business to the top of Google in your local area. Our SEO service is built exclusively around how homeowners and businesses search for HVAC services.";
+  "Local SEO built exclusively for HVAC companies. Get found on Google Maps and in local search by homeowners ready to book. Free 30-minute strategy call.";
 
 const faqs = [
   {
     question: "How long until we see rankings improve?",
     answer:
-      "Most clients see meaningful movement within 3-6 months. We'll give you an honest month-by-month outlook, not a guaranteed timeline nobody can promise.",
+      "Most clients see meaningful movement within 3 to 6 months. We'll give you an honest month-by-month outlook, not a guaranteed timeline nobody can promise.",
   },
   {
     question: "Do you guarantee rankings?",
@@ -47,16 +46,22 @@ const faqs = [
   {
     question: "What's included in local SEO?",
     answer:
-      "Google Business Profile optimisation, on-page SEO, service-area landing pages, citation building, and monthly content and reporting.",
+      "Google Business Profile setup and optimisation, service-area landing pages, local citation building, technical SEO audits, ongoing content targeting local search, and a monthly report.",
   },
   {
     question: "Do you handle Google Business Profile management?",
-    answer: "Yes — optimisation, review strategy, and ongoing posts are part of the SEO retainer.",
+    answer:
+      "Yes. Setup, optimisation, review strategy, and ongoing posts are all part of the SEO retainer.",
   },
   {
     question: "Is SEO ongoing or one-time?",
     answer:
-      "Ongoing. SEO isn't a one-off fix — rankings need to be maintained and built on month over month, which is why it's billed as a monthly retainer with a 3-month minimum commitment.",
+      "Ongoing. SEO isn't a one-off fix. Rankings need to be maintained and built on month over month, which is why it's a monthly plan with a 3-month minimum. After the first 3 months, it continues month to month.",
+  },
+  {
+    question: "Can I get SEO without a new website from you?",
+    answer:
+      "Yes, SEO can be booked on its own. If your current site has problems holding your rankings back, we'll tell you plainly in the first-month audit, and you decide whether to fix them or rebuild.",
   },
 ];
 
@@ -137,10 +142,10 @@ export const Route = createFileRoute("/services/seo")({
   }),
 });
 
-const stats = [
-  { to: 4, suffix: " months", prefix: "", label: "Avg. time to first page" },
-  { to: 100, suffix: "%", prefix: "", label: "Best organic enquiry increase" },
-  { to: 3, suffix: " months", prefix: "", label: "Minimum commitment, stated upfront" },
+const stats: { to?: number; suffix?: string; text?: string; label: string }[] = [
+  { to: 3, suffix: " months", label: "Minimum commitment, stated upfront" },
+  { text: "Monthly", label: "Ranking and traffic report in plain English" },
+  { to: 100, suffix: "%", label: "HVAC-focused strategy, no generic SEO playbooks" },
 ];
 
 const features = [
@@ -148,19 +153,19 @@ const features = [
     icon: MapPin,
     title: "Google Business Profile Optimisation",
     description:
-      "Full optimisation and a review strategy, since your GBP listing is often the first thing a searcher sees.",
+      "Setup (or clean-up) and full optimisation, plus a review strategy, since your Google listing is often the first thing a searcher sees.",
   },
   {
     icon: LayoutTemplate,
     title: "Service-Area Landing Pages",
     description:
-      "Dedicated pages for each service and town you cover — not one page trying to rank for everything.",
+      "Dedicated pages for each service and town you cover, not one page trying to rank for everything.",
   },
   {
     icon: ClipboardCheck,
     title: "Local Citation Building",
     description:
-      "Consistent name, address, and phone details across directories — inconsistency quietly hurts your rankings.",
+      "Consistent name, address, and phone details across directories. Inconsistency quietly hurts your rankings.",
   },
   {
     icon: Gauge,
@@ -191,9 +196,9 @@ const timeline = [
   },
   {
     week: "Month 1–2",
-    title: "On-Page + GBP Optimisation",
+    title: "On-Page + Google Business Profile Setup",
     description:
-      "Service and location pages optimised, Google Business Profile fully built out and active.",
+      "Your service and location pages are optimised, and your Google Business Profile is set up or cleaned up and fully built out.",
   },
   {
     week: "Month 2–3",
@@ -245,7 +250,7 @@ function SeoPage() {
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Local SEO built specifically around how homeowners and businesses search for HVAC
-                services — not generic SEO advice recycled from a different industry.
+                services, not generic SEO advice recycled from a different industry.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
                 <MagneticButton href="/contact" size="lg">
@@ -263,7 +268,7 @@ function SeoPage() {
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
                     <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-                      <Counter to={s.to} suffix={s.suffix} prefix={s.prefix} />
+                      {s.to !== undefined ? <Counter to={s.to} suffix={s.suffix ?? ""} /> : s.text}
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
                       {s.label}
@@ -286,7 +291,7 @@ function SeoPage() {
                   Built Around <span className="text-gradient-cool">Real Local Search</span>
                 </>
               }
-              subtitle='Not generic SEO checklist items — work built around how "boiler repair near me" searches actually behave.'
+              subtitle='Not generic SEO checklist items. Work built around how "AC repair near me" or "Boiler repair near me" searches actually behave.'
             />
 
             <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -333,6 +338,7 @@ function SeoPage() {
                   <span className="text-gradient-cool">Month by Month</span>
                 </>
               }
+              subtitle="Most clients see meaningful movement within 3 to 6 months. Here's what we're doing along the way."
               align="left"
             />
             <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -372,7 +378,7 @@ function SeoPage() {
 
             <div className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <Reveal delay={0} className="h-full">
-                <Link to="/work/$slug" params={{ slug: "yorkshire-boiler-specialists" }}>
+                <Link to="/work/$slug" params={{ slug: "midlands-hvac-co" }}>
                   <motion.article
                     whileHover={{ y: -8 }}
                     transition={{ type: "spring", stiffness: 260, damping: 22 }}
@@ -380,22 +386,22 @@ function SeoPage() {
                   >
                     <div className="relative overflow-hidden">
                       <img
-                        src={work2}
-                        alt="Local SEO results preview for Yorkshire Boiler Specialists"
+                        src={work1}
+                        alt="Local SEO results preview for Midlands HVAC"
                         width={1200}
                         height={800}
                         loading="lazy"
                         className="aspect-[3/2] w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                       />
                       <span className="absolute right-3 top-3 rounded-full border border-primary/40 bg-background/85 px-2.5 py-1 text-[11px] font-semibold text-primary">
-                        Page 1 in 4mo
+                        +536% clicks
                       </span>
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/25 to-transparent opacity-90" />
                     </div>
                     <div className="flex flex-1 flex-col p-6">
-                      <h3 className="text-base">Yorkshire Boiler Specialists</h3>
+                      <h3 className="text-base">Midlands HVAC</h3>
                       <p className="mt-2 flex-1 text-sm text-muted-foreground">
-                        &ldquo;First page of Google in 4 months&rdquo; — Leeds
+                        &ldquo;6x website clicks in 4 weeks&rdquo;
                       </p>
                       <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
                         View Case Study
@@ -407,38 +413,19 @@ function SeoPage() {
               </Reveal>
 
               <Reveal delay={0.06} className="h-full">
-                <Link to="/work/$slug" params={{ slug: "midlands-hvac-co" }}>
-                  <motion.article
-                    whileHover={{ y: -8 }}
-                    transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background/70 backdrop-blur-md transition-colors hover:border-primary/40"
+                <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-background/40 p-8 text-center backdrop-blur-md">
+                  <h3 className="font-display text-lg">SEO Case Study, Coming Soon</h3>
+                  <p className="mt-2.5 max-w-xs text-sm text-muted-foreground">
+                    Our next campaign results will be featured here.
+                  </p>
+                  <Link
+                    to="/work"
+                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
                   >
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={work1}
-                        alt="Local SEO results preview for Midlands HVAC Co."
-                        width={1200}
-                        height={800}
-                        loading="lazy"
-                        className="aspect-[3/2] w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <span className="absolute right-3 top-3 rounded-full border border-primary/40 bg-background/85 px-2.5 py-1 text-[11px] font-semibold text-primary">
-                        +300% enquiries
-                      </span>
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/25 to-transparent opacity-90" />
-                    </div>
-                    <div className="flex flex-1 flex-col p-6">
-                      <h3 className="text-base">Midlands HVAC Co.</h3>
-                      <p className="mt-2 flex-1 text-sm text-muted-foreground">
-                        &ldquo;300% increase in organic enquiries&rdquo; — Birmingham
-                      </p>
-                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                        View Case Study
-                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                      </span>
-                    </div>
-                  </motion.article>
-                </Link>
+                    View All Work
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </Reveal>
 
               <Reveal delay={0.12} className="h-full">
@@ -448,11 +435,11 @@ function SeoPage() {
                 >
                   <h3 className="font-display text-lg">Become Our Next Case Study</h3>
                   <p className="mt-2.5 max-w-xs text-sm text-muted-foreground">
-                    We're onboarding a small number of HVAC companies this quarter for local SEO —
-                    be featured here.
+                    We're onboarding a small number of HVAC companies this quarter for local SEO,
+                    and featuring each one here.
                   </p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                    Get in Touch
+                    Claim Your Spot
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                   </span>
                 </Link>
@@ -482,8 +469,8 @@ function SeoPage() {
                       SEO Retainer starts at $500/mo
                     </h3>
                     <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-                      No lock-in beyond the initial 3-month minimum. Full breakdown on the pricing
-                      page.
+                      Your exact monthly price is confirmed with you before you commit, with a
+                      3-month minimum and no lock-in after that. Full breakdown on the pricing page.
                     </p>
                   </div>
                   <MagneticButton href="/pricing" className="flex-none">
@@ -549,7 +536,9 @@ function SeoPage() {
                     to={serviceHrefs[s.slug as keyof typeof serviceHrefs]}
                     className="group flex h-full flex-col rounded-2xl border border-border bg-surface/40 p-5 backdrop-blur-md transition-colors hover:border-primary/40"
                   >
-                    <h3 className="font-display text-sm leading-snug">{s.shortTitle}</h3>
+                    <h3 className="font-display text-sm leading-snug">
+                      {s.slug === "websites" ? "Website Design" : s.shortTitle}
+                    </h3>
                     <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground">
                       {s.tagline}
                     </p>
@@ -576,7 +565,7 @@ function SeoPage() {
           primaryHref="/contact"
           secondaryLabel="See Pricing"
           secondaryHref="/pricing"
-          footnote="We reply within 4 hours · No obligation"
+          footnote="No sales pitch · No obligation"
         />
       </main>
     </div>
