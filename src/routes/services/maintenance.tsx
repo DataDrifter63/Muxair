@@ -27,31 +27,30 @@ import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/maintenance";
 
-const title =
-  "HVAC Website Maintenance & Hosting | Ongoing Support for Heating & Cooling Companies";
+const title = "HVAC Website Maintenance | Ongoing Support & Security";
 const description =
-  "Keep your HVAC website fast, secure, and up to date. Monthly maintenance plans with priority support, updates, and performance monitoring.";
+  "Keep your HVAC website fast, secure, and up to date. Monthly maintenance plans with priority support, updates, and monitoring. Cancel anytime.";
 
 const timeline = [
   {
     week: "Week 1",
     title: "Onboarding & Site Audit",
-    desc: "We review your current site, set up monitoring, and flag anything urgent right away.",
+    desc: "We review your current site, get access set up, and flag anything urgent right away.",
   },
   {
-    week: "Week 1–2",
+    week: "Week 1-2",
     title: "Monitoring Setup",
-    desc: "Uptime, security, and Core Web Vitals tracking configured so nothing slips through unnoticed.",
+    desc: "Uptime, security, and Core Web Vitals monitoring is configured and a performance baseline is recorded.",
   },
   {
     week: "Ongoing",
     title: "Regular Maintenance & Updates",
-    desc: "Backups, software updates, and small content edits handled on a rolling basis.",
+    desc: "Backups, software updates, and small content changes handled on a rolling basis.",
   },
   {
     week: "Monthly",
     title: "Reporting & Review",
-    desc: "A plain-English summary of what was done, what's changed, and what's coming up next.",
+    desc: "A plain-English summary of what we did, what we found, and what's next.",
   },
 ];
 
@@ -59,26 +58,36 @@ const faqs = [
   {
     question: "Is maintenance required after you build my site?",
     answer:
-      "Not required, but recommended — most sites that skip maintenance see slow performance and security issues creep in within a year.",
+      "Not required, but recommended. Most sites that skip maintenance see slow performance and security issues creep in within a year.",
+  },
+  {
+    question: "What's the difference between maintenance and the 30-day launch warranty?",
+    answer:
+      "The launch warranty covers fixing anything broken or missed in our own build during the first 30 days. Maintenance is ongoing care after that: monitoring, backups, updates, and support.",
   },
   {
     question: "What happens if my site goes down?",
     answer:
-      "Uptime monitoring alerts us immediately, and priority support means we're fixing it right away, not queued behind other tickets.",
+      "Uptime monitoring alerts us as soon as it happens, and we start diagnosing right away. If the cause is on your hosting provider's side, we work with them to get it resolved.",
   },
   {
-    question: "Can I cancel anytime?",
-    answer: "Yes — Maintenance is the one service with no minimum term. Cancel whenever you like.",
+    question: "Do you provide hosting?",
+    answer:
+      "No. You buy hosting directly from a provider, so the account stays in your name. We'll guide you to a reliable option, then monitor, back up, and maintain your site on it.",
+  },
+  {
+    question: "What's included in the monthly fee, and what costs extra?",
+    answer:
+      "Included: uptime and security monitoring, regular backups, Core Web Vitals monitoring, software and plugin updates, small content changes like swapping an offer or updating service details, and priority support. Your exact monthly price depends on your site's size and how much ongoing work you want handled, and we confirm it before you commit. Not included: hosting and domain, which you pay directly to the providers, and larger projects like new pages or a redesign, which we quote separately.",
   },
   {
     question: "Do you maintain sites you didn't build?",
     answer:
-      "In most cases, yes, after a quick technical review to make sure the existing site is in a state we're comfortable maintaining.",
+      "In most cases, yes, after a quick technical review to make sure the site is in a state we're comfortable maintaining.",
   },
   {
-    question: "What's the difference between the two price tiers?",
-    answer:
-      "The higher tier adds faster response times and more frequent content/offer updates — we'll recommend the right one based on how actively you want your site managed.",
+    question: "Can I cancel anytime?",
+    answer: "Yes. Maintenance is the one service with no minimum term. Cancel whenever you like.",
   },
 ];
 
@@ -103,9 +112,9 @@ export const Route = createFileRoute("/services/maintenance")({
           "@context": "https://schema.org",
           "@type": "Service",
           serviceType: "Website Maintenance",
-          name: "HVAC Website Maintenance & Hosting",
+          name: "HVAC Website Maintenance",
           description:
-            "Ongoing website maintenance, hosting, security, and support for HVAC business websites.",
+            "Ongoing website maintenance for HVAC business websites: uptime and security monitoring, regular backups, software updates, and priority support.",
           provider: { "@type": "ProfessionalService", name: "Muxair" },
           areaServed: [
             { "@type": "Country", name: "United States" },
@@ -115,7 +124,7 @@ export const Route = createFileRoute("/services/maintenance")({
           offers: {
             "@type": "Offer",
             name: "Website Maintenance",
-            description: "Hosting, security, updates, priority support.",
+            description: "Monitoring, backups, updates, and priority support.",
             priceSpecification: {
               "@type": "PriceSpecification",
               minPrice: 79,
@@ -157,10 +166,16 @@ export const Route = createFileRoute("/services/maintenance")({
   }),
 });
 
-const stats = [
-  { to: 99, suffix: ".9%", prefix: "", label: "Uptime monitored" },
-  { to: 0, suffix: "", prefix: "", label: "Minimum term — cancel anytime" },
+const stats: {
+  to?: number;
+  suffix?: string;
+  prefix?: string;
+  text?: string;
+  label: string;
+}[] = [
   { to: 79, suffix: "+", prefix: "$", label: "Starting price per month" },
+  { to: 0, label: "Minimum term, cancel anytime" },
+  { text: "Monthly", label: "Plain-English site health report" },
 ];
 
 const features = [
@@ -168,13 +183,13 @@ const features = [
     icon: ShieldCheck,
     title: "Uptime & Security Monitoring",
     description:
-      "We're alerted the moment your site goes down or shows signs of a security issue — not when a customer tells you.",
+      "We're alerted the moment your site goes down or shows signs of a security issue, not when a customer tells you.",
   },
   {
     icon: RefreshCcw,
     title: "Regular Backups",
     description:
-      "Automatic backups so a bad update or attack is a quick restore, not a rebuild from scratch.",
+      "Regular backups, so a bad update or attack means a quick restore, not a rebuild from scratch.",
   },
   {
     icon: Gauge,
@@ -192,7 +207,7 @@ const features = [
     icon: Sparkles,
     title: "Seasonal Content Updates",
     description:
-      "Offers, service messaging, and content refreshed as your business needs shift through the year.",
+      "Small changes like swapping an offer or updating service details, as your business shifts through the year.",
   },
   {
     icon: Timer,
@@ -237,8 +252,8 @@ function MaintenancePage() {
                 <span className="text-gradient-cool">Fast, Secure &amp; Up to Date</span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                A website is never really &ldquo;done&rdquo; — ongoing updates, monitoring, and
-                support so it keeps working for you long after launch, instead of quietly degrading.
+                A website is never really &ldquo;done.&rdquo; It needs ongoing updates, monitoring,
+                and support to keep working for you long after launch, instead of quietly degrading.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
                 <MagneticButton href="/contact" size="lg">
@@ -256,7 +271,11 @@ function MaintenancePage() {
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
                     <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-                      <Counter to={s.to} suffix={s.suffix} prefix={s.prefix} />
+                      {s.to !== undefined ? (
+                        <Counter to={s.to} suffix={s.suffix ?? ""} prefix={s.prefix ?? ""} />
+                      ) : (
+                        s.text
+                      )}
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
                       {s.label}
@@ -280,7 +299,7 @@ function MaintenancePage() {
                   <span className="text-gradient-cool">Keeps Sites Running</span>
                 </>
               }
-              subtitle="The kind of thing nobody notices when it's working — and everybody notices when it isn't."
+              subtitle="The kind of thing nobody notices when it's working, and everybody notices when it isn't."
             />
 
             <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -326,6 +345,7 @@ function MaintenancePage() {
                   Set Up Once, <span className="text-gradient-cool">Watched All Year</span>
                 </>
               }
+              subtitle="Setup takes about two weeks, then maintenance runs in the background every month."
               align="left"
             />
             <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -377,9 +397,9 @@ function MaintenancePage() {
                     Case study in progress
                   </div>
                   <div className="flex flex-1 flex-col p-7">
-                    <h3 className="text-lg">Maintenance case study coming soon</h3>
+                    <h3 className="text-lg">Maintenance Case Study, Coming Soon</h3>
                     <p className="mt-2 flex-1 text-sm text-muted-foreground">
-                      We're onboarding HVAC companies for ongoing site maintenance this quarter.
+                      Our first maintenance client results will be featured here.
                     </p>
                     <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
                       View All Work
@@ -397,10 +417,10 @@ function MaintenancePage() {
                   <h3 className="font-display text-lg">Become Our Next Case Study</h3>
                   <p className="mt-2.5 max-w-xs text-sm text-muted-foreground">
                     We're onboarding a small number of HVAC companies this quarter for ongoing
-                    maintenance — be featured here.
+                    maintenance, and featuring each one here.
                   </p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                    Get in Touch
+                    Claim Your Spot
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                   </span>
                 </Link>
@@ -430,7 +450,9 @@ function MaintenancePage() {
                       Maintenance starts at $79/mo
                     </h3>
                     <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-                      No minimum term — cancel anytime. Full tier breakdown on the pricing page.
+                      No minimum term, cancel anytime. Your exact price depends on your site and how
+                      much ongoing work you want handled, and is confirmed before you commit. Full
+                      breakdown on the pricing page.
                     </p>
                   </div>
                   <MagneticButton href="/pricing" className="flex-none">
@@ -522,7 +544,7 @@ function MaintenancePage() {
           primaryHref="/contact"
           secondaryLabel="See Pricing"
           secondaryHref="/pricing"
-          footnote="We reply within 4 hours · No obligation"
+          footnote="No sales pitch · No obligation"
         />
       </main>
     </div>

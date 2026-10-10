@@ -124,8 +124,8 @@ const contactInfo = [
   },
   {
     icon: Clock,
-    title: "We reply within 4 hours",
-    subtitle: "Usually much sooner",
+    title: "We Respond Fast",
+    subtitle: "Usually Within 1-2 Business Days",
   },
   {
     icon: Check,
@@ -136,15 +136,16 @@ const contactInfo = [
 
 const nextSteps = [
   {
-    title: "We look you up",
-    description: "Your current site, Google presence and reviews — before we call.",
+    title: "We Look You Up",
+    description: "Your current site, Google presence, and reviews, before we call.",
   },
   {
-    title: "We call you",
-    description: "Within 4 hours, to find a time for a proper 30-minute strategy call.",
+    title: "We Reach Out",
+    description:
+      "We'll get in touch within 1-2 business days to find a time for a proper 30-minute strategy call.",
   },
   {
-    title: "You get a clear plan",
+    title: "You Get a Clear Plan",
     description: "What's costing you leads, and what we'd recommend doing about it.",
   },
 ];
@@ -159,7 +160,7 @@ const faqs = [
   {
     question: "What happens after I submit the form?",
     answer:
-      "We'll get back to you within 4 business hours to book a free 30-minute strategy call. No pitch decks, no pressure — just an honest look at your online presence and what's holding you back.",
+      "We'll get back to you within 1-2 business days to book a free 30-minute strategy call. No pitch decks, no pressure — just an honest look at your online presence and what's holding you back.",
   },
   {
     question: "Do I need to know which service I want first?",
@@ -167,9 +168,9 @@ const faqs = [
       "Not at all. Just tell us where you're at and what you're trying to fix. We'll figure out the right approach together on the call.",
   },
   {
-    question: "Do you work with HVAC companies outside the UK?",
+    question: "Do you work with HVAC companies outside the US and UK?",
     answer:
-      "Yes. We work with heating and cooling businesses across the UK, US, Canada, and Australia. Local SEO and ad strategy is adapted to your specific market.",
+      "Yes. We primarily work with HVAC companies in the US and UK, and we're actively expanding into Canada and Australia. If you're outside these regions, reach out, we may still be able to help.",
   },
   {
     question: "Is the strategy call really free?",
@@ -185,6 +186,16 @@ const faqs = [
     question: "What information should I have ready for the call?",
     answer:
       "Nothing formal. It helps to roughly know your service area, your busiest seasons, and what you feel isn't working right now. That's it — we handle the rest.",
+  },
+  {
+    question: "Do I need an existing website to get started?",
+    answer:
+      "Not at all. Whether you're starting from scratch or replacing an outdated site, our process works the same way, we'll walk you through everything on the strategy call.",
+  },
+  {
+    question: "What if I'm not ready to commit to a full package yet?",
+    answer:
+      "That's exactly what the strategy call is for. No pressure, no pitch, we'll give you honest advice on what to prioritize, even if you're not ready to start right away.",
   },
 ];
 
@@ -290,8 +301,8 @@ function ContactPage() {
                 <span className="text-gradient-cool">Booked Jobs</span>
               </h1>
               <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Takes about a minute. Tell us a bit about your business and we'll call you — no live
-                calendar, no bot, an actual person.
+                It takes about a minute. Tell us a bit about your business and we'll call you back.
+                No live calendar, no bot, an actual person.
               </p>
             </Reveal>
           </div>
@@ -489,7 +500,7 @@ function ContactPage() {
                         </p>
                         <h2 className="mt-2 font-display text-2xl">Where should we send this?</h2>
                         <p className="mt-1.5 text-sm text-muted-foreground">
-                          We reply within 4 hours — usually faster.
+                          We'll get in touch within 1-2 business days.
                         </p>
 
                         <div className="mt-7 space-y-5">

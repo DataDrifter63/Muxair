@@ -67,7 +67,7 @@ export const Route = createFileRoute("/process/")({
             {
               "@type": "HowToStep",
               name: "Strategy & Proposal",
-              text: "A custom plan with scope, timeline, and fixed-price quote sent within 48 hours.",
+              text: "A custom plan with scope, timeline, and fixed-price quote sent within 72 hours.",
             },
             {
               "@type": "HowToStep",
@@ -106,8 +106,7 @@ export const Route = createFileRoute("/process/")({
 const stats = [
   { to: 5, suffix: "", label: "Clear stages" },
   { to: 30, suffix: " days", label: "Average time to launch" },
-  { to: 48, suffix: " hrs", label: "Proposal turnaround" },
-  { to: 30, suffix: " days", label: "Post-launch support included" },
+  { to: 72, suffix: " hrs", label: "Proposal turnaround" },
 ];
 
 const steps = [
@@ -117,24 +116,24 @@ const steps = [
     tag: "30 min · Free",
     tone: "cool" as const,
     description:
-      "We learn your business properly before recommending anything — your service area, your seasonal peaks, what's working, and what isn't.",
+      "We learn your business properly before recommending anything: your service area, your seasonal peaks, what's working, and what isn't.",
     checklist: [
       "Live look at your current website and Google presence",
       "Understand your busiest and slowest months",
-      "No pitch — just an honest assessment",
+      "No pitch, just an honest assessment",
     ],
   },
   {
     number: "2",
     title: "Strategy & Proposal",
-    tag: "Within 48 hours",
+    tag: "Within 72 hours",
     tone: "heat" as const,
     description:
-      "We send a custom plan built around what we learned on the call — not a generic package.",
+      "We send a custom plan built around what we learned on the call, not a one-size-fits-all pitch.",
     checklist: [
       "Clear scope of exactly what's included",
       "A realistic timeline, not an optimistic one",
-      "Fixed-price quote — no hourly surprises later",
+      "Fixed-price quote, no hourly surprises later",
     ],
   },
   {
@@ -146,7 +145,7 @@ const steps = [
       "Wireframes and visual design come to you for sign-off before a single line of code gets written.",
     checklist: [
       "See the full layout and look before build starts",
-      "Request changes here for free — this is the cheapest stage to adjust",
+      "Request changes here for free, this is the cheapest stage to adjust",
       "No code committed until you're happy with the direction",
     ],
   },
@@ -156,7 +155,7 @@ const steps = [
     tag: "You review as we go",
     tone: "heat" as const,
     description:
-      "We build the approved design and write HVAC-specific copy for every page — not filler text waiting for you to rewrite it.",
+      "We build the approved design and write HVAC-specific copy for every page, not filler text waiting for you to rewrite it.",
     checklist: [
       "Content written by our in-house HVAC copywriter",
       "Staging link so you can watch progress, not just wait",
@@ -173,23 +172,23 @@ const steps = [
     checklist: [
       "A training session so you can make basic edits yourself",
       "30 days of post-launch support included, no extra cost",
-      "Direct line to the person who built it — not a support ticket",
+      "Direct line to the person who built it, not a support ticket",
     ],
   },
 ];
 
 const proof = {
-  quote:
-    "They kept us updated at every stage — no surprises, no chasing for updates. We knew exactly where things stood the whole way through.",
-  highlight: "no surprises, no chasing for updates",
-  name: "Emily Marsh",
-  role: "Home Counties Heating",
+  before:
+    "Exceptional work: diligent, detail oriented and great communications! Most importantly they ",
+  highlight: "go above and beyond and get the job done",
+  after: "!",
+  name: "Raymond C.",
+  role: "CEO, Meridian",
 };
 
 const differentiators = [
   "Fixed price, agreed before work starts",
   "You approve design before any code is written",
-  "30 days of post-launch support included",
   "One point of contact from call to launch",
 ];
 
@@ -213,6 +212,21 @@ const faqs = [
     question: "What if my project needs more than 30 days?",
     answer:
       "30 days is our average for a standard site. Larger builds (e-commerce, multi-location sites) get a realistic timeline in your proposal — we'd rather tell you upfront than miss a promised date.",
+  },
+  {
+    question: "Does the 30-day timeline apply to SEO or Ads too?",
+    answer:
+      "No, this process page covers website builds specifically. SEO typically needs 3 to 6 months to show real movement, and Ads campaigns can launch in as little as 1 to 2 weeks. See the Services pages for each one's actual timeline.",
+  },
+  {
+    question: "What if my project is more complex than a standard site?",
+    answer:
+      "Bigger builds, like e-commerce, booking systems, or multi-location sites, get a realistic timeline in your proposal. We'd rather tell you upfront than promise 30 days and miss it.",
+  },
+  {
+    question: "How much of my time will this actually take?",
+    answer:
+      "Most of the work is on us. You'll need to review and approve at three points, design, build, and launch, plus provide any content or photos you want included. Figure a few focused hours total, not a part-time job.",
   },
 ];
 
@@ -243,7 +257,8 @@ function ProcessPage() {
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Clear stages, clear timelines, zero surprises. Here's exactly how we work with HVAC
-                companies, from the first call to the day your site goes live.
+                companies, from the first call to the day your site goes live. Running SEO or Ads
+                only? See how that works on each service page.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
                 <MagneticButton href="/contact" size="lg">
@@ -257,7 +272,7 @@ function ProcessPage() {
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:grid-cols-4 sm:px-10">
+              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
                     <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
@@ -284,7 +299,7 @@ function ProcessPage() {
                   Five Steps. <span className="text-gradient-cool">No Guesswork.</span>
                 </>
               }
-              subtitle="Every project follows the same structure — so you always know what's happening and what's next."
+              subtitle="Every project follows the same structure, so you always know what's happening and what's next."
             />
 
             <div ref={timelineRef} className="relative mt-14">
@@ -380,9 +395,9 @@ function ProcessPage() {
                 >
                   &ldquo;
                 </span>
-                They kept us updated at every stage —{" "}
-                <span className="text-gradient-cool">{proof.highlight}</span>. We knew exactly where
-                things stood the whole way through.
+                {proof.before}
+                <span className="text-gradient-cool">{proof.highlight}</span>
+                {proof.after}
                 <span
                   className="ml-1.5 font-display text-3xl leading-none text-primary/40 sm:text-4xl"
                   aria-hidden
@@ -401,7 +416,7 @@ function ProcessPage() {
         <section className="section-shell">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <Reveal>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid gap-6 sm:grid-cols-3">
                 {differentiators.map((item) => (
                   <div key={item} className="flex items-start gap-3">
                     <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
@@ -449,10 +464,10 @@ function ProcessPage() {
               Ready to Start With a <span className="text-gradient-cool">Discovery Call?</span>
             </>
           }
-          description="No pressure, no obligation — just an honest look at your website and what step 1 would look like for your business."
+          description="No pressure, no obligation, just an honest look at your website and what step 1 would look like for your business."
           primaryLabel="Get a Free Strategy Call"
           primaryHref="/contact"
-          footnote="We reply within 4 hours · No obligation"
+          footnote="No sales pitch · No obligation"
         />
       </main>
     </div>

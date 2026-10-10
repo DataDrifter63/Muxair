@@ -78,7 +78,7 @@ export const Route = createFileRoute("/work/")({
 });
 
 const stats = [
-  { to: 300, suffix: "%", label: "Best organic enquiry increase" },
+  { to: 284, prefix: "+", suffix: "%", label: "Inbound call increase" },
   { to: 30, suffix: " days", label: "Average time to launch" },
   { to: 100, suffix: "%", label: "HVAC-only clients" },
 ];
@@ -94,24 +94,24 @@ const filters: { id: WorkService | "all"; label: string }[] = [
 const reviews = [
   {
     quote:
-      "First agency that didn't need HVAC explained to them. They planned the whole build around our winter demand peak.",
-    name: "Sarah Doyle",
-    company: "Yorkshire Boiler Specialists",
-    badge: "Page 1 in 4mo",
+      "Couldn't be happier with Musab's work. The communication was very prompt and clear. I never had to explain anything twice and he delivered on everything we discussed. I would highly recommend his services and wouldn't hesitate to utilise his skills again in the future.",
+    name: "Sam T.",
+    company: "Owner, Swansea, UK",
+    badge: "New Website Design",
   },
   {
     quote:
-      "The new site plus their Google Ads gave us more commercial AC quotes in a month than the whole previous quarter.",
-    name: "Aaron Price",
-    company: "London AC Installer",
-    badge: "40 quotes/30d",
+      "Helped up with completely revamping one site and updating another. Very communicative and easy to work with. Such a pleasure collaborating on these projects, thank you Musab!",
+    name: "Raymond C.",
+    company: "CEO, New York, US",
+    badge: "SEO & Website Revamp",
   },
   {
     quote:
-      "Our booking rate barely moved for years. Within a few months of the redesign it climbed from 4% to 19% — same traffic, more booked jobs.",
-    name: "Ryan Holt",
-    company: "Coastal Cooling Ltd.",
-    badge: "4% → 19%",
+      "Isbah is very professional. He pays attention to details, carefully asks about changes, and executes them professionally. I would gladly work with him again in the future. I can recommend him to anyone.",
+    name: "Rachel W.",
+    company: "Business Owner, London, UK",
+    badge: "Website Design & Local SEO",
   },
 ];
 
@@ -137,10 +137,11 @@ function WorkIndex() {
                 Our Work
               </span>
               <h1 className="mt-5 text-balance font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
-                Real Websites for <span className="text-gradient-cool">Real HVAC Companies</span>
+                Work Built Exclusively for{" "}
+                <span className="text-gradient-cool">HVAC Companies</span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Every project below is a heating, cooling, or air quality business — no portfolio
+                Every project below is a heating, cooling, or air quality business, no portfolio
                 padding from unrelated industries.
               </p>
             </Reveal>
@@ -150,7 +151,7 @@ function WorkIndex() {
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
                     <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-                      <Counter to={s.to} suffix={s.suffix} />
+                      <Counter to={s.to} prefix={s.prefix ?? ""} suffix={s.suffix} />
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
                       {s.label}
@@ -208,10 +209,10 @@ function WorkIndex() {
                 <h3 className="font-display text-lg leading-snug">Become Our Next Case Study</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   We're onboarding a small number of HVAC companies this quarter to work directly
-                  with our whole team — and be featured here.
+                  with our whole team and be featured here.
                 </p>
                 <MagneticButton href="/contact" className="mt-5">
-                  Get in Touch
+                  Claim Your Spot
                 </MagneticButton>
               </div>
             </Reveal>
@@ -266,10 +267,10 @@ function WorkIndex() {
               Want Results Like <span className="text-gradient-cool">These?</span>
             </>
           }
-          description="Book a free strategy call and we'll show you what's possible for your business specifically — not a generic pitch."
+          description="Book a free strategy call and we'll show you what's possible for your business specifically, not a generic pitch."
           primaryLabel="Get a Free Strategy Call"
           primaryHref="/contact"
-          footnote="We reply within 4 hours · No obligation"
+          footnote="Quick, honest advice · No obligation"
         />
       </main>
     </div>

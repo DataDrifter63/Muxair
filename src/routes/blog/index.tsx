@@ -6,10 +6,10 @@ import {
   Calendar,
   ChevronLeft,
   ChevronRight,
+  Lightbulb,
   type LucideIcon,
-  MonitorSmartphone,
+  Megaphone,
   Newspaper,
-  Search,
   Target,
 } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
@@ -81,10 +81,15 @@ export const Route = createFileRoute("/blog/")({
 // to a generic icon for any category coming from Supabase that isn't in
 // this map, so it never breaks on new/unexpected category values.
 const categoryStyle: Record<string, { icon: LucideIcon; tone: "cool" | "heat" }> = {
-  "Website Design": { icon: MonitorSmartphone, tone: "cool" },
-  SEO: { icon: Search, tone: "heat" },
-  "Paid Ads": { icon: Target, tone: "cool" },
+  "Meta Ads": { icon: Megaphone, tone: "cool" },
+  "Google Ads": { icon: Target, tone: "heat" },
+  "Business Tips": { icon: Lightbulb, tone: "cool" },
 };
+
+// Filter tabs are fixed to these three categories (plus "All"), so old demo
+// categories never show up as tabs. Posts must use these exact names.
+const blogCategories = ["Meta Ads", "Google Ads", "Business Tips"];
+const categories = ["All", ...blogCategories];
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -161,13 +166,6 @@ function PostCover({ post, size = "md" }: { post: BlogPostRow; size?: "md" | "lg
 function BlogIndex() {
   const { posts } = Route.useLoaderData();
 
-  // Categories are derived from whatever's actually published in Supabase,
-  // with "All" pinned first — same filter UX as the original design.
-  const categories = useMemo(() => {
-    const unique = Array.from(new Set(posts.map((p) => p.category).filter(Boolean)));
-    return ["All", ...unique];
-  }, [posts]);
-
   const [category, setCategory] = useState("All");
 
   const filtered = useMemo(() => {
@@ -213,8 +211,8 @@ function BlogIndex() {
                 HVAC Marketing, <span className="text-gradient-cool">Explained Simply</span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                No jargon, no filler — practical advice on websites, SEO, and ads written
-                specifically for HVAC business owners.
+                Practical advice on websites, SEO, and ads, written specifically for HVAC business
+                owners. No jargon, no fluff.
               </p>
 
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
@@ -234,27 +232,25 @@ function BlogIndex() {
         <section className="section-shell border-y border-border bg-surface/25">
           <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-            {categories.length > 1 ? (
-              <Reveal>
-                <div className="flex flex-wrap gap-2">
-                  {categories.map((c) => (
-                    <button
-                      key={c}
-                      type="button"
-                      onClick={() => setCategory(c)}
-                      className={cn(
-                        "rounded-full border px-4 py-2 text-sm font-medium transition-colors",
-                        category === c
-                          ? "border-primary/40 bg-primary/10 text-primary"
-                          : "border-border bg-surface/40 text-muted-foreground hover:border-primary/30 hover:text-foreground",
-                      )}
-                    >
-                      {c}
-                    </button>
-                  ))}
-                </div>
-              </Reveal>
-            ) : null}
+            <Reveal>
+              <div className="flex flex-wrap gap-2">
+                {categories.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => setCategory(c)}
+                    className={cn(
+                      "rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                      category === c
+                        ? "border-primary/40 bg-primary/10 text-primary"
+                        : "border-border bg-surface/40 text-muted-foreground hover:border-primary/30 hover:text-foreground",
+                    )}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+            </Reveal>
 
             {filtered.length === 0 ? (
               <Reveal delay={0.1}>
@@ -398,9 +394,10 @@ function BlogIndex() {
               Want This Handled <span className="text-gradient-cool">For You?</span>
             </>
           }
-          description="Skip the DIY audit — book a free strategy call and we'll review your actual website with you."
+          description="Skip the DIY audit. Book a free strategy call and we'll review your actual website with you."
           primaryLabel="Get a Free Strategy Call"
           primaryHref="/contact"
+          footnote="No sales pitch · No obligation"
         />
       </main>
     </div>

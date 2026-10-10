@@ -2,13 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
-import {
-  MagneticButton,
-  Reveal,
-  SectionHeading,
-  TechBackdrop,
-  Counter,
-} from "@/components/site/primitives";
+import { MagneticButton, Reveal, SectionHeading, TechBackdrop } from "@/components/site/primitives";
 import {
   Accordion,
   AccordionContent,
@@ -23,63 +17,68 @@ const PAGE_URL = "https://muxair.com/pricing";
 
 const title = "HVAC Website & Marketing Pricing | Transparent Packages, No Hidden Fees";
 const description =
-  "See exactly what our HVAC website, SEO, and ads packages cost — starting at £1,500. No hidden fees, no surprise quotes.";
+  "See exactly what our HVAC website, SEO, and ads packages cost, starting at $1,200. No hidden fees, no surprise quotes.";
 
-const trustStats = [
-  { to: 0, suffix: "", display: "£0", label: "Hidden setup fees" },
-  { to: 2, suffix: "", display: "", label: "Revision rounds included" },
-  { to: 1, suffix: " day", display: "", label: "Average response time" },
-];
+const trustStats = [{ display: "$0", label: "Hidden setup fees" }];
 
 const websitePlans = [
   {
-    name: "Starter Site",
+    name: "Foundation",
     tone: "cool" as const,
     tagline: "For businesses that need a solid foundation",
-    price: "£1,500",
-    priceSuffix: "–£2,500",
+    price: "$1,200",
     priceNote: "One-time project cost",
+    chooseIf:
+      "you're just getting started online and want a professional, working website without paying for pages or features you don't need yet.",
     popular: false,
     ctaLabel: "Get Started",
     features: [
-      "5 custom-designed pages",
-      "Mobile-first, fast-loading build",
-      "Local SEO foundations included",
+      "5-7 custom-designed pages",
+      "Mobile-first, conversion-focused build",
+      "Core page copywriting included",
+      "Local SEO foundations included (Google Search Console setup, basic on-page SEO)",
       "Contact form + click-to-call button",
       "Live in ~30 days",
+      "30-day launch warranty on our build",
     ],
   },
   {
-    name: "Growth Site",
+    name: "Growth",
     tone: "heat" as const,
     tagline: "For businesses ready to actually compete online",
-    price: "£3,000",
-    priceSuffix: "–£5,000",
+    price: "$2,500",
     priceNote: "One-time project cost",
+    chooseIf:
+      "you already have some traction but your current site isn't pulling its weight, and you're ready to actually compete for local search traffic.",
     popular: true,
     ctaLabel: "Get Started",
     features: [
-      "Everything in Starter Site",
-      "8–12 custom-designed pages",
-      "Full HVAC-specific copywriting",
-      "Blog setup for ongoing content",
-      "Google Analytics + conversion tracking",
-      "CRO-focused layout, built to convert",
+      "Everything in Foundation",
+      "Website live in ~30-45 days",
+      "8-12 custom-designed pages",
+      "Full HVAC-specific copywriting across every page",
+      "Service-area landing pages, each built to convert for its specific town",
+      "5 launch blog posts included",
+      "Google Analytics, Search Console, and conversion tracking (form submissions and click-to-call clicks)",
     ],
   },
   {
-    name: "Full Digital",
+    name: "Complete",
     tone: "cool" as const,
     tagline: "For businesses ready for a complete growth system",
-    price: "£5,000",
-    priceSuffix: "+",
-    priceNote: "One-time build + ongoing services below",
+    price: "$5,000",
+    priceNote: "One-time build + 3 months of ongoing services included",
+    chooseIf:
+      "you want SEO and ads running from day one instead of adding them later, and a complete growth system rather than just a new website.",
     popular: false,
     ctaLabel: "Talk to Us",
     features: [
-      "Everything in Growth Site",
-      "SEO retainer included",
-      "Ad management included (Google or Meta)",
+      "Everything in Growth",
+      "Website live in ~30-45 days",
+      "SEO and Ads begin running shortly after launch, continuing through your 3-month included period and beyond",
+      "First 3 months of SEO Retainer included (Google Business Profile setup and optimization, on-page SEO, local citations), then billed monthly at the standard rate",
+      "First 3 months of Ads Management included (Google or Meta), then billed monthly at the standard rate",
+      "Ad spend billed separately throughout, direct to Google or Meta",
       "Monthly performance reporting",
       "Dedicated point of contact",
     ],
@@ -90,26 +89,37 @@ const growthPlans = [
   {
     name: "SEO Retainer",
     tone: "cool" as const,
-    price: "From £500",
+    price: "From $500",
     priceNote: "/mo",
     description:
-      "Google Business Profile optimisation, on-page SEO, monthly content, and reporting.",
+      "Google Business Profile optimization, on-page SEO, monthly content, and reporting. 3-month minimum commitment.",
     href: "/services/seo",
   },
   {
-    name: "Ads Management",
+    name: "Google Ads",
     tone: "heat" as const,
-    price: "From £400",
+    price: "From $400",
     priceNote: "/mo + ad spend",
-    description: "Google or Meta ad management with monthly optimisation.",
+    description:
+      "Google Ads management with monthly optimization. 3-month minimum commitment. Recommended ad spend varies by market and competition, we'll give you a realistic number on your strategy call.",
     href: "/services/google-ads",
+  },
+  {
+    name: "Meta Ads",
+    tone: "heat" as const,
+    price: "From $400",
+    priceNote: "/mo + ad spend",
+    description:
+      "Facebook and Instagram ad management with monthly optimization. 3-month minimum commitment. Recommended ad spend varies by market and competition, we'll give you a realistic number on your strategy call.",
+    href: "/services/meta-ads",
   },
   {
     name: "Maintenance",
     tone: "cool" as const,
-    price: "£79",
-    priceNote: "–£199/mo",
-    description: "Hosting, security, updates, and priority support.",
+    price: "From $79",
+    priceNote: "/mo",
+    description:
+      "Monitoring, backups, updates, and priority support. No minimum term, cancel anytime.",
     href: "/services/maintenance",
   },
 ];
@@ -118,7 +128,6 @@ const differentiators = [
   "Fixed price, agreed before work starts",
   "No hidden fees or surprise line items",
   "No lock-in on most services",
-  "One point of contact for every project",
 ];
 
 const faqs = [
@@ -130,17 +139,22 @@ const faqs = [
   {
     question: "Can I combine services for a better rate?",
     answer:
-      "Yes — Full Digital bundles a website with SEO and ad management at a better combined rate than booking each separately. We'll always tell you if bundling saves you money for your situation.",
+      "Yes. The Complete package bundles a website with SEO and ad management at a better combined rate than booking each separately. We'll always tell you if bundling saves you money for your situation.",
   },
   {
     question: "What's not included in these prices?",
     answer:
-      "Domain registration and any paid stock photography or premium plugins, if needed, are billed at cost. For Ads Management, your actual ad spend to Google or Meta is separate from our management fee.",
+      "Domain registration and any paid stock photography or premium plugins, if needed, are billed at cost. Hosting is paid by you directly to your hosting provider, and we'll guide you to a reliable option. For Google Ads and Meta Ads, your ad spend is paid to the platform and is separate from our management fee. Extra landing pages (beyond the first 3 on Google Ads) and extra ad creative (beyond the first 4 on Meta Ads) are quoted before we start.",
+  },
+  {
+    question: "Do you provide hosting?",
+    answer:
+      "No. You buy hosting directly from a provider, so the account stays in your name. We'll recommend a reliable, fast option for HVAC sites and guide you through getting it set up.",
   },
   {
     question: "Do you offer payment plans?",
     answer:
-      "For larger projects, yes — we can split the balance across milestones instead of a single payment at launch. Ask on your strategy call.",
+      "For larger projects, yes. We can split the balance across milestones instead of a single payment at launch. Ask on your strategy call.",
   },
   {
     question: "Are monthly plans a long-term contract?",
@@ -172,64 +186,79 @@ export const Route = createFileRoute("/pricing/")({
           "@type": "Service",
           serviceType: "HVAC Website Design & Digital Marketing",
           provider: { "@type": "ProfessionalService", name: "Muxair" },
-          areaServed: { "@type": "Country", name: "United Kingdom" },
+          areaServed: [
+            { "@type": "Country", name: "United States" },
+            { "@type": "Country", name: "United Kingdom" },
+          ],
           offers: [
             {
               "@type": "Offer",
-              name: "Starter Site",
+              name: "Foundation",
               description:
-                "5-page website, mobile-first, local SEO foundations, contact form and click-to-call.",
+                "5-7 page website, mobile-first, local SEO foundations, contact form and click-to-call, 30-day launch warranty.",
               priceSpecification: {
                 "@type": "PriceSpecification",
-                minPrice: 1500,
-                maxPrice: 2500,
-                priceCurrency: "GBP",
+                minPrice: 1200,
+                priceCurrency: "USD",
               },
             },
             {
               "@type": "Offer",
-              name: "Growth Site",
+              name: "Growth",
               description:
-                "8-12 page website, full copywriting, blog setup, Google Analytics, CRO-focused layout.",
+                "8-12 page website, full copywriting, service-area landing pages, 5 launch blog posts, Google Analytics and conversion tracking.",
               priceSpecification: {
                 "@type": "PriceSpecification",
-                minPrice: 3000,
-                maxPrice: 5000,
-                priceCurrency: "GBP",
+                minPrice: 2500,
+                priceCurrency: "USD",
               },
             },
             {
               "@type": "Offer",
-              name: "Full Digital",
-              description: "Website plus SEO retainer and ad management, with monthly reporting.",
+              name: "Complete",
+              description:
+                "Everything in Growth plus 3 months of SEO retainer and ads management included, with monthly performance reporting.",
               priceSpecification: {
                 "@type": "PriceSpecification",
                 minPrice: 5000,
-                priceCurrency: "GBP",
+                priceCurrency: "USD",
               },
             },
             {
               "@type": "Offer",
               name: "SEO Retainer",
               description:
-                "Google Business Profile optimisation, on-page SEO, monthly content, reporting.",
+                "Google Business Profile optimization, on-page SEO, monthly content, reporting. 3-month minimum.",
               priceSpecification: {
                 "@type": "UnitPriceSpecification",
                 price: 500,
-                priceCurrency: "GBP",
+                priceCurrency: "USD",
                 unitCode: "MON",
                 minPrice: 500,
               },
             },
             {
               "@type": "Offer",
-              name: "Ads Management",
+              name: "Google Ads Management",
               description:
-                "Google or Meta ad management, monthly optimisation. Ad spend billed separately.",
+                "Google Ads management with monthly optimization. Ad spend billed separately. 3-month minimum.",
               priceSpecification: {
                 "@type": "UnitPriceSpecification",
                 price: 400,
-                priceCurrency: "GBP",
+                priceCurrency: "USD",
+                unitCode: "MON",
+                minPrice: 400,
+              },
+            },
+            {
+              "@type": "Offer",
+              name: "Meta Ads Management",
+              description:
+                "Facebook and Instagram ad management with monthly optimization. Ad spend billed separately. 3-month minimum.",
+              priceSpecification: {
+                "@type": "UnitPriceSpecification",
+                price: 400,
+                priceCurrency: "USD",
                 unitCode: "MON",
                 minPrice: 400,
               },
@@ -237,13 +266,13 @@ export const Route = createFileRoute("/pricing/")({
             {
               "@type": "Offer",
               name: "Website Maintenance",
-              description: "Hosting, security, updates, priority support.",
+              description: "Monitoring, backups, updates, and priority support. No minimum term.",
               priceSpecification: {
-                "@type": "PriceSpecification",
-                minPrice: 79,
-                maxPrice: 199,
-                priceCurrency: "GBP",
+                "@type": "UnitPriceSpecification",
+                price: 79,
+                priceCurrency: "USD",
                 unitCode: "MON",
+                minPrice: 79,
               },
             },
           ],
@@ -293,8 +322,9 @@ function PricingPage() {
                 <span className="text-gradient-cool">Websites &amp; Marketing</span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Every price on this page is what you'll actually pay. No &ldquo;request a
-                quote&rdquo; games, no surprise line items after you've signed.
+                Every price on this page is a real starting point, not a bait figure. What you pay
+                depends on your business, but it stays within the range shown here, never a surprise
+                jump to something else entirely.
               </p>
               <span className="mx-auto mt-6 inline-flex max-w-xl items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-foreground">
                 Most agencies hide their pricing. We don't think that builds trust — so here it is.
@@ -305,17 +335,17 @@ function PricingPage() {
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
                 <MagneticButton href="/services" variant="ghost" size="lg">
-                  Compare Services
+                  See Our Services
                 </MagneticButton>
               </div>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mx-auto mt-14 grid max-w-3xl grid-cols-3 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
+              <div className="mx-auto mt-14 grid max-w-xs grid-cols-1 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
                 {trustStats.map((s) => (
                   <div key={s.label} className="text-center">
                     <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-                      {s.display ? s.display : <Counter to={s.to} suffix={s.suffix} />}
+                      {s.display}
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
                       {s.label}
@@ -334,7 +364,7 @@ function PricingPage() {
             <SectionHeading
               eyebrow="One-Time Projects"
               title="Website Packages"
-              subtitle="A fixed price agreed before work starts — not a “starting from” figure that grows once you're committed."
+              subtitle="A real starting price, and a fixed final quote agreed with you before any work begins. Never a surprise number after you've committed."
             />
 
             <div className="mt-14 grid gap-6 lg:grid-cols-3">
@@ -366,14 +396,17 @@ function PricingPage() {
                       </p>
 
                       <div className="mt-6 flex items-baseline gap-1.5">
+                        <span className="text-sm font-medium text-muted-foreground">From</span>
                         <span className="font-display text-3xl font-bold text-foreground sm:text-4xl">
                           {plan.price}
                         </span>
-                        <span className="text-lg font-semibold text-muted-foreground">
-                          {plan.priceSuffix}
-                        </span>
                       </div>
                       <p className="mt-1 text-xs text-muted-foreground">{plan.priceNote}</p>
+
+                      <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+                        <span className="font-semibold text-foreground">Choose this if:</span>{" "}
+                        {plan.chooseIf}
+                      </p>
 
                       <ul className="mt-7 flex-1 space-y-3">
                         {plan.features.map((f) => (
@@ -404,6 +437,13 @@ function PricingPage() {
                 );
               })}
             </div>
+
+            <Reveal delay={0.2}>
+              <p className="mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
+                Whichever package you choose, you get proper contact and communication throughout.
+                You always know where your project stands.
+              </p>
+            </Reveal>
           </div>
         </section>
 
@@ -416,7 +456,7 @@ function PricingPage() {
               subtitle="Can be booked on their own, or added to any website package above."
             />
 
-            <div className="mt-14 grid gap-5 sm:grid-cols-3">
+            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {growthPlans.map((plan, i) => {
                 const c = toneClasses(plan.tone);
                 return (
@@ -451,9 +491,10 @@ function PricingPage() {
             </div>
 
             <Reveal delay={0.2}>
-              <p className="mx-auto mt-8 max-w-md text-center text-xs text-muted-foreground">
+              <p className="mx-auto mt-8 max-w-lg text-center text-xs text-muted-foreground">
                 Ad spend is paid directly to Google or Meta and is separate from our monthly
-                management fee.
+                management fee. Prices shown in USD. Clients in the UK or Canada can be invoiced in
+                their local currency, just mention it on your call.
               </p>
             </Reveal>
 
@@ -470,10 +511,10 @@ function PricingPage() {
                   <Link to="/contact" className="font-semibold text-primary hover:underline">
                     Book a free call
                   </Link>{" "}
-                  and we'll recommend a starting point — no pressure.
+                  and we'll recommend a starting point. No pressure.
                 </p>
 
-                <div className="relative mt-9 grid gap-6 border-t border-border/70 pt-8 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="relative mt-9 grid gap-6 border-t border-border/70 pt-8 sm:grid-cols-3">
                   {differentiators.map((item) => (
                     <div key={item} className="flex items-start gap-3">
                       <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
@@ -525,7 +566,7 @@ function PricingPage() {
           description="Book a free strategy call and we'll recommend a starting point based on your actual business, not the biggest package we sell."
           primaryLabel="Get a Free Strategy Call"
           primaryHref="/contact"
-          footnote="We reply within 4 hours · No obligation"
+          footnote="No sales pitch · No obligation"
         />
       </main>
     </div>

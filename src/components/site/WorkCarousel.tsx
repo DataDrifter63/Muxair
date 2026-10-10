@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
@@ -6,8 +6,17 @@ import { cn } from "@/lib/utils";
 import type { WorkItemRow } from "@/lib/supabase";
 import { workServiceLabels, type WorkService } from "@/lib/site-data";
 
+// Start on the middle case study so there are cards visible on both the left
+// and right sides, and the user can scroll either way.
+const centerIndex = (length: number) => Math.max(0, Math.floor((length - 1) / 2));
+
 export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(() => centerIndex(items.length));
+
+  // Re-center whenever the list changes (e.g. switching the category filter).
+  useEffect(() => {
+    setActive(centerIndex(items.length));
+  }, [items]);
 
   function go(delta: number) {
     setActive((a) => Math.max(0, Math.min(items.length - 1, a + delta)));
