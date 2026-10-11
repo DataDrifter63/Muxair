@@ -8,7 +8,7 @@ const testimonials = [
   {
     name: "Sam T",
     role: "Owner, Comfort Zone HVAC",
-    location: "Nashville, TN",
+    location: "Swansea, UK",
     initials: "ST",
     quote:
       "Couldn't be happier with Musab's work. The communication was very prompt and clear. I never had to explain anything twice and he delivered on everything we discussed. I would highly recommend his services and wouldn't hesitate to utilise his skills again in the future.",

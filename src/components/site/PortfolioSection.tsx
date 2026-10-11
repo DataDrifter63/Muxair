@@ -1,5 +1,8 @@
 import { ArrowUpRight, BadgeCheck, TrendingUp } from "lucide-react";
 import { MagneticButton, Reveal, SectionHeading } from "./primitives";
+import { BeforeAfterSlider } from "./BeforeAfterSlider";
+import work1 from "@/assets/work-1.jpg";
+import work2 from "@/assets/work-2.jpg";
 
 /**
  * Static, in-file portfolio highlights for the homepage teaser section.
@@ -7,9 +10,13 @@ import { MagneticButton, Reveal, SectionHeading } from "./primitives";
  * real client case studies shown on /work; this section is example/sample
  * proof content maintained directly here.
  *
- * `chartImage`: paste a hosted image URL (a screenshot of the traffic/rank
- * graph, matching the reference design). Leave it "" to hide the visual
- * side gracefully until you have one.
+ * Visual side (right/left box) — paste hosted image URLs (Cloudinary):
+ *   - `beforeImage` AND `afterImage` both set  -> drag-to-reveal before/after slider
+ *   - only ONE URL set (in `chartImage`, `afterImage` or `beforeImage`) -> just that
+ *     single image, no slider
+ *   - nothing set -> dashed placeholder
+ * Cloudinary URLs are auto-cropped to a 4:3 cover-fit frame (see `fitImage`), so
+ * any size you upload fills the box cleanly.
  */
 type PortfolioHighlight = {
   name: string;
@@ -18,7 +25,9 @@ type PortfolioHighlight = {
   before: { label: string; stats: string[] };
   after: { label: string; stats: string[] };
   pills: { value: string; label: string }[];
-  chartImage: string;
+  chartImage?: string; // single image (e.g. a Search Console / rank graph screenshot)
+  beforeImage?: string; // set BOTH beforeImage + afterImage to get the slider
+  afterImage?: string;
   chartCaption: string; // e.g. "5669.23% increase in real visitors"
   verifiedLabel: string; // e.g. "Rank #1 for \"boiler repair leeds\""
 };
@@ -42,6 +51,8 @@ const highlights: PortfolioHighlight[] = [
       { value: "Top 3", label: 'SEO-Structured From the Ground Up"' },
     ],
     chartImage: "",
+    beforeImage: "https://res.cloudinary.com/dmaibvnp/image/upload/v1791670935/ruzz_global_before_image.png",
+    afterImage: "https://res.cloudinary.com/dmaibvnp/image/upload/v1791670936/ruzz_global_after_image.png",
     chartCaption: "From an outdated, hard-to-navigate site to a fast, modern design built to convert.",
     verifiedLabel: 'BEFORE & AFTER · FULL REDESIGN"',
   },
@@ -66,11 +77,87 @@ const highlights: PortfolioHighlight[] = [
       { value: "+536%", label: "Increase in Website Clicks" },
       { value: "Top 2", label: 'CTR Doubled from 0.4% to 0.8%' },
     ],
-    chartImage: "",
+    chartImage: "https://res.cloudinary.com/dmaibvnp/image/upload/v1791672428/Ruzz_Global_seo_results_chart.jpg",
     chartCaption: "Source: Google Search Console",
     verifiedLabel: 'SEO CAMPAIGN RESULTS · 4 WEEKS',
   },
+  // DEMO ITEM — replace every field below with your real third case study.
+  {
+    name: "Demo HVAC Co.",
+    tone: "cool",
+    headline: "Demo case study: replace this headline with your real result",
+    before: {
+      label: "Before (Month Year)",
+      stats: ["Add your first before stat", "Add your second before stat"],
+    },
+    after: {
+      label: "After (Month Year)",
+      stats: ["Add your first after stat", "Add your second after stat", "Add your third after stat"],
+    },
+    pills: [
+      { value: "+000%", label: "Replace with your key result" },
+      { value: "Top 3", label: "Replace with a second result" },
+    ],
+    chartImage: "",
+    beforeImage: work1,
+    afterImage: work2,
+    chartCaption: "Replace with a one-line result summary",
+    verifiedLabel: "DEMO · REPLACE WITH YOUR CASE STUDY",
+  },
 ];
+
+/**
+ * For Cloudinary URLs, add f_auto/q_auto + a 4:3 cover crop (anchored to the top,
+ * which suits website screenshots) so every image fills the frame. URLs that
+ * already contain transformations, and non-Cloudinary URLs, are left untouched.
+ */
+const CLOUDINARY_FIT = "f_auto,q_auto,c_fill,ar_4:3,w_1400,g_north";
+
+function fitImage(url: string): string {
+  const marker = "/image/upload/";
+  const at = url.indexOf(marker);
+  if (!url.includes("res.cloudinary.com") || at === -1) return url;
+  const head = url.slice(0, at + marker.length);
+  const rest = url.slice(at + marker.length);
+  const first = rest.split("/")[0] ?? "";
+  if (first.includes(",") || /^[a-z]{1,3}_/.test(first)) return url;
+  return `${head}${CLOUDINARY_FIT}/${rest}`;
+}
+
+function CaseVisual({ item }: { item: PortfolioHighlight }) {
+  const before = item.beforeImage ? fitImage(item.beforeImage) : "";
+  const after = item.afterImage ? fitImage(item.afterImage) : "";
+  const single = fitImage(item.chartImage || item.afterImage || item.beforeImage || "");
+
+  if (before && after) {
+    return (
+      <BeforeAfterSlider
+        beforeImage={before}
+        afterImage={after}
+        caption={item.name}
+        className="mt-4"
+      />
+    );
+  }
+
+  if (single) {
+    return (
+      <img
+        src={single}
+        alt={item.chartCaption}
+        loading="lazy"
+        className="mt-4 aspect-[4/3] w-full rounded-xl border border-border object-cover object-top"
+      />
+    );
+  }
+
+  return (
+    <div className="mt-4 flex aspect-[4/3] w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border text-muted-foreground">
+      <TrendingUp className="h-6 w-6" />
+      <p className="text-xs">Before/after photos or a single image go here</p>
+    </div>
+  );
+}
 
 function toneClasses(tone: "cool" | "heat") {
   return tone === "cool"
@@ -196,18 +283,7 @@ export function PortfolioSection() {
                       <span className="text-foreground">{item.verifiedLabel}</span>
                     </div>
 
-                    {item.chartImage ? (
-                      <img
-                        src={item.chartImage}
-                        alt={item.chartCaption}
-                        className="mt-4 aspect-[4/3] w-full rounded-xl border border-border object-cover"
-                      />
-                    ) : (
-                      <div className="mt-4 flex aspect-[4/3] w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border text-muted-foreground">
-                        <TrendingUp className="h-6 w-6" />
-                        <p className="text-xs">Growth chart image goes here</p>
-                      </div>
-                    )}
+                    <CaseVisual item={item} />
 
                     <div
                       className={`mt-4 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold ${c.border} ${c.bg} ${c.text}`}
@@ -225,11 +301,3 @@ export function PortfolioSection() {
     </section>
   );
 }
-
-
-
-
-
-
-
-

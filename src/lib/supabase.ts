@@ -48,15 +48,19 @@ export interface BlogPostRow {
   category: string;
   cover_image: string | null;
   published: boolean;
-  // Manual override for the "Related Service" card on the post page — falls
-  // back to auto-matching against `category` when left null.
-  related_service_slug: string | null;
+  // Shown on the post page; blank falls back to "Muxair Team".
+  author_name: string | null;
+  // Manual override for the "Related Service" card on the post page (a service
+  // slug such as "seo") — falls back to auto-matching against `category` when null.
+  related_service: string | null;
   // Per-post overrides for the bottom CTASection — each falls back to that
   // component's site-wide default when left null/empty.
+  cta_badge_label: string | null;
   cta_title: string | null;
   cta_description: string | null;
   cta_button_label: string | null;
   cta_button_href: string | null;
+  cta_footnote: string | null;
   created_at: string;
 }
 

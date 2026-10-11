@@ -86,10 +86,24 @@ const categoryStyle: Record<string, { icon: LucideIcon; tone: "cool" | "heat" }>
   "Business Tips": { icon: Lightbulb, tone: "cool" },
 };
 
-// Filter tabs are fixed to these three categories (plus "All"), so old demo
-// categories never show up as tabs. Posts must use these exact names.
-const blogCategories = ["Meta Ads", "Google Ads", "Business Tips"];
-const categories = ["All", ...blogCategories];
+// Filter tabs are built from the categories of the published posts, so any
+// category assigned in the admin panel shows up automatically. These three come
+// first (in this order) when they exist; every other category follows A-Z.
+const preferredOrder = ["Meta Ads", "Google Ads", "Business Tips"];
+
+function buildCategories(posts: BlogPostRow[]): string[] {
+  const seen = new Map<string, string>(); // lower-case key -> label (first spelling wins)
+  for (const post of posts) {
+    const label = post.category?.trim();
+    if (label && !seen.has(label.toLowerCase())) seen.set(label.toLowerCase(), label);
+  }
+  const rank = (label: string) => {
+    const i = preferredOrder.findIndex((c) => c.toLowerCase() === label.toLowerCase());
+    return i === -1 ? preferredOrder.length : i;
+  };
+  const labels = [...seen.values()].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
+  return ["All", ...labels];
+}
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -167,10 +181,13 @@ function BlogIndex() {
   const { posts } = Route.useLoaderData();
 
   const [category, setCategory] = useState("All");
+  const categories = useMemo(() => buildCategories(posts), [posts]);
 
   const filtered = useMemo(() => {
     if (category === "All") return posts;
-    return posts.filter((p) => p.category === category);
+    return posts.filter(
+      (p) => p.category?.trim().toLowerCase() === category.toLowerCase(),
+    );
   }, [category, posts]);
 
   // Page 1: 1 featured post + a 2-col grid of 6 (7 total). Every page after

@@ -133,10 +133,9 @@ const founders = [
 ];
 
 const proof = {
-  quoteStart:
+  quote:
     "Helped up with completely revamping one site and updating another. Very communicative and easy to work with. Such a pleasure collaborating on these projects, thank you Musab !",
-  highlight: "our winter demand peak",
-  quoteEnd: "— and I always knew exactly who I was talking to.",
+  project: "SEO & Website Revamp",
   name: "Raymond C",
   detail: "New York, US",
 };
@@ -362,19 +361,17 @@ function AboutPage() {
         </section>
 
         {/* Trust strip */}
-        <section className="border-y border-border py-10">
+        <section className="bg-[#F77036] py-10">
           <Reveal>
             <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-4 px-5 text-center lg:px-8">
-              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground/90">
-                <ShieldCheck className="h-4 w-4 text-primary" />
+              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+                <ShieldCheck className="h-4 w-4 text-white" />
                 Top-Rated on Upwork 50+
               </span>
-              <span className="h-1 w-1 rounded-full bg-border" aria-hidden />
-              <span className="text-sm font-semibold text-foreground/90">
-                Projects Delivered
-              </span>
-              <span className="h-1 w-1 rounded-full bg-border" aria-hidden />
-              <span className="text-sm font-semibold text-foreground/90">HVAC-Only Agency</span>
+              <span className="h-1 w-1 rounded-full bg-white/60" aria-hidden />
+              <span className="text-sm font-semibold text-white">Projects Delivered</span>
+              <span className="h-1 w-1 rounded-full bg-white/60" aria-hidden />
+              <span className="text-sm font-semibold text-white">HVAC-Only Agency</span>
             </div>
           </Reveal>
         </section>
@@ -389,6 +386,9 @@ function AboutPage() {
                   className="pointer-events-none absolute -top-20 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-primary/12 blur-[100px]"
                   aria-hidden
                 />
+                <span className="relative mb-6 inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+                  {proof.project}
+                </span>
                 <p className="relative text-balance font-display text-xl leading-snug sm:text-2xl">
                   <span
                     className="mr-1.5 font-display text-3xl leading-none text-primary/40 sm:text-4xl"
@@ -396,8 +396,7 @@ function AboutPage() {
                   >
                     &ldquo;
                   </span>
-                  {proof.quoteStart} <span className="text-primary">{proof.highlight}</span>{" "}
-                  {proof.quoteEnd}
+                  {proof.quote}
                   <span
                     className="ml-1.5 font-display text-3xl leading-none text-primary/40 sm:text-4xl"
                     aria-hidden
