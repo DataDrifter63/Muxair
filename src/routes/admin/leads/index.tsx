@@ -5,6 +5,15 @@ import { requireAuth } from "@/lib/auth";
 import { supabase, type LeadRow } from "@/lib/supabase";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 
+// The contact form saves a pricing-page choice as a "Selected plan: X" line at
+// the top of the lead's message. Pull it out so it can be shown as a badge.
+function splitPlan(message: string | null): { plan: string | null; notes: string } {
+  if (!message) return { plan: null, notes: "" };
+  const match = message.match(/^Selected plan:\s*(.+)$/m);
+  if (!match) return { plan: null, notes: message };
+  return { plan: match[1]?.trim() ?? null, notes: message.replace(match[0], "").trim() };
+}
+
 export const Route = createFileRoute("/admin/leads/")({
   beforeLoad: requireAuth,
   component: AdminLeads,
@@ -98,11 +107,23 @@ function AdminLeads() {
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">
                     {lead.need}
-                    {lead.message ? (
-                      <p className="mt-1 max-w-xs whitespace-pre-line text-xs text-muted-foreground/80">
-                        {lead.message}
-                      </p>
-                    ) : null}
+                    {(() => {
+                      const { plan, notes } = splitPlan(lead.message);
+                      return (
+                        <>
+                          {plan ? (
+                            <span className="mt-1.5 block w-fit rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                              Plan: {plan}
+                            </span>
+                          ) : null}
+                          {notes ? (
+                            <p className="mt-1 max-w-xs whitespace-pre-line text-xs text-muted-foreground/80">
+                              {notes}
+                            </p>
+                          ) : null}
+                        </>
+                      );
+                    })()}
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">{lead.service_area}</td>
                   <td className="px-4 py-3 text-muted-foreground">

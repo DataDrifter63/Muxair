@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
@@ -6,43 +6,115 @@ import { cn } from "@/lib/utils";
 import type { WorkItemRow } from "@/lib/supabase";
 import { workServiceLabels, type WorkService } from "@/lib/site-data";
 
+const AUTOPLAY_MS = 4500; // time each case study stays in the center
+const RESUME_DELAY_MS = 1500; // wait after the mouse leaves before auto-scroll resumes
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
 // Start on the middle case study so there are cards visible on both the left
 // and right sides, and the user can scroll either way.
 const centerIndex = (length: number) => Math.max(0, Math.floor((length - 1) / 2));
 
+// Shortest signed distance on a loop of `n` cards (0 = center, -1 = one left, ...).
+function wrapOffset(d: number, n: number) {
+  let o = ((d % n) + n) % n;
+  if (o > n / 2) o -= n;
+  return o;
+}
+
+type View = { active: number; jumped: ReadonlySet<number> };
+
+// Moves to `target` (looping). `jumped` holds the cards that wrap from one end
+// of the stack to the other, so they can be repositioned instantly instead of
+// flying across the whole carousel.
+function advance(v: View, target: number, n: number): View {
+  const next = ((target % n) + n) % n;
+  if (n === 0 || next === v.active) return v;
+  const step = wrapOffset(next - v.active, n);
+  const jumped = new Set<number>();
+  for (let i = 0; i < n; i++) {
+    if (wrapOffset(i - v.active, n) - step !== wrapOffset(i - next, n)) jumped.add(i);
+  }
+  return { active: next, jumped };
+}
+
 export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
-  const [active, setActive] = useState(() => centerIndex(items.length));
+  const n = items.length;
+  const [view, setView] = useState<View>(() => ({
+    active: centerIndex(n),
+    jumped: new Set<number>(),
+  }));
+  const { active, jumped } = view;
+  const [paused, setPaused] = useState(false);
+  const resumeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   // Re-center whenever the list changes (e.g. switching the category filter).
   useEffect(() => {
-    setActive(centerIndex(items.length));
-  }, [items]);
+    setView({ active: centerIndex(n), jumped: new Set<number>() });
+  }, [items, n]);
 
-  function go(delta: number) {
-    setActive((a) => Math.max(0, Math.min(items.length - 1, a + delta)));
-  }
+  const go = (delta: number) => setView((v) => advance(v, v.active + delta, n));
+  const goTo = (i: number) => setView((v) => advance(v, i, n));
 
-  if (items.length === 0) return null;
+  // Pause while the mouse / finger / keyboard focus is on the carousel, then
+  // resume a moment after it leaves.
+  const pause = () => {
+    clearTimeout(resumeTimer.current);
+    setPaused(true);
+  };
+  const resumeSoon = () => {
+    clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => setPaused(false), RESUME_DELAY_MS);
+  };
+  useEffect(() => () => clearTimeout(resumeTimer.current), []);
+
+  // Auto-advance. The timer restarts after every move (manual or automatic),
+  // so a click never gets followed by an instant auto-slide.
+  useEffect(() => {
+    if (paused || n < 2) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setInterval(() => {
+      if (document.visibilityState === "visible") {
+        setView((v) => advance(v, v.active + 1, n));
+      }
+    }, AUTOPLAY_MS);
+    return () => clearInterval(id);
+  }, [paused, n, active]);
+
+  if (n === 0) return null;
 
   return (
-    <div className="mt-10">
+    <div
+      className="mt-10"
+      onMouseEnter={pause}
+      onMouseLeave={resumeSoon}
+      onFocusCapture={pause}
+      onBlurCapture={resumeSoon}
+      onTouchStart={pause}
+      onTouchEnd={resumeSoon}
+    >
       <div className="relative h-[420px] sm:h-[440px]">
         {items.map((project, i) => {
-          const offset = i - active;
+          const offset = wrapOffset(i - active, n);
           const abs = Math.abs(offset);
-          if (abs > 2) return null;
+          const visible = abs <= 2;
+          const slot = Math.max(-3, Math.min(3, offset));
 
           return (
             <motion.div
               key={project.id}
               className="absolute inset-y-0 left-1/2 w-[85%] max-w-xl sm:w-[70%]"
-              style={{ zIndex: 10 - abs }}
-              animate={{
-                x: `calc(-50% + ${offset * 46}%)`,
-                scale: abs === 0 ? 1 : abs === 1 ? 0.86 : 0.74,
-                opacity: abs === 0 ? 1 : abs === 1 ? 0.5 : 0.2,
+              style={{
+                zIndex: 10 - abs,
+                willChange: "transform, opacity",
+                pointerEvents: visible ? "auto" : "none",
               }}
-              transition={{ type: "spring", stiffness: 260, damping: 30 }}
+              initial={false}
+              animate={{
+                x: `${-50 + slot * 46}%`,
+                scale: abs === 0 ? 1 : abs === 1 ? 0.86 : abs === 2 ? 0.74 : 0.62,
+                opacity: visible ? 1 : 0,
+              }}
+              transition={jumped.has(i) ? { duration: 0 } : { duration: 0.7, ease: EASE }}
             >
               <Link
                 to="/work/$slug"
@@ -52,17 +124,19 @@ export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
                 onClick={(e) => {
                   if (abs !== 0) {
                     e.preventDefault();
-                    setActive(i);
+                    goTo(i);
                   }
                 }}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background/70 shadow-xl backdrop-blur-md transition-colors hover:border-primary/40"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-xl transition-colors hover:border-primary/40"
               >
-                <div className="relative aspect-[16/9] overflow-hidden bg-background/60">
+                <div className="relative aspect-[16/9] overflow-hidden bg-background">
                   {project.cover_image ? (
                     <img
                       src={project.cover_image}
                       alt={`Website design preview for ${project.name}`}
-                      loading="lazy"
+                      loading={abs <= 3 ? "eager" : "lazy"}
+                      decoding="async"
+                      draggable={false}
                       className="h-full w-full object-cover object-top"
                     />
                   ) : (
@@ -71,13 +145,12 @@ export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
                       aria-hidden
                     />
                   )}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/25 to-transparent opacity-90" />
                   <span
                     className={cn(
-                      "absolute right-3 top-3 rounded-full border px-2.5 py-1 text-[11px] font-bold backdrop-blur-md",
+                      "absolute right-3 top-3 rounded-full border px-2.5 py-1 text-[11px] font-bold",
                       project.tone === "cool"
-                        ? "border-primary/40 bg-background/80 text-primary"
-                        : "border-heat/40 bg-background/80 text-heat",
+                        ? "border-primary/40 bg-background text-primary"
+                        : "border-heat/40 bg-background text-heat",
                     )}
                   >
                     {project.badge}
@@ -115,14 +188,13 @@ export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
         })}
       </div>
 
-      {/* Nav arrows */}
+      {/* Nav arrows (loop: they never get disabled) */}
       <div className="mt-6 flex items-center justify-center gap-4">
         <button
           type="button"
           onClick={() => go(-1)}
-          disabled={active === 0}
           aria-label="Previous case study"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface/60 text-foreground transition-colors hover:border-primary/40 hover:text-primary disabled:opacity-30"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface/60 text-foreground transition-colors hover:border-primary/40 hover:text-primary"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -130,17 +202,16 @@ export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
         {/* Progress bar */}
         <div className="h-1 w-40 overflow-hidden rounded-full bg-border sm:w-56">
           <div
-            className="h-full rounded-full bg-primary transition-all duration-300"
-            style={{ width: `${((active + 1) / items.length) * 100}%` }}
+            className="h-full rounded-full bg-primary transition-all duration-500"
+            style={{ width: `${((active + 1) / n) * 100}%` }}
           />
         </div>
 
         <button
           type="button"
           onClick={() => go(1)}
-          disabled={active === items.length - 1}
           aria-label="Next case study"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface/60 text-foreground transition-colors hover:border-primary/40 hover:text-primary disabled:opacity-30"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface/60 text-foreground transition-colors hover:border-primary/40 hover:text-primary"
         >
           <ChevronRight className="h-5 w-5" />
         </button>

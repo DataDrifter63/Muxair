@@ -102,7 +102,7 @@
 
 import { motion } from "motion/react";
 import { Check, X } from "lucide-react";
-import { Reveal, SectionHeading } from "./primitives";
+import { Reveal } from "./primitives";
 
 const generic = [
   "Don't understand HVAC seasons",
@@ -120,27 +120,28 @@ const ours = [
 
 export function WhyUsSection() {
   return (
-    <section id="why-us" className="section-shell border-y border-border bg-surface">
-      <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
+    <section id="why-us" className="section-shell bg-[#F77036] text-white">
+      <div className="pointer-events-none absolute inset-0 grid-tech opacity-10" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHeading
-          eyebrow="Why us"
-          title={
-            <>
-              Why HVAC Companies Choose Us Over{" "}
-              <span className="text-muted-foreground">Generic Agencies</span>
-            </>
-          }
-        />
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white">
+            <span className="h-1.5 w-1.5 rounded-full bg-white" />
+            Why us
+          </span>
+          <h2 className="mt-5 text-balance text-3xl leading-[1.08] text-white sm:text-4xl lg:text-5xl">
+            Why HVAC Companies Choose Us Over{" "}
+            <span className="text-[#1c1815]">Generic Agencies</span>
+          </h2>
+        </Reveal>
 
         <div className="relative mt-14 grid gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
           <Reveal>
-            <div className="h-full rounded-2xl border border-border bg-background/40 p-8 opacity-85 transition-opacity duration-500 hover:opacity-100">
-              <h3 className="text-lg text-foreground/80">Generic Agencies</h3>
+            <div className="h-full rounded-2xl border border-white/35 bg-white/10 p-8 backdrop-blur-md">
+              <h3 className="text-lg text-white">Generic Agencies</h3>
               <ul className="mt-6 space-y-4">
                 {generic.map((g) => (
-                  <li key={g} className="flex items-start gap-3 text-sm text-foreground/70">
-                    <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full border border-border bg-surface">
+                  <li key={g} className="flex items-start gap-3 text-sm text-white/90">
+                    <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full border border-white/50 bg-white/15">
                       <X className="h-3 w-3" />
                     </span>
                     {g}
@@ -157,7 +158,7 @@ export function WhyUsSection() {
                   key={y}
                   d={`M0 ${y} C 40 ${y}, 60 ${y - 18}, 100 ${y - 18}`}
                   stroke="url(#connector)"
-                  strokeWidth="1.2"
+                  strokeWidth="1.4"
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
                   viewport={{ once: true }}
@@ -166,17 +167,16 @@ export function WhyUsSection() {
               ))}
               <defs>
                 <linearGradient id="connector" x1="0" x2="1">
-                  <stop offset="0%" stopColor="#6B6B6B" stopOpacity="0.25" />
-                  <stop offset="100%" stopColor="#FF9D5C" stopOpacity="0.9" />
+                  <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.35" />
+                  <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.95" />
                 </linearGradient>
               </defs>
             </svg>
           </div>
 
           <Reveal delay={0.15}>
-            <div className="relative h-full overflow-hidden rounded-2xl border border-primary/35 bg-primary/[0.05] p-8 backdrop-blur-md glow-cool">
-              <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-primary/15 blur-[80px]" />
-              <h3 className="relative text-lg text-primary">Our Approach</h3>
+            <div className="relative h-full overflow-hidden rounded-2xl border border-white bg-white p-8 shadow-2xl shadow-black/20">
+              <h3 className="relative text-lg text-[#F77036]">Our Approach</h3>
               <ul className="relative mt-6 space-y-4">
                 {ours.map((o, i) => (
                   <motion.li
@@ -185,9 +185,9 @@ export function WhyUsSection() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.1 + i * 0.09 }}
-                    className="flex items-start gap-3 text-sm text-foreground"
+                    className="flex items-start gap-3 text-sm text-[#1c1815]"
                   >
-                    <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-[#F77036] text-white">
                       <Check className="h-3 w-3" strokeWidth={3} />
                     </span>
                     {o}

@@ -422,7 +422,7 @@ function PricingPage() {
 
                       <div className="mt-8">
                         <MagneticButton
-                          href="/contact"
+                          href={`/contact?plan=${encodeURIComponent(plan.name)}`}
                           variant={
                             plan.popular ? (plan.tone === "cool" ? "cool" : "heat") : "ghost"
                           }
