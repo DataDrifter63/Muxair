@@ -1,10 +1,95 @@
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Flame, PlayCircle, Snowflake, TrendingUp } from "lucide-react";
 import { useRef } from "react";
-import heroMockup from "@/assets/hero-mockup.jpg";
+import heroSite1 from "@/assets/hero-site-1.jpg";
+import heroSite2 from "@/assets/hero-site-2.jpg";
 import { MagneticButton } from "./primitives";
 
 const headline = ["Websites Built for", "HVAC Companies", "That Want More Booked Jobs"];
+
+/**
+ * Hero visual: two tilted browser windows whose page screenshots scroll on their own.
+ *
+ * TO CHANGE THE IMAGES: replace `image` (a Cloudinary URL, or an imported file) and `label`
+ * (the address shown in the browser bar) below. Use TALL, full-page screenshots of a website
+ * (about 800-1200px wide) — the taller the screenshot, the more scrolling you see. Images are
+ * never stretched: they fill the window width and slide from the top of the page to the bottom.
+ */
+const heroSites: { label: string; image: string }[] = [
+  { label: "klarta.com", image: heroSite1 },
+  { label: "oracledental.com.au", image: heroSite2 },
+];
+
+/** Cloudinary URLs: add auto format/quality and cap the width (no cropping). Others untouched. */
+function optimiseImage(url: string, width = 1000): string {
+  const marker = "/image/upload/";
+  const at = url.indexOf(marker);
+  if (!url.includes("res.cloudinary.com") || at === -1) return url;
+  const head = url.slice(0, at + marker.length);
+  const rest = url.slice(at + marker.length);
+  const first = rest.split("/")[0] ?? "";
+  if (first.includes(",") || /^[a-z]{1,3}_/.test(first)) return url;
+  return `${head}f_auto,q_auto,c_limit,w_${width}/${rest}`;
+}
+
+function BrowserFrame({
+  label,
+  image,
+  className,
+  tilt,
+  aspect,
+  scanSeconds,
+  priority = false,
+}: {
+  label: string;
+  image: string;
+  className: string;
+  tilt: number;
+  aspect: string;
+  scanSeconds: number;
+  priority?: boolean;
+}) {
+  const reduceMotion = useReducedMotion();
+  const scan = reduceMotion
+    ? {}
+    : {
+        animate: { objectPosition: ["50% 0%", "50% 100%"] },
+        transition: {
+          duration: scanSeconds,
+          delay: 0.8,
+          repeat: Infinity,
+          repeatType: "reverse" as const,
+          ease: "easeInOut" as const,
+        },
+      };
+
+  return (
+    <motion.div
+      style={{ rotate: tilt }}
+      className={`absolute overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_50px_90px_-30px_rgba(0,0,0,0.5)] ${className}`}
+    >
+      <div className="flex items-center gap-1.5 border-b border-border bg-surface px-3.5 py-2.5">
+        <i className="h-[9px] w-[9px] rounded-full bg-border" />
+        <i className="h-[9px] w-[9px] rounded-full bg-border" />
+        <i className="h-[9px] w-[9px] rounded-full bg-border" />
+        <span className="ml-2 flex-1 truncate text-left text-[11px] text-muted-foreground">
+          {label}
+        </span>
+      </div>
+      <motion.img
+        src={optimiseImage(image)}
+        alt={`Website design example: ${label}`}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        decoding="async"
+        draggable={false}
+        style={{ objectPosition: "50% 0%" }}
+        className={`block w-full object-cover ${aspect}`}
+        {...scan}
+      />
+    </motion.div>
+  );
+}
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -118,25 +203,41 @@ export function Hero() {
 
         <motion.div
           style={{ y: mockY }}
-          initial={{ opacity: 0, scale: 0.94, rotateY: -8 }}
-          animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="relative min-w-0 [perspective:1400px]"
+          className="relative aspect-[1/1.05] w-full min-w-0"
         >
-          <div className="relative rounded-2xl border border-border bg-surface/60 p-2 backdrop-blur-xl glow-cool">
-            <img
-              src={heroMockup}
-              alt="Example of a modern HVAC company website designed by our agency, showing heating, cooling and air quality service cards with a free quote call to action"
-              width={1200}
-              height={912}
-              fetchPriority="high"
-              className="w-full rounded-xl"
+          {/* soft glow behind the windows */}
+          <div
+            className="pointer-events-none absolute inset-x-[8%] inset-y-[6%] rounded-full bg-primary/25 blur-[70px]"
+            aria-hidden
+          />
+
+          {heroSites[0] ? (
+            <BrowserFrame
+              label={heroSites[0].label}
+              image={heroSites[0].image}
+              className="right-0 top-0 z-10 w-[82%]"
+              tilt={2.5}
+              aspect="aspect-[4/4.4]"
+              scanSeconds={16}
+              priority
             />
-            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-tr from-background/40 via-transparent to-transparent" />
-          </div>
+          ) : null}
+          {heroSites[1] ? (
+            <BrowserFrame
+              label={heroSites[1].label}
+              image={heroSites[1].image}
+              className="bottom-0 left-0 z-20 w-[56%]"
+              tilt={-3.5}
+              aspect="aspect-[4/4.6]"
+              scanSeconds={12}
+            />
+          ) : null}
 
           <motion.div
-            className="absolute -left-4 top-10 hidden items-center gap-2.5 rounded-xl border border-border bg-background/85 px-3.5 py-2.5 backdrop-blur-xl sm:flex"
+            className="absolute -left-4 top-10 z-30 hidden items-center gap-2.5 rounded-xl border border-border bg-background/85 px-3.5 py-2.5 backdrop-blur-xl sm:flex"
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           >
@@ -148,7 +249,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            className="absolute -right-3 bottom-10 hidden items-center gap-2.5 rounded-xl border border-heat/30 bg-background/85 px-3.5 py-2.5 backdrop-blur-xl sm:flex glow-heat"
+            className="absolute -right-3 bottom-10 z-30 hidden items-center gap-2.5 rounded-xl border border-heat/30 bg-background/85 px-3.5 py-2.5 backdrop-blur-xl sm:flex glow-heat"
             animate={{ y: [0, 14, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
           >

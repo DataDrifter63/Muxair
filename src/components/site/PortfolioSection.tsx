@@ -15,8 +15,10 @@ import work2 from "@/assets/work-2.jpg";
  *   - only ONE URL set (in `chartImage`, `afterImage` or `beforeImage`) -> just that
  *     single image, no slider
  *   - nothing set -> dashed placeholder
- * Cloudinary URLs are auto-cropped to a 4:3 cover-fit frame (see `fitImage`), so
- * any size you upload fills the box cleanly.
+ * The image frame is always the same 4:3 size for every card. Images are NEVER
+ * cropped: each one is shown whole, centred inside that frame, whatever its
+ * size or ratio. Cloudinary URLs are only optimised (auto format/quality, max
+ * 1600px wide) — see `optimiseImage`.
  */
 type PortfolioHighlight = {
   name: string;
@@ -51,8 +53,8 @@ const highlights: PortfolioHighlight[] = [
       { value: "Top 3", label: 'SEO-Structured From the Ground Up"' },
     ],
     chartImage: "",
-    beforeImage: "https://res.cloudinary.com/dmaibvnp/image/upload/v1791670935/ruzz_global_before_image.png",
-    afterImage: "https://res.cloudinary.com/dmaibvnp/image/upload/v1791670936/ruzz_global_after_image.png",
+    beforeImage: "https://res.cloudinary.com/dmaibvnp/image/upload/v1791847873/eep-plumbing-before.webp",
+    afterImage: "https://res.cloudinary.com/dmaibvnp/image/upload/v1791847874/eep-plumbing-after.webp",
     chartCaption: "From an outdated, hard-to-navigate site to a fast, modern design built to convert.",
     verifiedLabel: 'BEFORE & AFTER · FULL REDESIGN"',
   },
@@ -107,13 +109,13 @@ const highlights: PortfolioHighlight[] = [
 ];
 
 /**
- * For Cloudinary URLs, add f_auto/q_auto + a 4:3 cover crop (anchored to the top,
- * which suits website screenshots) so every image fills the frame. URLs that
- * already contain transformations, and non-Cloudinary URLs, are left untouched.
+ * For Cloudinary URLs, add f_auto/q_auto and cap the width at 1600px (c_limit
+ * only ever scales DOWN, it never crops). URLs that already contain
+ * transformations, and non-Cloudinary URLs, are left untouched.
  */
-const CLOUDINARY_FIT = "f_auto,q_auto,c_fill,ar_4:3,w_1400,g_north";
+const CLOUDINARY_OPTIMISE = "f_auto,q_auto,c_limit,w_1600";
 
-function fitImage(url: string): string {
+function optimiseImage(url: string): string {
   const marker = "/image/upload/";
   const at = url.indexOf(marker);
   if (!url.includes("res.cloudinary.com") || at === -1) return url;
@@ -121,13 +123,13 @@ function fitImage(url: string): string {
   const rest = url.slice(at + marker.length);
   const first = rest.split("/")[0] ?? "";
   if (first.includes(",") || /^[a-z]{1,3}_/.test(first)) return url;
-  return `${head}${CLOUDINARY_FIT}/${rest}`;
+  return `${head}${CLOUDINARY_OPTIMISE}/${rest}`;
 }
 
 function CaseVisual({ item }: { item: PortfolioHighlight }) {
-  const before = item.beforeImage ? fitImage(item.beforeImage) : "";
-  const after = item.afterImage ? fitImage(item.afterImage) : "";
-  const single = fitImage(item.chartImage || item.afterImage || item.beforeImage || "");
+  const before = item.beforeImage ? optimiseImage(item.beforeImage) : "";
+  const after = item.afterImage ? optimiseImage(item.afterImage) : "";
+  const single = optimiseImage(item.chartImage || item.afterImage || item.beforeImage || "");
 
   if (before && after) {
     return (
@@ -135,7 +137,8 @@ function CaseVisual({ item }: { item: PortfolioHighlight }) {
         beforeImage={before}
         afterImage={after}
         caption={item.name}
-        className="mt-4"
+        fit="contain"
+        className="mt-4 bg-surface"
       />
     );
   }
@@ -146,7 +149,7 @@ function CaseVisual({ item }: { item: PortfolioHighlight }) {
         src={single}
         alt={item.chartCaption}
         loading="lazy"
-        className="mt-4 aspect-[4/3] w-full rounded-xl border border-border object-cover object-top"
+        className="mt-4 aspect-[4/3] w-full rounded-xl border border-border bg-surface object-contain object-center"
       />
     );
   }
