@@ -236,7 +236,7 @@ function AboutPage() {
               </span>
               <h2 className="mt-5 text-balance font-display text-2xl leading-tight sm:text-3xl lg:text-4xl">
                 We picked one industry and decided to know it better than anyone else building
-                websites.
+                websites. 
               </h2>
               <p className="mt-5 text-base leading-relaxed text-muted-foreground">
                 Most HVAC companies are stuck choosing between generic agencies who've never heard of an F-Gas certification, and expensive marketing firms who treat a boiler installer's website the same as a law firm's. Neither actually understands the business. So we stopped taking on other industries. Every case study, every line of copy, every layout decision we make is built around how homeowners and facilities managers actually search for and choose an HVAC company.{" "}

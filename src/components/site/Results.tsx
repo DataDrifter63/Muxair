@@ -7,7 +7,7 @@ import { Reveal, SectionHeading } from "./primitives";
 const testimonials = [
   {
     name: "Sam T",
-    role: "Owner, Comfort Zone HVAC",
+    role: "Owner",
     location: "Swansea, UK",
     initials: "ST",
     quote:
