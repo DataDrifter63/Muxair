@@ -174,7 +174,12 @@ export function PortfolioSection() {
       <div className="pointer-events-none absolute inset-0 grid-tech opacity-15" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-          <SectionHeading eyebrow="Case-studies" title="Work That Speaks for Itself" align="left" />
+          <SectionHeading
+            eyebrow="Case-studies"
+            title="Work That Speaks for Itself"
+            subtitle="Every project is different, some are full redesigns, some come with measurable growth. Here's a look at the work and the outcomes so far."
+            align="left"
+          />
           <Reveal delay={0.1}>
             <MagneticButton href="/work" variant="ghost">
               See All Work
