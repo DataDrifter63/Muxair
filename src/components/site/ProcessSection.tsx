@@ -168,6 +168,12 @@ export function ProcessSection() {
           </div>
         </div>
 
+        <Reveal delay={0.1} className="mt-5">
+          <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
+            The timeline shown reflects our Foundation package. Larger builds may take longer, we'll walk you through your exact timeline on the discovery call.
+          </p>
+        </Reveal>
+
         <Reveal delay={0.15} className="mt-6">
           <div className="relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-primary/10 via-surface/60 to-heat/10 p-8 backdrop-blur-xl sm:flex-row sm:items-center sm:p-10">
             <div
