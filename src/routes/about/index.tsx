@@ -19,7 +19,6 @@ import {
   Users,
 } from "lucide-react";
 import {
-  Counter,
   MagneticButton,
   Reveal,
   SectionHeading,
@@ -196,37 +195,13 @@ function AboutPage() {
         <section className="section-shell">
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
             <Reveal>
-              <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border bg-surface/40 p-8 backdrop-blur-md">
-                <div
-                  className="pointer-events-none absolute inset-0 grid-tech opacity-25"
-                  aria-hidden
-                />
-                <div
-                  className="pointer-events-none absolute -top-16 right-0 h-56 w-56 rounded-full bg-primary/18 blur-[100px]"
-                  aria-hidden
-                />
-                <div className="relative flex h-full flex-col justify-between">
-                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/30 bg-primary/10 text-primary">
-                    <Users className="h-6 w-6" strokeWidth={1.7} />
-                  </span>
-                  <div className="grid grid-cols-3 gap-4">
-                    {[
-                      { to: 50, suffix: "+", label: "Projects delivered" },
-                      { to: 100, suffix: "%", label: "HVAC-only clients" },
-                      { to: 5, suffix: "", label: "Dedicated specialists" },
-                    ].map((stat) => (
-                      <div key={stat.label}>
-                        <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-                          <Counter to={stat.to} suffix={stat.suffix} />
-                        </p>
-                        <p className="mt-1 text-[11px] leading-tight text-muted-foreground">
-                          {stat.label}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <img
+                src="https://res.cloudinary.com/dmaibvnp/image/upload/v1792075191/Frame_1.webp"
+                alt="Muxair — HVAC-only web design specialists"
+                loading="lazy"
+                decoding="async"
+                className="h-auto w-full rounded-3xl border border-border object-cover"
+              />
             </Reveal>
 
             <Reveal delay={0.1}>
