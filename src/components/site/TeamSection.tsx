@@ -20,7 +20,7 @@ export const teamMembers = [
     bio: "Keeps every project moving smoothly and builds alongside the team as a Top-Rated developer on Upwork. Oversees development quality and delivery, so nothing stalls and what we promise on your strategy call is what ships at launch.",
   },
   {
-    name: "Anas Shah Mir",
+    name: "Shah Mir",
     role: "Development & Performance Marketing",
     image: anas,
     bio: "Builds the sites and runs the campaigns that bring in hot leads. Owns the technical side of SEO and leads our Google Ads and Meta Ads work, from tracking setup to campaign optimization.",
