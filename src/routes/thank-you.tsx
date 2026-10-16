@@ -3,7 +3,7 @@
 // export const Route = createFileRoute("/thank-you")({
 //   component: Page,
 //   head: () => ({
-//     meta: [{ title: "Privacy Policy | Ductwork Studio" }],
+//     meta: [{ title: "Privacy Policy | Muxair" }],
 //   }),
 // });
 
@@ -27,7 +27,7 @@ import { ArrowRight, CalendarClock, CheckCircle2, MessageCircle, PhoneCall } fro
 import { MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
 import { SITE_URL } from "@/lib/site-data";
 
-const title = "Thanks — We've Got Your Message | Ductwork Studio";
+const title = "Thanks — We've Got Your Message | Muxair";
 const description =
   "Your message has been received. Our team will review your details and get back to you within one business day.";
 

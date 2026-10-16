@@ -1,6 +1,6 @@
-# Ductwork Studio
+# Muxair
 
-Marketing website for **Ductwork Studio** — a web design and digital marketing
+Marketing website for **Muxair** — a web design and digital marketing
 agency that works exclusively with HVAC companies (heating, cooling, air
 quality, boilers, AC installers).
 

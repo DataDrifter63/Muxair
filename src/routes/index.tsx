@@ -12,7 +12,7 @@ import { CTASection } from "@/components/site/CTASection";
 
 // TODO: replace with the real production domain before launch — it also
 // drives the canonical/OG URLs below and public/sitemap.xml + robots.txt.
-const SITE_URL = "https://www.ductworkstudio.com";
+const SITE_URL = "https://muxair.com";
 
 const title = "HVAC Website Design Agency | Built Exclusively for Heating & Cooling Companies";
 const description =
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ProfessionalService",
-          name: "Ductwork Studio",
+          name: "Muxair",
           url: SITE_URL,
           description,
           serviceType: [

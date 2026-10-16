@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 
 type Theme = "light" | "dark";
 
-const STORAGE_KEY = "ductwork-theme";
+const STORAGE_KEY = "muxair-theme";
 
 type ThemeContextValue = {
   theme: Theme;

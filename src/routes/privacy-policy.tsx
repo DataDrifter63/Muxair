@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/privacy-policy")({
   component: Page,
   head: () => ({
-    meta: [{ title: "Privacy Policy | Ductwork Studio" }],
+    meta: [{ title: "Privacy Policy | Muxair" }],
   }),
 });
 

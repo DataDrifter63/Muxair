@@ -3,7 +3,7 @@
 export const Route = createFileRoute("/terms")({
   component: Page,
   head: () => ({
-    meta: [{ title: "Privacy Policy | Ductwork Studio" }],
+    meta: [{ title: "Privacy Policy | Muxair" }],
   }),
 });
 

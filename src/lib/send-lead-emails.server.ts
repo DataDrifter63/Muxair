@@ -26,10 +26,10 @@ function adminNotificationHtml(data: LeadEmailInput) {
 function submitterThankYouHtml(data: LeadEmailInput) {
   return `
     <p>Hi ${data.fullName},</p>
-    <p>Thanks for reaching out to Ductwork Studio! We've got your details and will call you
+    <p>Thanks for reaching out to Muxair! We've got your details and will call you
     within 4 hours (usually much sooner) to find a time for your free 30-minute strategy call.</p>
     <p>In the meantime, feel free to reply to this email if anything urgent comes up.</p>
-    <p>— The Ductwork Studio Team</p>
+    <p>— The Muxair Team</p>
   `;
 }
 
@@ -41,7 +41,7 @@ function submitterThankYouHtml(data: LeadEmailInput) {
  *
  * Required env vars (set locally in .env and on your host, e.g. Netlify):
  *   RESEND_API_KEY          - from resend.com/api-keys
- *   RESEND_FROM_EMAIL       - e.g. "Ductwork Studio <hello@yourdomain.com>"
+ *   RESEND_FROM_EMAIL       - e.g. "Muxair <hello@yourdomain.com>"
  *                             (must be on a domain verified in Resend to
  *                             email real customers — see resend.com/domains)
  *   LEAD_NOTIFICATION_EMAIL - your inbox, where new-lead alerts go
@@ -56,7 +56,7 @@ export const sendLeadEmails = createServerFn({ method: "POST" })
     }
 
     const fromAddress =
-      process.env["RESEND_FROM_EMAIL"] ?? "Ductwork Studio <onboarding@resend.dev>";
+      process.env["RESEND_FROM_EMAIL"] ?? "Muxair <onboarding@resend.dev>";
     const adminEmail = process.env["LEAD_NOTIFICATION_EMAIL"];
 
     const { Resend } = await import("resend");
@@ -66,7 +66,7 @@ export const sendLeadEmails = createServerFn({ method: "POST" })
       resend.emails.send({
         from: fromAddress,
         to: data.email,
-        subject: "Thanks for reaching out — Ductwork Studio",
+        subject: "Thanks for reaching out — Muxair",
         html: submitterThankYouHtml(data),
       }),
     ];

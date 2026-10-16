@@ -82,13 +82,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "HVAC Website Design Agency | Ductwork Studio" },
+      { title: "HVAC Website Design Agency | Muxair" },
       {
         name: "description",
         content:
           "Websites and digital marketing built exclusively for HVAC companies. More booked jobs.",
       },
-      { property: "og:site_name", content: "Ductwork Studio" },
+      { property: "og:site_name", content: "Muxair" },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "/og-image.png" },
       { property: "og:image:width", content: "1200" },

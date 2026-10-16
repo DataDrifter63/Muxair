@@ -12,7 +12,7 @@ import {
 
 // Canonical is hardcoded to the Muxair domain per the SEO checklist for new
 // pages, rather than the shared SITE_URL constant (which still points at
-// the old Ductwork Studio domain used elsewhere in the codebase).
+// the Muxair domain).
 const PAGE_URL = "https://muxair.com/pricing";
 
 const title = "HVAC Website & Marketing Pricing | Transparent Packages, No Hidden Fees";

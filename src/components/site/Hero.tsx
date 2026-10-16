@@ -1,8 +1,8 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Flame, PlayCircle, Snowflake, TrendingUp } from "lucide-react";
 import { useRef } from "react";
-import heroSite1 from "@/assets/hero-site-1.jpg";
-import heroSite2 from "@/assets/hero-site-2.jpg";
+import heroSite1 from "@/assets/hero-site-1.webp";
+import heroSite2 from "@/assets/hero-site-2.webp";
 import { MagneticButton } from "./primitives";
 
 const headline = ["Websites Built for", "HVAC Companies", "That Want More Booked Jobs"];
