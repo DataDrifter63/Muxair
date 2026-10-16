@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Navbar } from "../components/site/Navbar";
 import { Footer } from "../components/site/Footer";
+import { CustomCursor } from "../components/site/CustomCursor";
 
 import {
   Outlet,
@@ -149,6 +150,7 @@ function RootComponent() {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
+        {isAdmin ? null : <CustomCursor />}
         {isAdmin ? null : <Navbar />}
         <Outlet />
         {isAdmin ? null : <Footer />}
