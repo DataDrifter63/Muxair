@@ -49,6 +49,7 @@ export function TeamSection() {
             <button
               type="button"
               data-cursor="light"
+              data-cursor-label="Meet"
               aria-expanded={open}
               aria-label={`${m.name}, ${m.role}. Show bio`}
               onClick={() => setActive(open ? null : i)}
