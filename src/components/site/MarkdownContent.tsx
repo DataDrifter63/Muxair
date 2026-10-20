@@ -41,6 +41,32 @@ import { MagneticButton } from "./primitives";
  * if" comparisons. Separate the two cards with a blank line; each card is
  * its title line followed by `- ` bullet lines. Works with 2 cards; a 3rd
  * blank-line-separated group is ignored past the first two.
+ *
+ *   :::stats
+ *   2016 | Year founded
+ *   $12M+ | Projects delivered
+ *   :::
+ *
+ * ...renders a row of big orange numbers with a small label underneath, each
+ * line being `value | label` (2 to 4 lines look best).
+ *
+ * Images use normal Markdown: ![alt text](url "optional caption"). They render
+ * as a rounded, bordered figure with the title text shown as a caption.
+ *
+ *   :::bars Previous 28 days | Latest 28 days
+ *   Clicks | 179 | 1,360
+ *   Impressions | 45.1K | 197K
+ *   :::
+ *
+ * ...renders paired horizontal bars per row (`label | before | after`),
+ * scaled against the larger value. Values may use K and M suffixes. Do not
+ * use it for metrics where lower is better, such as average position.
+ *
+ *   :::timeline
+ *   Mid June | A quiet start | A sentence or two about what happened.
+ *   :::
+ *
+ * ...renders a vertical timeline (`when | title | description`).
  */
 
 type CtaBlock = { title?: string; text?: string; button?: string; href?: string };
@@ -160,6 +186,139 @@ function CompareCards({ cards }: { cards: CompareCard[] }) {
   );
 }
 
+type StatItem = { value: string; label: string };
+
+function parseStatsBlock(raw: string): StatItem[] {
+  return raw
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [value, label] = line.split("|").map((s) => s.trim());
+      return { value: value ?? "", label: label ?? "" };
+    });
+}
+
+function StatsRow({ items }: { items: StatItem[] }) {
+  return (
+    <div className="not-prose my-8 grid grid-cols-2 gap-4 rounded-2xl border border-border bg-surface/40 p-6 backdrop-blur-md sm:grid-cols-4">
+      {items.map((s, i) => (
+        <div key={i} className="text-center">
+          <p className="font-display text-2xl font-bold text-primary sm:text-3xl">{s.value}</p>
+          <p className="mt-1 text-xs text-muted-foreground">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function parseMetric(value: string): number {
+  const m = value.replace(/,/g, "").trim().match(/^([\d.]+)\s*([kKmM]?)/);
+  if (!m || !m[1]) return 0;
+  const n = parseFloat(m[1]);
+  const suffix = (m[2] ?? "").toLowerCase();
+  return suffix === "k" ? n * 1_000 : suffix === "m" ? n * 1_000_000 : n;
+}
+
+type BarRow = { label: string; before: string; after: string };
+
+function parseBarsBlock(raw: string): BarRow[] {
+  return raw
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [label, before, after] = line.split("|").map((s) => s.trim());
+      return { label: label ?? "", before: before ?? "", after: after ?? "" };
+    });
+}
+
+function BarsChart({ legend, rows }: { legend: string; rows: BarRow[] }) {
+  const [beforeLabel, afterLabel] = legend.split("|").map((s) => s.trim());
+  return (
+    <div className="not-prose my-8 rounded-2xl border border-border bg-surface/50 p-5 sm:p-7">
+      <div className="mb-6 flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground">
+        <span className="flex items-center gap-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/40" />
+          {beforeLabel || "Before"}
+        </span>
+        <span className="flex items-center gap-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-primary" />
+          {afterLabel || "After"}
+        </span>
+      </div>
+      <div className="space-y-7">
+        {rows.map((row, i) => {
+          const before = parseMetric(row.before);
+          const after = parseMetric(row.after);
+          const max = Math.max(before, after, 1);
+          return (
+            <div key={i}>
+              <p className="text-sm font-semibold text-foreground">{row.label}</p>
+              <div className="mt-3 space-y-2.5">
+                <div className="flex items-center gap-3">
+                  <div className="flex-1">
+                    <div
+                      className="h-3 rounded-full bg-muted-foreground/40"
+                      style={{ width: `${Math.max((before / max) * 100, 2)}%` }}
+                    />
+                  </div>
+                  <span className="w-16 text-right text-xs text-muted-foreground">{row.before}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex-1">
+                    <div
+                      className="h-3 rounded-full bg-primary"
+                      style={{ width: `${Math.max((after / max) * 100, 2)}%` }}
+                    />
+                  </div>
+                  <span className="w-16 text-right font-display text-sm font-bold text-primary">
+                    {row.after}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+type TimelineItem = { when: string; title: string; description: string };
+
+function parseTimelineBlock(raw: string): TimelineItem[] {
+  return raw
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [when, title, description] = line.split("|").map((s) => s.trim());
+      return { when: when ?? "", title: title ?? "", description: description ?? "" };
+    });
+}
+
+function TimelineList({ items }: { items: TimelineItem[] }) {
+  return (
+    <ol className="not-prose my-8 ml-2 border-l border-border">
+      {items.map((item, i) => (
+        <li key={i} className="relative pb-8 pl-7 last:pb-0">
+          <span className="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-primary ring-4 ring-background" />
+          <p className="text-[13px] font-bold uppercase tracking-wide text-primary">{item.when}</p>
+          <p className="mt-1 text-[15.5px] font-semibold leading-snug text-foreground">
+            {item.title}
+          </p>
+          {item.description ? (
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              {item.description}
+            </p>
+          ) : null}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 const markdownComponents = {
   h2: (props: any) => (
     <h2 className="mt-11 font-display text-2xl leading-snug text-foreground" {...props} />
@@ -167,7 +326,27 @@ const markdownComponents = {
   h3: (props: any) => (
     <h3 className="mt-8 text-lg font-semibold leading-snug text-foreground" {...props} />
   ),
-  p: (props: any) => <p className="mt-5 text-base leading-relaxed text-foreground/90" {...props} />,
+  p: ({ node, ...props }: any) => {
+    const onlyImage = node?.children?.length === 1 && node.children[0]?.tagName === "img";
+    return onlyImage ? (
+      <>{props.children}</>
+    ) : (
+      <p className="mt-5 text-base leading-relaxed text-foreground/90" {...props} />
+    );
+  },
+  img: ({ src, alt, title }: any) => (
+    <figure className="not-prose my-8">
+      <img
+        src={src}
+        alt={alt ?? ""}
+        loading="lazy"
+        className="w-full rounded-2xl border border-border"
+      />
+      {title ? (
+        <figcaption className="mt-3 text-center text-xs text-muted-foreground">{title}</figcaption>
+      ) : null}
+    </figure>
+  ),
   strong: (props: any) => <strong className="font-semibold text-foreground" {...props} />,
   ul: (props: any) => (
     <ul
@@ -208,7 +387,7 @@ const markdownComponents = {
   ),
 };
 
-const BLOCK_RE = /:::(cta|checklist|compare)( [^\n]*)?\n([\s\S]*?)\n:::/g;
+const BLOCK_RE = /:::(cta|checklist|compare|stats|bars|timeline)( [^\n]*)?\n([\s\S]*?)\n:::/g;
 
 export function MarkdownContent({ content, className }: { content: string; className?: string }) {
   const nodes: React.ReactNode[] = [];
@@ -240,6 +419,18 @@ export function MarkdownContent({ content, className }: { content: string; class
       );
     } else if (type === "compare") {
       nodes.push(<CompareCards key={key++} cards={parseCompareBlock(body ?? "")} />);
+    } else if (type === "stats") {
+      nodes.push(<StatsRow key={key++} items={parseStatsBlock(body ?? "")} />);
+    } else if (type === "bars") {
+      nodes.push(
+        <BarsChart
+          key={key++}
+          legend={(inlineArg ?? "").trim()}
+          rows={parseBarsBlock(body ?? "")}
+        />,
+      );
+    } else if (type === "timeline") {
+      nodes.push(<TimelineList key={key++} items={parseTimelineBlock(body ?? "")} />);
     }
 
     cursor = match.index + full.length;

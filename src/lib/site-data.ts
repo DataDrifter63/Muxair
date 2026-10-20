@@ -148,13 +148,14 @@ export const services: ServiceItem[] = [
   },
 ];
 
-export type WorkService = "website" | "seo" | "google-ads" | "meta-ads";
+export type WorkService = "website" | "seo" | "google-ads" | "meta-ads" | "maintenance";
 
 export const workServiceLabels: Record<WorkService, string> = {
   website: "Website Design",
   seo: "Local SEO",
   "google-ads": "Google Ads",
   "meta-ads": "Meta Ads",
+  maintenance: "Website Maintenance",
 };
 
 export interface WorkItem {

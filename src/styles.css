@@ -71,9 +71,11 @@
   --input: #d9cdb9;
   --ring: oklch(0.7 0.18 42);
 
-  --glow-cool: 0 0 0 1px color-mix(in oklab, var(--primary) 25%, transparent),
+  --glow-cool:
+    0 0 0 1px color-mix(in oklab, var(--primary) 25%, transparent),
     0 24px 70px -30px color-mix(in oklab, var(--primary) 65%, transparent);
-  --glow-heat: 0 0 0 1px color-mix(in oklab, var(--heat) 25%, transparent),
+  --glow-heat:
+    0 0 0 1px color-mix(in oklab, var(--heat) 25%, transparent),
     0 24px 70px -30px color-mix(in oklab, var(--heat) 60%, transparent);
   --gradient-cool: linear-gradient(135deg, var(--primary), oklch(0.55 0.16 35));
   --gradient-heat: linear-gradient(135deg, var(--heat), oklch(0.62 0.18 25));
@@ -142,8 +144,16 @@
 
 @utility grid-tech {
   background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--border) 70%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--border) 70%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--border) 70%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--border) 70%, transparent) 1px,
+      transparent 1px
+    );
   background-size: 64px 64px;
 }
 
@@ -216,5 +226,64 @@
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Custom brand cursor (mouse / trackpad only) ---------- */
+.muxair-cursor {
+  transition:
+    color 0.25s ease,
+    opacity 0.2s ease;
+}
+.muxair-cursor-dot,
+.muxair-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+.muxair-cursor-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: currentColor;
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.muxair-cursor-ring {
+  width: 38px;
+  height: 38px;
+}
+.muxair-cursor-ring > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  border: 1.5px solid currentColor;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.25s ease;
+}
+.muxair-cursor-ring.is-hover > span {
+  transform: scale(1.55);
+  background-color: color-mix(in oklab, currentColor 16%, transparent);
+}
+.muxair-cursor-ring.is-down > span {
+  transform: scale(0.75);
+}
+.muxair-cursor-ring.is-hover.is-down > span {
+  transform: scale(1.25);
+}
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+  html.has-custom-cursor
+    input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not(
+      [type="submit"]
+    ),
+  html.has-custom-cursor textarea,
+  html.has-custom-cursor [contenteditable="true"] {
+    cursor: auto !important;
   }
 }

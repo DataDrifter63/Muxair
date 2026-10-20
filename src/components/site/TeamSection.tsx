@@ -48,6 +48,7 @@ export function TeamSection() {
           <Reveal key={m.name} delay={i * 0.08} className="h-full">
             <button
               type="button"
+              data-cursor="light"
               aria-expanded={open}
               aria-label={`${m.name}, ${m.role}. Show bio`}
               onClick={() => setActive(open ? null : i)}

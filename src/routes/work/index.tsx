@@ -89,6 +89,7 @@ const filters: { id: WorkService | "all"; label: string }[] = [
   { id: "seo", label: "Local SEO" },
   { id: "google-ads", label: "Google Ads" },
   { id: "meta-ads", label: "Meta Ads" },
+  { id: "maintenance", label: "Maintenance" },
 ];
 
 const reviews = [
