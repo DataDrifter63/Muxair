@@ -229,49 +229,77 @@
   }
 }
 
-/* ---------- Custom brand cursor (mouse / trackpad only) ---------- */
+/* ---------- Custom brand cursor: spinning fan + label (mouse / trackpad only) ---------- */
 .muxair-cursor {
-  transition:
-    color 0.25s ease,
-    opacity 0.2s ease;
-}
-.muxair-cursor-dot,
-.muxair-cursor-ring {
+  --cursor-inv: #f5f0eb;
+  --cursor-pill-text: #1c1815;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    color 0.25s ease;
   will-change: transform;
 }
-.muxair-cursor-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 9999px;
-  background: currentColor;
-  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+.muxair-cursor.is-visible {
+  opacity: 1;
 }
-.muxair-cursor-ring {
-  width: 38px;
-  height: 38px;
+.muxair-cursor.is-light {
+  color: #fff !important;
+  --cursor-inv: #f77036;
+  --cursor-pill-text: #f77036;
 }
-.muxair-cursor-ring > span {
-  display: block;
+.muxair-fan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+}
+.muxair-fan-scale {
   width: 100%;
   height: 100%;
-  border-radius: 9999px;
-  border: 1.5px solid currentColor;
-  transition:
-    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.muxair-cursor-ring.is-hover > span {
-  transform: scale(1.55);
-  background-color: color-mix(in oklab, currentColor 16%, transparent);
+.muxair-fan svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.18));
 }
-.muxair-cursor-ring.is-down > span {
-  transform: scale(0.75);
-}
-.muxair-cursor-ring.is-hover.is-down > span {
+.muxair-cursor.is-hover .muxair-fan-scale {
   transform: scale(1.25);
+}
+.muxair-cursor.is-down .muxair-fan-scale {
+  transform: scale(0.8);
+}
+.muxair-pill {
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  background: currentColor;
+  white-space: nowrap;
+  font: 700 12.5px var(--font-sans);
+  opacity: 0;
+  transform: translateX(-8px) scale(0.9);
+  transform-origin: left center;
+  transition:
+    opacity 0.2s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.4);
+}
+.muxair-pill span {
+  color: var(--cursor-pill-text);
+}
+.muxair-cursor.has-label .muxair-pill {
+  opacity: 1;
+  transform: none;
 }
 @media (hover: hover) and (pointer: fine) {
   html.has-custom-cursor,
