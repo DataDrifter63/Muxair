@@ -21,6 +21,7 @@ import { MagneticButton, Reveal, SectionHeading, TechBackdrop } from "@/componen
 import { CTASection } from "@/components/site/CTASection";
 import { TeamSection, teamMembers } from "@/components/site/TeamSection";
 import { SITE_URL } from "@/lib/site-data";
+import whyHvacImg from "@/assets/why-hvac.webp";
 
 const title = "About Us | The HVAC-Specialist Web Design Agency";
 const description =
@@ -168,7 +169,7 @@ function AboutPage() {
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
             <Reveal>
               <img
-                src="https://res.cloudinary.com/dmaibvnp/image/upload/v1792075191/Frame_1.webp"
+                src={whyHvacImg}
                 alt="Muxair — HVAC-only web design specialists"
                 loading="lazy"
                 decoding="async"

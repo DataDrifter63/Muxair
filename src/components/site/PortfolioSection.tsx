@@ -84,28 +84,28 @@ const highlights: PortfolioHighlight[] = [
     verifiedLabel: 'SEO CAMPAIGN RESULTS · 4 WEEKS',
   },
   // DEMO ITEM — replace every field below with your real third case study.
-  {
-    name: "Demo HVAC Co.",
-    tone: "cool",
-    headline: "Demo case study: replace this headline with your real result",
-    before: {
-      label: "Before (Month Year)",
-      stats: ["Add your first before stat", "Add your second before stat"],
-    },
-    after: {
-      label: "After (Month Year)",
-      stats: ["Add your first after stat", "Add your second after stat", "Add your third after stat"],
-    },
-    pills: [
-      { value: "+000%", label: "Replace with your key result" },
-      { value: "Top 3", label: "Replace with a second result" },
-    ],
-    chartImage: "",
-    beforeImage: work1,
-    afterImage: work2,
-    chartCaption: "Replace with a one-line result summary",
-    verifiedLabel: "DEMO · REPLACE WITH YOUR CASE STUDY",
-  },
+  // {
+  //   name: "Demo HVAC Co.",
+  //   tone: "cool",
+  //   headline: "Demo case study: replace this headline with your real result",
+  //   before: {
+  //     label: "Before (Month Year)",
+  //     stats: ["Add your first before stat", "Add your second before stat"],
+  //   },
+  //   after: {
+  //     label: "After (Month Year)",
+  //     stats: ["Add your first after stat", "Add your second after stat", "Add your third after stat"],
+  //   },
+  //   pills: [
+  //     { value: "+000%", label: "Replace with your key result" },
+  //     { value: "Top 3", label: "Replace with a second result" },
+  //   ],
+  //   chartImage: "",
+  //   beforeImage: work1,
+  //   afterImage: work2,
+  //   chartCaption: "Replace with a one-line result summary",
+  //   verifiedLabel: "DEMO · REPLACE WITH YOUR CASE STUDY",
+  // },
 ];
 
 /**
