@@ -1,6 +1,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowRight, Flame, PlayCircle, Snowflake, TrendingUp } from "lucide-react";
-import { useRef } from "react";
+import { ArrowRight, Flame, PlayCircle, Snowflake } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import heroSite1 from "@/assets/hero-site-1.webp";
 import heroSite2 from "@/assets/hero-site-2.webp";
 import { MagneticButton } from "./primitives";
@@ -32,13 +32,15 @@ function optimiseImage(url: string, width = 1000): string {
   return `${head}f_auto,q_auto,c_limit,w_${width}/${rest}`;
 }
 
+/** On-screen scroll speed of the hero screenshots, in px per second (same for both windows). */
+const SCAN_PX_PER_SECOND = 45;
+
 function BrowserFrame({
   label,
   image,
   className,
   tilt,
   aspect,
-  scanSeconds,
   priority = false,
 }: {
   label: string;
@@ -46,22 +48,43 @@ function BrowserFrame({
   className: string;
   tilt: number;
   aspect: string;
-  scanSeconds: number;
   priority?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
-  const scan = reduceMotion
-    ? {}
-    : {
-        animate: { objectPosition: ["50% 0%", "50% 100%"] },
-        transition: {
-          duration: scanSeconds,
-          delay: 0.8,
-          repeat: Infinity,
-          repeatType: "reverse" as const,
-          ease: "easeInOut" as const,
-        },
-      };
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [scanSeconds, setScanSeconds] = useState<number | null>(null);
+
+  // Both windows scroll at the same on-screen speed (SCAN_PX_PER_SECOND), whatever the
+  // screenshot's height or the window's size: duration = distance to travel / speed.
+  const measure = useCallback(() => {
+    const img = imgRef.current;
+    if (!img || !img.naturalWidth || !img.clientWidth) return;
+    const renderedHeight = img.naturalHeight * (img.clientWidth / img.naturalWidth);
+    const distance = Math.max(0, renderedHeight - img.clientHeight);
+    setScanSeconds(Math.max(8, distance / SCAN_PX_PER_SECOND));
+  }, []);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(img);
+    return () => ro.disconnect();
+  }, [measure]);
+
+  const scan =
+    reduceMotion || scanSeconds === null
+      ? {}
+      : {
+          animate: { objectPosition: ["50% 0%", "50% 100%"] },
+          transition: {
+            duration: scanSeconds,
+            delay: 0.8,
+            repeat: Infinity,
+            repeatType: "reverse" as const,
+            ease: "linear" as const,
+          },
+        };
 
   return (
     <motion.div
@@ -77,6 +100,8 @@ function BrowserFrame({
         </span>
       </div>
       <motion.img
+        ref={imgRef}
+        onLoad={measure}
         src={optimiseImage(image)}
         alt={`Website design example: ${label}`}
         loading={priority ? "eager" : "lazy"}
@@ -221,7 +246,6 @@ export function Hero() {
               className="right-0 top-0 z-10 w-[82%]"
               tilt={2.5}
               aspect="aspect-[4/4.4]"
-              scanSeconds={16}
               priority
             />
           ) : null}
@@ -232,33 +256,8 @@ export function Hero() {
               className="bottom-0 left-0 z-20 w-[56%]"
               tilt={-3.5}
               aspect="aspect-[4/4.6]"
-              scanSeconds={12}
             />
           ) : null}
-
-          <motion.div
-            className="absolute -left-4 top-10 z-30 hidden items-center gap-2.5 rounded-xl border border-border bg-background/85 px-3.5 py-2.5 backdrop-blur-xl sm:flex"
-            animate={{ y: [0, -12, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <TrendingUp className="h-4 w-4 text-primary" />
-            <div className="leading-tight">
-              <p className="text-xs font-semibold">Made for local service businesses</p>
-              <p className="text-[11px] text-muted-foreground"></p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="absolute -right-3 bottom-10 z-30 hidden items-center gap-2.5 rounded-xl border border-heat/30 bg-background/85 px-3.5 py-2.5 backdrop-blur-xl sm:flex glow-heat"
-            animate={{ y: [0, 14, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-          >
-            <Flame className="h-4 w-4 text-heat" />
-            <div className="leading-tight">
-              <p className="text-xs font-semibold">Optimized for 'near me' searches</p>
-              <p className="text-[11px] text-muted-foreground"></p>
-            </div>
-          </motion.div>
         </motion.div>
       </div>
     </section>
