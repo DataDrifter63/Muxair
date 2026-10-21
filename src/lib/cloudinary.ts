@@ -31,3 +31,20 @@ export async function uploadImage(file: File): Promise<string> {
   const data = await res.json();
   return data.secure_url as string;
 }
+
+/**
+ * Adds f_auto/q_auto and caps width at 1600px (c_limit only ever scales
+ * DOWN, never crops) to a Cloudinary delivery URL, so images inserted into
+ * posts load fast. URLs that already carry transformations, and non-Cloudinary
+ * URLs, are returned unchanged.
+ */
+export function optimiseCloudinaryUrl(url: string): string {
+  const marker = "/image/upload/";
+  const at = url.indexOf(marker);
+  if (!url.includes("res.cloudinary.com") || at === -1) return url;
+  const head = url.slice(0, at + marker.length);
+  const rest = url.slice(at + marker.length);
+  const first = rest.split("/")[0] ?? "";
+  if (first.includes(",") || /^[a-z]{1,3}_/.test(first)) return url;
+  return `${head}f_auto,q_auto,c_limit,w_1600/${rest}`;
+}

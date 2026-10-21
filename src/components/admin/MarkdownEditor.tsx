@@ -5,16 +5,19 @@ import {
   Columns2,
   Eye,
   Heading2,
+  ImagePlus,
   Italic,
   Link2,
   List,
   ListChecks,
+  Loader2,
   Megaphone,
   Pencil,
   Quote,
 } from "lucide-react";
 import { MarkdownContent } from "@/components/site/MarkdownContent";
 import { cn } from "@/lib/utils";
+import { optimiseCloudinaryUrl, uploadImage } from "@/lib/cloudinary";
 
 /**
  * A small, dependency-light Markdown editor: a plain textarea with a
@@ -93,7 +96,66 @@ export function MarkdownEditor({
   onChange: (v: string) => void;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [mode, setMode] = useState<"write" | "preview">("write");
+  const [pending, setPending] = useState(0);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [dragging, setDragging] = useState(false);
+
+  // Uploads finish asynchronously, so they must edit the *latest* text, not the
+  // `value` captured when the upload started.
+  const valueRef = useRef(value);
+  valueRef.current = value;
+
+  function setText(next: string) {
+    valueRef.current = next;
+    onChange(next);
+  }
+
+  function insertAtCursor(text: string) {
+    const el = textareaRef.current;
+    const cur = valueRef.current;
+    const start = el?.selectionStart ?? cur.length;
+    const end = el?.selectionEnd ?? start;
+    const lead = start > 0 && cur[start - 1] !== "\n" ? "\n\n" : "";
+    setText(cur.slice(0, start) + lead + text + "\n\n" + cur.slice(end));
+  }
+
+  // Uploads each image to Cloudinary and drops a Markdown image at the cursor.
+  // A temporary "Uploading..." placeholder is inserted straight away and swapped
+  // for the real link when the upload finishes (or removed if it fails).
+  async function uploadFiles(files: File[]) {
+    const images = files.filter((f) => f.type.startsWith("image/"));
+    if (!images.length) {
+      setUploadError("Only image files can be uploaded here.");
+      return;
+    }
+    setUploadError(null);
+
+    for (const file of images) {
+      const alt =
+        file.name
+          .replace(/\.[^.]+$/, "")
+          .replace(/[-_]+/g, " ")
+          .replace(/[[\]()]/g, "")
+          .trim() || "Image";
+      const id = Math.random().toString(36).slice(2, 8);
+      const placeholder = `![Uploading ${alt}...](uploading-${id})`;
+
+      insertAtCursor(placeholder);
+      setPending((n) => n + 1);
+      try {
+        const url = await uploadImage(file);
+        const finalMarkdown = `![${alt}](${optimiseCloudinaryUrl(url)})`;
+        setText(valueRef.current.replace(placeholder, () => finalMarkdown));
+      } catch (err) {
+        setText(valueRef.current.replace(`${placeholder}\n\n`, "").replace(placeholder, ""));
+        setUploadError(err instanceof Error ? err.message : "Image upload failed");
+      } finally {
+        setPending((n) => n - 1);
+      }
+    }
+  }
 
   function applyAction(action: ToolbarAction) {
     const el = textareaRef.current;
@@ -153,6 +215,32 @@ export function MarkdownEditor({
             </button>
           ))}
 
+          <button
+            type="button"
+            title="Upload image (or paste / drag & drop into the editor)"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={mode === "preview"}
+            className="flex h-7 w-7 items-center justify-center rounded text-muted-foreground transition-colors hover:bg-surface hover:text-foreground disabled:opacity-40"
+          >
+            {pending > 0 ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            ) : (
+              <ImagePlus className="h-3.5 w-3.5" />
+            )}
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={(e) => {
+              const files = Array.from(e.target.files ?? []);
+              e.target.value = "";
+              if (files.length) void uploadFiles(files);
+            }}
+          />
+
           <span className="mx-1 h-4 w-px bg-border" aria-hidden />
 
           {blockActions.map((action) => (
@@ -202,7 +290,31 @@ export function MarkdownEditor({
           onChange={(e) => onChange(e.target.value)}
           rows={16}
           placeholder="Write your post in Markdown..."
-          className="w-full resize-y bg-background px-4 py-3 font-mono text-sm text-foreground outline-none placeholder:text-muted-foreground"
+          onPaste={(e) => {
+            const files = Array.from(e.clipboardData.files).filter((f) =>
+              f.type.startsWith("image/"),
+            );
+            if (!files.length) return;
+            e.preventDefault();
+            void uploadFiles(files);
+          }}
+          onDragOver={(e) => {
+            if (!Array.from(e.dataTransfer.types).includes("Files")) return;
+            e.preventDefault();
+            setDragging(true);
+          }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={(e) => {
+            setDragging(false);
+            const files = Array.from(e.dataTransfer.files);
+            if (!files.length) return;
+            e.preventDefault();
+            void uploadFiles(files);
+          }}
+          className={cn(
+            "w-full resize-y bg-background px-4 py-3 font-mono text-sm text-foreground outline-none placeholder:text-muted-foreground",
+            dragging && "ring-2 ring-inset ring-primary/60",
+          )}
         />
       ) : (
         <div className="bg-background px-4 py-3">
@@ -213,6 +325,24 @@ export function MarkdownEditor({
           )}
         </div>
       )}
+
+      {pending > 0 || uploadError || mode === "write" ? (
+        <div className="border-t border-border bg-surface/40 px-3 py-1.5 text-xs">
+          {pending > 0 ? (
+            <span className="flex items-center gap-1.5 text-muted-foreground">
+              <Loader2 className="h-3 w-3 animate-spin" />
+              Uploading {pending} image{pending > 1 ? "s" : ""} to Cloudinary...
+            </span>
+          ) : uploadError ? (
+            <span className="text-destructive">{uploadError}</span>
+          ) : (
+            <span className="text-muted-foreground">
+              Tip: click the image button, paste a screenshot, or drag &amp; drop images into the
+              editor, they upload to Cloudinary and the link is added automatically.
+            </span>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }
