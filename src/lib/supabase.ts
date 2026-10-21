@@ -85,6 +85,9 @@ export interface LeadRow {
  * ("website" | "seo" | "google-ads" | "meta-ads" | "maintenance").
  * Used by the service pages so each one links to its own real case study.
  * Returns null when none is published yet (the page shows "Coming Soon").
+ *
+ * Loads published rows the same way /work does and matches the tag in code,
+ * so it works whether `services` is a text[] or a jsonb column.
  */
 export async function fetchServiceCaseStudy(service: string): Promise<WorkItemRow | null> {
   try {
@@ -92,14 +95,19 @@ export async function fetchServiceCaseStudy(service: string): Promise<WorkItemRo
       .from("case_studies")
       .select("*")
       .eq("published", true)
-      .contains("services", [service])
-      .order("created_at", { ascending: false })
-      .limit(1);
+      .order("created_at", { ascending: false });
     if (error) {
       console.error("[service-case-study] load failed:", error.message);
       return null;
     }
-    return ((data ?? [])[0] ?? null) as WorkItemRow | null;
+    const rows = (data ?? []) as WorkItemRow[];
+    return (
+      rows.find(
+        (r) =>
+          Array.isArray(r.services) &&
+          r.services.some((s) => String(s).trim().toLowerCase() === service),
+      ) ?? null
+    );
   } catch (e) {
     console.error("[service-case-study] load failed:", e);
     return null;
