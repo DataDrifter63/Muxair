@@ -27,6 +27,7 @@ import { Route as ServicesGoogleAdsRouteImport } from './routes/services/google-
 import { Route as ServicesMaintenanceRouteImport } from './routes/services/maintenance'
 import { Route as ServicesMetaAdsRouteImport } from './routes/services/meta-ads'
 import { Route as ServicesSeoRouteImport } from './routes/services/seo'
+import { Route as ServicesWebsiteRouteImport } from './routes/services/website'
 import { Route as ServicesWebsitesRouteImport } from './routes/services/websites'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
 import { Route as WorkSlugRouteImport } from './routes/work/$slug'
@@ -129,6 +130,11 @@ const ServicesSeoRoute = ServicesSeoRouteImport.update({
   path: '/services/seo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesWebsiteRoute = ServicesWebsiteRouteImport.update({
+  id: '/services/website',
+  path: '/services/website',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesWebsitesRoute = ServicesWebsitesRouteImport.update({
   id: '/services/websites',
   path: '/services/websites',
@@ -197,6 +203,7 @@ export interface FileRoutesByFullPath {
   '/services/maintenance': typeof ServicesMaintenanceRoute
   '/services/meta-ads': typeof ServicesMetaAdsRoute
   '/services/seo': typeof ServicesSeoRoute
+  '/services/website': typeof ServicesWebsiteRoute
   '/services/websites': typeof ServicesWebsitesRoute
   '/work/$slug': typeof WorkSlugRoute
   '/about/': typeof AboutIndexRoute
@@ -228,6 +235,7 @@ export interface FileRoutesByTo {
   '/services/maintenance': typeof ServicesMaintenanceRoute
   '/services/meta-ads': typeof ServicesMetaAdsRoute
   '/services/seo': typeof ServicesSeoRoute
+  '/services/website': typeof ServicesWebsiteRoute
   '/services/websites': typeof ServicesWebsitesRoute
   '/work/$slug': typeof WorkSlugRoute
   '/about': typeof AboutIndexRoute
@@ -260,6 +268,7 @@ export interface FileRoutesById {
   '/services/maintenance': typeof ServicesMaintenanceRoute
   '/services/meta-ads': typeof ServicesMetaAdsRoute
   '/services/seo': typeof ServicesSeoRoute
+  '/services/website': typeof ServicesWebsiteRoute
   '/services/websites': typeof ServicesWebsitesRoute
   '/work/$slug': typeof WorkSlugRoute
   '/about/': typeof AboutIndexRoute
@@ -293,6 +302,7 @@ export interface FileRouteTypes {
     | '/services/maintenance'
     | '/services/meta-ads'
     | '/services/seo'
+    | '/services/website'
     | '/services/websites'
     | '/work/$slug'
     | '/about/'
@@ -324,6 +334,7 @@ export interface FileRouteTypes {
     | '/services/maintenance'
     | '/services/meta-ads'
     | '/services/seo'
+    | '/services/website'
     | '/services/websites'
     | '/work/$slug'
     | '/about'
@@ -355,6 +366,7 @@ export interface FileRouteTypes {
     | '/services/maintenance'
     | '/services/meta-ads'
     | '/services/seo'
+    | '/services/website'
     | '/services/websites'
     | '/work/$slug'
     | '/about/'
@@ -387,6 +399,7 @@ export interface RootRouteChildren {
   ServicesMaintenanceRoute: typeof ServicesMaintenanceRoute
   ServicesMetaAdsRoute: typeof ServicesMetaAdsRoute
   ServicesSeoRoute: typeof ServicesSeoRoute
+  ServicesWebsiteRoute: typeof ServicesWebsiteRoute
   ServicesWebsitesRoute: typeof ServicesWebsitesRoute
   WorkSlugRoute: typeof WorkSlugRoute
   AboutIndexRoute: typeof AboutIndexRoute
@@ -535,6 +548,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesSeoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/website': {
+      id: '/services/website'
+      path: '/services/website'
+      fullPath: '/services/website'
+      preLoaderRoute: typeof ServicesWebsiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services/websites': {
       id: '/services/websites'
       path: '/services/websites'
@@ -627,6 +647,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesMaintenanceRoute: ServicesMaintenanceRoute,
   ServicesMetaAdsRoute: ServicesMetaAdsRoute,
   ServicesSeoRoute: ServicesSeoRoute,
+  ServicesWebsiteRoute: ServicesWebsiteRoute,
   ServicesWebsitesRoute: ServicesWebsitesRoute,
   WorkSlugRoute: WorkSlugRoute,
   AboutIndexRoute: AboutIndexRoute,

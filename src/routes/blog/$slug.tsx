@@ -62,7 +62,7 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 const serviceHrefs = {
-  websites: "/services/websites",
+  website: "/services/website",
   seo: "/services/seo",
   "google-ads": "/services/google-ads",
   "meta-ads": "/services/meta-ads",
@@ -107,8 +107,10 @@ function BlogPostPage() {
   // The admin can pick a specific related service per post; if they leave it
   // on "Auto-detect", fall back to matching the post's category text against
   // a service title (SEO checklist: every post must link to a service page).
-  const relatedService = post.related_service
-    ? services.find((s) => s.slug === post.related_service)
+  // Older posts may have saved the previous "websites" slug.
+  const relatedSlug = post.related_service === "websites" ? "website" : post.related_service;
+  const relatedService = relatedSlug
+    ? services.find((s) => s.slug === relatedSlug)
     : (services.find((s) => post.category.toLowerCase().includes(s.title.toLowerCase())) ??
       services.find((s) =>
         s.title
@@ -116,7 +118,7 @@ function BlogPostPage() {
           .split(" ")
           .some((word) => post.category.toLowerCase().includes(word)),
       ) ??
-      services.find((s) => s.slug === "websites") ??
+      services.find((s) => s.slug === "website") ??
       services[0]);
 
   return (

@@ -10,8 +10,8 @@ import { MagneticButton } from "./primitives";
 import { ThemeToggle } from "./ThemeToggle";
 
 // "Services" carries a submenu built from the central services list, so every
-// inner service page (/services/websites, /services/seo, ...) is one tap/click
-// away from any page on the site.
+// inner service page (/services/website, /services/seo, ...) is one hover/tap
+// away from any page on the site. On desktop the submenu opens on hover.
 const links = [
   { label: "About", href: "/about" },
   {
@@ -33,11 +33,23 @@ export function Navbar() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const { scrollY } = useScroll();
   const servicesRef = useRef<HTMLLIElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 40));
 
   // Close mobile menu + any open submenus whenever the route changes.
+  // Hover handlers for the desktop Services dropdown. A short close delay keeps
+  // the menu open while the pointer travels from the link down into the panel.
+  const openServices = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setDesktopServicesOpen(true);
+  };
+  const closeServices = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setDesktopServicesOpen(false), 150);
+  };
+
   useEffect(() => {
     setOpen(false);
     setMobileServicesOpen(false);
@@ -94,10 +106,19 @@ export function Navbar() {
           <ul className="hidden items-center gap-1 lg:flex">
             {links.map((l) =>
               l.children ? (
-                <li key={l.label} ref={servicesRef} className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setDesktopServicesOpen((v) => !v)}
+                <li
+                  key={l.label}
+                  ref={servicesRef}
+                  className="relative"
+                  onMouseEnter={openServices}
+                  onMouseLeave={closeServices}
+                  onFocus={openServices}
+                  onBlur={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) closeServices();
+                  }}
+                >
+                  <Link
+                    to={l.href}
                     aria-haspopup="true"
                     aria-expanded={desktopServicesOpen}
                     className={cn(
@@ -113,7 +134,7 @@ export function Navbar() {
                         desktopServicesOpen && "rotate-180",
                       )}
                     />
-                  </button>
+                  </Link>
 
                   <AnimatePresence>
                     {desktopServicesOpen ? (
@@ -122,27 +143,29 @@ export function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
                         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute left-1/2 top-full z-50 mt-2 w-64 -translate-x-1/2 overflow-hidden rounded-2xl border border-border bg-background/95 p-2 shadow-xl backdrop-blur-xl"
+                        className="absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-2"
                       >
-                        <Link
-                          to={l.href}
-                          onClick={() => setDesktopServicesOpen(false)}
-                          className="block rounded-lg px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-surface"
-                        >
-                          All Services
-                        </Link>
-                        <div className="my-1 border-t border-border" />
-                        {l.children.map((child) => (
+                        <div className="overflow-hidden rounded-2xl border border-border bg-background/95 p-2 shadow-xl backdrop-blur-xl">
                           <Link
-                            key={child.href}
-                            to={child.href}
+                            to={l.href}
                             onClick={() => setDesktopServicesOpen(false)}
-                            className="block rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
-                            activeProps={{ className: "bg-surface text-foreground" }}
+                            className="block rounded-lg px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-surface"
                           >
-                            {child.label}
+                            All Services
                           </Link>
-                        ))}
+                          <div className="my-1 border-t border-border" />
+                          {l.children.map((child) => (
+                            <Link
+                              key={child.href}
+                              to={child.href}
+                              onClick={() => setDesktopServicesOpen(false)}
+                              className="block rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
+                              activeProps={{ className: "bg-surface text-foreground" }}
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
                       </motion.div>
                     ) : null}
                   </AnimatePresence>

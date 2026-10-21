@@ -223,7 +223,7 @@ const features = [
 const relatedServices = services.filter((s) => s.slug !== "maintenance");
 
 const serviceHrefs = {
-  websites: "/services/websites",
+  website: "/services/website",
   seo: "/services/seo",
   "google-ads": "/services/google-ads",
   "meta-ads": "/services/meta-ads",

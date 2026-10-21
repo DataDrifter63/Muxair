@@ -80,7 +80,9 @@ export function BlogPostForm({ existing }: { existing?: BlogPostRow }) {
           cover_image: existing.cover_image,
           content: existing.content,
           author_name: existing.author_name ?? "",
-          related_service: existing.related_service,
+          related_service: (existing.related_service === "websites"
+            ? "website"
+            : existing.related_service) as RelatedService,
           cta_badge_label: existing.cta_badge_label ?? "",
           cta_title: existing.cta_title ?? "",
           cta_description: existing.cta_description ?? "",

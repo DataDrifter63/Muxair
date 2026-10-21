@@ -13,7 +13,7 @@ const pageLinks = [
 ];
 
 const serviceLinks = [
-  { label: "Website Design", to: "/services/websites" },
+  { label: "Website Design", to: "/services/website" },
   { label: "Local SEO", to: "/services/seo" },
   { label: "Google Ads", to: "/services/google-ads" },
   { label: "Meta Ads", to: "/services/meta-ads" },

@@ -17,9 +17,9 @@ export interface ServiceItem {
 
 export const services: ServiceItem[] = [
   {
-    slug: "websites",
+    slug: "website",
     title: "HVAC Website Design",
-    shortTitle: "Websites",
+    shortTitle: "Website Design",
     tone: "cool",
     tagline: "Fast, mobile-first sites built to turn visitors into booked jobs.",
     description:

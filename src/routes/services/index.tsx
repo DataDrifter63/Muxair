@@ -76,7 +76,7 @@ export const Route = createFileRoute("/services/")({
 });
 
 const serviceIcons: Record<string, typeof MonitorSmartphone> = {
-  websites: MonitorSmartphone,
+  website: MonitorSmartphone,
   seo: MapPin,
   "google-ads": Target,
   "meta-ads": Facebook,
@@ -86,7 +86,7 @@ const serviceIcons: Record<string, typeof MonitorSmartphone> = {
 // Each service lives at its own static route (not a $slug dynamic route),
 // so map slugs to the exact literal paths the router knows about.
 const serviceHrefs = {
-  websites: "/services/websites",
+  website: "/services/website",
   seo: "/services/seo",
   "google-ads": "/services/google-ads",
   "meta-ads": "/services/meta-ads",
@@ -113,7 +113,7 @@ const startingPoints = [
     description:
       "If you don't have a site, or yours is actively hurting you, start here. Everything else depends on this being solid first.",
     note: "Most new businesses start with our Foundation package.",
-    chips: [{ label: "Website Design", slug: "websites" as const }],
+    chips: [{ label: "Website Design", slug: "website" as const }],
     featured: false,
   },
   {
