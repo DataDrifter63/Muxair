@@ -79,3 +79,29 @@ export interface LeadRow {
   deleted_at: string | null;
   created_at: string;
 }
+
+/**
+ * Latest published case study tagged with the given service slug
+ * ("website" | "seo" | "google-ads" | "meta-ads" | "maintenance").
+ * Used by the service pages so each one links to its own real case study.
+ * Returns null when none is published yet (the page shows "Coming Soon").
+ */
+export async function fetchServiceCaseStudy(service: string): Promise<WorkItemRow | null> {
+  try {
+    const { data, error } = await supabase
+      .from("case_studies")
+      .select("*")
+      .eq("published", true)
+      .contains("services", [service])
+      .order("created_at", { ascending: false })
+      .limit(1);
+    if (error) {
+      console.error("[service-case-study] load failed:", error.message);
+      return null;
+    }
+    return ((data ?? [])[0] ?? null) as WorkItemRow | null;
+  } catch (e) {
+    console.error("[service-case-study] load failed:", e);
+    return null;
+  }
+}

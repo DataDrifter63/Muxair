@@ -10,6 +10,8 @@ import {
   MapPin,
 } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
+import { ServiceCaseStudies } from "@/components/site/ServiceCaseStudies";
+import { fetchServiceCaseStudy } from "@/lib/supabase";
 import {
   MagneticButton,
   Counter,
@@ -61,6 +63,7 @@ const faqs = [
 
 export const Route = createFileRoute("/services/websites")({
   component: WebsitesPage,
+  loader: async () => ({ caseStudy: await fetchServiceCaseStudy("website") }),
   head: () => ({
     meta: [
       { title },
@@ -228,6 +231,7 @@ const serviceHrefs = {
 } as const;
 
 function WebsitesPage() {
+  const { caseStudy } = Route.useLoaderData();
   return (
     <div className="relative min-h-screen bg-background">
       <main>
@@ -369,107 +373,16 @@ function WebsitesPage() {
         </section>
 
         {/* Case studies */}
-        <section className="section-shell border-y border-border bg-surface/25">
-          <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
-          <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-            <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-              <SectionHeading eyebrow="Recent results" title="Website Case Studies" align="left" />
-              <Reveal delay={0.1}>
-                <Link
-                  to="/work"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
-                >
-                  See all work
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Reveal>
-            </div>
-
-            <div className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <Reveal delay={0} className="h-full">
-                <Link to="/work/$slug" params={{ slug: "coastal-cooling" }}>
-                  <motion.article
-                    whileHover={{ y: -8 }}
-                    transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background/70 backdrop-blur-md transition-colors hover:border-primary/40"
-                  >
-                    <div className="relative flex aspect-[3/2] items-center justify-center overflow-hidden border-b border-border bg-surface/60 px-6 text-center text-xs text-muted-foreground">
-                      <span>[ Site screenshot / mockup ]</span>
-                      <span className="absolute right-3 top-3 rounded-full border border-primary/40 bg-background/85 px-2.5 py-1 text-[11px] font-semibold text-primary">
-                        4% → 19% booking rate
-                      </span>
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent opacity-90" />
-                    </div>
-                    <div className="flex flex-1 flex-col p-6">
-                      <h3 className="text-base">Coastal Cooling Ltd.</h3>
-                      <p className="mt-2 flex-1 text-sm text-muted-foreground">
-                        “Booking rate climbed from 4% to 19%” — Brighton
-                      </p>
-                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                        View Case Study
-                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                      </span>
-                    </div>
-                  </motion.article>
-                </Link>
-              </Reveal>
-
-              <Reveal delay={0.06} className="h-full">
-                <Link to="/work/$slug" params={{ slug: "midlands-hvac-co" }}>
-                  <motion.article
-                    whileHover={{ y: -8 }}
-                    transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background/70 backdrop-blur-md transition-colors hover:border-primary/40"
-                  >
-                    <div className="relative flex aspect-[3/2] items-center justify-center overflow-hidden border-b border-border bg-surface/60 px-6 text-center text-xs text-muted-foreground">
-                      <span>[ Site screenshot / mockup ]</span>
-                      <span className="absolute right-3 top-3 rounded-full border border-primary/40 bg-background/85 px-2.5 py-1 text-[11px] font-semibold text-primary">
-                        +100% enquiries
-                      </span>
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent opacity-90" />
-                    </div>
-                    <div className="flex flex-1 flex-col p-6">
-                      <h3 className="text-base">Midlands HVAC Co.</h3>
-                      <p className="mt-2 flex-1 text-sm text-muted-foreground">
-                        “100% increase in organic enquiries” — Birmingham
-                      </p>
-                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                        View Case Study
-                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                      </span>
-                    </div>
-                  </motion.article>
-                </Link>
-              </Reveal>
-
-              <Reveal delay={0.12} className="h-full">
-                <Link
-                  to="/contact"
-                  className="group flex h-full flex-col items-center justify-center rounded-2xl border border-primary/40 bg-primary/[0.05] p-8 text-center backdrop-blur-md glow-cool"
-                >
-                  <h3 className="font-display text-lg">Become Our Next Case Study</h3>
-                  <p className="mt-2.5 max-w-xs text-sm text-muted-foreground">
-                    We're onboarding a small number of HVAC companies this quarter for new website
-                    builds, and featuring each one here.
-                  </p>
-                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                    Claim Your Spot
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                  </span>
-                </Link>
-              </Reveal>
-            </div>
-
-            <Reveal delay={0.18}>
-              <p className="mt-10 text-center text-sm text-muted-foreground">
-                Want results like these for your own business?{" "}
-                <Link to="/contact" className="font-semibold text-primary hover:underline">
-                  Book a Free Strategy Call →
-                </Link>
-              </p>
-            </Reveal>
-          </div>
-        </section>
+        <ServiceCaseStudies
+          title="Website Case Studies"
+          tone="cool"
+          item={caseStudy}
+          comingSoonTitle="Website Case Study, Coming Soon"
+          comingSoonBody="Our next website results will be featured here."
+          nextTitle="Become Our Next Case Study"
+          nextBody="We're onboarding a small number of HVAC companies this quarter for new website builds, and featuring each one here."
+          footerLine="Want results like these for your own business?"
+        />
 
         {/* Pricing teaser */}
         <section className="section-shell">
