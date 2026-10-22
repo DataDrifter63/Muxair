@@ -146,7 +146,7 @@ type VideoTestimonial = {
   name: string;
   role: string;
   category: string;
-  duration: string;
+  duration?: string;
   tone: "cool" | "heat" | "mixed";
   /** Poster/thumbnail image — swap for a real video still. */
   poster?: string;
@@ -154,24 +154,26 @@ type VideoTestimonial = {
   videoSrc?: string;
 };
 
+const CLOUDINARY_VIDEO = "https://res.cloudinary.com/dmaibvnp/video/upload";
+
 const testimonials: VideoTestimonial[] = [
   {
-    name: "Tom Larson",
-    role: "Owner, Comfort Zone HVAC",
-    category: "Residential HVAC",
-    duration: "0:24",
-    tone: "heat",
-    videoSrc: "/videos/tom-larson.mp4", // 👈 ye add karo
-    poster: "/videos/tom-larson.jpg", // 👈 optional — thumbnail image (chahiye to)
+    name: "Sam T.",
+    role: "United Kingdom",
+    category: "Website Design",
+    tone: "cool",
+    // f_mp4,q_auto = Cloudinary serves a web-optimised MP4; the .jpg is an auto thumbnail.
+    videoSrc: `${CLOUDINARY_VIDEO}/f_mp4,q_auto/v1792669862/client_testimonial_1.mp4`,
+    poster: `${CLOUDINARY_VIDEO}/so_0,f_jpg,q_auto/v1792669862/client_testimonial_1.jpg`,
   },
   {
-    name: "Sarah Rodriguez",
-    role: "Owner, Rodriguez Air Solutions",
-    category: "AC Installation",
-    duration: "0:31",
-    tone: "cool",
-    videoSrc: "/videos/tom-larson.mp4", // 👈 ye add karo
-    poster: "/videos/tom-larson.jpg",
+    name: "Mi P.",
+    role: "NY, USA",
+    category: "Website Design & Support",
+    tone: "heat",
+    // The source is a .mov; f_mp4 converts it so every browser can play it.
+    videoSrc: `${CLOUDINARY_VIDEO}/f_mp4,q_auto/v1792669844/client_testimonial_2.mp4`,
+    poster: `${CLOUDINARY_VIDEO}/so_0,f_jpg,q_auto/v1792669844/client_testimonial_2.jpg`,
   },
 ];
 
@@ -219,14 +221,28 @@ export function TestimonialsSection() {
                   className={`absolute inset-0 bg-gradient-to-br ${toneGradient[t.tone]}`}
                   aria-hidden
                 />
-                <div
-                  className="absolute inset-0 grid-tech opacity-30 mix-blend-overlay"
-                  aria-hidden
-                />
+                {t.poster ? (
+                  <img
+                    src={t.poster}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                ) : (
+                  <div
+                    className="absolute inset-0 grid-tech opacity-30 mix-blend-overlay"
+                    aria-hidden
+                  />
+                )}
 
-                <span className="absolute right-3 top-3 rounded-md bg-background/80 px-2 py-1 text-[11px] font-semibold text-foreground backdrop-blur-sm">
-                  {t.duration}
-                </span>
+                {t.duration ? (
+                  <span className="absolute right-3 top-3 rounded-md bg-background/80 px-2 py-1 text-[11px] font-semibold text-foreground backdrop-blur-sm">
+                    {t.duration}
+                  </span>
+                ) : null}
 
                 <span className="absolute inset-0 flex items-center justify-center">
                   <span className="flex h-14 w-14 items-center justify-center rounded-full border border-foreground/40 bg-background/40 backdrop-blur-md transition-transform duration-300 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary/20">
