@@ -39,8 +39,8 @@ export function Footer() {
               <img src={logoDark} alt="Muxair" className="hidden h-9 w-auto dark:block" />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Built exclusively for HVAC companies. Websites and marketing systems that book
-              more jobs.
+              Built exclusively for HVAC companies. Websites and marketing systems that book more
+              jobs.
             </p>
             <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-heat/30 bg-heat/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-heat">
               <span className="h-1.5 w-1.5 rounded-full bg-heat" />
@@ -110,9 +110,7 @@ export function Footer() {
                   +44 7806 982999
                 </a>
               </li>
-              <li className="text-xs text-muted-foreground/80">
-                We respond within 1 business day
-              </li>
+              <li className="text-xs text-muted-foreground/80">We respond within 1 business day</li>
             </ul>
 
             <ul className="mt-6 flex gap-3">
@@ -134,9 +132,7 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col gap-3 border-t border-border pt-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © 2026 Muxair
-          </p>
+          <p>© 2026 Muxair</p>
           <ul className="flex items-center gap-5">
             <li>
               <Link to="/privacy-policy" className="transition-colors hover:text-primary">

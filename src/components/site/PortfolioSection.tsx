@@ -40,24 +40,35 @@ const highlights: PortfolioHighlight[] = [
     name: "EEP Plumbing",
     href: "/work/eep-plumbing",
     tone: "cool",
-    headline:
-      "A Website Rebuilt for Modern HVAC Customers",
+    headline: "A Website Rebuilt for Modern HVAC Customers",
     before: {
       label: "Before (Jun 2024)",
-      stats: ["Outdated design, hard to navigate", "Not optimized for mobile", "No clear path to contact or book a call"],
+      stats: [
+        "Outdated design, hard to navigate",
+        "Not optimized for mobile",
+        "No clear path to contact or book a call",
+      ],
     },
     after: {
       label: "After (Aug 2025)",
-      stats: ["Modern, conversion-focused layout", "Mobile-first, fast-loading design", "SEO structure built for local search visibility", "Clear calls-to-action throughout"],
+      stats: [
+        "Modern, conversion-focused layout",
+        "Mobile-first, fast-loading design",
+        "SEO structure built for local search visibility",
+        "Clear calls-to-action throughout",
+      ],
     },
     pills: [
       { value: "+5,669%", label: "Full Website Redesign" },
       { value: "Top 3", label: 'SEO-Structured From the Ground Up"' },
     ],
     chartImage: "",
-    beforeImage: "https://res.cloudinary.com/dmaibvnp/image/upload/v1792674111/eep-before-cover-1600x1200.png",
-    afterImage: "https://res.cloudinary.com/dmaibvnp/image/upload/v1792674105/eep-after-cover-1600x1200.png",
-    chartCaption: "From an outdated, hard-to-navigate site to a fast, modern design built to convert.",
+    beforeImage:
+      "https://res.cloudinary.com/dmaibvnp/image/upload/v1792674111/eep-before-cover-1600x1200.png",
+    afterImage:
+      "https://res.cloudinary.com/dmaibvnp/image/upload/v1792674105/eep-after-cover-1600x1200.png",
+    chartCaption:
+      "From an outdated, hard-to-navigate site to a fast, modern design built to convert.",
     verifiedLabel: 'BEFORE & AFTER · FULL REDESIGN"',
   },
   {
@@ -67,24 +78,30 @@ const highlights: PortfolioHighlight[] = [
     headline: "We Helped Midlands HVAC 6x Their Website Clicks in 4 Weeks",
     before: {
       label: " BEFORE (7/25 to 8/21)",
-      stats: ["261 total clicks", "62.4K total impressions","0.4% average CTR","Average position 8"],
+      stats: [
+        "261 total clicks",
+        "62.4K total impressions",
+        "0.4% average CTR",
+        "Average position 8",
+      ],
     },
     after: {
       label: "AFTER (8/22 to 9/17)",
       stats: [
         "1.66K total clicks",
-        '215K total impressions',
+        "215K total impressions",
         "0.8% average CTR",
         "Average position 5.9",
       ],
     },
     pills: [
       { value: "+536%", label: "Increase in Website Clicks" },
-      { value: "Top 2", label: 'CTR Doubled from 0.4% to 0.8%' },
+      { value: "Top 2", label: "CTR Doubled from 0.4% to 0.8%" },
     ],
-    chartImage: "https://res.cloudinary.com/dmaibvnp/image/upload/v1792673406/ruzz-seo-chart-1600x1200.png",
+    chartImage:
+      "https://res.cloudinary.com/dmaibvnp/image/upload/v1792673406/ruzz-seo-chart-1600x1200.png",
     chartCaption: "Source: Google Search Console",
-    verifiedLabel: 'SEO CAMPAIGN RESULTS · 4 WEEKS',
+    verifiedLabel: "SEO CAMPAIGN RESULTS · 4 WEEKS",
   },
   // DEMO ITEM — replace every field below with your real third case study.
   // {

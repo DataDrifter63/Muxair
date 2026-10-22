@@ -79,8 +79,7 @@ export const sendLeadEmails = createServerFn({ method: "POST" })
       return { sent: false };
     }
 
-    const fromAddress =
-      process.env["RESEND_FROM_EMAIL"] ?? "Muxair <onboarding@resend.dev>";
+    const fromAddress = process.env["RESEND_FROM_EMAIL"] ?? "Muxair <onboarding@resend.dev>";
     const adminEmail = process.env["LEAD_NOTIFICATION_EMAIL"];
 
     const { Resend } = await import("resend");

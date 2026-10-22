@@ -185,9 +185,7 @@ function BlogIndex() {
 
   const filtered = useMemo(() => {
     if (category === "All") return posts;
-    return posts.filter(
-      (p) => p.category?.trim().toLowerCase() === category.toLowerCase(),
-    );
+    return posts.filter((p) => p.category?.trim().toLowerCase() === category.toLowerCase());
   }, [category, posts]);
 
   // Page 1: 1 featured post + a 2-col grid of 6 (7 total). Every page after

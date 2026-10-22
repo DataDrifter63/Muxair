@@ -114,7 +114,7 @@ const growthPlans = [
       "Facebook and Instagram ad management with monthly optimization. 3-month minimum commitment. Recommended ad spend varies by market and competition, we'll give you a realistic number on your strategy call.",
     href: "/services/meta-ads",
   },
-    {
+  {
     name: "Maintenance",
     tone: "cool" as const,
     price: "From $79",

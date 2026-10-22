@@ -48,6 +48,23 @@ export const Route = createFileRoute("/work/$slug")({
           type: "application/ld+json",
           children: JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+              { "@type": "ListItem", position: 2, name: "Work", item: `${SITE_URL}/work` },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: item.name,
+                item: `${SITE_URL}/work/${item.slug}`,
+              },
+            ],
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "CreativeWork",
             name: `${item.name} Case Study`,
             description: metaDescription,

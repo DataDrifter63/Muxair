@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment, type ComponentPropsWithoutRef, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowRight } from "lucide-react";
@@ -332,30 +332,38 @@ function nodeText(node: ReactNode): string {
   return "";
 }
 
+// react-markdown passes the parsed syntax node alongside the normal element props.
+type MdNode = import("hast").Element;
+type MdProps<T extends keyof React.JSX.IntrinsicElements> = ComponentPropsWithoutRef<T> & {
+  node?: MdNode | undefined;
+};
+
 const markdownComponents = {
-  h2: ({ node: _node, ...props }: any) => (
+  h2: ({ node: _node, ...props }: MdProps<"h2">) => (
     <h2
       id={slugifyHeading(nodeText(props.children))}
       className="mt-11 scroll-mt-28 font-display text-2xl leading-snug text-foreground"
       {...props}
     />
   ),
-  h3: ({ node: _node, ...props }: any) => (
+  h3: ({ node: _node, ...props }: MdProps<"h3">) => (
     <h3
       id={slugifyHeading(nodeText(props.children))}
       className="mt-8 scroll-mt-28 text-lg font-semibold leading-snug text-foreground"
       {...props}
     />
   ),
-  p: ({ node, ...props }: any) => {
-    const onlyImage = node?.children?.length === 1 && node.children[0]?.tagName === "img";
+  p: ({ node, ...props }: MdProps<"p">) => {
+    const first = node?.children?.[0];
+    const onlyImage =
+      node?.children?.length === 1 && first?.type === "element" && first.tagName === "img";
     return onlyImage ? (
       <>{props.children}</>
     ) : (
       <p className="mt-5 text-base leading-relaxed text-foreground/90" {...props} />
     );
   },
-  img: ({ src, alt, title }: any) => (
+  img: ({ src, alt, title }: MdProps<"img">) => (
     <figure className="not-prose my-8">
       <img
         src={src}
@@ -368,42 +376,48 @@ const markdownComponents = {
       ) : null}
     </figure>
   ),
-  strong: (props: any) => <strong className="font-semibold text-foreground" {...props} />,
-  ul: (props: any) => (
+  strong: ({ node: _node, ...props }: MdProps<"strong">) => (
+    <strong className="font-semibold text-foreground" {...props} />
+  ),
+  ul: ({ node: _node, ...props }: MdProps<"ul">) => (
     <ul
       className="mt-5 list-disc space-y-2 pl-5 text-base leading-relaxed text-foreground/90"
       {...props}
     />
   ),
-  ol: (props: any) => (
+  ol: ({ node: _node, ...props }: MdProps<"ol">) => (
     <ol
       className="mt-5 list-decimal space-y-2 pl-5 text-base leading-relaxed text-foreground/90"
       {...props}
     />
   ),
-  a: (props: any) => <a className="text-primary underline underline-offset-2" {...props} />,
-  blockquote: (props: any) => (
+  a: ({ node: _node, ...props }: MdProps<"a">) => (
+    <a className="text-primary underline underline-offset-2" {...props} />
+  ),
+  blockquote: ({ node: _node, ...props }: MdProps<"blockquote">) => (
     <blockquote
       className="my-8 rounded-r-xl border-l-2 border-primary bg-surface/50 py-4 pl-5 pr-4 text-base leading-relaxed text-muted-foreground"
       {...props}
     />
   ),
-  table: (props: any) => (
+  table: ({ node: _node, ...props }: MdProps<"table">) => (
     <div className="my-8 overflow-x-auto rounded-xl border border-border">
       <table className="w-full border-collapse text-sm" {...props} />
     </div>
   ),
-  thead: (props: any) => <thead className="bg-surface/60" {...props} />,
-  th: (props: any) => (
+  thead: ({ node: _node, ...props }: MdProps<"thead">) => (
+    <thead className="bg-surface/60" {...props} />
+  ),
+  th: ({ node: _node, ...props }: MdProps<"th">) => (
     <th
       className="border-b border-border px-4 py-3 text-left font-display text-xs uppercase tracking-wide text-foreground"
       {...props}
     />
   ),
-  td: (props: any) => (
+  td: ({ node: _node, ...props }: MdProps<"td">) => (
     <td className="border-b border-border px-4 py-3 align-top text-muted-foreground" {...props} />
   ),
-  code: (props: any) => (
+  code: ({ node: _node, ...props }: MdProps<"code">) => (
     <code className="rounded bg-surface px-1.5 py-0.5 text-[0.85em] text-primary" {...props} />
   ),
 };

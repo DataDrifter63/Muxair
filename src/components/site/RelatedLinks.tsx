@@ -2,12 +2,28 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
 const LINKS = [
-  { to: "/services/website", label: "HVAC Website Design", blurb: "Custom, mobile-first sites built to book jobs." },
-  { to: "/services/seo", label: "Local SEO for HVAC", blurb: "Get found on Google Maps and local search." },
-  { to: "/services/google-ads", label: "Google Ads Management", blurb: "Seasonal campaigns focused on booked jobs." },
+  {
+    to: "/services/website",
+    label: "HVAC Website Design",
+    blurb: "Custom, mobile-first sites built to book jobs.",
+  },
+  {
+    to: "/services/seo",
+    label: "Local SEO for HVAC",
+    blurb: "Get found on Google Maps and local search.",
+  },
+  {
+    to: "/services/google-ads",
+    label: "Google Ads Management",
+    blurb: "Seasonal campaigns focused on booked jobs.",
+  },
   { to: "/pricing", label: "Pricing", blurb: "Transparent packages, no hidden fees." },
   { to: "/work", label: "Case Studies", blurb: "Results we've delivered for HVAC companies." },
-  { to: "/blog", label: "HVAC Marketing Blog", blurb: "Practical tips for heating and cooling owners." },
+  {
+    to: "/blog",
+    label: "HVAC Marketing Blog",
+    blurb: "Practical tips for heating and cooling owners.",
+  },
 ] as const;
 
 /** Contextual internal links — shown on pages that otherwise link out only via nav/footer. */

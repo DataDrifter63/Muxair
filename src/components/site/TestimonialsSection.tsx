@@ -262,7 +262,7 @@ export function TestimonialsSection() {
                 {t.poster ? (
                   <img
                     src={t.poster}
-                    alt=""
+                    alt={`${t.name} video testimonial`}
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     onError={(e) => {

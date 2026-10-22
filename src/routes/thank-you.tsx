@@ -16,11 +16,6 @@
 //   );
 // }
 
-
-
-
-
-
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowRight, CalendarClock, CheckCircle2, MessageCircle, PhoneCall } from "lucide-react";

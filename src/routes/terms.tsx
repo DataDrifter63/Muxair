@@ -25,7 +25,12 @@ export const Route = createFileRoute("/terms")({
           "@type": "BreadcrumbList",
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-            { "@type": "ListItem", position: 2, name: "Terms of Service", item: `${SITE_URL}/terms` },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Terms of Service",
+              item: `${SITE_URL}/terms`,
+            },
           ],
         }),
       },
@@ -35,12 +40,30 @@ export const Route = createFileRoute("/terms")({
 
 // DEMO CONTENT — replace with the client's approved text before launch.
 const sections: { heading: string; text: string }[] = [
-  { heading: "1. Acceptance of Terms", text: "This is demo text. By accessing or using this website you agree to these Terms of Service. If you do not agree, please do not use the site." },
-  { heading: "2. Our Services", text: "This is demo text. Muxair provides web design and digital marketing services for HVAC companies. The scope, timelines and fees of each project are set out in a separate written proposal or agreement." },
-  { heading: "3. Payments", text: "This is demo text. Payment terms, deposits and refund conditions are defined in the proposal or agreement for each project." },
-  { heading: "4. Intellectual Property", text: "This is demo text. Unless agreed otherwise in writing, the content of this website belongs to Muxair. Ownership of project deliverables transfers according to the project agreement." },
-  { heading: "5. Limitation of Liability", text: "This is demo text. To the extent permitted by law, Muxair is not liable for indirect or consequential losses arising from use of this website or its services." },
-  { heading: "6. Changes and Contact", text: "This is demo text. We may update these terms from time to time. Questions can be sent through the form on our Contact page." },
+  {
+    heading: "1. Acceptance of Terms",
+    text: "This is demo text. By accessing or using this website you agree to these Terms of Service. If you do not agree, please do not use the site.",
+  },
+  {
+    heading: "2. Our Services",
+    text: "This is demo text. Muxair provides web design and digital marketing services for HVAC companies. The scope, timelines and fees of each project are set out in a separate written proposal or agreement.",
+  },
+  {
+    heading: "3. Payments",
+    text: "This is demo text. Payment terms, deposits and refund conditions are defined in the proposal or agreement for each project.",
+  },
+  {
+    heading: "4. Intellectual Property",
+    text: "This is demo text. Unless agreed otherwise in writing, the content of this website belongs to Muxair. Ownership of project deliverables transfers according to the project agreement.",
+  },
+  {
+    heading: "5. Limitation of Liability",
+    text: "This is demo text. To the extent permitted by law, Muxair is not liable for indirect or consequential losses arising from use of this website or its services.",
+  },
+  {
+    heading: "6. Changes and Contact",
+    text: "This is demo text. We may update these terms from time to time. Questions can be sent through the form on our Contact page.",
+  },
 ];
 
 function Page() {

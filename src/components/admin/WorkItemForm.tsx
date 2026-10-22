@@ -79,7 +79,7 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
           slug: existing.slug,
           tone: existing.tone,
           location: existing.location,
-          services: existing.services,
+          services: existing.services as WorkService[],
           badge: existing.badge,
           category: existing.category ?? "",
           result: existing.result ?? "",
@@ -246,7 +246,11 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
           <Label htmlFor="category">
             Category <span className="font-normal text-muted-foreground">(optional)</span>
           </Label>
-          <Input id="category" value={form.category} onChange={(e) => set("category", e.target.value)} />
+          <Input
+            id="category"
+            value={form.category}
+            onChange={(e) => set("category", e.target.value)}
+          />
         </div>
         <div className="flex items-center gap-2.5 pt-6">
           <Switch
@@ -298,7 +302,12 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
             />
             <button
               type="button"
-              onClick={() => set("metrics", form.metrics.filter((_, idx) => idx !== i))}
+              onClick={() =>
+                set(
+                  "metrics",
+                  form.metrics.filter((_, idx) => idx !== i),
+                )
+              }
               className="text-muted-foreground transition-colors hover:text-destructive"
             >
               <Trash2 className="h-4 w-4" />
@@ -334,15 +343,19 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
 
       <div className="space-y-2">
         <Label>
-          Approach Steps{" "}
-          <span className="font-normal text-muted-foreground">(short version)</span>
+          Approach Steps <span className="font-normal text-muted-foreground">(short version)</span>
         </Label>
         {form.approach.map((step, i) => (
           <div key={i} className="flex items-center gap-2">
             <Input value={step} onChange={(e) => updateApproach(i, e.target.value)} />
             <button
               type="button"
-              onClick={() => set("approach", form.approach.filter((_, idx) => idx !== i))}
+              onClick={() =>
+                set(
+                  "approach",
+                  form.approach.filter((_, idx) => idx !== i),
+                )
+              }
               className="text-muted-foreground transition-colors hover:text-destructive"
             >
               <Trash2 className="h-4 w-4" />
@@ -363,8 +376,7 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
 
       <div className="space-y-1.5">
         <Label htmlFor="outcome">
-          Outcome{" "}
-          <span className="font-normal text-muted-foreground">(short version)</span>
+          Outcome <span className="font-normal text-muted-foreground">(short version)</span>
         </Label>
         <Textarea
           id="outcome"
@@ -378,8 +390,8 @@ export function WorkItemForm({ existing }: { existing?: WorkItemRow }) {
         <Label>
           Full Case Study{" "}
           <span className="font-normal text-muted-foreground">
-            (Markdown, optional — section headings + images, like a blog post. When filled in,
-            this replaces the short Challenge/Approach/Outcome text above on the case study page.)
+            (Markdown, optional — section headings + images, like a blog post. When filled in, this
+            replaces the short Challenge/Approach/Outcome text above on the case study page.)
           </span>
         </Label>
         <MarkdownEditor value={form.content} onChange={(v) => set("content", v)} />

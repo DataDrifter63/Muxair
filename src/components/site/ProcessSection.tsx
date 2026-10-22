@@ -77,7 +77,8 @@ export function ProcessSection() {
           eyebrow="How It Works"
           title={
             <>
-              From Kickoff to Live Site in<span className="text-gradient-cool"> as Little as 30 Days</span>
+              From Kickoff to Live Site in
+              <span className="text-gradient-cool"> as Little as 30 Days</span>
             </>
           }
           subtitle="A proven process built around your schedule. You stay in the loop without being overwhelmed, we handle the heavy lifting."
@@ -170,7 +171,8 @@ export function ProcessSection() {
 
         <Reveal delay={0.1} className="mt-5">
           <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
-            The timeline shown reflects our Foundation package. Larger builds may take longer, we'll walk you through your exact timeline on the discovery call.
+            The timeline shown reflects our Foundation package. Larger builds may take longer, we'll
+            walk you through your exact timeline on the discovery call.
           </p>
         </Reveal>
 
@@ -183,12 +185,13 @@ export function ProcessSection() {
             <div className="relative">
               <h3 className="text-xl text-foreground sm:text-2xl">Ready to get started?</h3>
               <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                Book a free 30-minute discovery call. No pressure, no pitch, just a real conversation about your business.
+                Book a free 30-minute discovery call. No pressure, no pitch, just a real
+                conversation about your business.
               </p>
             </div>
             <div className="relative flex-none">
               <MagneticButton href="#contact" size="lg">
-                Book Strategy Call 
+                Book Strategy Call
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </MagneticButton>
             </div>

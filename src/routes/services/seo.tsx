@@ -462,9 +462,7 @@ function SeoPage() {
                     to={serviceHrefs[s.slug as keyof typeof serviceHrefs]}
                     className="group flex h-full flex-col rounded-2xl border border-border bg-surface/40 p-5 backdrop-blur-md transition-colors hover:border-primary/40"
                   >
-                    <h3 className="font-display text-sm leading-snug">
-                      {s.shortTitle}
-                    </h3>
+                    <h3 className="font-display text-sm leading-snug">{s.shortTitle}</h3>
                     <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground">
                       {s.tagline}
                     </p>
