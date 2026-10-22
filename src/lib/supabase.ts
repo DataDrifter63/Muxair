@@ -138,7 +138,7 @@ export type WorkCardRow = Pick<
 export async function fetchRelatedCaseStudies(
   slug: string,
   services: string[],
-  limit = 2,
+  limit = 3,
 ): Promise<WorkCardRow[]> {
   try {
     const { data, error } = await supabase
