@@ -138,9 +138,9 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { Play } from "lucide-react";
+import { ArrowRight, Play, Video } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Reveal, SectionHeading } from "./primitives";
+import { MagneticButton, Reveal, SectionHeading } from "./primitives";
 
 type VideoTestimonial = {
   name: string;
@@ -173,20 +173,6 @@ const testimonials: VideoTestimonial[] = [
     videoSrc: "/videos/tom-larson.mp4", // 👈 ye add karo
     poster: "/videos/tom-larson.jpg",
   },
-  {
-    name: "James Mitchell",
-    role: "Owner, Mitchell Heating & Air",
-    category: "Boiler Repair",
-    duration: "0:19",
-    tone: "mixed",
-  },
-  {
-    name: "Alex Kim",
-    role: "Owner, Peak Comfort Systems",
-    category: "Commercial HVAC",
-    duration: "0:27",
-    tone: "cool",
-  },
 ];
 
 const toneGradient: Record<VideoTestimonial["tone"], string> = {
@@ -218,7 +204,7 @@ export function TestimonialsSection() {
           subtitle="A few clients agreed to go on camera. Different industries, same story — a website that actually works for their business."
         />
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto mt-14 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((t, i) => (
             <Reveal key={t.name} delay={i * 0.08}>
               <motion.button
@@ -260,6 +246,35 @@ export function TestimonialsSection() {
               </motion.button>
             </Reveal>
           ))}
+
+          <Reveal delay={testimonials.length * 0.08}>
+            <div className="relative flex aspect-[3/4] w-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-primary/40 bg-primary/[0.04] p-7 text-center">
+              <div
+                className="pointer-events-none absolute -top-20 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-primary/20 blur-[80px]"
+                aria-hidden
+              />
+              <span className="relative flex h-14 w-14 items-center justify-center rounded-full border border-primary/40 bg-primary/10 text-primary">
+                <Video className="h-6 w-6" />
+              </span>
+              <h3 className="relative mt-5 font-display text-xl leading-snug">
+                Be Our Next Testimonial
+              </h3>
+              <p className="relative mt-3 text-sm leading-relaxed text-muted-foreground">
+                We're taking on a few more HVAC companies this quarter. Get a website that books
+                jobs, and tell your story next.
+              </p>
+              <MagneticButton href="/contact" className="relative mt-6">
+                Book a Free Call
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </MagneticButton>
+              <a
+                href="/work"
+                className="relative mt-4 text-xs font-semibold text-muted-foreground transition-colors hover:text-primary"
+              >
+                or see our case studies
+              </a>
+            </div>
+          </Reveal>
         </div>
       </div>
 
