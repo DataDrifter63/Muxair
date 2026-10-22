@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createSign } from "node:crypto";
 import type { LeadEmailInput } from "./send-lead-emails.server";
+import { guardLead } from "./lead-guard.server";
 
 const SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
@@ -57,6 +58,10 @@ async function getAccessToken(clientEmail: string, privateKey: string) {
  * Best-effort: missing config or a failed call is logged, never blocks the
  * form (the lead is already saved in Supabase by the time this runs).
  *
+ * Spam protection: calls go through guardLead() (honeypot, minimum fill
+ * time, validation, per-IP rate limit). Values are written with RAW so a
+ * submitted "=FORMULA(...)" is stored as plain text, never executed.
+ *
  * One-time setup (all free):
  *   1. console.cloud.google.com → new project → enable "Google Sheets API".
  *   2. IAM & Admin → Service Accounts → create one → Keys → Add key (JSON).
@@ -71,7 +76,14 @@ async function getAccessToken(clientEmail: string, privateKey: string) {
  */
 export const syncLeadToSheet = createServerFn({ method: "POST" })
   .validator((data: LeadEmailInput) => data)
-  .handler(async ({ data }) => {
+  .handler(async ({ data: input }) => {
+    const guard = await guardLead(input, "sheets");
+    if (!guard.ok) {
+      console.warn(`[sheets] blocked lead submission (${guard.reason}).`);
+      return { synced: false };
+    }
+    const data = guard.lead;
+
     const spreadsheetId = process.env["GOOGLE_SHEETS_SPREADSHEET_ID"];
     const clientEmail = process.env["GOOGLE_SERVICE_ACCOUNT_EMAIL"];
     const rawKey = process.env["GOOGLE_SERVICE_ACCOUNT_KEY"];
@@ -97,7 +109,7 @@ export const syncLeadToSheet = createServerFn({ method: "POST" })
       ];
 
       const res = await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A:H:append?valueInputOption=USER_ENTERED`,
+        `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A:H:append?valueInputOption=RAW`,
         {
           method: "POST",
           headers: {

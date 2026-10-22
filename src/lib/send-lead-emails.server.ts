@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { guardLead } from "./lead-guard.server";
 
 export type LeadEmailInput = {
   fullName: string;
@@ -8,24 +9,36 @@ export type LeadEmailInput = {
   serviceArea: string;
   need: string;
   message: string | null;
+  // Spam-protection fields (checked server-side by lead-guard, never stored).
+  hp?: string;
+  elapsedMs?: number;
 };
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
 function adminNotificationHtml(data: LeadEmailInput) {
   return `
     <h2>New lead from the website</h2>
-    <p><strong>Name:</strong> ${data.fullName}</p>
-    <p><strong>Business:</strong> ${data.bizName}</p>
-    <p><strong>Email:</strong> ${data.email}</p>
-    <p><strong>Phone:</strong> ${data.phone}</p>
-    <p><strong>Service Area:</strong> ${data.serviceArea}</p>
-    <p><strong>Need:</strong> ${data.need}</p>
-    ${data.message ? `<p><strong>Notes:</strong><br/>${data.message.replace(/\n/g, "<br/>")}</p>` : ""}
+    <p><strong>Name:</strong> ${escapeHtml(data.fullName)}</p>
+    <p><strong>Business:</strong> ${escapeHtml(data.bizName)}</p>
+    <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
+    <p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>
+    <p><strong>Service Area:</strong> ${escapeHtml(data.serviceArea)}</p>
+    <p><strong>Need:</strong> ${escapeHtml(data.need)}</p>
+    ${data.message ? `<p><strong>Notes:</strong><br/>${escapeHtml(data.message).replace(/\n/g, "<br/>")}</p>` : ""}
   `;
 }
 
 function submitterThankYouHtml(data: LeadEmailInput) {
   return `
-    <p>Hi ${data.fullName},</p>
+    <p>Hi ${escapeHtml(data.fullName)},</p>
     <p>Thanks for reaching out to Muxair! We've got your details and will call you
     within 4 hours (usually much sooner) to find a time for your free 30-minute strategy call.</p>
     <p>In the meantime, feel free to reply to this email if anything urgent comes up.</p>
@@ -39,6 +52,10 @@ function submitterThankYouHtml(data: LeadEmailInput) {
  * key or a send failure is logged but never blocks the form from succeeding
  * (the lead is already saved in Supabase by the time this runs).
  *
+ * Spam protection: every call goes through guardLead() (honeypot, minimum
+ * fill time, validation, per-IP rate limit) so this can't be abused to send
+ * emails to arbitrary addresses.
+ *
  * Required env vars (set locally in .env and on your host, e.g. Netlify):
  *   RESEND_API_KEY          - from resend.com/api-keys
  *   RESEND_FROM_EMAIL       - e.g. "Muxair <digitalmuxair@gmail.com>"
@@ -48,7 +65,14 @@ function submitterThankYouHtml(data: LeadEmailInput) {
  */
 export const sendLeadEmails = createServerFn({ method: "POST" })
   .validator((data: LeadEmailInput) => data)
-  .handler(async ({ data }) => {
+  .handler(async ({ data: input }) => {
+    const guard = await guardLead(input, "emails");
+    if (!guard.ok) {
+      console.warn(`[email] blocked lead submission (${guard.reason}).`);
+      return { sent: false };
+    }
+    const data = guard.lead;
+
     const apiKey = process.env["RESEND_API_KEY"];
     if (!apiKey) {
       console.error("[email] RESEND_API_KEY is not set — skipping lead emails.");
@@ -76,7 +100,7 @@ export const sendLeadEmails = createServerFn({ method: "POST" })
         resend.emails.send({
           from: fromAddress,
           to: adminEmail,
-          subject: `New lead: ${data.bizName}`,
+          subject: `New lead: ${data.bizName.replace(/[\r\n]+/g, " ")}`,
           html: adminNotificationHtml(data),
         }),
       );

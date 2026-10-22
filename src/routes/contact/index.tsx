@@ -1,5 +1,5 @@
 import { RelatedLinks } from "@/components/site/RelatedLinks";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -46,6 +46,9 @@ import { syncLeadToSheet } from "@/lib/sync-lead-to-sheet.server";
 const title = "Free HVAC Website Quote | Talk to Muxair";
 const description =
   "Ready to get more booked jobs from your website? Book a free 30-minute strategy call. No sales pressure, just honest advice.";
+
+// Spam protection: a submit sooner than this after the page opened is a bot.
+const MIN_FILL_MS = 3000;
 
 export const Route = createFileRoute("/contact/")({
   component: ContactPage,
@@ -105,13 +108,13 @@ const needs = [
 const heardOptions = ["Google search", "Instagram / Facebook", "Referral", "Other"];
 
 const contactSchema = z.object({
-  need: z.string().min(1, "Select what you need help with"),
-  bizName: z.string().trim().min(2, "Enter your business name"),
-  serviceArea: z.string().trim().min(2, "Enter your service area"),
-  otherInfo: z.string().trim().optional(),
-  fullName: z.string().trim().min(2, "Enter your name"),
-  email: z.string().trim().email("Enter a valid email address"),
-  phone: z.string().trim().min(7, "Enter a valid phone number"),
+  need: z.string().min(1, "Select what you need help with").max(60),
+  bizName: z.string().trim().min(2, "Enter your business name").max(150),
+  serviceArea: z.string().trim().min(2, "Enter your service area").max(150),
+  otherInfo: z.string().trim().max(2000, "Please keep this under 2000 characters").optional(),
+  fullName: z.string().trim().min(2, "Enter your name").max(100),
+  email: z.string().trim().email("Enter a valid email address").max(200),
+  phone: z.string().trim().min(7, "Enter a valid phone number").max(40),
   heard: z.string().optional(),
 });
 
@@ -211,6 +214,10 @@ function ContactPage() {
   const { plan } = Route.useSearch();
   const [step, setStep] = useState(plan ? 2 : 1);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  // Spam protection: when the page opened, and a hidden "honeypot" input that
+  // real visitors never see or fill but bots usually do.
+  const openedAt = useRef(Date.now());
+  const honeypotRef = useRef<HTMLInputElement>(null);
   // Arriving with a plan already picked means step 1 ("what do you need help
   // with") is redundant, they just told us on /pricing. Skip straight to
   // step 2 and renumber what's shown accordingly.
@@ -253,6 +260,15 @@ function ContactPage() {
   async function onSubmit(values: ContactFormValues) {
     setSubmitError(null);
 
+    // Bot check: honeypot filled, or submitted faster than a human could.
+    // Pretend it worked (thank-you page) but save nothing and send nothing,
+    // so the bot gets no signal to adapt to.
+    const elapsedMs = Date.now() - openedAt.current;
+    if ((honeypotRef.current?.value ?? "").trim() !== "" || elapsedMs < MIN_FILL_MS) {
+      navigate({ to: "/thank-you" });
+      return;
+    }
+
     const message = [
       plan ? `Selected plan: ${plan}` : null,
       values.otherInfo?.trim() ? values.otherInfo.trim() : null,
@@ -287,6 +303,9 @@ function ContactPage() {
       serviceArea: values.serviceArea,
       need: values.need,
       message: message || null,
+      // Checked again server-side (lead-guard) before any email/sheet write.
+      hp: honeypotRef.current?.value ?? "",
+      elapsedMs,
     };
     sendLeadEmails({ data: leadPayload }).catch((err) =>
       console.error("[contact] lead emails failed:", err),
@@ -363,6 +382,24 @@ function ContactPage() {
                     if (e.key === "Enter" && step < totalSteps) e.preventDefault();
                   }}
                 >
+                  {/* Honeypot: hidden from people and screen readers, left empty by
+                      humans. Bots that auto-fill every field give themselves away. */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden opacity-0"
+                  >
+                    <label htmlFor="company_url">Leave this field empty</label>
+                    <input
+                      ref={honeypotRef}
+                      id="company_url"
+                      name="company_url"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      defaultValue=""
+                    />
+                  </div>
+
                   <AnimatePresence mode="wait">
                     {step === 1 ? (
                       <motion.div

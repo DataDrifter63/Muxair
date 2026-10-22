@@ -51,34 +51,45 @@ function BrowserFrame({
   priority?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
+  const viewportRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
-  const [scanSeconds, setScanSeconds] = useState<number | null>(null);
+  const [scan, setScan] = useState<{ distance: number; seconds: number } | null>(null);
 
   // Both windows scroll at the same on-screen speed (SCAN_PX_PER_SECOND), whatever the
   // screenshot's height or the window's size: duration = distance to travel / speed.
+  // The image is shown at its natural proportions (full width, auto height) inside a clipped
+  // viewport and moved with a GPU-friendly `transform: translateY` — smoother than animating
+  // object-position, which forces a repaint every frame (jerky on older phones).
   const measure = useCallback(() => {
     const img = imgRef.current;
-    if (!img || !img.naturalWidth || !img.clientWidth) return;
-    const renderedHeight = img.naturalHeight * (img.clientWidth / img.naturalWidth);
-    const distance = Math.max(0, renderedHeight - img.clientHeight);
-    setScanSeconds(Math.max(8, distance / SCAN_PX_PER_SECOND));
+    const box = viewportRef.current;
+    if (!img || !box || !img.naturalWidth || !box.clientWidth) return;
+    const renderedHeight = img.naturalHeight * (box.clientWidth / img.naturalWidth);
+    const distance = Math.max(0, Math.round(renderedHeight - box.clientHeight));
+    const seconds = Math.max(8, Math.round((distance / SCAN_PX_PER_SECOND) * 10) / 10);
+    setScan((prev) =>
+      prev && prev.distance === distance && prev.seconds === seconds ? prev : { distance, seconds },
+    );
   }, []);
 
   useEffect(() => {
-    const img = imgRef.current;
-    if (!img || typeof ResizeObserver === "undefined") return;
+    const box = viewportRef.current;
+    if (!box) return;
+    // Cached images can finish loading before React attaches onLoad.
+    if (imgRef.current?.complete) measure();
+    if (typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver(measure);
-    ro.observe(img);
+    ro.observe(box);
     return () => ro.disconnect();
   }, [measure]);
 
-  const scan =
-    reduceMotion || scanSeconds === null
+  const scanProps =
+    reduceMotion || !scan || scan.distance === 0
       ? {}
       : {
-          animate: { objectPosition: ["50% 0%", "50% 100%"] },
+          animate: { y: [0, -scan.distance] },
           transition: {
-            duration: scanSeconds,
+            duration: scan.seconds,
             delay: 0.8,
             repeat: Infinity,
             repeatType: "reverse" as const,
@@ -99,19 +110,21 @@ function BrowserFrame({
           {label}
         </span>
       </div>
-      <motion.img
-        ref={imgRef}
-        onLoad={measure}
-        src={optimiseImage(image)}
-        alt={`Website design example: ${label}`}
-        loading={priority ? "eager" : "lazy"}
-        fetchPriority={priority ? "high" : "auto"}
-        decoding="async"
-        draggable={false}
-        style={{ objectPosition: "50% 0%" }}
-        className={`block w-full object-cover ${aspect}`}
-        {...scan}
-      />
+      <div ref={viewportRef} className={`relative overflow-hidden ${aspect}`}>
+        <motion.img
+          ref={imgRef}
+          onLoad={measure}
+          src={optimiseImage(image)}
+          alt={`Website design example: ${label}`}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
+          decoding="async"
+          draggable={false}
+          style={{ willChange: "transform" }}
+          className="block h-auto w-full max-w-none"
+          {...scanProps}
+        />
+      </div>
     </motion.div>
   );
 }

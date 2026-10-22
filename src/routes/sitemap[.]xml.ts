@@ -47,41 +47,48 @@ function urlEntry(loc: string, lastmod: string | undefined, changefreq: string, 
   </url>`;
 }
 
+type PublishedRow = { slug: string; created_at: string; updated_at?: string | null };
+
+// Loads published rows with their last-edited date. Uses `updated_at` when
+// the column exists (run the SQL migration first); if it hasn't been added
+// yet the first query errors, so fall back to `created_at` instead of
+// dropping every post from the sitemap.
+async function loadPublished(table: "blog_posts" | "case_studies"): Promise<PublishedRow[]> {
+  const withUpdated = await supabase
+    .from(table)
+    .select("slug, created_at, updated_at")
+    .eq("published", true);
+  if (!withUpdated.error) return (withUpdated.data ?? []) as PublishedRow[];
+
+  const fallback = await supabase.from(table).select("slug, created_at").eq("published", true);
+  if (fallback.error) {
+    console.error(`[sitemap] failed to load ${table}:`, fallback.error.message);
+    return [];
+  }
+  return (fallback.data ?? []) as PublishedRow[];
+}
+
+function lastmodOf(row: PublishedRow) {
+  const date = new Date(row.updated_at ?? row.created_at);
+  return Number.isNaN(date.getTime()) ? undefined : date.toISOString().slice(0, 10);
+}
+
 async function buildSitemap() {
   const entries: string[] = STATIC_PAGES.map((p) =>
     urlEntry(`${SITE_URL}${p.path}`, undefined, p.changefreq, p.priority),
   );
 
-  const [{ data: posts, error: postsError }, { data: caseStudies, error: caseStudiesError }] =
-    await Promise.all([
-      supabase.from("blog_posts").select("slug, created_at").eq("published", true),
-      supabase.from("case_studies").select("slug, created_at").eq("published", true),
-    ]);
+  const [posts, caseStudies] = await Promise.all([
+    loadPublished("blog_posts"),
+    loadPublished("case_studies"),
+  ]);
 
-  if (postsError) console.error("[sitemap] failed to load blog posts:", postsError.message);
-  if (caseStudiesError)
-    console.error("[sitemap] failed to load case studies:", caseStudiesError.message);
-
-  for (const post of posts ?? []) {
-    entries.push(
-      urlEntry(
-        `${SITE_URL}/blog/${post.slug}`,
-        new Date(post.created_at).toISOString().slice(0, 10),
-        "monthly",
-        "0.6",
-      ),
-    );
+  for (const post of posts) {
+    entries.push(urlEntry(`${SITE_URL}/blog/${post.slug}`, lastmodOf(post), "monthly", "0.6"));
   }
 
-  for (const item of caseStudies ?? []) {
-    entries.push(
-      urlEntry(
-        `${SITE_URL}/work/${item.slug}`,
-        new Date(item.created_at).toISOString().slice(0, 10),
-        "monthly",
-        "0.6",
-      ),
-    );
+  for (const item of caseStudies) {
+    entries.push(urlEntry(`${SITE_URL}/work/${item.slug}`, lastmodOf(item), "monthly", "0.6"));
   }
 
   return `<?xml version="1.0" encoding="UTF-8"?>
