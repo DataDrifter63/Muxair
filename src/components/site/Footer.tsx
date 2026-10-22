@@ -94,11 +94,11 @@ export function Footer() {
             <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
               <li>
                 <a
-                  href="mailto:digitalmuxair@gmail.com"
+                  href="mailto:hello@muxair.com"
                   className="inline-flex items-center gap-2 transition-colors hover:text-primary"
                 >
                   <Mail className="h-3.5 w-3.5 shrink-0" />
-                  digitalmuxair@gmail.com
+                  hello@muxair.com
                 </a>
               </li>
               <li>
