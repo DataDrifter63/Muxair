@@ -94,20 +94,20 @@ export function Footer() {
             <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
               <li>
                 <a
-                  href="mailto:hello@muxair.com"
+                  href="mailto:digitalmuxair@gmail.com"
                   className="inline-flex items-center gap-2 transition-colors hover:text-primary"
                 >
                   <Mail className="h-3.5 w-3.5 shrink-0" />
-                  hello@muxair.com
+                  digitalmuxair@gmail.com
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+442012345678"
+                  href="tel:+447806982999"
                   className="inline-flex items-center gap-2 transition-colors hover:text-primary"
                 >
                   <Phone className="h-3.5 w-3.5 shrink-0" />
-                  +44 20 1234 5678
+                  +44 7806 982999
                 </a>
               </li>
               <li className="text-xs text-muted-foreground/80">

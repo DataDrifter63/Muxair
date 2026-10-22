@@ -132,8 +132,8 @@ function ThankYouPage() {
               </div>
               <p className="mt-8 text-sm text-muted-foreground">
                 Need a faster answer? Call us directly on{" "}
-                <a href="tel:+442012345678" className="font-semibold text-primary hover:underline">
-                  +44 20 1234 5678
+                <a href="tel:+447806982999" className="font-semibold text-primary hover:underline">
+                  +44 7806 982999
                 </a>
               </p>
             </Reveal>

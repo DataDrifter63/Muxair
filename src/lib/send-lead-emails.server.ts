@@ -41,7 +41,7 @@ function submitterThankYouHtml(data: LeadEmailInput) {
  *
  * Required env vars (set locally in .env and on your host, e.g. Netlify):
  *   RESEND_API_KEY          - from resend.com/api-keys
- *   RESEND_FROM_EMAIL       - e.g. "Muxair <hello@yourdomain.com>"
+ *   RESEND_FROM_EMAIL       - e.g. "Muxair <digitalmuxair@gmail.com>"
  *                             (must be on a domain verified in Resend to
  *                             email real customers — see resend.com/domains)
  *   LEAD_NOTIFICATION_EMAIL - your inbox, where new-lead alerts go
