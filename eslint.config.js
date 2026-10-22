@@ -36,5 +36,16 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": "off",
     },
   },
+  {
+    // These files intentionally export helpers (variants, hooks, constants) next to
+    // components, which only affects dev-mode Fast Refresh, never production.
+    files: [
+      "src/components/ui/**/*.{ts,tsx}",
+      "src/components/site/primitives.tsx",
+      "src/components/site/TeamSection.tsx",
+      "src/lib/theme.tsx",
+    ],
+    rules: { "react-refresh/only-export-components": "off" },
+  },
   eslintPluginPrettier,
 );
