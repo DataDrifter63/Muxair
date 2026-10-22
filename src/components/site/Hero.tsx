@@ -1,14 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import {
-  ArrowRight,
-  Flame,
-  MapPin,
-  PhoneCall,
-  PlayCircle,
-  Snowflake,
-  Zap,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight, Flame, PlayCircle, Snowflake } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import heroSite1 from "@/assets/hero-site-1.webp";
 import heroSite2 from "@/assets/hero-site-2.webp";
@@ -43,76 +34,6 @@ function optimiseImage(url: string, width = 1000): string {
 
 /** On-screen scroll speed of the hero screenshots, in px per second (same for both windows). */
 const SCAN_PX_PER_SECOND = 45;
-
-/** Small floating "proof" chips around the browser windows. */
-const heroChips: {
-  icon: LucideIcon;
-  title: string;
-  sub: string;
-  className: string;
-  tone: "cool" | "heat";
-  delay: number;
-}[] = [
-  {
-    icon: PhoneCall,
-    title: "More booked jobs",
-    sub: "Calls & quote requests",
-    className: "left-0 top-[4%] scale-90 origin-left sm:top-[9%] sm:scale-100",
-    tone: "heat",
-    delay: 1.1,
-  },
-  {
-    icon: MapPin,
-    title: "Found on Google Maps",
-    sub: "Local SEO built in",
-    className: "right-0 top-[60%] scale-90 origin-right sm:top-[56%] sm:scale-100",
-    tone: "cool",
-    delay: 1.3,
-  },
-  {
-    icon: Zap,
-    title: "Loads in under 2s",
-    sub: "Mobile-first build",
-    className: "bottom-[2%] right-[4%] hidden sm:block",
-    tone: "heat",
-    delay: 1.5,
-  },
-];
-
-function FloatingChip({ chip, index }: { chip: (typeof heroChips)[number]; index: number }) {
-  const reduceMotion = useReducedMotion();
-  const Icon = chip.icon;
-  const iconTone = chip.tone === "heat" ? "bg-heat/15 text-heat" : "bg-primary/15 text-primary";
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: chip.delay, ease: [0.22, 1, 0.36, 1] }}
-      className={`absolute z-30 ${chip.className}`}
-    >
-      <motion.div
-        animate={reduceMotion ? {} : { y: [0, -7, 0] }}
-        transition={{
-          duration: 5 + index,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: index * 0.6,
-        }}
-        className="flex items-center gap-2.5 rounded-2xl border border-border bg-background/85 px-3 py-2.5 shadow-[0_18px_40px_-18px_rgba(0,0,0,0.45)] backdrop-blur-md"
-      >
-        <span
-          className={`flex h-8 w-8 flex-none items-center justify-center rounded-xl ${iconTone}`}
-        >
-          <Icon className="h-4 w-4" />
-        </span>
-        <span className="pr-1 text-left leading-tight">
-          <span className="block text-xs font-semibold text-foreground">{chip.title}</span>
-          <span className="block text-[10.5px] text-muted-foreground">{chip.sub}</span>
-        </span>
-      </motion.div>
-    </motion.div>
-  );
-}
 
 function BrowserFrame({
   label,
@@ -337,10 +258,6 @@ export function Hero() {
               aspect="aspect-[4/4.6]"
             />
           ) : null}
-
-          {heroChips.map((chip, i) => (
-            <FloatingChip key={chip.title} chip={chip} index={i} />
-          ))}
         </motion.div>
       </div>
     </section>
