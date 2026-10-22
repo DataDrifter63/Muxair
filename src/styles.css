@@ -115,6 +115,16 @@
 
   html {
     scroll-behavior: smooth;
+    /* Keep the scrollbar's space reserved so opening a dialog (which locks page
+       scroll) doesn't shift the whole page sideways. */
+    scrollbar-gutter: stable;
+  }
+
+  /* The gutter above already prevents the shift, so cancel the dialog's own
+     scrollbar compensation (it would otherwise push the page left). */
+  html body[data-scroll-locked] {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
   }
 
   body {

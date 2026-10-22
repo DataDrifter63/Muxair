@@ -155,6 +155,10 @@ type VideoTestimonial = {
 };
 
 const CLOUDINARY_VIDEO = "https://res.cloudinary.com/dmaibvnp/video/upload";
+// Web-optimised delivery: H.264/AAC MP4 (also converts .mov), capped at 720px wide.
+const VIDEO_T = "f_mp4,vc_h264,ac_aac,q_auto:good,w_720,c_limit";
+// First-frame thumbnail, cropped to the card's 3:4 shape at a small size.
+const POSTER_T = "so_0,f_jpg,q_auto,w_480,h_640,c_fill,g_auto";
 
 const testimonials: VideoTestimonial[] = [
   {
@@ -163,8 +167,8 @@ const testimonials: VideoTestimonial[] = [
     category: "Website Design",
     tone: "cool",
     // f_mp4,q_auto = Cloudinary serves a web-optimised MP4; the .jpg is an auto thumbnail.
-    videoSrc: `${CLOUDINARY_VIDEO}/f_mp4,q_auto/v1792669862/client_testimonial_1.mp4`,
-    poster: `${CLOUDINARY_VIDEO}/so_0,f_jpg,q_auto/v1792669862/client_testimonial_1.jpg`,
+    videoSrc: `${CLOUDINARY_VIDEO}/${VIDEO_T}/v1792669862/client_testimonial_1.mp4`,
+    poster: `${CLOUDINARY_VIDEO}/${POSTER_T}/v1792669862/client_testimonial_1.jpg`,
   },
   {
     name: "Mi P.",
@@ -172,8 +176,8 @@ const testimonials: VideoTestimonial[] = [
     category: "Website Design & Support",
     tone: "heat",
     // The source is a .mov; f_mp4 converts it so every browser can play it.
-    videoSrc: `${CLOUDINARY_VIDEO}/f_mp4,q_auto/v1792669844/client_testimonial_2.mp4`,
-    poster: `${CLOUDINARY_VIDEO}/so_0,f_jpg,q_auto/v1792669844/client_testimonial_2.jpg`,
+    videoSrc: `${CLOUDINARY_VIDEO}/${VIDEO_T}/v1792669844/client_testimonial_2.mp4`,
+    poster: `${CLOUDINARY_VIDEO}/${POSTER_T}/v1792669844/client_testimonial_2.jpg`,
   },
 ];
 
@@ -189,8 +193,40 @@ const toneBadge: Record<VideoTestimonial["tone"], string> = {
   mixed: "border-primary/30 bg-primary/10 text-primary",
 };
 
+function TestimonialPlayer({ src, poster }: { src: string; poster?: string | undefined }) {
+  const [loading, setLoading] = useState(true);
+  return (
+    <>
+      <video
+        src={src}
+        poster={poster}
+        controls
+        autoPlay
+        playsInline
+        preload="auto"
+        controlsList="nodownload"
+        onLoadedData={() => setLoading(false)}
+        onCanPlay={() => setLoading(false)}
+        onWaiting={() => setLoading(true)}
+        onPlaying={() => setLoading(false)}
+        onSeeked={() => setLoading(false)}
+        className="h-full w-full bg-black object-contain"
+      />
+      {loading ? (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <span className="h-10 w-10 animate-spin rounded-full border-2 border-foreground/30 border-t-primary" />
+        </div>
+      ) : null}
+    </>
+  );
+}
+
 export function TestimonialsSection() {
   const [active, setActive] = useState<VideoTestimonial | null>(null);
+  // Which videos to warm up (fetch metadata + start Cloudinary processing) on hover/focus.
+  const [warm, setWarm] = useState<Set<string>>(new Set());
+  const warmUp = (name: string) =>
+    setWarm((prev) => (prev.has(name) ? prev : new Set(prev).add(name)));
 
   return (
     <section className="section-shell">
@@ -212,6 +248,8 @@ export function TestimonialsSection() {
               <motion.button
                 type="button"
                 onClick={() => setActive(t)}
+                onPointerEnter={() => warmUp(t.name)}
+                onFocus={() => warmUp(t.name)}
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 280, damping: 22 }}
                 className="group relative flex aspect-[3/4] w-full flex-col justify-end overflow-hidden rounded-2xl border border-border bg-surface/60 text-left"
@@ -244,13 +282,25 @@ export function TestimonialsSection() {
                   </span>
                 ) : null}
 
+                {t.videoSrc && warm.has(t.name) ? (
+                  <video
+                    src={t.videoSrc}
+                    preload="metadata"
+                    muted
+                    playsInline
+                    tabIndex={-1}
+                    aria-hidden
+                    className="hidden"
+                  />
+                ) : null}
+
                 <span className="absolute inset-0 flex items-center justify-center">
                   <span className="flex h-14 w-14 items-center justify-center rounded-full border border-foreground/40 bg-background/40 backdrop-blur-md transition-transform duration-300 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary/20">
                     <Play className="h-5 w-5 translate-x-0.5 text-foreground" fill="currentColor" />
                   </span>
                 </span>
 
-                <div className="relative z-10 bg-gradient-to-t from-background via-background/80 to-transparent p-5 pt-10">
+                <div className="relative z-10 bg-gradient-to-t from-background/75 via-background/30 to-transparent p-5 pt-12">
                   <p className="text-sm font-semibold text-foreground">{t.name}</p>
                   <p className="mt-0.5 text-xs text-muted-foreground">{t.role}</p>
                   <span
@@ -300,13 +350,7 @@ export function TestimonialsSection() {
             <div className="relative aspect-[9/16] w-full bg-surface">
               <DialogTitle className="sr-only">Testimonial from {active.name}</DialogTitle>
               {active.videoSrc ? (
-                <video
-                  src={active.videoSrc}
-                  poster={active.poster}
-                  controls
-                  autoPlay
-                  className="h-full w-full object-cover"
-                />
+                <TestimonialPlayer src={active.videoSrc} poster={active.poster} />
               ) : (
                 <div
                   className={`flex h-full w-full flex-col items-center justify-center gap-3 bg-gradient-to-br ${toneGradient[active.tone]} px-6 text-center`}
