@@ -113,3 +113,56 @@ export async function fetchServiceCaseStudy(service: string): Promise<WorkItemRo
     return null;
   }
 }
+
+/** The fields a case study *card* needs (no long Markdown body). */
+export type WorkCardRow = Pick<
+  WorkItemRow,
+  | "slug"
+  | "name"
+  | "tone"
+  | "location"
+  | "services"
+  | "badge"
+  | "category"
+  | "result"
+  | "summary"
+  | "cover_image"
+  | "created_at"
+>;
+
+/**
+ * Other published case studies to suggest at the end of a case study page.
+ * Ones that share the most services with the current one come first, then
+ * newest first.
+ */
+export async function fetchRelatedCaseStudies(
+  slug: string,
+  services: string[],
+  limit = 2,
+): Promise<WorkCardRow[]> {
+  try {
+    const { data, error } = await supabase
+      .from("case_studies")
+      .select(
+        "slug,name,tone,location,services,badge,category,result,summary,cover_image,created_at",
+      )
+      .eq("published", true)
+      .neq("slug", slug)
+      .order("created_at", { ascending: false });
+    if (error) {
+      console.error("[related-case-studies] load failed:", error.message);
+      return [];
+    }
+    const rows = (data ?? []) as WorkCardRow[];
+    const shared = (r: WorkCardRow) =>
+      Array.isArray(r.services) ? r.services.filter((s) => services.includes(s)).length : 0;
+    return rows
+      .map((row, index) => ({ row, index, score: shared(row) }))
+      .sort((a, b) => b.score - a.score || a.index - b.index)
+      .slice(0, limit)
+      .map((x) => x.row);
+  } catch (e) {
+    console.error("[related-case-studies] load failed:", e);
+    return [];
+  }
+}

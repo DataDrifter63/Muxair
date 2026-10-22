@@ -1,8 +1,9 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowRight } from "lucide-react";
 import { MagneticButton } from "./primitives";
+import { slugifyHeading } from "@/lib/markdown-headings";
 
 /**
  * Renders blog post content written in Markdown, with two custom block
@@ -213,7 +214,10 @@ function StatsRow({ items }: { items: StatItem[] }) {
 }
 
 function parseMetric(value: string): number {
-  const m = value.replace(/,/g, "").trim().match(/^([\d.]+)\s*([kKmM]?)/);
+  const m = value
+    .replace(/,/g, "")
+    .trim()
+    .match(/^([\d.]+)\s*([kKmM]?)/);
   if (!m || !m[1]) return 0;
   const n = parseFloat(m[1]);
   const suffix = (m[2] ?? "").toLowerCase();
@@ -263,7 +267,9 @@ function BarsChart({ legend, rows }: { legend: string; rows: BarRow[] }) {
                       style={{ width: `${Math.max((before / max) * 100, 2)}%` }}
                     />
                   </div>
-                  <span className="w-16 text-right text-xs text-muted-foreground">{row.before}</span>
+                  <span className="w-16 text-right text-xs text-muted-foreground">
+                    {row.before}
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="flex-1">
@@ -309,9 +315,7 @@ function TimelineList({ items }: { items: TimelineItem[] }) {
             {item.title}
           </p>
           {item.description ? (
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-              {item.description}
-            </p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
           ) : null}
         </li>
       ))}
@@ -319,12 +323,29 @@ function TimelineList({ items }: { items: TimelineItem[] }) {
   );
 }
 
+function nodeText(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(nodeText).join("");
+  if (node && typeof node === "object" && "props" in node) {
+    return nodeText((node as { props: { children?: ReactNode } }).props.children);
+  }
+  return "";
+}
+
 const markdownComponents = {
-  h2: (props: any) => (
-    <h2 className="mt-11 font-display text-2xl leading-snug text-foreground" {...props} />
+  h2: ({ node: _node, ...props }: any) => (
+    <h2
+      id={slugifyHeading(nodeText(props.children))}
+      className="mt-11 scroll-mt-28 font-display text-2xl leading-snug text-foreground"
+      {...props}
+    />
   ),
-  h3: (props: any) => (
-    <h3 className="mt-8 text-lg font-semibold leading-snug text-foreground" {...props} />
+  h3: ({ node: _node, ...props }: any) => (
+    <h3
+      id={slugifyHeading(nodeText(props.children))}
+      className="mt-8 scroll-mt-28 text-lg font-semibold leading-snug text-foreground"
+      {...props}
+    />
   ),
   p: ({ node, ...props }: any) => {
     const onlyImage = node?.children?.length === 1 && node.children[0]?.tagName === "img";

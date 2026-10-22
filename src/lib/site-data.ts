@@ -150,6 +150,15 @@ export const services: ServiceItem[] = [
 
 export type WorkService = "website" | "seo" | "google-ads" | "meta-ads" | "maintenance";
 
+// Literal paths for each service page (the router needs exact static routes).
+export const workServiceHrefs = {
+  website: "/services/website",
+  seo: "/services/seo",
+  "google-ads": "/services/google-ads",
+  "meta-ads": "/services/meta-ads",
+  maintenance: "/services/maintenance",
+} as const;
+
 export const workServiceLabels: Record<WorkService, string> = {
   website: "Website Design",
   seo: "Local SEO",

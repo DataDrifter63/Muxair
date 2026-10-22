@@ -1,10 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
-import { MagneticButton, Reveal } from "@/components/site/primitives";
+import { ArrowLeft, CheckCircle2, Clock, MapPin } from "lucide-react";
+import { MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
 import { MarkdownContent } from "@/components/site/MarkdownContent";
+import { extractHeadings } from "@/lib/markdown-headings";
 import { CTASection } from "@/components/site/CTASection";
-import { supabase, type WorkItemRow } from "@/lib/supabase";
-import { workServiceLabels, SITE_URL, type WorkService } from "@/lib/site-data";
+import { CaseStudySnapshot, CaseStudyToc } from "@/components/site/CaseStudyAside";
+import { CaseStudyRelated } from "@/components/site/CaseStudyRelated";
+import { fetchRelatedCaseStudies, supabase, type WorkItemRow } from "@/lib/supabase";
+import { SITE_URL } from "@/lib/site-data";
 
 export const Route = createFileRoute("/work/$slug")({
   component: WorkItemPage,
@@ -19,7 +22,9 @@ export const Route = createFileRoute("/work/$slug")({
     if (error) {
       console.error("[work] failed to load case study:", error.message);
     }
-    return { item: (data ?? null) as WorkItemRow | null };
+    const item = (data ?? null) as WorkItemRow | null;
+    const related = item ? await fetchRelatedCaseStudies(item.slug, item.services ?? []) : [];
+    return { item, related };
   },
   head: ({ loaderData }) => {
     const item = loaderData?.item;
@@ -56,8 +61,13 @@ export const Route = createFileRoute("/work/$slug")({
   },
 });
 
+function readingTime(markdown: string) {
+  const words = markdown.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 220));
+}
+
 function WorkItemPage() {
-  const { item } = Route.useLoaderData();
+  const { item, related } = Route.useLoaderData();
 
   if (!item) {
     return (
@@ -79,147 +89,185 @@ function WorkItemPage() {
   }
 
   const isCool = item.tone === "cool";
+  const accentText = isCool ? "text-primary" : "text-heat";
+  const headings = item.content ? extractHeadings(item.content) : [];
+  const lead = item.summary || item.result;
 
   return (
     <div className="relative min-h-screen bg-background">
       <main>
-        <article className="section-shell pt-36 sm:pt-40">
-          <div className="mx-auto max-w-7xl px-5 lg:px-8">
-            <Reveal>
-              <Link
-                to="/work"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back to Work
-              </Link>
-
-              <div className="mt-6 flex flex-wrap items-center gap-2">
-                <span
-                  className={`rounded-full border px-3 py-1 text-[11px] font-bold ${
-                    isCool
-                      ? "border-primary/40 bg-primary/10 text-primary"
-                      : "border-heat/40 bg-heat/10 text-heat"
-                  }`}
+        <article>
+          {/* Header */}
+          <header className="relative overflow-hidden pb-4 pt-36 sm:pt-40">
+            <TechBackdrop />
+            <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
+              <Reveal>
+                <Link
+                  to="/work"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
                 >
-                  {item.badge}
-                </span>
-                {item.category ? (
-                  <span className="rounded-full border border-border bg-surface/60 px-3 py-1 text-[11px] font-medium text-muted-foreground">
-                    {item.category}
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to Work
+                </Link>
+
+                <div className="mt-6 flex flex-wrap items-center gap-2">
+                  <span
+                    className={`rounded-full border px-3 py-1 text-[11px] font-bold ${
+                      isCool
+                        ? "border-primary/40 bg-primary/10 text-primary"
+                        : "border-heat/40 bg-heat/10 text-heat"
+                    }`}
+                  >
+                    {item.badge}
                   </span>
+                  {item.category ? (
+                    <span className="rounded-full border border-border bg-surface/60 px-3 py-1 text-[11px] font-medium text-muted-foreground">
+                      {item.category}
+                    </span>
+                  ) : null}
+                </div>
+
+                <h1 className="mt-5 max-w-4xl text-balance font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
+                  {item.name}
+                </h1>
+
+                {lead ? (
+                  <p className="mt-5 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+                    {lead}
+                  </p>
                 ) : null}
+
+                <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-muted-foreground">
+                  {item.location ? (
+                    <span className="flex items-center gap-1.5">
+                      <MapPin className={`h-4 w-4 ${accentText}`} />
+                      {item.location}
+                    </span>
+                  ) : null}
+                  {item.location && item.content ? (
+                    <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
+                  ) : null}
+                  {item.content ? (
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="h-4 w-4" />
+                      {readingTime(item.content)} min read
+                    </span>
+                  ) : null}
+                </div>
+              </Reveal>
+
+              {item.cover_image ? (
+                <Reveal delay={0.1}>
+                  <img
+                    src={item.cover_image}
+                    alt={`Website design preview for ${item.name}`}
+                    className="mt-10 aspect-[16/9] w-full rounded-2xl border border-border object-cover object-top shadow-2xl shadow-black/10"
+                  />
+                </Reveal>
+              ) : null}
+
+              {item.metrics && item.metrics.length > 0 ? (
+                <Reveal delay={0.15}>
+                  <div className="mt-8 grid grid-cols-2 gap-4 rounded-2xl border border-border bg-surface/40 p-6 backdrop-blur-md sm:grid-cols-3">
+                    {item.metrics.map((m) => (
+                      <div key={m.label} className="text-center">
+                        <p className={`font-display text-2xl font-bold sm:text-3xl ${accentText}`}>
+                          {m.value}
+                        </p>
+                        <p className="mt-1 text-xs text-muted-foreground">{m.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              ) : null}
+            </div>
+          </header>
+
+          {/* Body: story on the left, sticky snapshot + contents on the right */}
+          <div className="relative mx-auto max-w-7xl px-5 pb-24 pt-10 lg:px-8">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-16">
+              <div className="min-w-0">
+                <div className="mb-10 space-y-4 lg:hidden">
+                  <CaseStudySnapshot item={item} />
+                  <CaseStudyToc headings={headings} collapsible />
+                </div>
+
+                <div className="max-w-3xl">
+                  {item.content ? (
+                    <Reveal delay={0.1}>
+                      <MarkdownContent content={item.content} />
+                    </Reveal>
+                  ) : (
+                    <>
+                      {item.challenge ? (
+                        <Reveal delay={0.1}>
+                          <h2 className="font-display text-xl sm:text-2xl">The Challenge</h2>
+                          <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                            {item.challenge}
+                          </p>
+                        </Reveal>
+                      ) : null}
+
+                      {item.approach && item.approach.length > 0 ? (
+                        <Reveal delay={0.15}>
+                          <h2 className="mt-10 font-display text-xl sm:text-2xl">What We Did</h2>
+                          <ul className="mt-3 space-y-2.5">
+                            {item.approach.map((step) => (
+                              <li key={step} className="flex items-start gap-2.5">
+                                <CheckCircle2
+                                  className={`mt-0.5 h-5 w-5 flex-none ${accentText}`}
+                                />
+                                <span className="text-base leading-relaxed text-foreground/90">
+                                  {step}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </Reveal>
+                      ) : null}
+
+                      {item.outcome ? (
+                        <Reveal delay={0.2}>
+                          <div className="mt-10 rounded-2xl border border-border bg-surface/40 p-6">
+                            <h2 className="font-display text-xl sm:text-2xl">The Outcome</h2>
+                            <p className="mt-3 text-sm leading-relaxed text-foreground/90">
+                              {item.outcome}
+                            </p>
+                          </div>
+                        </Reveal>
+                      ) : null}
+                    </>
+                  )}
+                </div>
               </div>
 
-              <h1 className="mt-4 text-balance font-display text-3xl leading-tight sm:text-4xl lg:text-5xl">
-                {item.name}
-              </h1>
-              <p className="mt-3 text-sm text-muted-foreground">{item.location}</p>
-            </Reveal>
-
-            {item.cover_image ? (
-              <Reveal delay={0.1}>
-                <img
-                  src={item.cover_image}
-                  alt={`Website design preview for ${item.name}`}
-                  className="mt-10 aspect-[16/9] w-full rounded-2xl border border-border object-cover object-top"
-                />
-              </Reveal>
-            ) : null}
-
-            {item.summary ? (
-              <Reveal delay={0.12}>
-                <p className="mx-auto mt-8 max-w-3xl text-base leading-relaxed text-muted-foreground">
-                  {item.summary}
-                </p>
-              </Reveal>
-            ) : null}
-
-            {item.metrics && item.metrics.length > 0 ? (
-              <Reveal delay={0.15}>
-                <div className="mt-8 grid grid-cols-2 gap-4 rounded-2xl border border-border bg-surface/40 p-6 backdrop-blur-md sm:grid-cols-3">
-                  {item.metrics.map((m) => (
-                    <div key={m.label} className="text-center">
-                      <p
-                        className={`font-display text-2xl font-bold sm:text-3xl ${
-                          isCool ? "text-primary" : "text-heat"
-                        }`}
-                      >
-                        {m.value}
-                      </p>
-                      <p className="mt-1 text-xs text-muted-foreground">{m.label}</p>
-                    </div>
-                  ))}
+              <aside className="hidden lg:block">
+                <div className="sticky top-28 flex max-h-[calc(100vh-8rem)] flex-col gap-5">
+                  <div className="flex-none">
+                    <CaseStudySnapshot item={item} />
+                  </div>
+                  <CaseStudyToc headings={headings} />
                 </div>
-              </Reveal>
-            ) : null}
-
-            {item.services && item.services.length > 0 ? (
-              <Reveal delay={0.18}>
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {item.services.map((s) => (
-                    <span
-                      key={s}
-                      className="rounded-full border border-border bg-surface/60 px-3 py-1 text-xs font-medium text-muted-foreground"
-                    >
-                      {workServiceLabels[s as WorkService] ?? s}
-                    </span>
-                  ))}
-                </div>
-              </Reveal>
-            ) : null}
-
-            {item.content ? (
-              <Reveal delay={0.2}>
-                <MarkdownContent content={item.content} />
-              </Reveal>
-            ) : (
-              <>
-                {item.challenge ? (
-                  <Reveal delay={0.2}>
-                    <h2 className="mt-12 font-display text-xl sm:text-2xl">The Challenge</h2>
-                    <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-                      {item.challenge}
-                    </p>
-                  </Reveal>
-                ) : null}
-
-                {item.approach && item.approach.length > 0 ? (
-                  <Reveal delay={0.25}>
-                    <h2 className="mt-10 font-display text-xl sm:text-2xl">What We Did</h2>
-                    <ul className="mt-3 max-w-3xl space-y-2.5">
-                      {item.approach.map((step) => (
-                        <li key={step} className="flex items-start gap-2.5">
-                          <CheckCircle2
-                            className={`mt-0.5 h-5 w-5 flex-none ${
-                              isCool ? "text-primary" : "text-heat"
-                            }`}
-                          />
-                          <span className="text-base leading-relaxed text-foreground/90">
-                            {step}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </Reveal>
-                ) : null}
-
-                {item.outcome ? (
-                  <Reveal delay={0.3}>
-                    <div className="mt-10 max-w-3xl rounded-2xl border border-border bg-surface/40 p-6">
-                      <h2 className="font-display text-xl sm:text-2xl">The Outcome</h2>
-                      <p className="mt-3 text-sm leading-relaxed text-foreground/90">
-                        {item.outcome}
-                      </p>
-                    </div>
-                  </Reveal>
-                ) : null}
-              </>
-            )}
+              </aside>
+            </div>
           </div>
         </article>
 
-        <CTASection />
+        <CaseStudyRelated item={item} related={related} />
+
+        <CTASection
+          title={
+            <>
+              Want results like this for <span className="text-gradient-cool">your business?</span>
+            </>
+          }
+          description="Book a free 30-minute strategy call. We'll look at your current website and search presence and tell you honestly what we would fix first."
+          primaryLabel="Book Your Free Call"
+          primaryHref="/contact"
+          secondaryLabel="See More Work"
+          secondaryHref="/work"
+          footnote="No pressure and no lock-in. Built only for HVAC companies."
+        />
       </main>
     </div>
   );
