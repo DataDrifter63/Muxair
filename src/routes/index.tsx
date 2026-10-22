@@ -11,10 +11,10 @@ import { Results } from "@/components/site/Results";
 import { CTASection } from "@/components/site/CTASection";
 
 // TODO: replace with the real production domain before launch — it also
-// drives the canonical/OG URLs below and public/sitemap.xml + robots.txt.
+// drives the canonical/OG URLs below (sitemap.xml is served dynamically).
 const SITE_URL = "https://muxair.com";
 
-const title = "HVAC Website Design Agency | Built Exclusively for Heating & Cooling Companies";
+const title = "HVAC Website Design Agency | Muxair";
 const description =
   "We build high-converting websites and run digital marketing exclusively for HVAC businesses. More booked jobs, guaranteed. Get a free quote today.";
 
@@ -28,6 +28,8 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: SITE_URL }],
@@ -39,6 +41,8 @@ export const Route = createFileRoute("/")({
           "@type": "ProfessionalService",
           name: "Muxair",
           url: SITE_URL,
+          logo: `${SITE_URL}/icon-512.png`,
+          image: `${SITE_URL}/og-image.png`,
           description,
           serviceType: [
             "HVAC web design agency",
@@ -46,7 +50,11 @@ export const Route = createFileRoute("/")({
             "HVAC digital marketing",
             "Heating and cooling website design",
           ],
-          areaServed: "United Kingdom",
+          areaServed: [
+            { "@type": "Country", name: "United States" },
+            { "@type": "Country", name: "United Kingdom" },
+            { "@type": "Country", name: "Canada" },
+          ],
         }),
       },
     ],

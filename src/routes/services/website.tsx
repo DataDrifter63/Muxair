@@ -29,7 +29,7 @@ import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/website";
 
-const title = "HVAC Website Design | Custom Sites Built to Convert for Heating & Cooling Companies";
+const title = "HVAC Website Design | Custom Sites That Convert";
 const description =
   "We design and build custom websites exclusively for HVAC businesses. Fast, mobile-first, conversion-optimised, and built to rank on Google.";
 

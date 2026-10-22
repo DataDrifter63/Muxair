@@ -14,7 +14,7 @@ a final call-to-action.
 - [React 19](https://react.dev/) + [TanStack Start](https://tanstack.com/start) (file-based routing, SSR)
 - [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) components
 - [Motion](https://motion.dev/) for animation
-- [Vite](https://vitejs.dev/) build tooling, deployed on [Netlify](https://www.netlify.com/) via [Nitro](https://nitro.build/)
+- [Vite](https://vitejs.dev/) build tooling, built with [Nitro](https://nitro.build/) (node-server preset for Hostinger hPanel; `NITRO_PRESET=netlify` for Netlify)
 
 ## Getting started
 
@@ -32,7 +32,7 @@ The dev server runs at `http://localhost:8080`.
 | Command | Description |
 | --- | --- |
 | `npm run dev` | Start the local dev server |
-| `npm run build` | Production build (outputs to `dist/`) |
+| `npm run build` | Production build (outputs to `.output/`, start with `npm start`) |
 | `npm run preview` | Preview the production build locally |
 | `npm run typecheck` | Type-check the project with `tsc` |
 | `npm run lint` | Lint with ESLint |
@@ -93,3 +93,23 @@ git push -u origin main
 
 (`node_modules/`, `dist/`, and `.output/` are already excluded via
 `.gitignore` — only source files get pushed.)
+
+## Deploy on Hostinger (hPanel)
+
+- Node 22, build: `npm ci && npm run build`, startup file: `.output/server/index.mjs`
+- Build-time env: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_CLOUDINARY_CLOUD_NAME`, `VITE_CLOUDINARY_UPLOAD_PRESET`
+- Runtime env: `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEAD_NOTIFICATION_EMAIL`, `GOOGLE_SHEETS_SPREADSHEET_ID`, `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_SERVICE_ACCOUNT_KEY`
+
+## Indexing: client-approval mode vs launch
+
+By default the site is **not indexable**: `robots.txt` is `Disallow: /`, every response sends `X-Robots-Tag: noindex`, and pages carry `<meta name="robots" content="noindex">`.
+
+To go live: set `ALLOW_INDEXING=true` (runtime) and `VITE_ALLOW_INDEXING=true` (build time), rebuild, and replace `public/robots.txt` with:
+
+```
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /thank-you
+Sitemap: https://muxair.com/sitemap.xml
+```

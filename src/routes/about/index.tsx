@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { MagneticButton, Reveal, SectionHeading, TechBackdrop } from "@/components/site/primitives";
 import { CTASection } from "@/components/site/CTASection";
+import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { TeamSection, teamMembers } from "@/components/site/TeamSection";
 import { SITE_URL } from "@/lib/site-data";
 import whyHvacImg from "@/assets/why-hvac.webp";
@@ -312,6 +313,7 @@ function AboutPage() {
         </section>
 
         {/* Final CTA */}
+        <RelatedLinks />
         <CTASection
           title={
             <>

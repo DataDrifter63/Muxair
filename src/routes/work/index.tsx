@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Star } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
+import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { Counter, MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
 import { WorkCarousel } from "@/components/site/WorkCarousel";
 import { cn } from "@/lib/utils";
@@ -9,7 +10,7 @@ import { supabase, type WorkItemRow } from "@/lib/supabase";
 import { SITE_URL, type WorkService } from "@/lib/site-data";
 
 // Per the site's per-page SEO checklist for /work.
-const title = "HVAC Website Design Portfolio | Case Studies for Heating & Cooling Companies";
+const title = "HVAC Website Portfolio | Case Studies | Muxair";
 const description =
   "Browse our portfolio of websites built exclusively for HVAC companies. See the results we've delivered for heating, cooling, and air quality businesses.";
 
@@ -262,6 +263,7 @@ function WorkIndex() {
           </div>
         </section>
 
+        <RelatedLinks exclude="/work" />
         <CTASection
           title={
             <>

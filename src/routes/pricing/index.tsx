@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
+import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { MagneticButton, Reveal, SectionHeading, TechBackdrop } from "@/components/site/primitives";
 import {
   Accordion,
@@ -15,7 +16,7 @@ import {
 // the Muxair domain).
 const PAGE_URL = "https://muxair.com/pricing";
 
-const title = "HVAC Website & Marketing Pricing | Transparent Packages, No Hidden Fees";
+const title = "HVAC Website & Marketing Pricing | Muxair";
 const description =
   "See exactly what our HVAC website, SEO, and ads packages cost, starting at $1,200. No hidden fees, no surprise quotes.";
 
@@ -556,6 +557,7 @@ function PricingPage() {
           </div>
         </section>
 
+        <RelatedLinks exclude="/pricing" />
         <CTASection
           badgeLabel="Free 30-Minute Call"
           title={

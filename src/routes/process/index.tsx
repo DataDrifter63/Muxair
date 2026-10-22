@@ -3,6 +3,7 @@ import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
+import { RelatedLinks } from "@/components/site/RelatedLinks";
 import {
   Counter,
   MagneticButton,
@@ -457,6 +458,7 @@ function ProcessPage() {
           </div>
         </section>
 
+        <RelatedLinks />
         <CTASection
           badgeLabel="Free 30-Minute Call"
           title={

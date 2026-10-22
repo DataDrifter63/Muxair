@@ -44,12 +44,23 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+// Staging / client-approval mode: every response carries X-Robots-Tag so Google
+// never indexes the site, even if a URL leaks. At launch set the env var
+// ALLOW_INDEXING=true (and VITE_ALLOW_INDEXING=true at build time).
+function withRobotsHeader(res: Response): Response {
+  if (process.env["ALLOW_INDEXING"] === "true") return res;
+  const headers = new Headers(res.headers);
+  headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+  return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const res = await normalizeCatastrophicSsrResponse(response);
+      return withRobotsHeader(res);
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {

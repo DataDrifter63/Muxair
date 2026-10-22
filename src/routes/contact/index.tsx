@@ -1,3 +1,4 @@
+import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
@@ -42,7 +43,7 @@ import { supabase } from "@/lib/supabase";
 import { sendLeadEmails } from "@/lib/send-lead-emails.server";
 import { syncLeadToSheet } from "@/lib/sync-lead-to-sheet.server";
 
-const title = "Get a Free HVAC Website Quote | Talk to Our HVAC Web Design Specialists";
+const title = "Free HVAC Website Quote | Talk to Muxair";
 const description =
   "Ready to get more booked jobs from your website? Book a free 30-minute strategy call. No sales pressure, just honest advice.";
 
@@ -719,6 +720,7 @@ function ContactPage() {
             </Reveal>
           </div>
         </section>
+        <RelatedLinks />
       </main>
     </div>
   );
