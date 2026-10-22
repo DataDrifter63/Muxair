@@ -21,6 +21,7 @@ import work2 from "@/assets/work-2.jpg";
  * 1600px wide) — see `optimiseImage`.
  */
 type PortfolioHighlight = {
+  href: string; // case study page this card links to
   name: string;
   tone: "cool" | "heat";
   headline: string; // e.g. "We helped Acme HVAC grow annual revenue +167% in 12 months (client-reported)"
@@ -37,6 +38,7 @@ type PortfolioHighlight = {
 const highlights: PortfolioHighlight[] = [
   {
     name: "EEP Plumbing",
+    href: "/work/eep-plumbing",
     tone: "cool",
     headline:
       "A Website Rebuilt for Modern HVAC Customers",
@@ -60,6 +62,7 @@ const highlights: PortfolioHighlight[] = [
   },
   {
     name: "Ruzz Global",
+    href: "/work/ruzz-global-local-seo",
     tone: "heat",
     headline: "We Helped Midlands HVAC 6x Their Website Clicks in 4 Weeks",
     before: {
@@ -275,7 +278,7 @@ export function PortfolioSection() {
                     </div>
 
                     <a
-                      href="/work"
+                      href={item.href}
                       className={`mt-7 inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}
                     >
                       View Full Case Study
