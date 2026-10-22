@@ -37,7 +37,7 @@ export function CTASection({
     <section id="contact" className="section-shell border-t border-border bg-surface">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl border border-border bg-surface/50 px-6 py-20 text-center backdrop-blur-xl sm:px-12">
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-background/80 px-6 py-20 text-center shadow-[0_30px_80px_-40px_rgba(0,0,0,0.25)] backdrop-blur-xl sm:px-12">
             <div className="pointer-events-none absolute inset-0" aria-hidden>
               <div className="absolute inset-0 grid-tech opacity-25" />
               <div className="absolute -top-32 left-1/2 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-primary/18 blur-[130px]" />
