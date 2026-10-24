@@ -6,7 +6,12 @@ import { extractHeadings } from "@/lib/markdown-headings";
 import { CTASection } from "@/components/site/CTASection";
 import { CaseStudySnapshot, CaseStudyToc } from "@/components/site/CaseStudyAside";
 import { CaseStudyRelated } from "@/components/site/CaseStudyRelated";
-import { fetchRelatedCaseStudies, supabase, type WorkItemRow } from "@/lib/supabase";
+import {
+  fetchRelatedCaseStudies,
+  isHiddenCaseStudy,
+  supabase,
+  type WorkItemRow,
+} from "@/lib/supabase";
 import { SITE_URL } from "@/lib/site-data";
 
 export const Route = createFileRoute("/work/$slug")({
@@ -22,7 +27,8 @@ export const Route = createFileRoute("/work/$slug")({
     if (error) {
       console.error("[work] failed to load case study:", error.message);
     }
-    const item = (data ?? null) as WorkItemRow | null;
+    const found = (data ?? null) as WorkItemRow | null;
+    const item = found && !isHiddenCaseStudy(found) ? found : null;
     const related = item ? await fetchRelatedCaseStudies(item.slug, item.services ?? []) : [];
     return { item, related };
   },

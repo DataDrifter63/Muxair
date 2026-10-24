@@ -89,6 +89,16 @@ export interface LeadRow {
  * Loads published rows the same way /work does and matches the tag in code,
  * so it works whether `services` is a text[] or a jsonb column.
  */
+/**
+ * Case studies kept off the public site for now (their content is being redone).
+ * Matched by slug or name. To show one again, remove it from this list and also
+ * make sure it is published in the admin.
+ */
+const HIDDEN_CASE_STUDY = /solace/i;
+export function isHiddenCaseStudy(row: { slug?: string | null; name?: string | null }): boolean {
+  return HIDDEN_CASE_STUDY.test(row.slug ?? "") || HIDDEN_CASE_STUDY.test(row.name ?? "");
+}
+
 export async function fetchServiceCaseStudy(service: string): Promise<WorkItemRow | null> {
   try {
     const { data, error } = await supabase
@@ -100,7 +110,7 @@ export async function fetchServiceCaseStudy(service: string): Promise<WorkItemRo
       console.error("[service-case-study] load failed:", error.message);
       return null;
     }
-    const rows = (data ?? []) as WorkItemRow[];
+    const rows = ((data ?? []) as WorkItemRow[]).filter((r) => !isHiddenCaseStudy(r));
     return (
       rows.find(
         (r) =>
@@ -153,7 +163,7 @@ export async function fetchRelatedCaseStudies(
       console.error("[related-case-studies] load failed:", error.message);
       return [];
     }
-    const rows = (data ?? []) as WorkCardRow[];
+    const rows = ((data ?? []) as WorkCardRow[]).filter((r) => !isHiddenCaseStudy(r));
     const shared = (r: WorkCardRow) =>
       Array.isArray(r.services) ? r.services.filter((s) => services.includes(s)).length : 0;
     return rows

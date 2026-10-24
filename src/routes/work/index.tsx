@@ -6,7 +6,7 @@ import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { Counter, MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
 import { WorkCarousel } from "@/components/site/WorkCarousel";
 import { cn } from "@/lib/utils";
-import { supabase, type WorkItemRow } from "@/lib/supabase";
+import { isHiddenCaseStudy, supabase, type WorkItemRow } from "@/lib/supabase";
 import { SITE_URL, type WorkService } from "@/lib/site-data";
 
 // Per the site's per-page SEO checklist for /work.
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/work/")({
       console.error("[work] failed to load case studies:", error.message);
       return { items: [] as WorkItemRow[] };
     }
-    return { items: (data ?? []) as WorkItemRow[] };
+    return { items: ((data ?? []) as WorkItemRow[]).filter((r) => !isHiddenCaseStudy(r)) };
   },
   head: ({ loaderData }) => {
     const items = loaderData?.items ?? [];

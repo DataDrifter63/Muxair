@@ -1,4 +1,4 @@
-import { Fragment, type ComponentPropsWithoutRef, type ReactNode } from "react";
+import { Fragment, useState, type ComponentPropsWithoutRef, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowRight } from "lucide-react";
@@ -363,19 +363,7 @@ const markdownComponents = {
       <p className="mt-5 text-base leading-relaxed text-foreground/90" {...props} />
     );
   },
-  img: ({ src, alt, title }: MdProps<"img">) => (
-    <figure className="not-prose my-8">
-      <img
-        src={src}
-        alt={alt ?? ""}
-        loading="lazy"
-        className="w-full rounded-2xl border border-border"
-      />
-      {title ? (
-        <figcaption className="mt-3 text-center text-xs text-muted-foreground">{title}</figcaption>
-      ) : null}
-    </figure>
-  ),
+  img: ({ src, alt, title }: MdProps<"img">) => <MdImage src={src} alt={alt} title={title} />,
   strong: ({ node: _node, ...props }: MdProps<"strong">) => (
     <strong className="font-semibold text-foreground" {...props} />
   ),
@@ -486,5 +474,33 @@ export function MarkdownContent({ content, className }: { content: string; class
         <Fragment key={i}>{n}</Fragment>
       ))}
     </div>
+  );
+}
+
+/** Markdown image that disappears (instead of showing a broken-image icon) if it fails to load. */
+function MdImage({
+  src,
+  alt,
+  title,
+}: {
+  src?: string | undefined;
+  alt?: string | undefined;
+  title?: string | undefined;
+}) {
+  const [failed, setFailed] = useState(false);
+  if (failed || !src) return null;
+  return (
+    <figure className="not-prose my-8">
+      <img
+        src={src}
+        alt={alt ?? ""}
+        loading="lazy"
+        onError={() => setFailed(true)}
+        className="w-full rounded-2xl border border-border"
+      />
+      {title ? (
+        <figcaption className="mt-3 text-center text-xs text-muted-foreground">{title}</figcaption>
+      ) : null}
+    </figure>
   );
 }

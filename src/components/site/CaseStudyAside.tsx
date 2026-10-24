@@ -222,7 +222,7 @@ export function CaseStudyToc({
   return (
     <nav
       aria-label="On this page"
-      className="flex min-h-0 flex-col rounded-2xl border border-border bg-surface/30 p-6"
+      className="flex min-h-[12rem] flex-col rounded-2xl border border-border bg-surface/30 p-6"
     >
       <p className="flex flex-none items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
         <ListTree className="h-3.5 w-3.5" />

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { supabase } from "@/lib/supabase";
+import { isHiddenCaseStudy, supabase } from "@/lib/supabase";
 import { SITE_URL } from "@/lib/site-data";
 
 // Dynamic sitemap.xml — served by the app's own Node server (works
@@ -87,7 +87,7 @@ async function buildSitemap() {
     entries.push(urlEntry(`${SITE_URL}/blog/${post.slug}`, lastmodOf(post), "monthly", "0.6"));
   }
 
-  for (const item of caseStudies) {
+  for (const item of caseStudies.filter((c) => !isHiddenCaseStudy(c))) {
     entries.push(urlEntry(`${SITE_URL}/work/${item.slug}`, lastmodOf(item), "monthly", "0.6"));
   }
 
