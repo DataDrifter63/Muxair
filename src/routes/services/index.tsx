@@ -212,8 +212,9 @@ function ServicesIndex() {
         </section>
 
         {/* Which service is right for you */}
-        <section className="section-shell">
-          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <section className="section-shell border-y border-border bg-surface/50">
+          <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
+          <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <SectionHeading
               eyebrow="Where to start"
               title={
@@ -302,8 +303,8 @@ function ServicesIndex() {
         </section>
 
         {/* Service cards */}
-        <section className="section-shell border-y border-border bg-surface/25">
-          <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
+        <section className="section-shell">
+          <div className="pointer-events-none absolute inset-0 grid-tech opacity-10" aria-hidden />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <SectionHeading
               eyebrow="What we do"

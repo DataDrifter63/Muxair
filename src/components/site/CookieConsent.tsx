@@ -184,7 +184,7 @@ export function CookieConsent() {
                     onClick={() => decide(false, false)}
                     className="rounded-full border border-border bg-surface/60 px-4 py-2.5 text-sm font-semibold transition-colors hover:border-primary/50"
                   >
-                    Reject non-essential
+                    Reject all
                   </button>
                   <button
                     type="button"
