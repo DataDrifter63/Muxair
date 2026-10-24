@@ -16,8 +16,8 @@ const headline = ["Websites Built for", "HVAC Companies", "That Want More Booked
  * never stretched: they fill the window width and slide from the top of the page to the bottom.
  */
 const heroSites: { label: string; image: string }[] = [
-  { label: "www.your-hvac-company.com", image: heroSite1 },
-  { label: "www.local-heating-cooling.com", image: heroSite2 },
+  { label: "HVAC Website Design & SEO", image: heroSite1 },
+  { label: "HVAC Marketing That Drives Leads", image: heroSite2 },
 ];
 
 /** Cloudinary URLs: add auto format/quality and cap the width (no cropping). Others untouched. */

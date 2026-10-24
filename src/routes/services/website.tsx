@@ -198,7 +198,7 @@ const timeline = [
     week: "Step 2",
     title: "Strategy & Proposal",
     description:
-      "A custom plan with scope, timeline, and a fixed-price quote, sent within 48 hours.",
+      "A custom plan with scope, timeline, and a fixed-price quote, sent within 72 hours.",
   },
   {
     week: "Step 3",
@@ -255,7 +255,7 @@ function WebsitesPage() {
                 Websites Built to Turn{" "}
                 <span className="text-gradient-cool">Visitors Into Booked Jobs</span>
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Fast, mobile-first sites designed specifically for how homeowners and property
                 managers search for and choose an HVAC company, not a recycled template with your
                 logo dropped in.
@@ -377,6 +377,7 @@ function WebsitesPage() {
           title="Website Case Studies"
           tone="cool"
           item={caseStudy}
+          cover="/case-studies/covers/eep-website-design.webp"
           comingSoonTitle="Website Case Study, Coming Soon"
           comingSoonBody="Our next website results will be featured here."
           nextTitle="Become Our Next Case Study"

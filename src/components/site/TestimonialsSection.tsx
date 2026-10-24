@@ -188,9 +188,9 @@ const toneGradient: Record<VideoTestimonial["tone"], string> = {
 };
 
 const toneBadge: Record<VideoTestimonial["tone"], string> = {
-  cool: "border-primary/30 bg-primary/10 text-primary",
-  heat: "border-heat/30 bg-heat/10 text-heat",
-  mixed: "border-primary/30 bg-primary/10 text-primary",
+  cool: "border-primary/60 bg-black/50 text-white backdrop-blur-sm",
+  heat: "border-heat/70 bg-black/50 text-white backdrop-blur-sm",
+  mixed: "border-primary/60 bg-black/50 text-white backdrop-blur-sm",
 };
 
 function TestimonialPlayer({ src, poster }: { src: string; poster?: string | undefined }) {
@@ -239,7 +239,7 @@ export function TestimonialsSection() {
               Hear It <span className="text-gradient-cool">From Them</span>, Not Us
             </>
           }
-          subtitle="A few clients agreed to go on camera. Different industries, same story — a website that actually works for their business."
+          subtitle="Some of our clients have shared their experiences on camera. They come from different industries, but they have one thing in common: a website that works for their business."
         />
 
         <div className="mx-auto mt-14 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -300,9 +300,9 @@ export function TestimonialsSection() {
                   </span>
                 </span>
 
-                <div className="relative z-10 bg-gradient-to-t from-background/75 via-background/30 to-transparent p-5 pt-12">
-                  <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{t.role}</p>
+                <div className="relative z-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 pt-14">
+                  <p className="text-sm font-semibold text-white">{t.name}</p>
+                  <p className="mt-0.5 text-xs text-white/80">{t.role}</p>
                   <span
                     className={`mt-3 inline-flex rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] ${toneBadge[t.tone]}`}
                   >
@@ -323,7 +323,7 @@ export function TestimonialsSection() {
                 <Video className="h-6 w-6" />
               </span>
               <h3 className="relative mt-5 font-display text-xl leading-snug">
-                Be Our Next Testimonial
+                Be Our Next Success Story
               </h3>
               <p className="relative mt-3 text-sm leading-relaxed text-muted-foreground">
                 We're taking on a few more HVAC companies this quarter. Get a website that books
@@ -345,9 +345,9 @@ export function TestimonialsSection() {
       </div>
 
       <Dialog open={!!active} onOpenChange={(open) => !open && setActive(null)}>
-        <DialogContent className="max-w-md overflow-hidden border-border bg-background p-0 [&>button]:right-3 [&>button]:top-3 [&>button]:rounded-full [&>button]:bg-background/80 [&>button]:p-2 [&>button]:backdrop-blur-sm sm:rounded-2xl">
+        <DialogContent className="w-fit max-w-[92vw] overflow-hidden border-border bg-background p-0 [&>button]:right-3 [&>button]:top-3 [&>button]:rounded-full [&>button]:bg-background/80 [&>button]:p-2 [&>button]:backdrop-blur-sm sm:rounded-2xl">
           {active ? (
-            <div className="relative aspect-[9/16] w-full bg-surface">
+            <div className="relative mx-auto aspect-[9/16] h-[min(82vh,640px)] max-w-full bg-surface">
               <DialogTitle className="sr-only">Testimonial from {active.name}</DialogTitle>
               {active.videoSrc ? (
                 <TestimonialPlayer src={active.videoSrc} poster={active.poster} />

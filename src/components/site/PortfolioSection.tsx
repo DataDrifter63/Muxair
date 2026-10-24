@@ -42,7 +42,7 @@ const highlights: PortfolioHighlight[] = [
     tone: "cool",
     headline: "A Website Rebuilt for Modern HVAC Customers",
     before: {
-      label: "Before (Jun 2024)",
+      label: "Before (July 2026)",
       stats: [
         "Outdated design, hard to navigate",
         "Not optimized for mobile",
@@ -50,7 +50,7 @@ const highlights: PortfolioHighlight[] = [
       ],
     },
     after: {
-      label: "After (Aug 2025)",
+      label: "After (August 2026)",
       stats: [
         "Modern, conversion-focused layout",
         "Mobile-first, fast-loading design",
@@ -59,8 +59,8 @@ const highlights: PortfolioHighlight[] = [
       ],
     },
     pills: [
-      { value: "+5,669%", label: "Full Website Redesign" },
-      { value: "Top 3", label: 'SEO-Structured From the Ground Up"' },
+      { value: "Complete Redesign", label: "Full Website Redesign" },
+      { value: "SEO-Ready Structured", label: "From the Ground Up" },
     ],
     chartImage: "",
     beforeImage:
@@ -69,15 +69,15 @@ const highlights: PortfolioHighlight[] = [
       "https://res.cloudinary.com/dmaibvnp/image/upload/v1792674105/eep-after-cover-1600x1200.png",
     chartCaption:
       "From an outdated, hard-to-navigate site to a fast, modern design built to convert.",
-    verifiedLabel: 'BEFORE & AFTER · FULL REDESIGN"',
+    verifiedLabel: "BEFORE & AFTER · FULL REDESIGN",
   },
   {
     name: "Ruzz Global",
     href: "/work/ruzz-global-local-seo",
     tone: "heat",
-    headline: "We Helped Midlands HVAC 6x Their Website Clicks in 4 Weeks",
+    headline: "We Helped Ruzz Global 6x Their Website Clicks in 4 Weeks",
     before: {
-      label: " BEFORE (7/25 to 8/21)",
+      label: "BEFORE (25 Jul – 21 Aug 2026)",
       stats: [
         "261 total clicks",
         "62.4K total impressions",
@@ -86,7 +86,7 @@ const highlights: PortfolioHighlight[] = [
       ],
     },
     after: {
-      label: "AFTER (8/22 to 9/17)",
+      label: "AFTER (22 Aug – 17 Sep 2026)",
       stats: [
         "1.66K total clicks",
         "215K total impressions",
@@ -96,7 +96,7 @@ const highlights: PortfolioHighlight[] = [
     },
     pills: [
       { value: "+536%", label: "Increase in Website Clicks" },
-      { value: "Top 2", label: "CTR Doubled from 0.4% to 0.8%" },
+      { value: "2x CTR", label: "CTR Doubled from 0.4% to 0.8%" },
     ],
     chartImage:
       "https://res.cloudinary.com/dmaibvnp/image/upload/v1792673406/ruzz-seo-chart-1600x1200.png",
@@ -296,7 +296,7 @@ export function PortfolioSection() {
 
                     <a
                       href={item.href}
-                      className={`mt-7 inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}
+                      className={`group mt-7 inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}
                     >
                       View Full Case Study
                       <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

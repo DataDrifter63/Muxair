@@ -261,9 +261,9 @@ function GoogleAdsPage() {
                 Google Ads Built for <span className="text-gradient-heat">Booked Jobs</span>, Not
                 Clicks
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                We manage Google Ads campaigns built around seasonal demand spikes, service-specific
-                keywords, and, most importantly, cost per booked job, not vanity click metrics.
+              <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
+                We run Google Ads campaigns that target seasonal demand and the services you want to
+                promote, with a focus on turning ad spend into booked jobs rather than just clicks.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
                 <MagneticButton href="/contact" size="lg" variant="heat">
@@ -377,6 +377,7 @@ function GoogleAdsPage() {
           title="Ads Case Studies"
           tone="heat"
           item={caseStudy}
+          cover="/case-studies/covers/google-ads.webp"
           comingSoonTitle="Google Ads Case Study, Coming Soon"
           comingSoonBody="Our next campaign results will be featured here."
           nextTitle="Become Our Next Ads Case Study"

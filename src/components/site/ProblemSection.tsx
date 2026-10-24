@@ -12,7 +12,7 @@ const problems = [
   },
   {
     icon: XCircle,
-    title: "Your current site looks like it's from 2010",
+    title: "Your current site looks like it's from 2016",
     description:
       "Homeowners judge your professionalism in 3 seconds. An outdated, slow, or generic website signals \u2018amateur operation\u2019 \u2014 and they call someone else.",
     tone: "cool" as const,

@@ -107,7 +107,7 @@ const proof = {
   quote:
     "Helped up with completely revamping one site and updating another. Very communicative and easy to work with. Such a pleasure collaborating on these projects, thank you Musab !",
   project: "SEO & Website Revamp",
-  name: "Raymond C",
+  name: "Raymond C.",
   detail: "New York, US",
 };
 
@@ -199,7 +199,7 @@ function AboutPage() {
               <p className="mt-4 text-base leading-relaxed text-muted-foreground"></p>
               <Link
                 to="/services"
-                className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
+                className="group mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
               >
                 See everything we offer
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
@@ -265,10 +265,10 @@ function AboutPage() {
             <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-4 px-5 text-center lg:px-8">
               <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-white">
                 <ShieldCheck className="h-4 w-4 text-white" />
-                Top-Rated on Upwork 50+
+                Top-Rated on Upwork
               </span>
               <span className="h-1 w-1 rounded-full bg-white/60" aria-hidden />
-              <span className="text-sm font-semibold text-white">Projects Delivered</span>
+              <span className="text-sm font-semibold text-white">50+ Projects Delivered</span>
               <span className="h-1 w-1 rounded-full bg-white/60" aria-hidden />
               <span className="text-sm font-semibold text-white">HVAC-Only Agency</span>
             </div>

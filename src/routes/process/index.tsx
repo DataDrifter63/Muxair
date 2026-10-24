@@ -256,7 +256,7 @@ function ProcessPage() {
                 From Discovery Call to <span className="text-gradient-cool">Live Site</span> in 30
                 Days
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mx-auto mt-5 max-w-3xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Clear stages, clear timelines, zero surprises. Here's exactly how we work with HVAC
                 companies, from the first call to the day your site goes live. Running SEO or Ads
                 only? See how that works on each service page.
@@ -419,8 +419,8 @@ function ProcessPage() {
             <Reveal>
               <div className="grid gap-6 sm:grid-cols-3">
                 {differentiators.map((item) => (
-                  <div key={item} className="flex items-start gap-3">
-                    <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
+                  <div key={item} className="flex items-center gap-3">
+                    <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
                       <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
                     </span>
                     <p className="text-sm leading-snug text-foreground/90">{item}</p>

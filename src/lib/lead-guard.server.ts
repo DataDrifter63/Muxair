@@ -20,7 +20,7 @@ const leadSchema = z.object({
   phone: z.string().trim().min(7).max(40),
   bizName: z.string().trim().min(2).max(150),
   serviceArea: z.string().trim().min(2).max(150),
-  need: z.string().trim().min(1).max(60),
+  need: z.string().trim().min(1).max(200),
   message: z.string().trim().max(3000).nullable(),
 });
 

@@ -115,6 +115,7 @@ const startingPoints = [
     note: "Most new businesses start with our Foundation package.",
     chips: [{ label: "Website Design", slug: "website" as const }],
     featured: false,
+    plan: "Foundation",
   },
   {
     tag: "Established, Ready to Grow",
@@ -126,6 +127,7 @@ const startingPoints = [
       { label: "Google Ads", slug: "google-ads" as const },
     ],
     featured: true,
+    plan: "Growth",
   },
   {
     tag: "Scaling Across Areas",
@@ -138,6 +140,8 @@ const startingPoints = [
       { label: "Meta Ads", slug: "meta-ads" as const },
     ],
     featured: false,
+    premium: true,
+    plan: "Complete",
   },
 ];
 
@@ -175,7 +179,7 @@ function ServicesIndex() {
                 Everything Your HVAC Business Needs to{" "}
                 <span className="text-gradient-cool">Win Online</span>
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Five specialist services, one team that only works with heating, cooling and air
                 quality companies. Pick one, or combine them into a full growth system.
               </p>
@@ -226,9 +230,11 @@ function ServicesIndex() {
                 <Reveal key={point.title} delay={i * 0.08} className="h-full">
                   <div
                     className={`relative flex h-full flex-col overflow-hidden rounded-2xl border p-7 backdrop-blur-md sm:p-8 ${
-                      point.featured
-                        ? "border-primary/40 bg-primary/[0.05] glow-cool"
-                        : "border-border bg-surface/40"
+                      "premium" in point && point.premium
+                        ? "border-heat bg-heat text-white shadow-[0_24px_60px_-20px_rgba(255,107,53,0.6)]"
+                        : point.featured
+                          ? "border-primary/40 bg-primary/[0.05] glow-cool"
+                          : "border-border bg-surface/40"
                     }`}
                   >
                     {point.featured ? (
@@ -236,9 +242,11 @@ function ServicesIndex() {
                     ) : null}
                     <span
                       className={`relative inline-flex w-fit items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${
-                        point.featured
-                          ? "border-primary/30 bg-primary/10 text-primary"
-                          : "border-border bg-surface/60 text-muted-foreground"
+                        "premium" in point && point.premium
+                          ? "border-white/50 bg-white/15 text-white"
+                          : point.featured
+                            ? "border-primary/30 bg-primary/10 text-primary"
+                            : "border-border bg-surface/60 text-muted-foreground"
                       }`}
                     >
                       {point.tag}
@@ -246,12 +254,16 @@ function ServicesIndex() {
                     <h3 className="relative mt-5 font-display text-xl leading-snug sm:text-2xl">
                       {point.title}
                     </h3>
-                    <p className="relative mt-3 text-sm leading-relaxed text-muted-foreground">
+                    <p
+                      className={`relative mt-3 text-sm leading-relaxed ${"premium" in point && point.premium ? "text-white/90" : "text-muted-foreground"}`}
+                    >
                       {point.description}
                     </p>
                     <div className="flex-1" />
                     {"note" in point && point.note ? (
-                      <p className="relative mt-4 text-xs font-medium leading-relaxed text-foreground/80">
+                      <p
+                        className={`relative mt-4 text-xs font-medium leading-relaxed ${"premium" in point && point.premium ? "text-white/90" : "text-foreground/80"}`}
+                      >
                         {point.note}
                       </p>
                     ) : null}
@@ -260,12 +272,28 @@ function ServicesIndex() {
                         <Link
                           key={chip.label}
                           to={serviceHrefs[chip.slug]}
-                          className="rounded-full border border-border bg-background/60 px-3 py-1.5 text-xs font-medium text-foreground/90 transition-colors hover:border-primary/40 hover:text-primary"
+                          className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+                            "premium" in point && point.premium
+                              ? "border-white/40 bg-white/10 text-white hover:bg-white/25"
+                              : "border-border bg-background/60 text-foreground/90 hover:border-primary/40 hover:text-primary"
+                          }`}
                         >
                           {chip.label}
                         </Link>
                       ))}
                     </div>
+                    <Link
+                      to="/contact"
+                      search={{ plan: point.plan }}
+                      className={`group relative mt-6 inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
+                        "premium" in point && point.premium
+                          ? "bg-white text-heat hover:bg-white/90"
+                          : "bg-primary text-primary-foreground hover:bg-primary/90"
+                      }`}
+                    >
+                      Get {point.plan}
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                    </Link>
                   </div>
                 </Reveal>
               ))}
@@ -341,7 +369,7 @@ function ServicesIndex() {
 
                       <Link
                         to={serviceHrefs[s.slug as keyof typeof serviceHrefs]}
-                        className={`mt-7 inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}
+                        className={`group mt-7 inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}
                       >
                         Explore {s.shortTitle}
                         <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
@@ -370,7 +398,7 @@ function ServicesIndex() {
                   </div>
                   <Link
                     to="/pricing"
-                    className="relative mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
+                    className="group relative mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
                   >
                     See Pricing &amp; Packages
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
@@ -408,8 +436,8 @@ function ServicesIndex() {
                 />
                 <div className="relative grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
                   {included.map((item) => (
-                    <div key={item} className="flex items-start gap-3">
-                      <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <div key={item} className="flex items-center gap-3">
+                      <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
                         <BadgeCheck className="h-3.5 w-3.5" strokeWidth={2.5} />
                       </span>
                       <p className="text-sm leading-snug text-foreground/90">{item}</p>

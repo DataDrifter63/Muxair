@@ -244,7 +244,7 @@ function MetaAdsPage() {
               <h1 className="mt-5 text-balance font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
                 Get Seen <span className="text-gradient-heat">Before They Even Search</span>
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Targeted Facebook and Instagram campaigns that put your HVAC business in front of
                 homeowners and property managers in your area, before they've typed a single word
                 into Google.
@@ -362,6 +362,7 @@ function MetaAdsPage() {
           title="Meta Ads Case Studies"
           tone="heat"
           item={caseStudy}
+          cover="/case-studies/covers/meta-ads.webp"
           comingSoonTitle="Meta Ads Case Study, Coming Soon"
           comingSoonBody="Our next campaign results will be featured here."
           nextTitle="Become Our Next Ads Case Study"

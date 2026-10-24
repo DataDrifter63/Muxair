@@ -77,7 +77,7 @@ export function CTASection({
               <h2 className="mt-6 text-balance font-display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
                 {title}
               </h2>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
                 {description}
               </p>
               <div className="mt-9 flex flex-wrap justify-center gap-4">

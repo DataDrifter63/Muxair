@@ -371,15 +371,18 @@ function PricingPage() {
             <div className="mt-14 grid gap-6 lg:grid-cols-3">
               {websitePlans.map((plan, i) => {
                 const c = toneClasses(plan.tone);
+                const prem = plan.name === "Complete";
                 return (
                   <Reveal key={plan.name} delay={i * 0.08} className="h-full">
                     <motion.div
                       whileHover={{ y: -8 }}
                       transition={{ type: "spring", stiffness: 260, damping: 22 }}
                       className={`relative flex h-full flex-col overflow-hidden rounded-2xl border p-7 backdrop-blur-md sm:p-8 ${
-                        plan.popular
-                          ? `${c.border} bg-background/80 ring-1 ${c.ring} glow-cool`
-                          : "border-border bg-background/60"
+                        prem
+                          ? "border-heat bg-heat text-white shadow-[0_30px_70px_-20px_rgba(255,107,53,0.65)] lg:-my-3 lg:py-10"
+                          : plan.popular
+                            ? `${c.border} bg-background/80 ring-1 ${c.ring} glow-cool`
+                            : "border-border bg-background/60"
                       }`}
                     >
                       {plan.popular ? (
@@ -391,21 +394,46 @@ function PricingPage() {
                         </span>
                       ) : null}
 
+                      {prem ? (
+                        <span className="absolute right-6 top-6 inline-flex items-center gap-1 rounded-full border border-white/50 bg-white/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+                          <Sparkles className="h-3 w-3" />
+                          Best Value
+                        </span>
+                      ) : null}
+
                       <h3 className="font-display text-xl">{plan.name}</h3>
-                      <p className="mt-2 min-h-[2.5rem] text-sm leading-relaxed text-muted-foreground">
+                      <p
+                        className={`mt-2 min-h-[2.5rem] text-sm leading-relaxed ${prem ? "text-white/90" : "text-muted-foreground"}`}
+                      >
                         {plan.tagline}
                       </p>
 
                       <div className="mt-6 flex items-baseline gap-1.5">
-                        <span className="text-sm font-medium text-muted-foreground">From</span>
-                        <span className="font-display text-3xl font-bold text-foreground sm:text-4xl">
+                        <span
+                          className={`text-sm font-medium ${prem ? "text-white/90" : "text-muted-foreground"}`}
+                        >
+                          From
+                        </span>
+                        <span
+                          className={`font-display text-3xl font-bold sm:text-4xl ${prem ? "text-white" : "text-foreground"}`}
+                        >
                           {plan.price}
                         </span>
                       </div>
-                      <p className="mt-1 text-xs text-muted-foreground">{plan.priceNote}</p>
+                      <p
+                        className={`mt-1 text-xs ${prem ? "text-white/90" : "text-muted-foreground"}`}
+                      >
+                        {plan.priceNote}
+                      </p>
 
-                      <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
-                        <span className="font-semibold text-foreground">Choose this if:</span>{" "}
+                      <p
+                        className={`mt-5 text-sm leading-relaxed ${prem ? "text-white/90" : "text-muted-foreground"}`}
+                      >
+                        <span
+                          className={`font-semibold ${prem ? "text-white" : "text-foreground"}`}
+                        >
+                          Choose this if:
+                        </span>{" "}
                         {plan.chooseIf}
                       </p>
 
@@ -413,25 +441,36 @@ function PricingPage() {
                         {plan.features.map((f) => (
                           <li key={f} className="flex items-start gap-2.5 text-sm">
                             <Check
-                              className={`mt-0.5 h-4 w-4 flex-none ${c.text}`}
+                              className={`mt-0.5 h-4 w-4 flex-none ${prem ? "text-white" : c.text}`}
                               strokeWidth={2.5}
                             />
-                            <span className="text-foreground/90">{f}</span>
+                            <span className={prem ? "text-white" : "text-foreground/90"}>{f}</span>
                           </li>
                         ))}
                       </ul>
 
                       <div className="mt-8">
-                        <MagneticButton
-                          href={`/contact?plan=${encodeURIComponent(plan.name)}`}
-                          variant={
-                            plan.popular ? (plan.tone === "cool" ? "cool" : "heat") : "ghost"
-                          }
-                          className="w-full justify-center"
-                        >
-                          {plan.ctaLabel}
-                          <ArrowRight className="h-4 w-4" />
-                        </MagneticButton>
+                        {prem ? (
+                          <Link
+                            to="/contact"
+                            search={{ plan: plan.name }}
+                            className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-heat transition-colors hover:bg-white/90"
+                          >
+                            {plan.ctaLabel}
+                            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                          </Link>
+                        ) : (
+                          <MagneticButton
+                            href={`/contact?plan=${encodeURIComponent(plan.name)}`}
+                            variant={
+                              plan.popular ? (plan.tone === "cool" ? "cool" : "heat") : "ghost"
+                            }
+                            className="w-full justify-center"
+                          >
+                            {plan.ctaLabel}
+                            <ArrowRight className="h-4 w-4" />
+                          </MagneticButton>
+                        )}
                       </div>
                     </motion.div>
                   </Reveal>
@@ -440,7 +479,7 @@ function PricingPage() {
             </div>
 
             <Reveal delay={0.2}>
-              <p className="mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
+              <p className="mx-auto mt-10 max-w-3xl text-balance text-center text-sm leading-relaxed text-muted-foreground">
                 Whichever package you choose, you get proper contact and communication throughout.
                 You always know where your project stands.
               </p>
@@ -480,7 +519,7 @@ function PricingPage() {
                       </p>
                       <Link
                         to={plan.href}
-                        className={`mt-5 inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}
+                        className={`group mt-5 inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}
                       >
                         Learn more
                         <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5" />
@@ -492,7 +531,7 @@ function PricingPage() {
             </div>
 
             <Reveal delay={0.2}>
-              <p className="mx-auto mt-8 max-w-lg text-center text-xs text-muted-foreground">
+              <p className="mx-auto mt-8 max-w-2xl text-balance text-center text-xs text-muted-foreground">
                 Ad spend is paid directly to Google or Meta and is separate from our monthly
                 management fee. Prices shown in USD. Clients in the UK or Canada can be invoiced in
                 their local currency, just mention it on your call.
@@ -517,8 +556,8 @@ function PricingPage() {
 
                 <div className="relative mt-9 grid gap-6 border-t border-border/70 pt-8 sm:grid-cols-3">
                   {differentiators.map((item) => (
-                    <div key={item} className="flex items-start gap-3">
-                      <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <div key={item} className="flex items-center gap-3">
+                      <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
                         <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
                       </span>
                       <p className="text-sm leading-snug text-foreground/90">{item}</p>

@@ -60,7 +60,7 @@ export function SectionHeading({
       ) : null}
       <As className="mt-5 text-balance text-3xl leading-[1.08] sm:text-4xl lg:text-5xl">{title}</As>
       {subtitle ? (
-        <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+        <p className="mt-4 text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
           {subtitle}
         </p>
       ) : null}

@@ -13,7 +13,6 @@ import {
   Facebook,
   Instagram,
   Layers,
-  Linkedin,
   Loader2,
   MapPin,
   MonitorSmartphone,
@@ -108,7 +107,7 @@ const needs = [
 const heardOptions = ["Google search", "Instagram / Facebook", "Referral", "Other"];
 
 const contactSchema = z.object({
-  need: z.string().min(1, "Select what you need help with").max(60),
+  need: z.string().min(1, "Select at least one service").max(200),
   bizName: z.string().trim().min(2, "Enter your business name").max(150),
   serviceArea: z.string().trim().min(2, "Enter your service area").max(150),
   otherInfo: z.string().trim().max(2000, "Please keep this under 2000 characters").optional(),
@@ -163,7 +162,6 @@ const nextSteps = [
 const socials = [
   { label: "Instagram", icon: Instagram, href: "https://instagram.com" },
   { label: "Facebook", icon: Facebook, href: "https://facebook.com" },
-  { label: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
 ];
 
 const faqs = [
@@ -414,17 +412,30 @@ function ContactPage() {
                         </p>
                         <h2 className="mt-2 font-display text-2xl">What do you need help with?</h2>
                         <p className="mt-1.5 text-sm text-muted-foreground">
-                          Pick what's closest — we'll tailor the call around it.
+                          Select all that apply — we'll tailor the call around it.
                         </p>
 
                         <div className="mt-7 grid gap-3 sm:grid-cols-2">
                           {needs.map((n) => {
-                            const selected = values.need === n.value;
+                            const picked = values.need ? values.need.split(", ") : [];
+                            const selected = picked.includes(n.value);
                             return (
                               <button
                                 key={n.value}
                                 type="button"
-                                onClick={() => setValue("need", n.value, { shouldValidate: true })}
+                                onClick={() => {
+                                  let next: string[];
+                                  if (n.value === "Not Sure Yet") {
+                                    next = selected ? [] : [n.value];
+                                  } else {
+                                    const base = picked.filter((v) => v !== "Not Sure Yet");
+                                    next = selected
+                                      ? base.filter((v) => v !== n.value)
+                                      : [...base, n.value];
+                                  }
+                                  setValue("need", next.join(", "), { shouldValidate: true });
+                                }}
+                                aria-pressed={selected}
                                 className={`flex items-center justify-between gap-3 rounded-xl border p-4 text-left text-sm font-semibold transition-colors ${
                                   selected
                                     ? "border-primary/60 bg-primary/10 text-foreground"
@@ -440,7 +451,7 @@ function ContactPage() {
                                   {n.value}
                                 </span>
                                 <span
-                                  className={`flex h-4.5 w-4.5 flex-none items-center justify-center rounded-full border ${
+                                  className={`flex h-4.5 w-4.5 flex-none items-center justify-center rounded border ${
                                     selected
                                       ? "border-primary bg-primary text-primary-foreground"
                                       : "border-muted-foreground/40"

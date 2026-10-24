@@ -25,7 +25,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import work1 from "@/assets/work-1.jpg";
 import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/seo";
@@ -252,7 +251,7 @@ function SeoPage() {
                 Own the Map Pack for{" "}
                 <span className="text-gradient-cool">Every Town You Cover</span>
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Local SEO built specifically around how homeowners and businesses search for HVAC
                 services, not generic SEO advice recycled from a different industry.
               </p>
@@ -368,13 +367,12 @@ function SeoPage() {
           title="SEO Case Studies"
           tone="cool"
           item={caseStudy}
+          cover="/case-studies/covers/ruzz-local-seo.webp"
           fallback={{
-            slug: "midlands-hvac-co",
-            name: "Midlands HVAC",
+            slug: "ruzz-global-local-seo",
+            name: "Ruzz Global",
             badge: "+536% clicks",
             quote: "6x website clicks in 4 weeks",
-            image: work1,
-            imageAlt: "Local SEO results preview for Midlands HVAC",
           }}
           comingSoonTitle="SEO Case Study, Coming Soon"
           comingSoonBody="Our next campaign results will be featured here."

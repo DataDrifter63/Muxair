@@ -15,7 +15,7 @@ const testimonials = [
     stat: "New Website Design",
   },
   {
-    name: "Raymond C",
+    name: "Raymond C.",
     role: "CEO",
     location: "New York, US",
     initials: "RC",

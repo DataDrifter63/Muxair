@@ -21,6 +21,8 @@ interface Props {
   item: WorkItemRow | null;
   /** Shown instead of "Coming Soon" when `item` is null. */
   fallback?: StaticCase;
+  /** Branded cover image shown (uncropped) on the card; overrides the database image. */
+  cover?: string;
   comingSoonTitle: string;
   comingSoonBody: string;
   nextTitle?: string;
@@ -49,6 +51,7 @@ export function ServiceCaseStudies({
   tone,
   item,
   fallback,
+  cover,
   comingSoonTitle,
   comingSoonBody,
   nextTitle = "Become Our Next Case Study",
@@ -57,7 +60,7 @@ export function ServiceCaseStudies({
 }: Props) {
   const t = tones[tone];
 
-  const card: StaticCase | null = item
+  const base: StaticCase | null = item
     ? {
         slug: item.slug,
         name: item.name,
@@ -67,6 +70,7 @@ export function ServiceCaseStudies({
         imageAlt: `${item.name} case study preview`,
       }
     : (fallback ?? null);
+  const card: StaticCase | null = base ? { ...base, image: cover ?? base.image } : null;
 
   return (
     <section className="section-shell border-y border-border bg-surface/25">
@@ -77,10 +81,10 @@ export function ServiceCaseStudies({
           <Reveal delay={0.1}>
             <Link
               to="/work"
-              className={`inline-flex items-center gap-1.5 text-sm font-semibold ${t.text}`}
+              className={`group inline-flex items-center gap-1.5 text-sm font-semibold ${t.text}`}
             >
               See all work
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
             </Link>
           </Reveal>
         </div>
@@ -94,15 +98,15 @@ export function ServiceCaseStudies({
                   transition={{ type: "spring", stiffness: 260, damping: 22 }}
                   className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background/70 backdrop-blur-md transition-colors ${t.hoverBorder}`}
                 >
-                  <div className="relative aspect-[3/2] overflow-hidden border-b border-border bg-surface/60">
+                  <div className="relative aspect-[16/9] overflow-hidden border-b border-border bg-surface/60">
                     {card.image ? (
                       <img
                         src={card.image}
                         alt={card.imageAlt ?? `${card.name} case study preview`}
-                        width={1200}
-                        height={800}
+                        width={1600}
+                        height={900}
                         loading="lazy"
-                        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        className="h-full w-full object-contain"
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center px-6 text-center font-display text-lg text-muted-foreground">
@@ -116,7 +120,6 @@ export function ServiceCaseStudies({
                         {card.badge}
                       </span>
                     )}
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/25 to-transparent opacity-90" />
                   </div>
                   <div className="flex flex-1 flex-col p-7">
                     <h3 className="text-lg">{card.name}</h3>
@@ -137,7 +140,7 @@ export function ServiceCaseStudies({
                 to="/work"
                 className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background/70 backdrop-blur-md transition-colors ${t.hoverBorder}`}
               >
-                <div className="flex aspect-[3/2] items-center justify-center bg-surface/60 text-center text-xs text-muted-foreground">
+                <div className="flex aspect-[16/9] items-center justify-center bg-surface/60 text-center text-xs text-muted-foreground">
                   Case study in progress
                 </div>
                 <div className="flex flex-1 flex-col p-7">

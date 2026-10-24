@@ -170,7 +170,7 @@ export function ProcessSection() {
         </div>
 
         <Reveal delay={0.1} className="mt-5">
-          <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
+          <p className="text-xs leading-relaxed text-muted-foreground">
             The timeline shown reflects our Foundation package. Larger builds may take longer, we'll
             walk you through your exact timeline on the discovery call.
           </p>
@@ -190,7 +190,7 @@ export function ProcessSection() {
               </p>
             </div>
             <div className="relative flex-none">
-              <MagneticButton href="#contact" size="lg">
+              <MagneticButton href="/contact" size="lg">
                 Book Strategy Call
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </MagneticButton>

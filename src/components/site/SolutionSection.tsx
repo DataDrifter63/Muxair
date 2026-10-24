@@ -80,7 +80,7 @@ export function SolutionSection() {
           <Reveal delay={0.1}>
             <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
               We've spent years studying what makes HVAC customers call. Every design decision,
-              every headline, every button placement is backed by data from 100+ HVAC websites we've
+              every headline, every button placement is backed by data from 20+ HVAC websites we've
               built and optimized.
             </p>
             <a

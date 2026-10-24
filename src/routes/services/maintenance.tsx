@@ -255,7 +255,7 @@ function MaintenancePage() {
                 Keep Your Site{" "}
                 <span className="text-gradient-cool">Fast, Secure &amp; Up to Date</span>
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
                 A website is never really &ldquo;done.&rdquo; It needs ongoing updates, monitoring,
                 and support to keep working for you long after launch, instead of quietly degrading.
               </p>
@@ -375,6 +375,7 @@ function MaintenancePage() {
           title="Maintenance Case Studies"
           tone="cool"
           item={caseStudy}
+          cover="/case-studies/covers/maintenance.webp"
           comingSoonTitle="Maintenance Case Study, Coming Soon"
           comingSoonBody="Our first maintenance client results will be featured here."
           nextTitle="Become Our Next Case Study"

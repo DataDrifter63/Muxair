@@ -230,8 +230,7 @@ function WorkIndex() {
                 In Their Words
               </span>
               <h2 className="mt-5 text-balance font-display text-2xl sm:text-3xl">
-                What HVAC Owners Say{" "}
-                <span className="text-gradient-cool">After Working With Us</span>
+                What Clients Say <span className="text-gradient-cool">After Working With Us</span>
               </h2>
             </Reveal>
 

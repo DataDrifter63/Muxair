@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
+import { Facebook, Instagram, Mail, Phone } from "lucide-react";
 import logoLight from "@/assets/logo-black.png";
 import logoDark from "@/assets/logo-white.png";
 
@@ -23,7 +23,6 @@ const serviceLinks = [
 const socials = [
   { label: "Instagram", icon: Instagram, href: "https://www.instagram.com/muxair.hvac" },
   { label: "Facebook", icon: Facebook, href: "https://www.facebook.com/muxair.hvac" },
-  { label: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
 ];
 
 export function Footer() {

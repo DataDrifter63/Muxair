@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowRight, Facebook, MapPin, MonitorSmartphone, Target } from "lucide-react";
 import { Reveal, SectionHeading } from "./primitives";
@@ -6,6 +7,7 @@ const services = [
   {
     icon: MonitorSmartphone,
     title: "HVAC Website Design",
+    to: "/services/website" as const,
     description:
       "Fast, mobile-first sites engineered around quote forms, service areas and emergency call-outs.",
     tone: "cool" as const,
@@ -13,12 +15,14 @@ const services = [
   {
     icon: MapPin,
     title: "Local SEO for HVAC",
+    to: "/services/seo" as const,
     description: "Own the map pack for boiler repair, AC install and every service town you cover.",
     tone: "cool" as const,
   },
   {
     icon: Target,
     title: "Google Ads Management",
+    to: "/services/google-ads" as const,
     description:
       "High-intent search campaigns built around seasonal demand spikes and cost-per-booked-job.",
     tone: "heat" as const,
@@ -26,6 +30,7 @@ const services = [
   {
     icon: Facebook,
     title: "Meta Ads (Facebook & Instagram)",
+    to: "/services/meta-ads" as const,
     description:
       "Offer-led creative that fills quiet months with installs, servicing plans and upgrades.",
     tone: "heat" as const,
@@ -81,15 +86,15 @@ export function ServicesSection() {
                 <p className="mt-2.5 flex-1 text-sm leading-relaxed text-muted-foreground">
                   {s.description}
                 </p>
-                <a
-                  href="#contact"
+                <Link
+                  to={s.to}
                   className={`mt-6 inline-flex items-center gap-1.5 text-sm font-semibold ${
                     s.tone === "cool" ? "text-primary" : "text-heat"
                   }`}
                 >
                   Learn More
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                </a>
+                </Link>
               </motion.article>
             </Reveal>
           ))}
