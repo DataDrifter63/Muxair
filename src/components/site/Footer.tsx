@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { openCookieSettings } from "@/lib/cookie-consent";
 import { Facebook, Instagram, Mail, Phone } from "lucide-react";
 import logoLight from "@/assets/logo-black.png";
 import logoDark from "@/assets/logo-white.png";
@@ -142,6 +143,15 @@ export function Footer() {
               <Link to="/terms" className="transition-colors hover:text-primary">
                 Terms
               </Link>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={openCookieSettings}
+                className="transition-colors hover:text-primary"
+              >
+                Cookie Settings
+              </button>
             </li>
           </ul>
         </div>
