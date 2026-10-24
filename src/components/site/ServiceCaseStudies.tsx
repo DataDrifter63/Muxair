@@ -21,8 +21,6 @@ interface Props {
   item: WorkItemRow | null;
   /** Shown instead of "Coming Soon" when `item` is null. */
   fallback?: StaticCase;
-  /** Branded cover image shown (uncropped) on the card; overrides the database image. */
-  cover?: string;
   comingSoonTitle: string;
   comingSoonBody: string;
   nextTitle?: string;
@@ -51,7 +49,6 @@ export function ServiceCaseStudies({
   tone,
   item,
   fallback,
-  cover,
   comingSoonTitle,
   comingSoonBody,
   nextTitle = "Become Our Next Case Study",
@@ -60,7 +57,7 @@ export function ServiceCaseStudies({
 }: Props) {
   const t = tones[tone];
 
-  const base: StaticCase | null = item
+  const card: StaticCase | null = item
     ? {
         slug: item.slug,
         name: item.name,
@@ -70,7 +67,6 @@ export function ServiceCaseStudies({
         imageAlt: `${item.name} case study preview`,
       }
     : (fallback ?? null);
-  const card: StaticCase | null = base ? { ...base, image: cover ?? base.image } : null;
 
   return (
     <section className="section-shell border-y border-border bg-surface/25">

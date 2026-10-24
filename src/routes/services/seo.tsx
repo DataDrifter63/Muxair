@@ -367,7 +367,6 @@ function SeoPage() {
           title="SEO Case Studies"
           tone="cool"
           item={caseStudy}
-          cover="/case-studies/covers/ruzz-local-seo.webp"
           fallback={{
             slug: "ruzz-global-local-seo",
             name: "Ruzz Global",

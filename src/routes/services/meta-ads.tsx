@@ -362,7 +362,6 @@ function MetaAdsPage() {
           title="Meta Ads Case Studies"
           tone="heat"
           item={caseStudy}
-          cover="/case-studies/covers/meta-ads.webp"
           comingSoonTitle="Meta Ads Case Study, Coming Soon"
           comingSoonBody="Our next campaign results will be featured here."
           nextTitle="Become Our Next Ads Case Study"

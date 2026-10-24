@@ -377,7 +377,6 @@ function WebsitesPage() {
           title="Website Case Studies"
           tone="cool"
           item={caseStudy}
-          cover="/case-studies/covers/eep-website-design.webp"
           comingSoonTitle="Website Case Study, Coming Soon"
           comingSoonBody="Our next website results will be featured here."
           nextTitle="Become Our Next Case Study"

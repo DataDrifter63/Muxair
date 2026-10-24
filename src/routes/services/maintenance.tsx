@@ -375,7 +375,6 @@ function MaintenancePage() {
           title="Maintenance Case Studies"
           tone="cool"
           item={caseStudy}
-          cover="/case-studies/covers/maintenance.webp"
           comingSoonTitle="Maintenance Case Study, Coming Soon"
           comingSoonBody="Our first maintenance client results will be featured here."
           nextTitle="Become Our Next Case Study"
