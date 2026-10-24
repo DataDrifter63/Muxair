@@ -411,7 +411,7 @@ function ServicesIndex() {
         </section>
 
         {/* Proof / testimonial spotlight */}
-        <section className="section-shell border-b border-border">
+        <section className="section-shell border-y border-border bg-surface/50">
           <div className="pointer-events-none absolute inset-0 grid-tech opacity-15" aria-hidden />
           <div className="relative mx-auto max-w-4xl px-5 text-center lg:px-8">
             <Reveal>
