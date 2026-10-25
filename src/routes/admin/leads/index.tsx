@@ -18,7 +18,8 @@ export const Route = createFileRoute("/admin/leads/")({
   beforeLoad: requireAuth,
   component: AdminLeads,
   loader: async () => {
-    const { data, error } = await supabase
+    const { supabase: db } = await import("@/lib/supabase");
+    const { data, error } = await db
       .from("leads")
       .select("*")
       .is("deleted_at", null)

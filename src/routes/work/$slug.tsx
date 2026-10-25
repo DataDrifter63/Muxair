@@ -6,17 +6,13 @@ import { extractHeadings } from "@/lib/markdown-headings";
 import { CTASection } from "@/components/site/CTASection";
 import { CaseStudySnapshot, CaseStudyToc } from "@/components/site/CaseStudyAside";
 import { CaseStudyRelated } from "@/components/site/CaseStudyRelated";
-import {
-  fetchRelatedCaseStudies,
-  isHiddenCaseStudy,
-  supabase,
-  type WorkItemRow,
-} from "@/lib/supabase";
+import type { WorkItemRow } from "@/lib/supabase";
 import { SITE_URL } from "@/lib/site-data";
 
 export const Route = createFileRoute("/work/$slug")({
   component: WorkItemPage,
   loader: async ({ params }) => {
+    const { supabase, isHiddenCaseStudy, fetchRelatedCaseStudies } = await import("@/lib/supabase");
     const { data, error } = await supabase
       .from("case_studies")
       .select("*")
@@ -184,6 +180,8 @@ function WorkItemPage() {
                   <img
                     src={item.cover_image}
                     alt={`Website design preview for ${item.name}`}
+                    width={1600}
+                    height={900}
                     className="mt-10 aspect-[16/9] w-full rounded-2xl border border-border object-cover object-top shadow-2xl shadow-black/10"
                   />
                 </Reveal>

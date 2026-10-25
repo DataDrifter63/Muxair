@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { requireAuth } from "@/lib/auth";
-import { supabase, type BlogPostRow } from "@/lib/supabase";
+import type { BlogPostRow } from "@/lib/supabase";
 import { BlogPostForm } from "@/components/admin/BlogPostForm";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 
@@ -8,11 +8,8 @@ export const Route = createFileRoute("/admin/blog/$id")({
   beforeLoad: requireAuth,
   component: EditBlogPost,
   loader: async ({ params }) => {
-    const { data, error } = await supabase
-      .from("blog_posts")
-      .select("*")
-      .eq("id", params.id)
-      .single();
+    const { supabase: db } = await import("@/lib/supabase");
+    const { data, error } = await db.from("blog_posts").select("*").eq("id", params.id).single();
     if (error) console.error(error);
     return { post: data as BlogPostRow | null };
   },

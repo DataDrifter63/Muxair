@@ -119,6 +119,8 @@ function BrowserFrame({
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : "auto"}
           decoding="async"
+          width={800}
+          height={4100}
           draggable={false}
           style={{ willChange: "transform" }}
           className="block h-auto w-full max-w-none"

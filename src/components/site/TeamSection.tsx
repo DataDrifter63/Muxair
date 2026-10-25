@@ -60,6 +60,8 @@ export function TeamSection() {
               <img
                 src={m.image}
                 alt={`${m.name}, ${m.role} at Muxair`}
+                width={800}
+                height={1036}
                 loading="lazy"
                 decoding="async"
                 draggable={false}

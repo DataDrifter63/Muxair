@@ -1,13 +1,14 @@
 import { redirect } from "@tanstack/react-router";
-import { supabase } from "./supabase";
 
 export async function signIn(email: string, password: string) {
+  const { supabase } = await import("./supabase");
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) throw new Error(error.message);
   return data;
 }
 
 export async function signOut() {
+  const { supabase } = await import("./supabase");
   await supabase.auth.signOut();
 }
 
@@ -29,6 +30,7 @@ export async function requireAuth() {
   // re-validates against the real session on hydration.
   if (typeof window === "undefined") return {};
 
+  const { supabase } = await import("./supabase");
   const { data } = await supabase.auth.getSession();
   if (!data.session) {
     throw redirect({ to: "/admin/login" });

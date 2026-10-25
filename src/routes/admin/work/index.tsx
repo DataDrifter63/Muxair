@@ -10,7 +10,8 @@ export const Route = createFileRoute("/admin/work/")({
   beforeLoad: requireAuth,
   component: AdminWorkList,
   loader: async () => {
-    const { data, error } = await supabase
+    const { supabase: db } = await import("@/lib/supabase");
+    const { data, error } = await db
       .from("case_studies")
       .select("*")
       .order("created_at", { ascending: false });

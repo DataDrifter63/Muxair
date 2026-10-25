@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { openCookieSettings } from "@/lib/cookie-consent";
 import { Facebook, Instagram, Mail, Phone } from "lucide-react";
-import logoLight from "@/assets/logo-black.png";
-import logoDark from "@/assets/logo-white.png";
+import logoLight from "@/assets/logo-black.webp";
+import logoDark from "@/assets/logo-white.webp";
 
 const pageLinks = [
   { label: "Home", to: "/" },
@@ -35,8 +35,20 @@ export function Footer() {
           {/* Brand — 40% */}
           <div>
             <Link to="/" className="flex items-center">
-              <img src={logoLight} alt="Muxair" className="h-9 w-auto dark:hidden" />
-              <img src={logoDark} alt="Muxair" className="hidden h-9 w-auto dark:block" />
+              <img
+                src={logoLight}
+                alt="Muxair"
+                width={320}
+                height={84}
+                className="h-9 w-auto dark:hidden"
+              />
+              <img
+                src={logoDark}
+                alt="Muxair"
+                width={320}
+                height={84}
+                className="hidden h-9 w-auto dark:block"
+              />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Built exclusively for HVAC companies. Websites and marketing systems that book more
@@ -53,12 +65,12 @@ export function Footer() {
             <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
               Quick Links
             </h3>
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-4 space-y-1">
               {pageLinks.map((l) => (
                 <li key={l.label}>
                   <Link
                     to={l.to}
-                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    className="inline-block py-1 text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {l.label}
                   </Link>
@@ -72,12 +84,12 @@ export function Footer() {
             <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
               Services
             </h3>
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-4 space-y-1">
               {serviceLinks.map((l) => (
                 <li key={l.label}>
                   <Link
                     to={l.to}
-                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    className="inline-block py-1 text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {l.label}
                   </Link>
@@ -137,12 +149,15 @@ export function Footer() {
           <p>© 2026 Muxair</p>
           <ul className="flex items-center gap-5">
             <li>
-              <Link to="/privacy-policy" className="transition-colors hover:text-primary">
+              <Link
+                to="/privacy-policy"
+                className="inline-block py-2 transition-colors hover:text-primary"
+              >
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link to="/terms" className="transition-colors hover:text-primary">
+              <Link to="/terms" className="inline-block py-2 transition-colors hover:text-primary">
                 Terms
               </Link>
             </li>
@@ -150,7 +165,7 @@ export function Footer() {
               <button
                 type="button"
                 onClick={openCookieSettings}
-                className="transition-colors hover:text-primary"
+                className="inline-block py-2 transition-colors hover:text-primary"
               >
                 Cookie Settings
               </button>

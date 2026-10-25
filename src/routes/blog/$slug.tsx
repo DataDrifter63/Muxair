@@ -3,12 +3,13 @@ import { ArrowLeft, ArrowRight, CalendarDays, Clock } from "lucide-react";
 import { MagneticButton, Reveal } from "@/components/site/primitives";
 import { MarkdownContent } from "@/components/site/MarkdownContent";
 import { CTASection } from "@/components/site/CTASection";
-import { supabase, type BlogPostRow } from "@/lib/supabase";
+import type { BlogPostRow } from "@/lib/supabase";
 import { services, SITE_URL } from "@/lib/site-data";
 
 export const Route = createFileRoute("/blog/$slug")({
   component: BlogPostPage,
   loader: async ({ params }) => {
+    const { supabase } = await import("@/lib/supabase");
     const { data, error } = await supabase
       .from("blog_posts")
       .select("*")
@@ -168,6 +169,8 @@ function BlogPostPage() {
                 <img
                   src={post.cover_image}
                   alt=""
+                  width={1600}
+                  height={686}
                   className="mt-10 aspect-[21/9] w-full rounded-2xl border border-border object-cover"
                 />
               </Reveal>

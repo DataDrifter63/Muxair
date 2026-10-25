@@ -172,6 +172,8 @@ function AboutPage() {
               <img
                 src={whyHvacImg}
                 alt="Muxair — HVAC-only web design specialists"
+                width={1600}
+                height={1200}
                 loading="lazy"
                 decoding="async"
                 className="h-auto w-full rounded-3xl border border-border object-cover"

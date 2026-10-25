@@ -191,6 +191,7 @@ export function BeforeAfterSlider({
         src={afterImage}
         alt={caption ? `After: ${caption}` : "After"}
         className={`absolute inset-0 h-full w-full ${fitClass}`}
+        loading="lazy"
         decoding="async"
         draggable={false}
       />
@@ -207,6 +208,7 @@ export function BeforeAfterSlider({
           src={beforeImage}
           alt={caption ? `Before: ${caption}` : "Before"}
           className={`absolute inset-0 h-full w-full ${fitClass}`}
+          loading="lazy"
           decoding="async"
           draggable={false}
         />

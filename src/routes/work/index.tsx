@@ -6,7 +6,7 @@ import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { Counter, MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
 import { WorkCarousel } from "@/components/site/WorkCarousel";
 import { cn } from "@/lib/utils";
-import { isHiddenCaseStudy, supabase, type WorkItemRow } from "@/lib/supabase";
+import type { WorkItemRow } from "@/lib/supabase";
 import { SITE_URL, type WorkService } from "@/lib/site-data";
 
 // Per the site's per-page SEO checklist for /work.
@@ -17,6 +17,7 @@ const description =
 export const Route = createFileRoute("/work/")({
   component: WorkIndex,
   loader: async () => {
+    const { supabase, isHiddenCaseStudy } = await import("@/lib/supabase");
     const { data, error } = await supabase
       .from("case_studies")
       .select("*")

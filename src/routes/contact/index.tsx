@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { contactSchema, stepFields, type ContactFormValues } from "@/lib/contact-schema";
 import { AnimatePresence, motion } from "motion/react";
 import {
   ArrowLeft,
@@ -38,7 +38,6 @@ import {
 } from "@/components/ui/select";
 import { Reveal, SectionHeading, TechBackdrop } from "@/components/site/primitives";
 import { SITE_URL } from "@/lib/site-data";
-import { supabase } from "@/lib/supabase";
 import { sendLeadEmails } from "@/lib/send-lead-emails.server";
 import { syncLeadToSheet } from "@/lib/sync-lead-to-sheet.server";
 
@@ -105,25 +104,6 @@ const needs = [
 ];
 
 const heardOptions = ["Google search", "Instagram / Facebook", "Referral", "Other"];
-
-const contactSchema = z.object({
-  need: z.string().min(1, "Select at least one service").max(200),
-  bizName: z.string().trim().min(2, "Enter your business name").max(150),
-  serviceArea: z.string().trim().min(2, "Enter your service area").max(150),
-  otherInfo: z.string().trim().max(2000, "Please keep this under 2000 characters").optional(),
-  fullName: z.string().trim().min(2, "Enter your name").max(100),
-  email: z.string().trim().email("Enter a valid email address").max(200),
-  phone: z.string().trim().min(7, "Enter a valid phone number").max(40),
-  heard: z.string().optional(),
-});
-
-type ContactFormValues = z.infer<typeof contactSchema>;
-
-const stepFields: Record<number, (keyof ContactFormValues)[]> = {
-  1: ["need"],
-  2: ["bizName", "serviceArea"],
-  3: ["fullName", "email", "phone"],
-};
 
 const contactInfo = [
   {
@@ -275,6 +255,7 @@ function ContactPage() {
       .filter(Boolean)
       .join("\n\n");
 
+    const { supabase } = await import("@/lib/supabase");
     const { error } = await supabase.from("leads").insert({
       full_name: values.fullName,
       email: values.email,

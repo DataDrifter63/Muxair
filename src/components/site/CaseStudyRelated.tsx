@@ -201,6 +201,8 @@ function CardCover({ c }: { c: WorkCardRow }) {
           <img
             src={c.cover_image}
             alt={`${c.name} case study preview`}
+            width={1600}
+            height={900}
             loading="lazy"
             className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
           />

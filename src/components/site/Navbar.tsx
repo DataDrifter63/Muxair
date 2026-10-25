@@ -4,8 +4,8 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { services } from "@/lib/site-data";
-import logoLight from "@/assets/logo-black.png";
-import logoDark from "@/assets/logo-white.png";
+import logoLight from "@/assets/logo-black.webp";
+import logoDark from "@/assets/logo-white.webp";
 import { MagneticButton } from "./primitives";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -98,8 +98,20 @@ export function Navbar() {
           aria-label="Main"
         >
           <Link to="/" className="flex items-center">
-            <img src={logoLight} alt="Muxair" className="h-8 w-auto dark:hidden" />
-            <img src={logoDark} alt="Muxair" className="hidden h-8 w-auto dark:block" />
+            <img
+              src={logoLight}
+              alt="Muxair"
+              width={320}
+              height={84}
+              className="h-8 w-auto dark:hidden"
+            />
+            <img
+              src={logoDark}
+              alt="Muxair"
+              width={320}
+              height={84}
+              className="hidden h-8 w-auto dark:block"
+            />
           </Link>
 
           {/* Desktop nav */}

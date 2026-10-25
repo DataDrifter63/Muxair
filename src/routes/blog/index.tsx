@@ -15,7 +15,7 @@ import {
 import { CTASection } from "@/components/site/CTASection";
 import { MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
 import { cn } from "@/lib/utils";
-import { supabase, type BlogPostRow } from "@/lib/supabase";
+import type { BlogPostRow } from "@/lib/supabase";
 import { SITE_URL } from "@/lib/site-data";
 
 // --- Content / meta / schema (sourced from the Muxair blog page) ---
@@ -28,6 +28,7 @@ export const Route = createFileRoute("/blog/")({
   // Functionality: posts are loaded live from Supabase (same as the
   // current production blog page) instead of the old static placeholder list.
   loader: async () => {
+    const { supabase } = await import("@/lib/supabase");
     const { data, error } = await supabase
       .from("blog_posts")
       .select("*")
@@ -169,6 +170,8 @@ function PostCover({ post, size = "md" }: { post: BlogPostRow; size?: "md" | "lg
           src={post.cover_image}
           alt=""
           loading="lazy"
+          width={1200}
+          height={675}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>

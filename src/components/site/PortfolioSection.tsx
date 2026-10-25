@@ -133,7 +133,7 @@ const highlights: PortfolioHighlight[] = [
  * only ever scales DOWN, it never crops). URLs that already contain
  * transformations, and non-Cloudinary URLs, are left untouched.
  */
-const CLOUDINARY_OPTIMISE = "f_auto,q_auto,c_limit,w_1600";
+const CLOUDINARY_OPTIMISE = "f_auto,q_auto,c_limit,w_1200";
 
 function optimiseImage(url: string): string {
   const marker = "/image/upload/";
@@ -168,6 +168,8 @@ function CaseVisual({ item }: { item: PortfolioHighlight }) {
       <img
         src={single}
         alt={item.chartCaption}
+        width={1600}
+        height={1200}
         loading="lazy"
         className="mt-4 aspect-[4/3] w-full rounded-xl border border-border bg-surface object-contain object-center"
       />

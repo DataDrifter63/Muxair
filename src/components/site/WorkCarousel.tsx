@@ -134,6 +134,8 @@ export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
                     <img
                       src={project.cover_image}
                       alt={`Website design preview for ${project.name}`}
+                      width={1600}
+                      height={900}
                       loading={abs <= 3 ? "eager" : "lazy"}
                       decoding="async"
                       draggable={false}

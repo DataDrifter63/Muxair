@@ -121,6 +121,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
+        // Loaded without blocking the first paint; switched on by the script below.
+        media: "print",
+        "data-font-async": "",
+      },
+    ],
+    scripts: [
+      {
+        children:
+          "(function(){var l=document.querySelector('link[data-font-async]');if(!l)return;var on=function(){l.media='all'};if(l.sheet)on();else l.addEventListener('load',on)})();",
       },
     ],
   }),

@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
 import { ServiceCaseStudies } from "@/components/site/ServiceCaseStudies";
-import { fetchServiceCaseStudy } from "@/lib/supabase";
 import {
   Counter,
   MagneticButton,
@@ -78,7 +77,11 @@ const faqs = [
 
 export const Route = createFileRoute("/services/google-ads")({
   component: GoogleAdsPage,
-  loader: async () => ({ caseStudy: await fetchServiceCaseStudy("google-ads") }),
+  loader: async () => {
+    // Loaded on demand so the database client isn't part of every page's JavaScript.
+    const { fetchServiceCaseStudy } = await import("@/lib/supabase");
+    return { caseStudy: await fetchServiceCaseStudy("google-ads") };
+  },
   head: () => ({
     meta: [
       { title },

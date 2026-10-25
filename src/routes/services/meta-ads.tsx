@@ -3,7 +3,6 @@ import { motion } from "motion/react";
 import { ArrowRight, CalendarClock, Facebook, Repeat, Sparkles, Target, Users } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
 import { ServiceCaseStudies } from "@/components/site/ServiceCaseStudies";
-import { fetchServiceCaseStudy } from "@/lib/supabase";
 import {
   Counter,
   MagneticButton,
@@ -70,7 +69,11 @@ const faqs = [
 
 export const Route = createFileRoute("/services/meta-ads")({
   component: MetaAdsPage,
-  loader: async () => ({ caseStudy: await fetchServiceCaseStudy("meta-ads") }),
+  loader: async () => {
+    // Loaded on demand so the database client isn't part of every page's JavaScript.
+    const { fetchServiceCaseStudy } = await import("@/lib/supabase");
+    return { caseStudy: await fetchServiceCaseStudy("meta-ads") };
+  },
   head: () => ({
     meta: [
       { title },

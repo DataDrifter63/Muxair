@@ -1,17 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Briefcase, MessageSquare, Newspaper } from "lucide-react";
 import { requireAuth } from "@/lib/auth";
-import { supabase } from "@/lib/supabase";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 
 export const Route = createFileRoute("/admin/")({
   beforeLoad: requireAuth,
   component: AdminHome,
   loader: async () => {
+    const { supabase: db } = await import("@/lib/supabase");
     const [posts, work, leads] = await Promise.all([
-      supabase.from("blog_posts").select("id", { count: "exact", head: true }),
-      supabase.from("case_studies").select("id", { count: "exact", head: true }),
-      supabase.from("leads").select("id", { count: "exact", head: true }).is("deleted_at", null),
+      db.from("blog_posts").select("id", { count: "exact", head: true }),
+      db.from("case_studies").select("id", { count: "exact", head: true }),
+      db.from("leads").select("id", { count: "exact", head: true }).is("deleted_at", null),
     ]).then((results) => results.map((r) => (r.error ? 0 : (r.count ?? 0))));
     return { postCount: posts, workCount: work, leadCount: leads };
   },
