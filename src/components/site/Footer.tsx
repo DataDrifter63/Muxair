@@ -110,7 +110,9 @@ export function Footer() {
                   +44 7806 982999
                 </a>
               </li>
-              <li className="text-xs text-muted-foreground/80">We respond within 1 business day</li>
+              <li className="text-xs text-muted-foreground/80">
+                We respond within 1-2 business days
+              </li>
             </ul>
 
             <ul className="mt-6 flex gap-3">

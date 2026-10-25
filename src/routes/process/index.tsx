@@ -417,7 +417,7 @@ function ProcessPage() {
         <section className="section-shell">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <Reveal>
-              <div className="grid gap-6 sm:grid-cols-3">
+              <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
                 {differentiators.map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">

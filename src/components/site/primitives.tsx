@@ -115,7 +115,7 @@ export function MagneticButton({
 }: {
   children: ReactNode;
   href?: string;
-  variant?: "cool" | "ghost" | "heat";
+  variant?: "cool" | "ghost" | "heat" | "light";
   className?: string;
   size?: "md" | "lg";
 }) {
@@ -148,6 +148,8 @@ export function MagneticButton({
           "bg-primary text-primary-foreground shadow-[0_18px_50px_-18px_var(--primary)] hover:brightness-110",
         variant === "heat" &&
           "bg-heat text-heat-foreground shadow-[0_18px_50px_-18px_var(--heat)] hover:brightness-110",
+        variant === "light" &&
+          "bg-white text-heat shadow-[0_18px_50px_-18px_rgba(0,0,0,0.35)] hover:bg-white/90",
         variant === "ghost" &&
           "border border-border bg-surface/40 text-foreground backdrop-blur-md hover:border-primary/60 hover:text-primary",
         className,

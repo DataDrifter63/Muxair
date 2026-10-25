@@ -283,18 +283,16 @@ function ServicesIndex() {
                         </Link>
                       ))}
                     </div>
-                    <Link
-                      to="/contact"
-                      search={{ plan: point.plan }}
-                      className={`group relative mt-6 inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
-                        "premium" in point && point.premium
-                          ? "bg-white text-heat hover:bg-white/90"
-                          : "bg-primary text-primary-foreground hover:bg-primary/90"
-                      }`}
-                    >
-                      Get {point.plan}
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                    </Link>
+                    <div className="relative mt-6">
+                      <MagneticButton
+                        href={`/contact?plan=${encodeURIComponent(point.plan)}`}
+                        variant={"premium" in point && point.premium ? "light" : "cool"}
+                        className="w-full justify-center"
+                      >
+                        Get {point.plan}
+                        <ArrowRight className="h-4 w-4" />
+                      </MagneticButton>
+                    </div>
                   </div>
                 </Reveal>
               ))}
@@ -435,7 +433,7 @@ function ServicesIndex() {
                   className="pointer-events-none absolute inset-0 grid-tech opacity-15"
                   aria-hidden
                 />
-                <div className="relative grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+                <div className="relative flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
                   {included.map((item) => (
                     <div key={item} className="flex items-center gap-3">
                       <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">

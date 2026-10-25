@@ -44,11 +44,14 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
-// Staging / client-approval mode: every response carries X-Robots-Tag so Google
-// never indexes the site, even if a URL leaks. At launch set the env var
-// ALLOW_INDEXING=true (and VITE_ALLOW_INDEXING=true at build time).
-function withRobotsHeader(res: Response): Response {
-  if (process.env["ALLOW_INDEXING"] === "true") return res;
+// The site is indexable by default. Private pages (/admin, /thank-you) always send
+// noindex. To take the whole site out of Google again (staging / client approval), set
+// BLOCK_INDEXING=true (and VITE_BLOCK_INDEXING=true at build time) and restore
+// public/robots.txt to `Disallow: /`.
+function withRobotsHeader(req: Request, res: Response): Response {
+  const path = new URL(req.url).pathname;
+  const isPrivate = path.startsWith("/admin") || path.startsWith("/thank-you");
+  if (process.env["BLOCK_INDEXING"] !== "true" && !isPrivate) return res;
   const headers = new Headers(res.headers);
   headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
   return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
@@ -60,7 +63,7 @@ export default {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       const res = await normalizeCatastrophicSsrResponse(response);
-      return withRobotsHeader(res);
+      return withRobotsHeader(request, res);
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {

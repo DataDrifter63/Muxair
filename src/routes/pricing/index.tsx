@@ -450,27 +450,22 @@ function PricingPage() {
                       </ul>
 
                       <div className="mt-8">
-                        {prem ? (
-                          <Link
-                            to="/contact"
-                            search={{ plan: plan.name }}
-                            className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-heat transition-colors hover:bg-white/90"
-                          >
-                            {plan.ctaLabel}
-                            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                          </Link>
-                        ) : (
-                          <MagneticButton
-                            href={`/contact?plan=${encodeURIComponent(plan.name)}`}
-                            variant={
-                              plan.popular ? (plan.tone === "cool" ? "cool" : "heat") : "ghost"
-                            }
-                            className="w-full justify-center"
-                          >
-                            {plan.ctaLabel}
-                            <ArrowRight className="h-4 w-4" />
-                          </MagneticButton>
-                        )}
+                        <MagneticButton
+                          href={`/contact?plan=${encodeURIComponent(plan.name)}`}
+                          variant={
+                            prem
+                              ? "light"
+                              : plan.popular
+                                ? plan.tone === "cool"
+                                  ? "cool"
+                                  : "heat"
+                                : "ghost"
+                          }
+                          className="w-full justify-center"
+                        >
+                          {plan.ctaLabel}
+                          <ArrowRight className="h-4 w-4" />
+                        </MagneticButton>
                       </div>
                     </motion.div>
                   </Reveal>
@@ -554,7 +549,7 @@ function PricingPage() {
                   and we'll recommend a starting point. No pressure.
                 </p>
 
-                <div className="relative mt-9 grid gap-6 border-t border-border/70 pt-8 sm:grid-cols-3">
+                <div className="relative mt-9 flex flex-wrap items-center justify-center gap-x-12 gap-y-5 border-t border-border/70 pt-8">
                   {differentiators.map((item) => (
                     <div key={item} className="flex items-center gap-3">
                       <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">

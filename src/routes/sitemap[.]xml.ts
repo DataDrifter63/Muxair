@@ -26,8 +26,7 @@ const STATIC_PAGES: { path: string; changefreq: string; priority: string }[] = [
   { path: "/privacy-policy", changefreq: "yearly", priority: "0.3" },
   { path: "/terms", changefreq: "yearly", priority: "0.3" },
   // Deliberately excluded: /thank-you (noindex, thin content) and /admin/*
-  // (private dashboard). NOTE: while the site is in client-approval mode,
-  // robots.txt is Disallow: / — swap it at launch (see README).
+  // (private dashboard).
 ];
 
 function xmlEscape(value: string) {

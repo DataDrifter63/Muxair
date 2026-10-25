@@ -261,7 +261,7 @@ function GoogleAdsPage() {
                 Google Ads Built for <span className="text-gradient-heat">Booked Jobs</span>, Not
                 Clicks
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mx-auto mt-5 max-w-[52rem] text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
                 We run Google Ads campaigns that target seasonal demand and the services you want to
                 promote, with a focus on turning ad spend into booked jobs rather than just clicks.
               </p>

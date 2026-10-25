@@ -100,16 +100,8 @@ git push -u origin main
 - Build-time env: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_CLOUDINARY_CLOUD_NAME`, `VITE_CLOUDINARY_UPLOAD_PRESET`
 - Runtime env: `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEAD_NOTIFICATION_EMAIL`, `GOOGLE_SHEETS_SPREADSHEET_ID`, `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_SERVICE_ACCOUNT_KEY`
 
-## Indexing: client-approval mode vs launch
+## Indexing
 
-By default the site is **not indexable**: `robots.txt` is `Disallow: /`, every response sends `X-Robots-Tag: noindex`, and pages carry `<meta name="robots" content="noindex">`.
+The site is **indexable**: `public/robots.txt` allows crawling (except `/admin` and `/thank-you`) and points to `/sitemap.xml`; `/admin` and `/thank-you` always send `X-Robots-Tag: noindex`.
 
-To go live: set `ALLOW_INDEXING=true` (runtime) and `VITE_ALLOW_INDEXING=true` (build time), rebuild, and replace `public/robots.txt` with:
-
-```
-User-agent: *
-Allow: /
-Disallow: /admin
-Disallow: /thank-you
-Sitemap: https://muxair.com/sitemap.xml
-```
+To hide the whole site again (e.g. a staging copy), set `BLOCK_INDEXING=true` (runtime) and `VITE_BLOCK_INDEXING=true` (build time), rebuild, and change `public/robots.txt` to `User-agent: *` / `Disallow: /`.

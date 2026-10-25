@@ -99,9 +99,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: "https://muxair.com/og-image.png" },
-      ...(import.meta.env["VITE_ALLOW_INDEXING"] === "true"
-        ? []
-        : [{ name: "robots", content: "noindex, nofollow" }]),
+      ...(import.meta.env["VITE_BLOCK_INDEXING"] === "true"
+        ? [{ name: "robots", content: "noindex, nofollow" }]
+        : []),
       { name: "theme-color", content: "#F5F0EB" },
     ],
     links: [
