@@ -8,6 +8,9 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 const RETENTION_DAYS = 30;
 
 export const Route = createFileRoute("/admin/leads/trash")({
+  // Admin pages render only in the browser, after the login check, so the server
+  // never sends admin screens or data to anyone who is not signed in.
+  ssr: false,
   beforeLoad: requireAuth,
   component: LeadsTrash,
   loader: async () => {

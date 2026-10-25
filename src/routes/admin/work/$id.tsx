@@ -5,6 +5,9 @@ import { WorkItemForm } from "@/components/admin/WorkItemForm";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 
 export const Route = createFileRoute("/admin/work/$id")({
+  // Admin pages render only in the browser, after the login check, so the server
+  // never sends admin screens or data to anyone who is not signed in.
+  ssr: false,
   beforeLoad: requireAuth,
   component: EditWorkItem,
   loader: async ({ params }) => {

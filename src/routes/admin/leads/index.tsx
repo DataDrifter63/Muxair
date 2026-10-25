@@ -15,6 +15,9 @@ function splitPlan(message: string | null): { plan: string | null; notes: string
 }
 
 export const Route = createFileRoute("/admin/leads/")({
+  // Admin pages render only in the browser, after the login check, so the server
+  // never sends admin screens or data to anyone who is not signed in.
+  ssr: false,
   beforeLoad: requireAuth,
   component: AdminLeads,
   loader: async () => {
