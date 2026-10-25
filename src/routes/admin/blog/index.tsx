@@ -11,12 +11,15 @@ export const Route = createFileRoute("/admin/blog/")({
   // never sends admin screens or data to anyone who is not signed in.
   ssr: false,
   beforeLoad: requireAuth,
+  // Reuse the list for 30s when switching tabs (saving or deleting still refreshes it).
+  staleTime: 30_000,
+  preloadStaleTime: 30_000,
   component: AdminBlogList,
   loader: async () => {
     const { supabase: db } = await import("@/lib/supabase");
     const { data, error } = await db
       .from("blog_posts")
-      .select("*")
+      .select("id,title,slug,category,published,created_at")
       .order("created_at", { ascending: false });
     if (error) console.error(error);
     return { posts: (data ?? []) as BlogPostRow[] };

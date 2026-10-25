@@ -8,6 +8,9 @@ export const Route = createFileRoute("/admin/")({
   // never sends admin screens or data to anyone who is not signed in.
   ssr: false,
   beforeLoad: requireAuth,
+  // Reuse the list for 30s when switching tabs (saving or deleting still refreshes it).
+  staleTime: 30_000,
+  preloadStaleTime: 30_000,
   component: AdminHome,
   loader: async () => {
     const { supabase: db } = await import("@/lib/supabase");

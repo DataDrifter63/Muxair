@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import {
   Bold,
   Code,
@@ -15,7 +15,10 @@ import {
   Pencil,
   Quote,
 } from "lucide-react";
-import { MarkdownContent } from "@/components/site/MarkdownContent";
+// The preview renderer is large, so it only loads when "Preview" is opened.
+const MarkdownContent = lazy(() =>
+  import("@/components/site/MarkdownContent").then((m) => ({ default: m.MarkdownContent })),
+);
 import { cn } from "@/lib/utils";
 import { optimiseCloudinaryUrl, uploadImage } from "@/lib/cloudinary";
 
@@ -319,7 +322,9 @@ export function MarkdownEditor({
       ) : (
         <div className="bg-background px-4 py-3">
           {value.trim() ? (
-            <MarkdownContent content={value} />
+            <Suspense fallback={<p className="text-sm text-muted-foreground">Loading preview…</p>}>
+              <MarkdownContent content={value} />
+            </Suspense>
           ) : (
             <p className="text-sm text-muted-foreground">Nothing to preview yet.</p>
           )}

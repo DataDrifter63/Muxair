@@ -11,12 +11,15 @@ export const Route = createFileRoute("/admin/work/")({
   // never sends admin screens or data to anyone who is not signed in.
   ssr: false,
   beforeLoad: requireAuth,
+  // Reuse the list for 30s when switching tabs (saving or deleting still refreshes it).
+  staleTime: 30_000,
+  preloadStaleTime: 30_000,
   component: AdminWorkList,
   loader: async () => {
     const { supabase: db } = await import("@/lib/supabase");
     const { data, error } = await db
       .from("case_studies")
-      .select("*")
+      .select("id,slug,name,location,badge,published,created_at")
       .order("created_at", { ascending: false });
     if (error) console.error(error);
     return { items: (data ?? []) as WorkItemRow[] };
