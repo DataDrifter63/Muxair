@@ -184,6 +184,17 @@ export const Route = createFileRoute("/pricing/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://muxair.com" },
+            { "@type": "ListItem", position: 2, name: "Pricing", item: PAGE_URL },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
           "@type": "Service",
           serviceType: "HVAC Website Design & Digital Marketing",
           provider: { "@type": "ProfessionalService", name: "Muxair" },

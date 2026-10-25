@@ -28,7 +28,7 @@ import {
 } from "@/components/site/primitives";
 import { services, SITE_URL, type Tone } from "@/lib/site-data";
 
-const title = "HVAC Marketing Services | Websites, SEO, Google & Meta Ads";
+const title = "HVAC Marketing Services | Web Design, SEO & Ads";
 const description =
   "Explore every service we offer HVAC companies — website design, local SEO, Google Ads, Meta Ads and ongoing website maintenance. Built to book more jobs.";
 

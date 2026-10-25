@@ -5,7 +5,7 @@ import { privacyPolicy } from "@/lib/legal-content";
 
 const title = "Privacy Policy | Muxair";
 const description =
-  "How Muxair collects, uses and protects your personal information when you use our website or contact us.";
+  "How Muxair collects, uses and protects your personal information when you visit our website, contact us or work with us, including cookies and your rights.";
 
 export const Route = createFileRoute("/privacy-policy")({
   component: Page,

@@ -10,13 +10,11 @@ import { ProcessSection } from "@/components/site/ProcessSection";
 import { Results } from "@/components/site/Results";
 import { CTASection } from "@/components/site/CTASection";
 
-// TODO: replace with the real production domain before launch — it also
-// drives the canonical/OG URLs below (sitemap.xml is served dynamically).
 const SITE_URL = "https://muxair.com";
 
 const title = "HVAC Website Design Agency | Muxair";
 const description =
-  "We build high-converting websites and run digital marketing exclusively for HVAC businesses. More booked jobs, guaranteed. Get a free quote today.";
+  "We build high-converting websites and run digital marketing exclusively for HVAC businesses. More booked jobs, not just more traffic. Get a free quote today.";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -38,10 +36,22 @@ export const Route = createFileRoute("/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Muxair",
+          url: SITE_URL,
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
           "@type": "ProfessionalService",
           name: "Muxair",
           url: SITE_URL,
           logo: `${SITE_URL}/icon-512.png`,
+          email: "hello@muxair.com",
+          telephone: "+44 7806 982999",
+          sameAs: ["https://www.instagram.com/muxair.hvac", "https://www.facebook.com/muxair.hvac"],
           image: `${SITE_URL}/og-image.png`,
           description,
           serviceType: [
