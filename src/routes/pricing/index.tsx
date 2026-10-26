@@ -16,9 +16,9 @@ import {
 // the Muxair domain).
 const PAGE_URL = "https://muxair.com/pricing";
 
-const title = "HVAC Website & Marketing Pricing | Muxair";
+const title = "HVAC Website Design & Marketing Pricing | Muxair";
 const description =
-  "See exactly what our HVAC website, SEO, and ads packages cost, starting at $1,200. No hidden fees, no surprise quotes.";
+  "Explore Muxair's pricing for HVAC website design, local SEO and digital advertising. Website packages start at $1,200, with clear pricing and no hidden fees.";
 
 const trustStats = [{ display: "$0", label: "Hidden setup fees" }];
 

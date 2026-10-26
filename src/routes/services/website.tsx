@@ -28,9 +28,9 @@ import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/website";
 
-const title = "HVAC Website Design | Custom Sites That Convert";
+const title = "HVAC Website Design Services | Custom Websites | Muxair";
 const description =
-  "We design and build custom websites exclusively for HVAC businesses. Fast, mobile-first, conversion-optimised, and built to rank on Google.";
+  "Get a custom website designed for your HVAC business. Muxair builds fast, mobile-friendly websites focused on local search visibility, enquiries and booked jobs.";
 
 const faqs = [
   {

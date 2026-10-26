@@ -28,9 +28,9 @@ import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/seo";
 
-const title = "HVAC Local SEO Services | Rank Higher on Google";
+const title = "HVAC Local SEO Services | Google Maps & Search | Muxair";
 const description =
-  "Local SEO built exclusively for HVAC companies. Get found on Google Maps and in local search by homeowners ready to book. Free 30-minute strategy call.";
+  "Help your HVAC business appear in local Google Search results and Google Maps. Muxair provides HVAC-focused local SEO to improve visibility and attract more enquiries.";
 
 const faqs = [
   {

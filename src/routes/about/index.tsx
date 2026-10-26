@@ -24,9 +24,9 @@ import { TeamSection, teamMembers } from "@/components/site/TeamSection";
 import { SITE_URL } from "@/lib/site-data";
 import whyHvacImg from "@/assets/why-hvac.webp";
 
-const title = "About Us | The HVAC-Specialist Web Design Agency";
+const title = "About Muxair | HVAC Website Design Specialists";
 const description =
-  "We're a small team that works exclusively with HVAC companies. Meet the specialists behind Muxair, and why we chose this niche.";
+  "Meet the team behind Muxair, a web design and digital marketing agency dedicated exclusively to HVAC companies. Learn about our approach and how we work.";
 
 export const Route = createFileRoute("/about/")({
   component: AboutPage,

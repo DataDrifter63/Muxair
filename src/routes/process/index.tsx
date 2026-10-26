@@ -20,9 +20,9 @@ import {
 import { SITE_URL } from "@/lib/site-data";
 
 // Per the site's per-page SEO checklist for /process.
-const title = "How We Work | Our 5-Step Process for HVAC Website Projects";
+const title = "Our Website Design Process for HVAC Companies | Muxair";
 const description =
-  "From discovery call to live site, here's exactly how we work with HVAC companies. Clear stages, clear timelines, zero surprises.";
+  "See how Muxair takes HVAC website projects from discovery to launch. Understand each stage, what to expect and how we keep projects organised and on track.";
 
 export const Route = createFileRoute("/process/")({
   component: ProcessPage,

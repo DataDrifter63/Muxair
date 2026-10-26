@@ -30,7 +30,7 @@ import { services, SITE_URL, type Tone } from "@/lib/site-data";
 
 const title = "HVAC Marketing Services | Web Design, SEO & Ads";
 const description =
-  "Explore every service we offer HVAC companies — website design, local SEO, Google Ads, Meta Ads and ongoing website maintenance. Built to book more jobs.";
+  "Explore HVAC marketing services from Muxair, including website design, local SEO, Google Ads, Meta Ads and website maintenance. Built for HVAC businesses.";
 
 export const Route = createFileRoute("/services/")({
   component: ServicesIndex,

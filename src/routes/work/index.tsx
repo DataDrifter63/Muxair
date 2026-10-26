@@ -10,9 +10,9 @@ import type { WorkItemRow } from "@/lib/supabase";
 import { SITE_URL, type WorkService } from "@/lib/site-data";
 
 // Per the site's per-page SEO checklist for /work.
-const title = "HVAC Website Portfolio | Case Studies | Muxair";
+const title = "HVAC Website Portfolio & Case Studies | Muxair";
 const description =
-  "Browse our portfolio of websites built exclusively for HVAC companies. See the results we've delivered for heating, cooling, and air quality businesses.";
+  "Explore HVAC website designs and case studies by Muxair. See our work for heating, cooling and air quality businesses, including website features and measurable results.";
 
 export const Route = createFileRoute("/work/")({
   component: WorkIndex,

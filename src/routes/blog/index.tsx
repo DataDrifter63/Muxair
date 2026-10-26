@@ -19,9 +19,9 @@ import type { BlogPostRow } from "@/lib/supabase";
 import { SITE_URL } from "@/lib/site-data";
 
 // --- Content / meta / schema (sourced from the Muxair blog page) ---
-const title = "HVAC Marketing & Website Tips | Muxair Blog";
+const title = "HVAC Website Design & Marketing Blog | Muxair";
 const description =
-  "Practical advice on HVAC websites, local SEO, and digital marketing — written for heating and cooling business owners, not marketers.";
+  "Practical advice for HVAC business owners on website design, local SEO, Google Ads and digital marketing. Learn how to attract local customers and generate more enquiries.";
 
 export const Route = createFileRoute("/blog/")({
   component: BlogIndex,

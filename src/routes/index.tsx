@@ -12,9 +12,9 @@ import { CTASection } from "@/components/site/CTASection";
 
 const SITE_URL = "https://muxair.com";
 
-const title = "HVAC Website Design Agency | Muxair";
+const title = "HVAC Website Design & Marketing Agency | Muxair";
 const description =
-  "We build high-converting websites and run digital marketing exclusively for HVAC businesses. More booked jobs, not just more traffic. Get a free quote today.";
+  "Muxair builds high-converting websites and provides SEO and digital advertising for HVAC companies. Get more local enquiries and booked jobs. Request a free quote.";
 
 export const Route = createFileRoute("/")({
   component: Index,

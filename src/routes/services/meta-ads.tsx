@@ -20,9 +20,9 @@ import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/meta-ads";
 
-const title = "Meta Ads Management for HVAC | Facebook & Instagram";
+const title = "HVAC Facebook & Instagram Ads Management | Muxair";
 const description =
-  "Facebook and Instagram ad management built exclusively for HVAC companies. Reach homeowners before they search and stay in front of them after. Free call.";
+  "Reach more homeowners with Facebook and Instagram ads built for HVAC companies. Generate quality leads, promote your services, and grow your business with Muxair.";
 
 const faqs = [
   {

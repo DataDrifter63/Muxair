@@ -28,9 +28,9 @@ import { services } from "@/lib/site-data";
 
 const PAGE_URL = "https://muxair.com/services/google-ads";
 
-const title = "Google Ads Management for HVAC | Booked Jobs, Not Clicks";
+const title = "Google Ads Management for HVAC Companies | Muxair";
 const description =
-  "Google Ads management built exclusively for HVAC companies. Seasonal, service-specific campaigns focused on cost per booked job, not clicks. Free call.";
+  "Reach local homeowners searching for HVAC services with targeted Google Ads campaigns. Muxair focuses on qualified enquiries, booked jobs and efficient ad spend.";
 
 const faqs = [
   {

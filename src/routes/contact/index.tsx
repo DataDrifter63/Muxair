@@ -41,9 +41,9 @@ import { SITE_URL } from "@/lib/site-data";
 import { sendLeadEmails } from "@/lib/send-lead-emails.server";
 import { syncLeadToSheet } from "@/lib/sync-lead-to-sheet.server";
 
-const title = "Free HVAC Website Quote | Talk to Muxair";
+const title = "Get an HVAC Website Quote | Contact Muxair";
 const description =
-  "Ready to get more booked jobs from your website? Book a free 30-minute strategy call. No sales pressure, just honest advice.";
+  "Planning a new HVAC website or looking to improve your marketing? Book a free 30-minute call with Muxair to discuss your goals and explore your options.";
 
 // Spam protection: a submit sooner than this after the page opened is a bot.
 const MIN_FILL_MS = 3000;
