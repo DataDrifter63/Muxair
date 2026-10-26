@@ -97,7 +97,11 @@ export const Route = createFileRoute("/services/meta-ads")({
           description:
             "Targeted Meta ad campaigns built around brand awareness, retargeting, and lookalike audiences for HVAC businesses.",
           provider: { "@type": "ProfessionalService", name: "Muxair" },
-          areaServed: { "@type": "Country", name: "United Kingdom" },
+          areaServed: [
+            { "@type": "Country", name: "United States" },
+            { "@type": "Country", name: "United Kingdom" },
+            { "@type": "Country", name: "Canada" },
+          ],
           offers: {
             "@type": "Offer",
             name: "Ads Management",
@@ -106,7 +110,7 @@ export const Route = createFileRoute("/services/meta-ads")({
             priceSpecification: {
               "@type": "UnitPriceSpecification",
               price: 400,
-              priceCurrency: "GBP",
+              priceCurrency: "USD",
               unitCode: "MON",
               minPrice: 400,
             },
@@ -119,13 +123,14 @@ export const Route = createFileRoute("/services/meta-ads")({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://muxair.com" },
             {
               "@type": "ListItem",
-              position: 1,
+              position: 2,
               name: "Services",
               item: "https://muxair.com/services",
             },
-            { "@type": "ListItem", position: 2, name: "Meta Ads", item: PAGE_URL },
+            { "@type": "ListItem", position: 3, name: "Meta Ads", item: PAGE_URL },
           ],
         }),
       },

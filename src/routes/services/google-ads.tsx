@@ -131,13 +131,14 @@ export const Route = createFileRoute("/services/google-ads")({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://muxair.com" },
             {
               "@type": "ListItem",
-              position: 1,
+              position: 2,
               name: "Services",
               item: "https://muxair.com/services",
             },
-            { "@type": "ListItem", position: 2, name: "Google Ads", item: PAGE_URL },
+            { "@type": "ListItem", position: 3, name: "Google Ads", item: PAGE_URL },
           ],
         }),
       },

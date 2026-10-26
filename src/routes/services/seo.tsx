@@ -121,13 +121,14 @@ export const Route = createFileRoute("/services/seo")({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://muxair.com" },
             {
               "@type": "ListItem",
-              position: 1,
+              position: 2,
               name: "Services",
               item: "https://muxair.com/services",
             },
-            { "@type": "ListItem", position: 2, name: "Local SEO", item: PAGE_URL },
+            { "@type": "ListItem", position: 3, name: "Local SEO", item: PAGE_URL },
           ],
         }),
       },
