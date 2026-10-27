@@ -46,6 +46,7 @@ export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
   const { active, jumped } = view;
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const swipeX = useRef<number | null>(null);
 
   // Re-center whenever the list changes (e.g. switching the category filter).
   useEffect(() => {
@@ -84,13 +85,25 @@ export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
 
   return (
     <div
-      className="mt-10"
+      className="mt-10 overflow-x-clip"
       onMouseEnter={pause}
       onMouseLeave={resumeSoon}
       onFocusCapture={pause}
       onBlurCapture={resumeSoon}
-      onTouchStart={pause}
-      onTouchEnd={resumeSoon}
+      onTouchStart={(e) => {
+        swipeX.current = e.touches[0]?.clientX ?? null;
+        pause();
+      }}
+      onTouchEnd={(e) => {
+        const start = swipeX.current;
+        const end = e.changedTouches[0]?.clientX;
+        swipeX.current = null;
+        // Swipe left/right to move between case studies on touch screens.
+        if (start !== null && end !== undefined && Math.abs(end - start) > 45) {
+          go(end < start ? 1 : -1);
+        }
+        resumeSoon();
+      }}
     >
       <div className="relative h-[420px] sm:h-[440px]">
         {items.map((project, i) => {

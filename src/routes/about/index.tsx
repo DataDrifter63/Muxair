@@ -264,14 +264,14 @@ function AboutPage() {
         {/* Trust strip */}
         <section className="bg-[#F77036] py-10">
           <Reveal>
-            <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-4 px-5 text-center lg:px-8">
+            <div className="mx-auto flex max-w-3xl flex-col items-center justify-center gap-3 px-5 text-center sm:flex-row sm:flex-wrap sm:gap-4 lg:px-8">
               <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-white">
                 <ShieldCheck className="h-4 w-4 text-white" />
                 Top-Rated on Upwork
               </span>
-              <span className="h-1 w-1 rounded-full bg-white/60" aria-hidden />
+              <span className="hidden h-1 w-1 rounded-full bg-white/60 sm:block" aria-hidden />
               <span className="text-sm font-semibold text-white">50+ Projects Delivered</span>
-              <span className="h-1 w-1 rounded-full bg-white/60" aria-hidden />
+              <span className="hidden h-1 w-1 rounded-full bg-white/60 sm:block" aria-hidden />
               <span className="text-sm font-semibold text-white">HVAC-Only Agency</span>
             </div>
           </Reveal>
