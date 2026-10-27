@@ -31,7 +31,7 @@
 //           }
 //         />
 
-//         <div className="relative mt-14 grid gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
+//         <div className="relative mt-10 grid sm:mt-14  gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
 //           <Reveal>
 //             <div className="h-full rounded-2xl border border-border bg-background/40 p-8 opacity-70 transition-opacity duration-500 hover:opacity-90">
 //               <h3 className="text-lg text-muted-foreground">Generic Agencies</h3>
@@ -136,7 +136,7 @@ export function WhyUsSection() {
 
         <div className="relative mt-14 grid gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
           <Reveal>
-            <div className="h-full rounded-2xl border border-white/35 bg-white/10 p-8 backdrop-blur-md">
+            <div className="h-full rounded-2xl border border-white/35 bg-white/10 p-6 backdrop-blur-md">
               <h3 className="text-lg text-white">Generic Agencies</h3>
               <ul className="mt-6 space-y-4">
                 {generic.map((g) => (
@@ -175,7 +175,7 @@ export function WhyUsSection() {
           </div>
 
           <Reveal delay={0.15}>
-            <div className="relative h-full overflow-hidden rounded-2xl border border-white bg-white p-8 shadow-2xl shadow-black/20">
+            <div className="relative h-full overflow-hidden rounded-2xl border border-white bg-white p-6 shadow-2xl shadow-black/20">
               <h3 className="relative text-lg text-[#F77036]">Our Approach</h3>
               <ul className="relative mt-6 space-y-4">
                 {ours.map((o, i) => (

@@ -84,12 +84,12 @@ export function Results() {
         />
 
         <div
-          className="mt-14"
+          className="mt-10 sm:mt-14"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
           <Reveal>
-            <div className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl border border-border bg-surface/50 p-8 backdrop-blur-xl sm:p-12">
+            <div className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl border border-border bg-surface/50 p-6 backdrop-blur-xl sm:p-12">
               <div
                 className="pointer-events-none absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-primary/12 blur-[100px]"
                 aria-hidden
@@ -161,7 +161,7 @@ export function Results() {
                   onClick={() => setIndex(i)}
                   aria-label={`Show testimonial from ${t.name}`}
                   className={cn(
-                    "h-1.5 rounded-full transition-all duration-300",
+                    "relative h-1.5 rounded-full transition-all duration-300 before:absolute before:-inset-x-1 before:-inset-y-3 before:content-['']",
                     i === index ? "w-6 bg-primary" : "w-1.5 bg-border hover:bg-muted-foreground",
                   )}
                 />

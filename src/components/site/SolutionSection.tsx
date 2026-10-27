@@ -93,7 +93,7 @@ export function SolutionSection() {
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 sm:mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {solutions.map((s, i) => (
             <Reveal key={s.title} delay={i * 0.08} className="h-full">
               <motion.article

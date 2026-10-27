@@ -84,7 +84,7 @@ export function ProcessSection() {
           subtitle="A proven process built around your schedule. You stay in the loop without being overwhelmed, we handle the heavy lifting."
         />
 
-        <div ref={timelineRef} className="relative mt-14">
+        <div ref={timelineRef} className="relative mt-10 sm:mt-14">
           <div
             className="absolute left-7 top-6 hidden h-[calc(100%-3rem)] w-px bg-border/60 sm:block lg:left-8"
             aria-hidden

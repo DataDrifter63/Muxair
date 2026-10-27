@@ -62,13 +62,13 @@ export function ProblemSection() {
           subtitle="You've built a great HVAC business through hard work and reputation. But if your website doesn't reflect that quality, you're leaving thousands of dollars on the table every single month."
         />
 
-        <div className="mt-14 grid gap-5 md:grid-cols-2">
+        <div className="mt-10 grid gap-4 sm:mt-14 sm:gap-5 md:grid-cols-2">
           {problems.map((p, i) => (
             <Reveal key={p.title} delay={i * 0.09}>
               <motion.article
                 whileHover={{ y: -8, rotateX: 3, rotateY: -3 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                className="group relative flex h-full items-start gap-5 overflow-hidden rounded-2xl border border-border bg-surface/60 p-7 [transform-style:preserve-3d] backdrop-blur-md"
+                className="group relative flex h-full items-start gap-4 overflow-hidden rounded-2xl border border-border bg-surface/60 p-5 sm:gap-5 sm:p-7 [transform-style:preserve-3d] backdrop-blur-md"
               >
                 <div
                   className={`pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full blur-[70px] transition-opacity duration-500 ${
@@ -97,7 +97,7 @@ export function ProblemSection() {
         </div>
 
         <Reveal delay={0.2}>
-          <div className="relative mx-auto mt-8 max-w-4xl overflow-hidden rounded-2xl border border-heat/25 bg-heat/[0.05] p-7 text-center backdrop-blur-md sm:p-9">
+          <div className="relative mx-auto mt-6 max-w-4xl overflow-hidden rounded-2xl border border-heat/25 bg-heat/[0.05] p-6 sm:mt-8 text-center backdrop-blur-md sm:p-9">
             <div className="pointer-events-none absolute -top-20 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-heat/15 blur-[80px]" />
             <p className="relative text-base leading-relaxed text-foreground/90 sm:text-lg">
               <span className="font-display font-bold text-foreground">

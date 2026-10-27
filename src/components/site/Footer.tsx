@@ -70,7 +70,7 @@ export function Footer() {
                 <li key={l.label}>
                   <Link
                     to={l.to}
-                    className="inline-block py-1 text-sm text-muted-foreground transition-colors hover:text-primary"
+                    className="inline-block py-1.5 sm:py-1 text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {l.label}
                   </Link>
@@ -89,7 +89,7 @@ export function Footer() {
                 <li key={l.label}>
                   <Link
                     to={l.to}
-                    className="inline-block py-1 text-sm text-muted-foreground transition-colors hover:text-primary"
+                    className="inline-block py-1.5 sm:py-1 text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {l.label}
                   </Link>

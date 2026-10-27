@@ -185,9 +185,9 @@ export function Hero() {
             <Flame className="h-3.5 w-3.5 text-heat" />
           </motion.span>
 
-          <h1 className="mt-6 font-display text-[2.6rem] leading-[1.05] sm:text-5xl lg:text-[2.3rem] xl:text-[2.7rem]">
+          <h1 className="mt-6 font-display text-[clamp(1.75rem,9vw,2.6rem)] leading-[1.05] sm:text-5xl lg:text-[2.3rem] xl:text-[2.7rem]">
             {headline.map((line, i) => (
-              <span key={line} className="block overflow-hidden">
+              <span key={line} className="block overflow-hidden text-balance">
                 <motion.span
                   className="block"
                   initial={{ y: "110%", opacity: 0 }}
@@ -214,13 +214,18 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.78 }}
-            className="mt-9 flex flex-wrap items-center gap-3"
+            className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
           >
-            <MagneticButton href="#contact" size="lg">
+            <MagneticButton href="#contact" size="lg" className="w-full justify-center sm:w-auto">
               Get a Free Strategy Call
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </MagneticButton>
-            <MagneticButton href="#work" variant="ghost" size="lg">
+            <MagneticButton
+              href="#work"
+              variant="ghost"
+              size="lg"
+              className="w-full justify-center sm:w-auto"
+            >
               <PlayCircle className="h-4 w-4" />
               See Our Work
             </MagneticButton>
@@ -230,12 +235,12 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.95 }}
-            className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground"
+            className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground sm:mt-9 sm:text-xs sm:tracking-[0.16em]"
           >
-            {["Top-Rated on Upwork ", "7 Years Experience", " HVAC-Only Studio "].map((t, i) => (
-              <li key={t} className="flex items-center gap-4">
-                {i > 0 ? <span className="h-1 w-1 rounded-full bg-primary/70" /> : null}
-                <span>{t}</span>
+            {["Top-Rated on Upwork", "7 Years Experience", "HVAC-Only Studio"].map((t) => (
+              <li key={t} className="flex items-center gap-2.5">
+                <span className="h-1 w-1 rounded-full bg-primary/70" />
+                <span>{t.trim()}</span>
               </li>
             ))}
           </motion.ul>
@@ -246,7 +251,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="relative aspect-[1/1.05] w-full min-w-0"
+          className="relative mx-auto mt-2 aspect-[1/1.05] w-full min-w-0 max-w-[34rem] lg:mt-0 lg:max-w-none"
         >
           {/* soft glow behind the windows */}
           <div

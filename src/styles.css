@@ -190,7 +190,11 @@
 
 @utility section-shell {
   position: relative;
-  padding-block: 6rem;
+  padding-block: 4rem;
+
+  @media (min-width: 48rem) {
+    padding-block: 6rem;
+  }
 }
 
 @keyframes drift-x {

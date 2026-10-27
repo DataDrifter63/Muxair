@@ -242,9 +242,13 @@ export function TestimonialsSection() {
           subtitle="Some of our clients have shared their experiences on camera. They come from different industries, but they have one thing in common: a website that works for their business."
         />
 
-        <div className="mx-auto mt-14 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="-mx-5 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:none] sm:mx-auto sm:mt-14 sm:grid sm:max-w-5xl sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
           {testimonials.map((t, i) => (
-            <Reveal key={t.name} delay={i * 0.08}>
+            <Reveal
+              key={t.name}
+              delay={i * 0.08}
+              className="w-[72%] max-w-[18rem] shrink-0 snap-center sm:w-auto sm:max-w-none"
+            >
               <motion.button
                 type="button"
                 onClick={() => setActive(t)}
