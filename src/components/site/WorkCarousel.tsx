@@ -105,7 +105,7 @@ export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
         resumeSoon();
       }}
     >
-      <div className="relative h-[420px] sm:h-[440px]">
+      <div className="relative h-[370px] sm:h-[440px]">
         {items.map((project, i) => {
           const offset = wrapOffset(i - active, n);
           const abs = Math.abs(offset);
@@ -172,7 +172,7 @@ export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
                   </span>
                 </div>
 
-                <div className="flex flex-1 flex-col p-6">
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
                   <h3 className="font-display text-lg leading-snug sm:text-xl">{project.name}</h3>
                   <p className="mt-0.5 text-xs text-muted-foreground">{project.location}</p>
 
@@ -189,7 +189,7 @@ export function WorkCarousel({ items }: { items: WorkItemRow[] }) {
 
                   <span
                     className={cn(
-                      "mt-auto flex items-center gap-1.5 pt-5 text-sm font-semibold",
+                      "mt-auto flex items-center gap-1.5 pt-4 text-sm font-semibold sm:pt-5",
                       project.tone === "cool" ? "text-primary" : "text-heat",
                     )}
                   >

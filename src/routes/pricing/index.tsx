@@ -560,7 +560,7 @@ function PricingPage() {
                   and we'll recommend a starting point. No pressure.
                 </p>
 
-                <div className="relative mt-9 flex flex-wrap items-center justify-center gap-x-12 gap-y-5 border-t border-border/70 pt-8">
+                <div className="relative mt-9 grid justify-center gap-y-4 border-t border-border/70 pt-8 sm:flex sm:flex-wrap sm:items-center sm:gap-x-12 sm:gap-y-5">
                   {differentiators.map((item) => (
                     <div key={item} className="flex items-center gap-3">
                       <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
