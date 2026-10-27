@@ -68,7 +68,7 @@ export function ProblemSection() {
               <motion.article
                 whileHover={{ y: -8, rotateX: 3, rotateY: -3 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                className="group relative flex h-full items-start gap-4 overflow-hidden rounded-2xl border border-border bg-surface/60 p-5 sm:gap-5 sm:p-7 [transform-style:preserve-3d] backdrop-blur-md"
+                className="group relative flex h-full flex-col items-start gap-4 overflow-hidden rounded-2xl border border-border bg-surface/60 p-6 sm:flex-row sm:gap-5 sm:p-7 [transform-style:preserve-3d] backdrop-blur-md"
               >
                 <div
                   className={`pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full blur-[70px] transition-opacity duration-500 ${

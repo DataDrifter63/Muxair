@@ -178,7 +178,7 @@ export function Results() {
             </button>
           </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="mt-10 hidden grid-cols-3 gap-4 sm:grid lg:grid-cols-5">
             {testimonials.map((t, i) => (
               <Reveal key={t.name} delay={i * 0.06}>
                 <motion.button

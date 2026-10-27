@@ -209,7 +209,7 @@ export function PortfolioSection() {
           </Reveal>
         </div>
 
-        <div className="mt-16 space-y-16 sm:space-y-24">
+        <div className="mt-10 space-y-14 sm:mt-16 sm:space-y-24">
           {highlights.map((item, i) => {
             const c = toneClasses(item.tone);
             const reversed = i % 2 === 1;
@@ -217,12 +217,12 @@ export function PortfolioSection() {
             return (
               <Reveal key={item.name} delay={0.05}>
                 <div
-                  className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-14 ${
+                  className={`grid items-center gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-14 ${
                     reversed ? "lg:[&>*:first-child]:order-2" : ""
                   }`}
                 >
-                  {/* Text side */}
-                  <div>
+                  {/* Text side (below the visual on mobile) */}
+                  <div className="order-2 min-w-0 lg:order-none">
                     <span
                       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] ${c.border} ${c.bg} ${c.text}`}
                     >
@@ -234,7 +234,7 @@ export function PortfolioSection() {
                     </h3>
 
                     {/* Before / After comparison */}
-                    <div className="mt-7 grid grid-cols-2 gap-5 border-t border-border pt-6">
+                    <div className="mt-6 grid grid-cols-2 gap-4 border-t border-border pt-5 sm:mt-7 sm:gap-5 sm:pt-6">
                       <div>
                         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                           {item.before.label}
@@ -306,7 +306,7 @@ export function PortfolioSection() {
                   </div>
 
                   {/* Visual side — verified growth chart only (no search-result mockup) */}
-                  <div className="relative overflow-hidden rounded-2xl border border-border bg-surface/40 p-5 backdrop-blur-md sm:p-6">
+                  <div className="relative order-1 min-w-0 overflow-hidden rounded-2xl border border-border bg-surface/40 p-4 backdrop-blur-md sm:p-6 lg:order-none">
                     <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
                       <BadgeCheck className={`h-3.5 w-3.5 ${c.text}`} />
                       Verified
