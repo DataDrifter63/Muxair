@@ -1,4 +1,4 @@
-// import { motion } from "motion/react";
+// import { m as motion } from "motion/react";
 // import { Quote } from "lucide-react";
 // import { Counter, Reveal, SectionHeading, TechBackdrop } from "./primitives";
 
@@ -137,7 +137,7 @@
 // }
 
 import { useState } from "react";
-import { motion } from "motion/react";
+import { m as motion } from "motion/react";
 import { ArrowRight, Play, Video } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { MagneticButton, Reveal, SectionHeading } from "./primitives";

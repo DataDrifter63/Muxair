@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m as motion } from "motion/react";
 import { Cookie, X } from "lucide-react";
 import { OPEN_SETTINGS_EVENT, applyConsent, getConsent, saveConsent } from "@/lib/cookie-consent";
 import { cn } from "@/lib/utils";

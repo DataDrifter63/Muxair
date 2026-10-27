@@ -1,5 +1,5 @@
-import { motion, useInView, useSpring, useTransform, type Variants } from "motion/react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { m as motion, useInView, useSpring, useTransform, type Variants } from "motion/react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export const fadeUp: Variants = {
@@ -12,6 +12,30 @@ export const stagger = (delay = 0.08): Variants => ({
   show: { transition: { staggerChildren: delay } },
 });
 
+// One shared IntersectionObserver for every <Reveal> on the page (cheaper than a motion component
+// per block). The entrance itself is plain CSS (.reveal in styles.css); the observer only flips a
+// data attribute, so React never re-renders for it.
+let revealObserver: IntersectionObserver | null = null;
+function observeReveal(el: HTMLElement) {
+  if (typeof IntersectionObserver === "undefined") {
+    el.setAttribute("data-in", "");
+    return () => {};
+  }
+  revealObserver ??= new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.setAttribute("data-in", "");
+          revealObserver?.unobserve(entry.target);
+        }
+      }
+    },
+    { rootMargin: "0px 0px -80px 0px" },
+  );
+  revealObserver.observe(el);
+  return () => revealObserver?.unobserve(el);
+}
+
 export function Reveal({
   children,
   className,
@@ -21,19 +45,20 @@ export function Reveal({
   className?: string;
   delay?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    return el ? observeReveal(el) : undefined;
+  }, []);
+
   return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
-      variants={{
-        hidden: { opacity: 0, y: 28 },
-        show: { opacity: 1, y: 0, transition: { duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] } },
-      }}
+    <div
+      ref={ref}
+      className={cn("reveal", className)}
+      style={delay ? ({ "--reveal-delay": `${delay}s` } as CSSProperties) : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 

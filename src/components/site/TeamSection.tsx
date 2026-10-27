@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "motion/react";
+import { m as motion } from "motion/react";
 import { Reveal } from "./primitives";
 import musab from "@/assets/team/musab.webp";
 import isbah from "@/assets/team/isbah.webp";

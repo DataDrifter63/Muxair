@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "motion/react";
+import { AnimatePresence, m as motion, useScroll, useMotionValueEvent } from "motion/react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";

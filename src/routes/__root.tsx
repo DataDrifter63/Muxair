@@ -1,4 +1,3 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Navbar } from "../components/site/Navbar";
 import { Footer } from "../components/site/Footer";
 import { CustomCursor } from "../components/site/CustomCursor";
@@ -7,13 +6,14 @@ import { CookieConsent } from "../components/site/CookieConsent";
 import {
   Outlet,
   Link,
-  createRootRouteWithContext,
+  createRootRoute,
   useRouter,
   useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { LazyMotion, domAnimation } from "motion/react";
 
 import appCss from "../styles.css?url";
 import { reportClientError } from "../lib/error-reporting";
@@ -79,7 +79,7 @@ function ErrorComponent({ error, reset }: { error: unknown; reset: () => void })
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -158,19 +158,18 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isAdmin = pathname.startsWith("/admin");
 
   return (
     <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
+      <LazyMotion features={domAnimation}>
         {isAdmin ? null : <CustomCursor />}
         {isAdmin ? null : <Navbar />}
         <Outlet />
         {isAdmin ? null : <Footer />}
         {isAdmin ? null : <CookieConsent />}
-      </QueryClientProvider>
+      </LazyMotion>
     </ThemeProvider>
   );
 }

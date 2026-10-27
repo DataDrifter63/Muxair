@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { m as motion, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef } from "react";
 import { ArrowRight, MessagesSquare, PenTool, Rocket, Search } from "lucide-react";
 import { MagneticButton, Reveal, SectionHeading } from "./primitives";

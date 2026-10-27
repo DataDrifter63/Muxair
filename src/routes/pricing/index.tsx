@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "motion/react";
+import { m as motion } from "motion/react";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
 import { RelatedLinks } from "@/components/site/RelatedLinks";

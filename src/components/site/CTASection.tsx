@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { m as motion } from "motion/react";
 import { ArrowRight, PhoneCall, type LucideIcon } from "lucide-react";
 import { MagneticButton, Reveal } from "./primitives";
 

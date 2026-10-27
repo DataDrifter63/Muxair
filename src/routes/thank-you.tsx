@@ -17,7 +17,7 @@
 // }
 
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "motion/react";
+import { m as motion } from "motion/react";
 import { ArrowRight, CalendarClock, CheckCircle2, MessageCircle, PhoneCall } from "lucide-react";
 import { MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
 import { SITE_URL } from "@/lib/site-data";

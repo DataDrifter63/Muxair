@@ -1,4 +1,4 @@
-// import { motion } from "motion/react";
+// import { m as motion } from "motion/react";
 // import { Check, X } from "lucide-react";
 // import { Reveal, SectionHeading } from "./primitives";
 
@@ -100,7 +100,7 @@
 //   );
 // }
 
-import { motion } from "motion/react";
+import { m as motion } from "motion/react";
 import { Check, X } from "lucide-react";
 import { Reveal } from "./primitives";
 

@@ -1,4 +1,4 @@
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { m as motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Flame, PlayCircle, Snowflake } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import heroSite1 from "@/assets/hero-site-1.webp";
@@ -174,47 +174,33 @@ export function Hero() {
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2 lg:gap-10 lg:px-8">
         <div className="min-w-0">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary backdrop-blur-md"
-          >
+          <span className="hero-rise inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary backdrop-blur-md">
             <Snowflake className="h-3.5 w-3.5" />
             HVAC-only growth studio
             <Flame className="h-3.5 w-3.5 text-heat" />
-          </motion.span>
+          </span>
 
           <h1 className="mt-6 font-display text-[clamp(1.75rem,9vw,2.6rem)] leading-[1.05] sm:text-5xl lg:text-[2.3rem] xl:text-[2.7rem]">
             {headline.map((line, i) => (
               <span key={line} className="block overflow-hidden text-balance">
-                <motion.span
-                  className="block"
-                  initial={{ y: "110%", opacity: 0 }}
-                  animate={{ y: "0%", opacity: 1 }}
-                  transition={{ duration: 0.85, delay: 0.15 + i * 0.11, ease: [0.22, 1, 0.36, 1] }}
-                >
+                <span className="hero-line block" style={{ animationDelay: `${0.05 + i * 0.09}s` }}>
                   {i === 1 ? <span className="text-gradient-cool">{line}</span> : line}
-                </motion.span>
+                </span>
               </span>
             ))}
           </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.65 }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+          <p
+            style={{ animationDelay: "0.2s" }}
+            className="hero-rise mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
           >
             We're a specialist web design agency working exclusively with heating, cooling, and air
             quality businesses. No generalists. No guesswork.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.78 }}
-            className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
+          <div
+            style={{ animationDelay: "0.3s" }}
+            className="hero-rise mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
           >
             <MagneticButton href="#contact" size="lg" className="w-full justify-center sm:w-auto">
               Get a Free Strategy Call
@@ -229,13 +215,11 @@ export function Hero() {
               <PlayCircle className="h-4 w-4" />
               See Our Work
             </MagneticButton>
-          </motion.div>
+          </div>
 
-          <motion.ul
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.95 }}
-            className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground sm:mt-9 sm:text-xs sm:tracking-[0.16em]"
+          <ul
+            style={{ animationDelay: "0.45s" }}
+            className="hero-rise mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground sm:mt-9 sm:text-xs sm:tracking-[0.16em]"
           >
             {["Top-Rated on Upwork", "7 Years Experience", "HVAC-Only Studio"].map((t) => (
               <li key={t} className="flex items-center gap-2.5">
@@ -243,7 +227,7 @@ export function Hero() {
                 <span>{t.trim()}</span>
               </li>
             ))}
-          </motion.ul>
+          </ul>
         </div>
 
         <motion.div
