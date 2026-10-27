@@ -255,6 +255,33 @@
   }
 }
 
+/*
+ * Rendering cost: big CSS blur() filters and backdrop-filters are expensive to paint (especially on
+ * phones and in speed tests), so decorative glows are drawn with a soft radial mask instead of a
+ * blur, and cards skip the backdrop blur (they sit on plain backgrounds, so it is barely visible).
+ * The navbar, dropdowns and cookie banner (backdrop-blur-xl) keep their blur.
+ * If you use a new blur-[Npx] size for a glow, add it to the list below.
+ */
+.blur-\[60px\],
+.blur-\[70px\],
+.blur-\[80px\],
+.blur-\[90px\],
+.blur-\[100px\],
+.blur-\[110px\],
+.blur-\[120px\],
+.blur-\[130px\],
+.blur-\[140px\] {
+  filter: none;
+  -webkit-mask-image: radial-gradient(closest-side, rgb(0 0 0 / 0.75), transparent);
+  mask-image: radial-gradient(closest-side, rgb(0 0 0 / 0.75), transparent);
+}
+
+.backdrop-blur-md,
+.backdrop-blur-sm {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 /* <Reveal>: fades/slides content in when it scrolls into view (see primitives.tsx). */
 .reveal {
   opacity: 0;
