@@ -242,9 +242,9 @@ export function TestimonialsSection() {
           subtitle="Some of our clients have shared their experiences on camera. They come from different industries, but they have one thing in common: a website that works for their business."
         />
 
-        <div className="mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-3 sm:mt-14 sm:gap-5 lg:grid-cols-3">
+        <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-5 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((t, i) => (
-            <Reveal key={t.name} delay={i * 0.08}>
+            <Reveal key={t.name} delay={i * 0.08} className="mx-auto w-full max-w-sm sm:max-w-none">
               <motion.button
                 type="button"
                 onClick={() => setActive(t)}
@@ -296,13 +296,13 @@ export function TestimonialsSection() {
                   />
                 ) : null}
 
-                <span className="absolute inset-0 flex items-center justify-center pb-16 sm:pb-0">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-foreground/40 bg-background/40 backdrop-blur-md transition-transform sm:h-14 sm:w-14 duration-300 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary/20">
+                <span className="absolute inset-0 flex items-center justify-center">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full border border-foreground/40 bg-background/40 backdrop-blur-md transition-transform duration-300 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary/20">
                     <Play className="h-5 w-5 translate-x-0.5 text-foreground" fill="currentColor" />
                   </span>
                 </span>
 
-                <div className="relative z-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 pt-12 sm:p-5 sm:pt-14">
+                <div className="relative z-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 pt-14">
                   <p className="text-sm font-semibold text-white">{t.name}</p>
                   <p className="mt-0.5 text-xs text-white/80">{t.role}</p>
                   <span
@@ -315,7 +315,10 @@ export function TestimonialsSection() {
             </Reveal>
           ))}
 
-          <Reveal delay={testimonials.length * 0.08} className="col-span-2 sm:col-span-1">
+          <Reveal
+            delay={testimonials.length * 0.08}
+            className="mx-auto w-full max-w-sm sm:max-w-none"
+          >
             <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-primary/40 bg-primary/[0.04] px-7 py-10 text-center sm:aspect-[3/4] sm:py-7">
               <div
                 className="pointer-events-none absolute -top-20 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-primary/20 blur-[80px]"
