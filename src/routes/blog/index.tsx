@@ -251,7 +251,7 @@ function BlogIndex() {
           <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <Reveal>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap justify-center gap-2">
                 {categories.map((c) => (
                   <button
                     key={c}

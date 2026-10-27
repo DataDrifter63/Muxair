@@ -1,0 +1,31 @@
+# Muxair
+
+> Muxair is a web design and digital marketing agency that works exclusively with HVAC (heating, cooling and air quality) companies. We build fast, mobile-first websites and run local SEO, Google Ads and Meta Ads, with a focus on booked jobs rather than just traffic.
+
+Website: https://muxair.com
+Contact: hello@muxair.com
+Audience: HVAC business owners in the United States, United Kingdom and Canada.
+
+## Services
+
+- [HVAC Website Design](https://muxair.com/services/website): Custom, mobile-first websites built to rank locally and turn visitors into calls and enquiries. Packages start at $1,200 (USD).
+- [HVAC Local SEO](https://muxair.com/services/seo): Google Business Profile, on-page SEO and monthly reporting to win Google Search and Google Maps visibility. From $500 per month.
+- [Google Ads Management](https://muxair.com/services/google-ads): Campaigns built around seasonal demand and the services you want to promote. From $400 per month, ad spend billed separately.
+- [Meta Ads (Facebook and Instagram)](https://muxair.com/services/meta-ads): Ad campaigns for awareness, retargeting and lead generation. From $400 per month, ad spend billed separately.
+- [Website Maintenance](https://muxair.com/services/maintenance): Monitoring, backups, updates and priority support. From $79 per month.
+- [All services overview](https://muxair.com/services)
+
+## Key pages
+
+- [Pricing](https://muxair.com/pricing): Website packages Foundation (from $1,200), Growth (from $2,500) and Complete (from $5,000), plus monthly SEO, ads and maintenance plans. Clear pricing, no hidden fees.
+- [Process](https://muxair.com/process): The 5-step process from discovery call to launch and handover, typically about 30 days for a Foundation site.
+- [Work and case studies](https://muxair.com/work): Real HVAC website and marketing projects with results.
+- [About](https://muxair.com/about): The small specialist team behind Muxair.
+- [Blog](https://muxair.com/blog): Practical advice on HVAC website design, local SEO, Google Ads and digital marketing.
+- [Contact](https://muxair.com/contact): Book a free 30-minute call or request a quote.
+
+## Optional
+
+- [Privacy Policy](https://muxair.com/privacy-policy)
+- [Terms of Service](https://muxair.com/terms)
+- [Sitemap](https://muxair.com/sitemap.xml)
