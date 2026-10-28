@@ -133,12 +133,21 @@ function AboutPage() {
                 developers, no agency that needs a Gas Safe engineer explained to them. Just a small
                 team that works on your site personally, start to finish.
               </p>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <MagneticButton href="/contact" size="lg">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
+                <MagneticButton
+                  href="/contact"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   Get a Free Strategy Call
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
-                <MagneticButton href="/services" variant="ghost" size="lg">
+                <MagneticButton
+                  href="/services"
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   See Our Services
                 </MagneticButton>
               </div>
@@ -180,7 +189,7 @@ function AboutPage() {
               />
             </Reveal>
 
-            <Reveal delay={0.1}>
+            <Reveal delay={0.1} className="text-center lg:text-left">
               <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                 Why HVAC

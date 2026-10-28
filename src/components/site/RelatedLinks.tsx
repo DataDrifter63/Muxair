@@ -32,7 +32,7 @@ export function RelatedLinks({ exclude }: { exclude?: string }) {
   return (
     <section aria-label="Explore more" className="py-12">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <h2 className="font-display text-2xl">Explore more</h2>
+        <h2 className="text-center font-display text-2xl lg:text-left">Explore more</h2>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((l) => (
             <li key={l.to}>
