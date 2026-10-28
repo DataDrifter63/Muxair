@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
 import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { Counter, MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
@@ -147,13 +147,31 @@ function WorkIndex() {
                 Every project below is a heating, cooling, or air quality business, no portfolio
                 padding from unrelated industries.
               </p>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
+                <MagneticButton
+                  href="/contact"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
+                  Get a Free Strategy Call
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </MagneticButton>
+                <MagneticButton
+                  href="/services"
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
+                  See Our Services
+                </MagneticButton>
+              </div>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:grid-cols-3 sm:px-10">
+              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
-                    <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+                    <p className="whitespace-nowrap font-display text-xl font-bold text-foreground min-[400px]:text-2xl sm:text-3xl">
                       <Counter to={s.to} prefix={s.prefix ?? ""} suffix={s.suffix} />
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
