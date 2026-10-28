@@ -69,6 +69,7 @@ export function SolutionSection() {
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <SectionHeading
             align="left"
+            className="mx-auto text-center lg:mx-0 lg:text-left"
             eyebrow="The solution"
             title={
               <>
@@ -77,7 +78,7 @@ export function SolutionSection() {
               </>
             }
           />
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} className="text-center lg:text-left">
             <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
               We've spent years studying what makes HVAC customers call. Every design decision,
               every headline, every button placement is backed by data from 20+ HVAC websites we've

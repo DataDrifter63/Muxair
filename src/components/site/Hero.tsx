@@ -131,6 +131,13 @@ function BrowserFrame({
   );
 }
 
+const trustItems = [
+  "Top-Rated on Upwork",
+  "7 Years Experience",
+  "HVAC-Only Studio",
+  "20+ HVAC Websites Built",
+];
+
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -173,7 +180,7 @@ export function Hero() {
       </div>
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2 lg:gap-10 lg:px-8">
-        <div className="min-w-0">
+        <div className="min-w-0 text-center lg:text-left">
           <span className="hero-rise inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary backdrop-blur-md">
             <Snowflake className="h-3.5 w-3.5" />
             HVAC-only growth studio
@@ -192,7 +199,7 @@ export function Hero() {
 
           <p
             style={{ animationDelay: "0.2s" }}
-            className="hero-rise mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+            className="hero-rise mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:mx-0"
           >
             We're a specialist web design agency working exclusively with heating, cooling, and air
             quality businesses. No generalists. No guesswork.
@@ -200,7 +207,7 @@ export function Hero() {
 
           <div
             style={{ animationDelay: "0.3s" }}
-            className="hero-rise mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center"
+            className="hero-rise mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center lg:justify-start"
           >
             <MagneticButton href="#contact" size="lg" className="w-full justify-center sm:w-auto">
               Get a Free Strategy Call
@@ -219,12 +226,15 @@ export function Hero() {
 
           <ul
             style={{ animationDelay: "0.45s" }}
-            className="hero-rise mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground sm:mt-9 sm:text-xs sm:tracking-[0.16em]"
+            className="hero-rise mx-auto mt-8 grid max-w-md grid-cols-2 gap-2.5 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground sm:mt-9 sm:max-w-lg sm:gap-3 sm:text-xs sm:tracking-[0.14em] lg:mx-0"
           >
-            {["Top-Rated on Upwork", "7 Years Experience", "HVAC-Only Studio"].map((t) => (
-              <li key={t} className="flex items-center gap-2.5">
-                <span className="h-1 w-1 rounded-full bg-primary/70" />
-                <span>{t.trim()}</span>
+            {trustItems.map((t) => (
+              <li
+                key={t}
+                className="flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/40 px-3 py-2.5 text-center leading-snug lg:justify-start lg:text-left"
+              >
+                <span className="h-1 w-1 flex-none rounded-full bg-primary/70" />
+                <span>{t}</span>
               </li>
             ))}
           </ul>

@@ -68,15 +68,23 @@ export function SectionHeading({
   subtitle,
   align = "center",
   as: As = "h2",
+  className,
 }: {
   eyebrow?: string;
   title: ReactNode;
   subtitle?: string;
   align?: "center" | "left";
   as?: "h2" | "h3";
+  className?: string;
 }) {
   return (
-    <Reveal className={cn("max-w-3xl", align === "center" ? "mx-auto text-center" : "text-left")}>
+    <Reveal
+      className={cn(
+        "max-w-3xl",
+        align === "center" ? "mx-auto text-center" : "text-left",
+        className,
+      )}
+    >
       {eyebrow ? (
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
           <span className="h-1.5 w-1.5 rounded-full bg-primary" />

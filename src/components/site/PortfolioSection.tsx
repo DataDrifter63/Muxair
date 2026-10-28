@@ -67,8 +67,7 @@ const highlights: PortfolioHighlight[] = [
       "https://res.cloudinary.com/dmaibvnp/image/upload/v1792674111/eep-before-cover-1600x1200.png",
     afterImage:
       "https://res.cloudinary.com/dmaibvnp/image/upload/v1792674105/eep-after-cover-1600x1200.png",
-    chartCaption:
-      "From an outdated, hard-to-navigate site to a fast, modern design built to convert.",
+    chartCaption: "From outdated to fast and modern.",
     verifiedLabel: "BEFORE & AFTER · FULL REDESIGN",
   },
   {
@@ -195,15 +194,16 @@ export function PortfolioSection() {
     <section id="work" className="section-shell relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 grid-tech opacity-15" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+        <div className="flex flex-col items-stretch justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading
+            className="mx-auto text-center sm:mx-0 sm:text-left"
             eyebrow="Case-studies"
             title="Work That Speaks for Itself"
             subtitle="Every project is different, some are full redesigns, some come with measurable growth. Here's a look at the work and the outcomes so far."
             align="left"
           />
-          <Reveal delay={0.1}>
-            <MagneticButton href="/work" variant="ghost">
+          <Reveal delay={0.1} className="w-full sm:w-auto">
+            <MagneticButton href="/work" variant="ghost" className="w-full sm:w-auto">
               See All Work
             </MagneticButton>
           </Reveal>
@@ -222,19 +222,19 @@ export function PortfolioSection() {
                   }`}
                 >
                   {/* Text side (below the visual on mobile) */}
-                  <div className="order-2 min-w-0 lg:order-none">
+                  <div className="order-2 min-w-0 text-center lg:order-none lg:text-left">
                     <span
                       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] ${c.border} ${c.bg} ${c.text}`}
                     >
                       {item.name}
                     </span>
 
-                    <h3 className="mt-4 max-w-lg text-balance font-display text-xl leading-snug sm:text-2xl">
+                    <h3 className="mx-auto mt-4 max-w-lg text-balance font-display text-xl leading-snug sm:text-2xl lg:mx-0">
                       {item.headline}
                     </h3>
 
                     {/* Before / After comparison */}
-                    <div className="mt-6 grid grid-cols-2 gap-4 border-t border-border pt-5 sm:mt-7 sm:gap-5 sm:pt-6">
+                    <div className="mt-6 grid grid-cols-2 gap-4 border-t border-border pt-5 text-left sm:mt-7 sm:gap-5 sm:pt-6">
                       <div>
                         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                           {item.before.label}
@@ -274,21 +274,21 @@ export function PortfolioSection() {
                     </div>
 
                     {/* Stat pills */}
-                    <div className="mt-6 flex flex-wrap gap-3">
+                    <div className="mt-6 grid grid-cols-2 gap-2 text-left sm:flex sm:flex-wrap sm:gap-3">
                       {item.pills.map((p) => (
                         <div
                           key={p.label}
-                          className="flex items-center gap-2 rounded-xl border border-border bg-surface/50 px-3.5 py-2.5 backdrop-blur-md"
+                          className="flex items-center justify-center gap-2 rounded-xl border border-border bg-surface/50 px-2 py-2.5 text-center backdrop-blur-md sm:justify-start sm:px-3.5 sm:text-left"
                         >
                           <ArrowUpRight
-                            className={`h-4 w-4 flex-none ${c.text}`}
+                            className={`hidden h-4 w-4 flex-none sm:block ${c.text}`}
                             strokeWidth={2.4}
                           />
                           <div>
-                            <p className="font-display text-sm font-bold leading-none text-foreground">
+                            <p className="whitespace-nowrap font-display text-[12px] font-bold leading-none text-foreground min-[380px]:text-[13px] sm:text-sm">
                               {p.value}
                             </p>
-                            <p className="mt-1 text-[11px] leading-none text-muted-foreground">
+                            <p className="mt-1 text-[10px] leading-tight text-muted-foreground min-[380px]:text-[11px] sm:leading-none">
                               {p.label}
                             </p>
                           </div>
@@ -296,13 +296,15 @@ export function PortfolioSection() {
                       ))}
                     </div>
 
-                    <a
+                    <MagneticButton
                       href={item.href}
-                      className={`group mt-7 inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}
+                      variant="cool"
+                      size="lg"
+                      className="mt-7 w-full justify-center sm:w-auto"
                     >
                       View Full Case Study
                       <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </a>
+                    </MagneticButton>
                   </div>
 
                   {/* Visual side — verified growth chart only (no search-result mockup) */}
