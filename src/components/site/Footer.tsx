@@ -31,9 +31,9 @@ export function Footer() {
     <footer id="footer" className="relative border-t border-border bg-background">
       <div className="pointer-events-none absolute inset-0 grid-tech opacity-15" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-5 py-16 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-[2fr_1fr_1fr_1fr]">
-          {/* Brand — 40% */}
-          <div>
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-[2fr_1fr_1fr_1fr] md:gap-12">
+          {/* Brand — 40% (centered on mobile, left on desktop) */}
+          <div className="col-span-2 flex flex-col items-center text-center md:col-span-1 md:items-start md:text-left">
             <Link to="/" className="flex items-center">
               <img
                 src={logoLight}
@@ -98,12 +98,15 @@ export function Footer() {
             </ul>
           </nav>
 
-          {/* Contact — 20% */}
-          <div>
+          {/* Contact — 20% (full row under the two link columns on mobile) */}
+          <div className="col-span-2 md:col-span-1">
             <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
               Contact
             </h3>
-            <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
+            <p className="mt-2 text-xs text-muted-foreground/80 md:hidden">
+              We respond within 1-2 business days
+            </p>
+            <ul className="mt-4 space-y-3 text-sm text-muted-foreground md:mt-5">
               <li>
                 <a
                   href="mailto:hello@muxair.com"
@@ -122,7 +125,7 @@ export function Footer() {
                   +44 7806 982999
                 </a>
               </li>
-              <li className="text-xs text-muted-foreground/80">
+              <li className="hidden text-xs text-muted-foreground/80 md:list-item">
                 We respond within 1-2 business days
               </li>
             </ul>
@@ -145,9 +148,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-border pt-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Muxair</p>
-          <ul className="flex items-center gap-5">
+        <div className="mt-12 flex flex-col items-center gap-1 border-t border-border pt-6 text-center text-xs text-muted-foreground sm:mt-14 sm:flex-row sm:justify-between sm:gap-3 sm:pt-7 sm:text-left">
+          <p className="order-2 sm:order-1">© 2026 Muxair</p>
+          <ul className="order-1 flex flex-wrap items-center justify-center gap-x-5 sm:order-2">
             <li>
               <Link
                 to="/privacy-policy"
