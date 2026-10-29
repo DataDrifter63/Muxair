@@ -75,8 +75,11 @@ export function applyConsent(c: CookieConsent | null): void {
       w[`ga-disable-${GA_ID}`] = false;
       if (!w.gtag) {
         w.dataLayer = w.dataLayer ?? [];
-        w.gtag = function gtag(...args: unknown[]) {
-          (w.dataLayer as unknown[]).push(args);
+        // gtag.js only understands an `arguments` object in the dataLayer, NOT a plain
+        // array (rest params), so this must stay a classic `function` using `arguments`.
+        w.gtag = function gtag() {
+          // eslint-disable-next-line prefer-rest-params
+          (w.dataLayer as unknown[]).push(arguments);
         };
         w.gtag("js", new Date());
         addScript(`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`, "ga4-script");
