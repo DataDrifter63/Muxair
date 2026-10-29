@@ -3,6 +3,7 @@ import { m as motion } from "motion/react";
 import {
   ArrowRight,
   BadgeCheck,
+  Check,
   Facebook,
   Layers,
   MapPin,
@@ -183,12 +184,21 @@ function ServicesIndex() {
                 Five specialist services, one team that only works with heating, cooling and air
                 quality companies. Pick one, or combine them into a full growth system.
               </p>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <MagneticButton href="/contact" size="lg">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
+                <MagneticButton
+                  href="/contact"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   Book a Free Strategy Call
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
-                <MagneticButton href="/work" variant="ghost" size="lg">
+                <MagneticButton
+                  href="/work"
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   See Our Work
                 </MagneticButton>
               </div>
@@ -433,11 +443,11 @@ function ServicesIndex() {
                   className="pointer-events-none absolute inset-0 grid-tech opacity-15"
                   aria-hidden
                 />
-                <div className="relative flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
+                <div className="relative grid justify-center gap-y-4 sm:flex sm:flex-wrap sm:items-center sm:gap-x-12 sm:gap-y-5">
                   {included.map((item) => (
                     <div key={item} className="flex items-center gap-3">
                       <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary text-primary-foreground">
-                        <BadgeCheck className="h-3.5 w-3.5" strokeWidth={2.5} />
+                        <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
                       </span>
                       <p className="text-sm leading-snug text-foreground/90">{item}</p>
                     </div>
