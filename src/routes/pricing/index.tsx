@@ -20,7 +20,11 @@ const title = "HVAC Website Design & Marketing Pricing | Muxair";
 const description =
   "Explore Muxair's pricing for HVAC website design, local SEO and digital advertising. Website packages start at $1,200, with clear pricing and no hidden fees.";
 
-const trustStats = [{ display: "$0", label: "Hidden setup fees" }];
+const trustStats = [
+  { display: "$0", label: "Hidden setup fees" },
+  { display: "72 hrs", label: "Fixed-price quote turnaround" },
+  { display: "100%", label: "Pricing agreed in writing upfront" },
+];
 
 const websitePlans = [
   {
@@ -338,25 +342,34 @@ function PricingPage() {
                 depends on your business, but it stays within the range shown here, never a surprise
                 jump to something else entirely.
               </p>
-              <span className="mx-auto mt-6 inline-flex max-w-xl items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-foreground">
+              <span className="mx-auto mt-6 inline-flex max-w-xl items-center justify-center gap-2 text-balance rounded-full border border-primary/30 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-foreground">
                 Most agencies hide their pricing. We don't think that builds trust — so here it is.
               </span>
-              <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
-                <MagneticButton href="/contact" size="lg">
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
+                <MagneticButton
+                  href="/contact"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   Get a Free Strategy Call
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
-                <MagneticButton href="/services" variant="ghost" size="lg">
+                <MagneticButton
+                  href="/services"
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   See Our Services
                 </MagneticButton>
               </div>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mx-auto mt-14 grid max-w-xs grid-cols-1 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
+              <div className="mx-auto mt-14 grid max-w-3xl grid-cols-3 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:mt-16 sm:px-10">
                 {trustStats.map((s) => (
                   <div key={s.label} className="text-center">
-                    <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+                    <p className="whitespace-nowrap font-display text-xl font-bold text-foreground min-[400px]:text-2xl sm:text-3xl">
                       {s.display}
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
