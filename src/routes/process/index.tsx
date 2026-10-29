@@ -261,12 +261,21 @@ function ProcessPage() {
                 companies, from the first call to the day your site goes live. Running SEO or Ads
                 only? See how that works on each service page.
               </p>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <MagneticButton href="/contact" size="lg">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
+                <MagneticButton
+                  href="/contact"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   Get a Free Strategy Call
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
-                <MagneticButton href="/work" variant="ghost" size="lg">
+                <MagneticButton
+                  href="/work"
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   See Our Work
                 </MagneticButton>
               </div>
