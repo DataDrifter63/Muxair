@@ -148,8 +148,8 @@ export const Route = createFileRoute("/services/seo")({
   }),
 });
 
-const stats: { to?: number; suffix?: string; text?: string; label: string }[] = [
-  { to: 3, suffix: " months", label: "Minimum commitment, stated upfront" },
+const stats: { to?: number; suffix?: string; unit?: string; text?: string; label: string }[] = [
+  { to: 3, suffix: "", unit: "months", label: "Minimum commitment, stated upfront" },
   { text: "Monthly", label: "Ranking and traffic report in plain English" },
   { to: 100, suffix: "%", label: "HVAC-focused strategy, no generic SEO playbooks" },
 ];
@@ -259,23 +259,37 @@ function SeoPage() {
                 Local SEO built specifically around how homeowners and businesses search for HVAC
                 services, not generic SEO advice recycled from a different industry.
               </p>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <MagneticButton href="/contact" size="lg">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
+                <MagneticButton
+                  href="/contact"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   Book a Free Strategy Call
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
-                <MagneticButton href="/pricing" variant="ghost" size="lg">
+                <MagneticButton
+                  href="/pricing"
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   See Pricing
                 </MagneticButton>
               </div>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
+              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-3 rounded-2xl border border-border bg-surface/40 px-4 py-7 backdrop-blur-md sm:gap-4 sm:px-10">
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
-                    <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+                    <p className="whitespace-nowrap font-display text-lg font-bold text-foreground min-[400px]:text-xl sm:text-3xl">
                       {s.to !== undefined ? <Counter to={s.to} suffix={s.suffix ?? ""} /> : s.text}
+                      {s.unit ? (
+                        <span className="ml-1 text-xs font-semibold min-[400px]:text-sm sm:text-xl">
+                          {s.unit}
+                        </span>
+                      ) : null}
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
                       {s.label}
@@ -347,6 +361,7 @@ function SeoPage() {
               }
               subtitle="Most clients see meaningful movement within 3 to 6 months. Here's what we're doing along the way."
               align="left"
+              className="mx-auto text-center lg:mx-0 lg:text-left"
             />
             <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {timeline.map((step, i) => (
@@ -390,12 +405,12 @@ function SeoPage() {
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-primary/[0.05] px-7 py-8 backdrop-blur-md glow-cool sm:px-10">
                 <div className="pointer-events-none absolute -top-16 left-1/2 h-40 w-72 -translate-x-1/2 rounded-full bg-primary/18 blur-[100px]" />
-                <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+                <div className="relative flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:items-center sm:text-left">
                   <div>
                     <h3 className="font-display text-xl sm:text-2xl">
                       SEO Retainer starts at $500/mo
                     </h3>
-                    <p className="mt-2 max-w-lg text-sm text-muted-foreground">
+                    <p className="mx-auto mt-2 max-w-lg text-sm text-muted-foreground sm:mx-0">
                       Your exact monthly price is confirmed with you before you commit, with a
                       3-month minimum and no lock-in after that. Full breakdown on the pricing page.
                     </p>
