@@ -146,8 +146,14 @@ export const Route = createFileRoute("/services/website")({
   }),
 });
 
-const stats = [
-  { from: 30, to: 45, suffix: " days", label: "Typical time to launch" },
+const stats: {
+  from?: number;
+  to: number;
+  suffix: string;
+  unit?: string;
+  label: string;
+}[] = [
+  { from: 30, to: 45, suffix: "", unit: "days", label: "Typical time to launch" },
   { from: 5, to: 15, suffix: "", label: "Custom-designed pages, depending on package" },
   { to: 100, suffix: "%", label: "Mobile-first builds" },
 ];
@@ -264,22 +270,31 @@ function WebsitesPage() {
                 managers search for and choose an HVAC company, not a recycled template with your
                 logo dropped in.
               </p>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <MagneticButton href="/contact" size="lg">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
+                <MagneticButton
+                  href="/contact"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   Book a Free Strategy Call
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
-                <MagneticButton href="/pricing" variant="ghost" size="lg">
+                <MagneticButton
+                  href="/pricing"
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   See Pricing
                 </MagneticButton>
               </div>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
+              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-3 rounded-2xl border border-border bg-surface/40 px-4 py-7 backdrop-blur-md sm:gap-4 sm:px-10">
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
-                    <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+                    <p className="whitespace-nowrap font-display text-lg font-bold text-foreground min-[400px]:text-xl sm:text-3xl">
                       {s.from !== undefined ? (
                         <>
                           <Counter to={s.from} />-<Counter to={s.to} suffix={s.suffix} />
@@ -287,6 +302,11 @@ function WebsitesPage() {
                       ) : (
                         <Counter to={s.to} suffix={s.suffix} />
                       )}
+                      {s.unit ? (
+                        <span className="ml-1 text-xs font-semibold min-[400px]:text-sm sm:text-xl">
+                          {s.unit}
+                        </span>
+                      ) : null}
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
                       {s.label}
@@ -357,6 +377,7 @@ function WebsitesPage() {
               }
               subtitle="Most Foundation sites go live in about 30 days. Larger builds take 30 to 45 days, and we confirm your exact timeline in your proposal."
               align="left"
+              className="mx-auto text-center lg:mx-0 lg:text-left"
             />
             <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               {timeline.map((step, i) => (
@@ -394,10 +415,10 @@ function WebsitesPage() {
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-primary/[0.05] px-7 py-8 backdrop-blur-md glow-cool sm:px-10">
                 <div className="pointer-events-none absolute -top-16 left-1/2 h-40 w-72 -translate-x-1/2 rounded-full bg-primary/18 blur-[100px]" />
-                <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+                <div className="relative flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:items-center sm:text-left">
                   <div>
                     <h3 className="font-display text-xl sm:text-2xl">Websites start at $1,200</h3>
-                    <p className="mt-2 max-w-lg text-sm text-muted-foreground">
+                    <p className="mx-auto mt-2 max-w-lg text-sm text-muted-foreground sm:mx-0">
                       Your final price is a fixed quote, agreed with you before any work begins.
                       Full package breakdown on the pricing page.
                     </p>

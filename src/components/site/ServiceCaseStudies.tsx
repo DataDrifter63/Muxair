@@ -72,9 +72,14 @@ export function ServiceCaseStudies({
     <section className="section-shell border-y border-border bg-surface/25">
       <div className="pointer-events-none absolute inset-0 grid-tech opacity-20" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-          <SectionHeading eyebrow="Recent results" title={title} align="left" />
-          <Reveal delay={0.1}>
+        <div className="flex flex-col items-stretch justify-between gap-6 sm:flex-row sm:items-end">
+          <SectionHeading
+            eyebrow="Recent results"
+            title={title}
+            align="left"
+            className="mx-auto text-center sm:mx-0 sm:text-left"
+          />
+          <Reveal delay={0.1} className="text-center sm:text-left">
             <Link
               to="/work"
               className={`group inline-flex items-center gap-1.5 text-sm font-semibold ${t.text}`}
