@@ -98,7 +98,7 @@ const highlights: PortfolioHighlight[] = [
       { value: "2x CTR", label: "CTR Doubled from 0.4% to 0.8%" },
     ],
     chartImage:
-      "https://res.cloudinary.com/dmaibvnp/image/upload/v1792673406/ruzz-seo-chart-1600x1200.png",
+      "https://res.cloudinary.com/dmaibvnp/image/upload/v1793357604/Ruzz_Global_SEO_Case_Study_by_Muxair.jpg.jpg",
     chartCaption: "Source: Google Search Console",
     verifiedLabel: "SEO CAMPAIGN RESULTS · 4 WEEKS",
   },

@@ -52,6 +52,42 @@ const testimonials = [
   },
 ];
 
+type Testimonial = (typeof testimonials)[number];
+
+/** Stars + quote + author row. Rendered once visibly and once per review as an invisible sizer. */
+function ReviewBody({ t }: { t: Testimonial }) {
+  return (
+    <>
+      <div className="relative mt-6 flex gap-1" aria-hidden>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+        ))}
+      </div>
+
+      <blockquote className="mt-5 text-balance text-lg leading-relaxed text-foreground/95 sm:text-xl">
+        {t.quote}
+      </blockquote>
+
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
+        <div className="flex items-center gap-3">
+          <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-sm font-bold text-primary">
+            {t.initials}
+          </span>
+          <span className="leading-tight">
+            <span className="block text-sm font-semibold text-foreground">{t.name}</span>
+            <span className="block text-xs text-muted-foreground">
+              {t.role} · {t.location}
+            </span>
+          </span>
+        </div>
+        <span className="inline-flex rounded-full border border-heat/30 bg-heat/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-heat">
+          {t.stat}
+        </span>
+      </div>
+    </>
+  );
+}
+
 export function Results() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -101,45 +137,34 @@ export function Results() {
                 &rdquo;
               </span>
 
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative"
-                >
-                  <div className="relative mt-6 flex gap-1" aria-hidden>
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-                    ))}
+              {/*
+                All reviews are stacked in one grid cell: the invisible copies reserve the height
+                of the longest review, so the card (and the section) never changes size when the
+                active review changes. Only the active one is visible and animated.
+              */}
+              <div className="grid">
+                {testimonials.map((t) => (
+                  <div
+                    key={t.name}
+                    aria-hidden
+                    className="invisible pointer-events-none relative col-start-1 row-start-1 select-none"
+                  >
+                    <ReviewBody t={t} />
                   </div>
-
-                  <blockquote className="mt-5 text-balance text-lg leading-relaxed text-foreground/95 sm:text-xl">
-                    {active.quote}
-                  </blockquote>
-
-                  <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-sm font-bold text-primary">
-                        {active.initials}
-                      </span>
-                      <span className="leading-tight">
-                        <span className="block text-sm font-semibold text-foreground">
-                          {active.name}
-                        </span>
-                        <span className="block text-xs text-muted-foreground">
-                          {active.role} · {active.location}
-                        </span>
-                      </span>
-                    </div>
-                    <span className="inline-flex rounded-full border border-heat/30 bg-heat/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-heat">
-                      {active.stat}
-                    </span>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+                ))}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    className="relative col-start-1 row-start-1"
+                  >
+                    <ReviewBody t={active} />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
           </Reveal>
 
@@ -180,13 +205,13 @@ export function Results() {
 
           <div className="mt-10 hidden grid-cols-3 gap-4 sm:grid lg:grid-cols-5">
             {testimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.06}>
+              <Reveal key={t.name} delay={i * 0.06} className="h-full">
                 <motion.button
                   type="button"
                   onClick={() => setIndex(i)}
                   whileHover={{ y: -4 }}
                   className={cn(
-                    "group flex w-full flex-col items-start gap-2 rounded-xl border p-4 text-left backdrop-blur-md transition-colors",
+                    "group flex h-full w-full flex-col items-start gap-2 rounded-xl border p-4 text-left backdrop-blur-md transition-colors",
                     i === index
                       ? "border-primary/50 bg-primary/[0.06]"
                       : "border-border bg-surface/40 hover:border-primary/30",
