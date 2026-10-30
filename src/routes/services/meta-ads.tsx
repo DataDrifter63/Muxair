@@ -150,8 +150,8 @@ export const Route = createFileRoute("/services/meta-ads")({
   }),
 });
 
-const stats: { to?: number; suffix?: string; text?: string; label: string }[] = [
-  { to: 3, suffix: " months", label: "Minimum commitment, stated upfront" },
+const stats: { to?: number; suffix?: string; unit?: string; text?: string; label: string }[] = [
+  { to: 3, suffix: "", unit: "months", label: "Minimum commitment, stated upfront" },
   { text: "Monthly", label: "Plain-English performance report" },
   { to: 100, suffix: "%", label: "Of your ad spend goes straight to Meta" },
 ];
@@ -257,23 +257,38 @@ function MetaAdsPage() {
                 homeowners and property managers in your area, before they've typed a single word
                 into Google.
               </p>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <MagneticButton href="/contact" size="lg" variant="heat">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
+                <MagneticButton
+                  href="/contact"
+                  size="lg"
+                  variant="heat"
+                  className="w-full justify-center sm:w-auto"
+                >
                   Book a Free Strategy Call
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
-                <MagneticButton href="/pricing" variant="ghost" size="lg">
+                <MagneticButton
+                  href="/pricing"
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                >
                   See Pricing
                 </MagneticButton>
               </div>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-4 rounded-2xl border border-border bg-surface/40 px-6 py-7 backdrop-blur-md sm:px-10">
+              <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-3 rounded-2xl border border-border bg-surface/40 px-4 py-7 backdrop-blur-md sm:gap-4 sm:px-10">
                 {stats.map((s) => (
                   <div key={s.label} className="text-center">
-                    <p className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+                    <p className="whitespace-nowrap font-display text-lg font-bold text-foreground min-[400px]:text-xl sm:text-3xl">
                       {s.to !== undefined ? <Counter to={s.to} suffix={s.suffix ?? ""} /> : s.text}
+                      {s.unit ? (
+                        <span className="ml-1 text-xs font-semibold min-[400px]:text-sm sm:text-xl">
+                          {s.unit}
+                        </span>
+                      ) : null}
                     </p>
                     <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground sm:text-xs">
                       {s.label}
@@ -346,6 +361,7 @@ function MetaAdsPage() {
               }
               subtitle="Timing depends on how quickly we get access to your accounts and your approvals."
               align="left"
+              className="mx-auto text-center lg:mx-0 lg:text-left"
             />
             <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {timeline.map((step, i) => (
@@ -383,12 +399,12 @@ function MetaAdsPage() {
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl border border-heat/30 bg-heat/[0.05] px-7 py-8 backdrop-blur-md glow-heat sm:px-10">
                 <div className="pointer-events-none absolute -top-16 left-1/2 h-40 w-72 -translate-x-1/2 rounded-full bg-heat/18 blur-[100px]" />
-                <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+                <div className="relative flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:items-center sm:text-left">
                   <div>
                     <h3 className="font-display text-xl sm:text-2xl">
                       Meta Ads management starts at $400/mo + ad spend
                     </h3>
-                    <p className="mt-2 max-w-lg text-sm text-muted-foreground">
+                    <p className="mx-auto mt-2 max-w-lg text-sm text-muted-foreground sm:mx-0">
                       Ad spend is paid directly to Meta, separate from our management fee. Your
                       exact monthly price is confirmed with you before you commit, with a 3-month
                       minimum. Full breakdown on the pricing page.
