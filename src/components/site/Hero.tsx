@@ -5,7 +5,7 @@ import heroSite1 from "@/assets/hero-site-1.webp";
 import heroSite2 from "@/assets/hero-site-2.webp";
 import { MagneticButton } from "./primitives";
 
-const headline = ["Websites Built for", "HVAC Companies", "That Want More Booked Jobs"];
+const headline = ["Websites, SEO, and Ads for", "HVAC Companies", "That Want More Booked Jobs"];
 
 /**
  * Hero visual: two tilted browser windows whose page screenshots scroll on their own.
@@ -201,8 +201,8 @@ export function Hero() {
             style={{ animationDelay: "0.2s" }}
             className="hero-rise mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:mx-0"
           >
-            We're a specialist web design agency working exclusively with heating, cooling, and air
-            quality businesses. No generalists. No guesswork.
+            We're a specialist web design and marketing agency working exclusively with heating,
+            cooling, and air quality businesses. No generalists. No guesswork.
           </p>
 
           <div
@@ -226,12 +226,12 @@ export function Hero() {
 
           <ul
             style={{ animationDelay: "0.45s" }}
-            className="hero-rise mx-auto mt-8 grid max-w-md grid-cols-2 gap-2.5 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground sm:mt-9 sm:max-w-lg sm:gap-3 sm:text-xs sm:tracking-[0.14em] lg:mx-0"
+            className="hero-rise mx-auto mt-8 flex max-w-md flex-wrap justify-center gap-2 text-[9.5px] font-medium uppercase tracking-[0.04em] text-muted-foreground sm:mt-9 sm:max-w-lg sm:gap-3 sm:text-xs sm:tracking-[0.14em] lg:mx-0 lg:justify-start"
           >
             {trustItems.map((t) => (
               <li
                 key={t}
-                className="flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/40 px-3 py-2.5 text-center leading-snug lg:justify-start lg:text-left"
+                className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-border bg-surface/40 px-2 py-2 sm:gap-2 sm:px-3 sm:py-2.5"
               >
                 <span className="h-1 w-1 flex-none rounded-full bg-primary/70" />
                 <span>{t}</span>
@@ -245,7 +245,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto mt-2 aspect-[1/1.05] w-full min-w-0 max-w-[34rem] lg:mt-0 lg:max-w-none"
+          className="relative mx-auto mt-6 aspect-[1/1.05] w-full min-w-0 max-w-[34rem] lg:mt-0 lg:max-w-none"
         >
           {/* soft glow behind the windows */}
           <div
