@@ -9,7 +9,7 @@ import { services, SITE_URL } from "@/lib/site-data";
 export const Route = createFileRoute("/blog/$slug")({
   component: BlogPostPage,
   loader: async ({ params }) => {
-    const { supabase } = await import("@/lib/supabase");
+    const { supabasePublic: supabase } = await import("@/lib/supabase");
     const { data, error } = await supabase
       .from("blog_posts")
       .select("*")

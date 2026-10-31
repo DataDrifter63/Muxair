@@ -12,7 +12,7 @@ import { SITE_URL } from "@/lib/site-data";
 export const Route = createFileRoute("/work/$slug")({
   component: WorkItemPage,
   loader: async ({ params }) => {
-    const { supabase, isHiddenCaseStudy, fetchRelatedCaseStudies } = await import("@/lib/supabase");
+    const { supabasePublic: supabase, isHiddenCaseStudy, fetchRelatedCaseStudies } = await import("@/lib/supabase");
     const { data, error } = await supabase
       .from("case_studies")
       .select("*")

@@ -3,6 +3,7 @@ import { Footer } from "../components/site/Footer";
 import { CustomCursor } from "../components/site/CustomCursor";
 import { CookieConsent } from "../components/site/CookieConsent";
 import { ScrollToTop } from "../components/site/ScrollToTop";
+import { NavProgress } from "../components/site/NavProgress";
 
 import {
   Outlet,
@@ -166,6 +167,7 @@ function RootComponent() {
     <ThemeProvider>
       <LazyMotion features={domAnimation}>
         {isAdmin ? null : <CustomCursor />}
+        {isAdmin ? null : <NavProgress />}
         {isAdmin ? null : <Navbar />}
         <Outlet />
         {isAdmin ? null : <Footer />}

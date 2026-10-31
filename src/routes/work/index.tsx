@@ -17,7 +17,7 @@ const description =
 export const Route = createFileRoute("/work/")({
   component: WorkIndex,
   loader: async () => {
-    const { supabase, isHiddenCaseStudy } = await import("@/lib/supabase");
+    const { supabasePublic: supabase, isHiddenCaseStudy } = await import("@/lib/supabase");
     const { data, error } = await supabase
       .from("case_studies")
       .select("*")

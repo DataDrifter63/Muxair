@@ -255,7 +255,7 @@ function ContactPage() {
       .filter(Boolean)
       .join("\n\n");
 
-    const { supabase } = await import("@/lib/supabase");
+    const { supabasePublic: supabase } = await import("@/lib/supabase");
     const { error } = await supabase.from("leads").insert({
       full_name: values.fullName,
       email: values.email,

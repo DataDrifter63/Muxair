@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { isHiddenCaseStudy, supabase } from "@/lib/supabase";
+import { isHiddenCaseStudy, supabasePublic as supabase } from "@/lib/supabase";
 import { SITE_URL } from "@/lib/site-data";
 
 // Dynamic sitemap.xml — served by the app's own Node server (works

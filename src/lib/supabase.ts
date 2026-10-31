@@ -10,7 +10,36 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
+/** Full client with login session — used by the admin panel and auth only. */
 export const supabase = createClient(supabaseUrl ?? "", supabaseAnonKey ?? "");
+
+/** Give up on a request that hangs, so a page never waits forever on the database. */
+const REQUEST_TIMEOUT_MS = 7000;
+function fetchWithTimeout(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  const timeout = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
+  const signal =
+    init?.signal && typeof AbortSignal.any === "function"
+      ? AbortSignal.any([init.signal, timeout])
+      : (init?.signal ?? timeout);
+  return fetch(input, { ...init, signal });
+}
+
+/**
+ * Client for public pages (work, blog, service pages, contact form). It has no login session,
+ * so it never touches the browser auth lock (a stuck lock froze every request until a hard
+ * refresh, which made links change the URL but not the page) and its requests time out.
+ */
+export const supabasePublic = createClient(supabaseUrl ?? "", supabaseAnonKey ?? "", {
+  auth: {
+    persistSession: false,
+    autoRefreshToken: false,
+    detectSessionInUrl: false,
+    storageKey: "sb-muxair-public",
+  },
+  // No automatic retries: with the timeout above they would stretch a hung request to 20s+.
+  db: { retry: false },
+  global: { fetch: fetchWithTimeout },
+});
 
 // Matches the `case_studies` table columns — used by /work and /work/$slug.
 export interface WorkItemRow {
@@ -101,7 +130,7 @@ export function isHiddenCaseStudy(row: { slug?: string | null; name?: string | n
 
 export async function fetchServiceCaseStudy(service: string): Promise<WorkItemRow | null> {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabasePublic
       .from("case_studies")
       .select("*")
       .eq("published", true)
@@ -151,7 +180,7 @@ export async function fetchRelatedCaseStudies(
   limit = 3,
 ): Promise<WorkCardRow[]> {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabasePublic
       .from("case_studies")
       .select(
         "slug,name,tone,location,services,badge,category,result,summary,cover_image,created_at",

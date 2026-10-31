@@ -28,7 +28,7 @@ export const Route = createFileRoute("/blog/")({
   // Functionality: posts are loaded live from Supabase (same as the
   // current production blog page) instead of the old static placeholder list.
   loader: async () => {
-    const { supabase } = await import("@/lib/supabase");
+    const { supabasePublic: supabase } = await import("@/lib/supabase");
     const { data, error } = await supabase
       .from("blog_posts")
       .select("*")
