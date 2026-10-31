@@ -2,6 +2,7 @@ import { Navbar } from "../components/site/Navbar";
 import { Footer } from "../components/site/Footer";
 import { CustomCursor } from "../components/site/CustomCursor";
 import { CookieConsent } from "../components/site/CookieConsent";
+import { ScrollToTop } from "../components/site/ScrollToTop";
 
 import {
   Outlet,
@@ -168,6 +169,7 @@ function RootComponent() {
         {isAdmin ? null : <Navbar />}
         <Outlet />
         {isAdmin ? null : <Footer />}
+        {isAdmin ? null : <ScrollToTop />}
         {isAdmin ? null : <CookieConsent />}
       </LazyMotion>
     </ThemeProvider>
