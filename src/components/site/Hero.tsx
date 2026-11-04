@@ -209,12 +209,12 @@ export function Hero() {
             style={{ animationDelay: "0.3s" }}
             className="hero-rise mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center lg:justify-start"
           >
-            <MagneticButton href="#contact" size="lg" className="w-full justify-center sm:w-auto">
+            <MagneticButton href="/contact" size="lg" className="w-full justify-center sm:w-auto">
               Get a Free Strategy Call
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </MagneticButton>
             <MagneticButton
-              href="#work"
+              href="/work"
               variant="ghost"
               size="lg"
               className="w-full justify-center sm:w-auto"

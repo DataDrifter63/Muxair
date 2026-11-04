@@ -177,6 +177,8 @@ export function CustomCursor() {
     const onMove = (e: MouseEvent) => {
       mx = e.clientX;
       my = e.clientY;
+      // Back over the page after being on the scrollbar: hide the system cursor again.
+      if (!root.classList.contains("has-custom-cursor")) root.classList.add("has-custom-cursor");
       visible = true;
       target = e.target as Element | null;
       queue();
@@ -191,6 +193,9 @@ export function CustomCursor() {
     };
     const onLeave = () => {
       visible = false;
+      // The pointer left the page (e.g. onto the scrollbar): bring back the normal arrow there,
+      // otherwise the fan is clipped behind the scrollbar and no cursor shows at all.
+      root.classList.remove("has-custom-cursor");
     };
     const onScroll = () => {
       // The page moved under a still pointer: re-check what's below it.

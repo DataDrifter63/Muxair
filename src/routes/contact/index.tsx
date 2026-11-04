@@ -12,6 +12,7 @@ import {
   Clock,
   Facebook,
   Instagram,
+  Linkedin,
   Layers,
   Loader2,
   MapPin,
@@ -140,8 +141,9 @@ const nextSteps = [
 ];
 
 const socials = [
-  { label: "Instagram", icon: Instagram, href: "https://instagram.com" },
-  { label: "Facebook", icon: Facebook, href: "https://facebook.com" },
+  { label: "Instagram", icon: Instagram, href: "https://www.instagram.com/muxair.hvac" },
+  { label: "Facebook", icon: Facebook, href: "https://www.facebook.com/muxair.hvac" },
+  { label: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/company/muxair/" },
 ];
 
 const faqs = [

@@ -51,7 +51,11 @@ export const Route = createFileRoute("/")({
           logo: `${SITE_URL}/icon-512.png`,
           email: "hello@muxair.com",
           telephone: "+44 7806 982999",
-          sameAs: ["https://www.instagram.com/muxair.hvac", "https://www.facebook.com/muxair.hvac"],
+          sameAs: [
+            "https://www.instagram.com/muxair.hvac",
+            "https://www.facebook.com/muxair.hvac",
+            "https://www.linkedin.com/company/muxair/",
+          ],
           image: `${SITE_URL}/og-image.png`,
           description,
           serviceType: [

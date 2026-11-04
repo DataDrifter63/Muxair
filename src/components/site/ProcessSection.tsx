@@ -170,27 +170,27 @@ export function ProcessSection() {
         </div>
 
         <Reveal delay={0.1} className="mt-5">
-          <p className="text-xs leading-relaxed text-muted-foreground">
+          <p className="text-center text-xs leading-relaxed text-muted-foreground sm:text-left">
             The timeline shown reflects our Foundation package. Larger builds may take longer, we'll
             walk you through your exact timeline on the discovery call.
           </p>
         </Reveal>
 
         <Reveal delay={0.15} className="mt-6">
-          <div className="relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-primary/10 via-surface/60 to-heat/10 p-8 backdrop-blur-xl sm:flex-row sm:items-center sm:p-10">
+          <div className="relative flex flex-col items-center justify-between gap-6 overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-primary/10 via-surface/60 to-heat/10 p-8 text-center sm:items-start backdrop-blur-xl sm:flex-row sm:items-center sm:p-10 sm:text-left">
             <div
               className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full bg-primary/15 blur-[90px]"
               aria-hidden
             />
             <div className="relative">
               <h3 className="text-xl text-foreground sm:text-2xl">Ready to get started?</h3>
-              <p className="mt-2 max-w-md text-sm text-muted-foreground">
+              <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground sm:mx-0">
                 Book a free 30-minute discovery call. No pressure, no pitch, just a real
                 conversation about your business.
               </p>
             </div>
-            <div className="relative flex-none">
-              <MagneticButton href="/contact" size="lg">
+            <div className="relative w-full flex-none sm:w-auto">
+              <MagneticButton href="/contact" size="lg" className="w-full justify-center sm:w-auto">
                 Book Strategy Call
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </MagneticButton>

@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { openCookieSettings } from "@/lib/cookie-consent";
-import { Facebook, Instagram, Mail, Phone } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
 import logoLight from "@/assets/logo-black.webp";
 import logoDark from "@/assets/logo-white.webp";
 
@@ -24,6 +24,7 @@ const serviceLinks = [
 const socials = [
   { label: "Instagram", icon: Instagram, href: "https://www.instagram.com/muxair.hvac" },
   { label: "Facebook", icon: Facebook, href: "https://www.facebook.com/muxair.hvac" },
+  { label: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/company/muxair/" },
 ];
 
 export function Footer() {
@@ -61,7 +62,7 @@ export function Footer() {
           </div>
 
           {/* Pages — 20% */}
-          <nav aria-label="Pages">
+          <nav aria-label="Pages" className="text-center md:text-left">
             <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
               Quick Links
             </h3>
@@ -80,7 +81,7 @@ export function Footer() {
           </nav>
 
           {/* Services — 20% */}
-          <nav aria-label="Services">
+          <nav aria-label="Services" className="text-center md:text-left">
             <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
               Services
             </h3>
@@ -99,14 +100,14 @@ export function Footer() {
           </nav>
 
           {/* Contact — 20% (full row under the two link columns on mobile) */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="col-span-2 text-center md:col-span-1 md:text-left">
             <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
               Contact
             </h3>
             <p className="mt-2 text-xs text-muted-foreground/80 md:hidden">
               We respond within 1-2 business days
             </p>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground md:mt-5">
+            <ul className="mt-4 flex flex-col items-center space-y-3 text-sm text-muted-foreground md:mt-5 md:items-start">
               <li>
                 <a
                   href="mailto:hello@muxair.com"
@@ -130,7 +131,7 @@ export function Footer() {
               </li>
             </ul>
 
-            <ul className="mt-6 flex gap-3">
+            <ul className="mt-6 flex justify-center gap-3 md:justify-start">
               {socials.map((s) => (
                 <li key={s.label}>
                   <a
