@@ -428,24 +428,14 @@
   .nav-progress-bar { animation: none; width: 100%; }
 }
 
-/* ---- Scrollbars, styled to match the site ---- */
-/* Mouse / trackpad devices: slim rounded orange thumb. */
-@media (hover: hover) and (pointer: fine) {
-  html::-webkit-scrollbar { width: 12px; height: 12px; }
-  html::-webkit-scrollbar-track { background: var(--background); }
-  html::-webkit-scrollbar-thumb {
-    background: color-mix(in oklab, var(--primary) 70%, transparent);
-    border: 3px solid var(--background);
-    border-radius: 999px;
-    min-height: 48px;
-  }
-  html::-webkit-scrollbar-thumb:hover { background: var(--primary); }
-  @supports (-moz-appearance: none) {
-    html { scrollbar-width: thin; scrollbar-color: var(--primary) var(--background); }
-  }
+/* ---- Scrollbars ---- */
+/* The native page scrollbar is hidden everywhere; <ScrollThumb /> draws the branded one (on
+   desktop it can be dragged). A native scrollbar always sits above the page, which hid the brand
+   cursor behind it. */
+html {
+  scrollbar-width: none;
+  scrollbar-gutter: auto;
 }
-/* Touch devices: hide the native bar; <ScrollThumb /> draws a branded one instead. */
-@media (hover: none) {
-  html { scrollbar-width: none; scrollbar-gutter: auto; }
-  html::-webkit-scrollbar { display: none; }
+html::-webkit-scrollbar {
+  display: none;
 }
