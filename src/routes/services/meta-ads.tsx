@@ -96,7 +96,12 @@ export const Route = createFileRoute("/services/meta-ads")({
           name: "Facebook & Instagram Ads for HVAC Companies",
           description:
             "Targeted Meta ad campaigns built around brand awareness, retargeting, and lookalike audiences for HVAC businesses.",
-          provider: { "@type": "ProfessionalService", name: "Muxair" },
+          provider: {
+            "@type": "Organization",
+            "@id": "https://muxair.com/#organization",
+            name: "Muxair",
+            url: "https://muxair.com",
+          },
           areaServed: [
             { "@type": "Country", name: "United States" },
             { "@type": "Country", name: "United Kingdom" },

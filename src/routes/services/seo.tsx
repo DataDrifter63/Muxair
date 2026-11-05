@@ -94,7 +94,12 @@ export const Route = createFileRoute("/services/seo")({
           name: "HVAC Local SEO",
           description:
             "Local SEO built specifically around how homeowners and businesses search for HVAC services in their area.",
-          provider: { "@type": "ProfessionalService", name: "Muxair" },
+          provider: {
+            "@type": "Organization",
+            "@id": "https://muxair.com/#organization",
+            name: "Muxair",
+            url: "https://muxair.com",
+          },
           areaServed: [
             { "@type": "Country", name: "United States" },
             { "@type": "Country", name: "United Kingdom" },

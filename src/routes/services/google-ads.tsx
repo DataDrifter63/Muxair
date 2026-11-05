@@ -104,7 +104,12 @@ export const Route = createFileRoute("/services/google-ads")({
           name: "Google Ads Management for HVAC Companies",
           description:
             "Google Ads campaigns built around seasonal demand spikes, service-specific keywords, and cost per booked job.",
-          provider: { "@type": "ProfessionalService", name: "Muxair" },
+          provider: {
+            "@type": "Organization",
+            "@id": "https://muxair.com/#organization",
+            name: "Muxair",
+            url: "https://muxair.com",
+          },
           areaServed: [
             { "@type": "Country", name: "United States" },
             { "@type": "Country", name: "United Kingdom" },

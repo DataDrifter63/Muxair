@@ -89,7 +89,12 @@ export const Route = createFileRoute("/services/website")({
           name: "HVAC Website Design",
           description:
             "Custom, mobile-first websites built exclusively for HVAC businesses, optimised to convert and rank on Google.",
-          provider: { "@type": "ProfessionalService", name: "Muxair" },
+          provider: {
+            "@type": "Organization",
+            "@id": "https://muxair.com/#organization",
+            name: "Muxair",
+            url: "https://muxair.com",
+          },
           areaServed: [
             { "@type": "Country", name: "United States" },
             { "@type": "Country", name: "United Kingdom" },

@@ -57,8 +57,20 @@ function withRobotsHeader(req: Request, res: Response): Response {
   return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
 }
 
+// www.muxair.com and muxair.com both answered with the full site, so crawlers saw every page
+// twice. Send www to the main domain with a permanent redirect.
+function redirectWwwToApex(req: Request): Response | null {
+  const raw = req.headers.get("x-forwarded-host") ?? req.headers.get("host") ?? "";
+  const host = (raw.split(",")[0] ?? "").trim().toLowerCase();
+  if (host !== "www.muxair.com") return null;
+  const { pathname, search } = new URL(req.url);
+  return Response.redirect(`https://muxair.com${pathname}${search}`, 301);
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    const redirect = redirectWwwToApex(request);
+    if (redirect) return redirect;
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);

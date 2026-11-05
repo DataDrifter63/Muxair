@@ -45,7 +45,8 @@ export const Route = createFileRoute("/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "ProfessionalService",
+          "@type": "Organization",
+          "@id": `${SITE_URL}/#organization`,
           name: "Muxair",
           url: SITE_URL,
           logo: `${SITE_URL}/icon-512.png`,
@@ -58,11 +59,12 @@ export const Route = createFileRoute("/")({
           ],
           image: `${SITE_URL}/og-image.png`,
           description,
-          serviceType: [
-            "HVAC web design agency",
-            "Website design for HVAC companies",
-            "HVAC digital marketing",
-            "Heating and cooling website design",
+          knowsAbout: [
+            "HVAC web design",
+            "HVAC local SEO",
+            "Google Ads for HVAC companies",
+            "Meta Ads for HVAC companies",
+            "Website maintenance",
           ],
           areaServed: [
             { "@type": "Country", name: "United States" },

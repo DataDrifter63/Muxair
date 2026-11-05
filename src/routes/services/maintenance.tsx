@@ -121,7 +121,12 @@ export const Route = createFileRoute("/services/maintenance")({
           name: "HVAC Website Maintenance",
           description:
             "Ongoing website maintenance for HVAC business websites: uptime and security monitoring, regular backups, software updates, and priority support.",
-          provider: { "@type": "ProfessionalService", name: "Muxair" },
+          provider: {
+            "@type": "Organization",
+            "@id": "https://muxair.com/#organization",
+            name: "Muxair",
+            url: "https://muxair.com",
+          },
           areaServed: [
             { "@type": "Country", name: "United States" },
             { "@type": "Country", name: "United Kingdom" },
