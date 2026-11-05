@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, CalendarDays, Clock } from "lucide-react";
 import { MagneticButton, Reveal } from "@/components/site/primitives";
+import { fitDescription, fitTitle } from "@/lib/seo";
 import { MarkdownContent } from "@/components/site/MarkdownContent";
 import { CTASection } from "@/components/site/CTASection";
 import type { BlogPostRow } from "@/lib/supabase";
@@ -29,10 +30,10 @@ export const Route = createFileRoute("/blog/$slug")({
     }
     // meta_description is the SEO-specific field (can differ from the
     // card-preview excerpt) — falls back to excerpt if not set.
-    const metaDescription = post.meta_description || post.excerpt;
+    const metaDescription = fitDescription(post.meta_description || post.excerpt || "");
     return {
       meta: [
-        { title: `${post.title} | Muxair Blog` },
+        { title: fitTitle(post.title, "| Muxair Blog") },
         { name: "description", content: metaDescription },
         { property: "og:title", content: post.title },
         { property: "og:description", content: metaDescription },

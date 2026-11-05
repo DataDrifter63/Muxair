@@ -1,3 +1,4 @@
+import { fitDescription, fitTitle } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, CheckCircle2, Clock, MapPin } from "lucide-react";
 import { MagneticButton, Reveal, TechBackdrop } from "@/components/site/primitives";
@@ -37,10 +38,12 @@ export const Route = createFileRoute("/work/$slug")({
     if (!item) {
       return { meta: [{ title: "Case Study Not Found | Muxair" }] };
     }
-    const metaDescription = item.summary || item.result || `${item.name} — a Muxair case study.`;
+    const metaDescription = fitDescription(
+      item.summary || item.result || `${item.name} — a Muxair case study.`,
+    );
     return {
       meta: [
-        { title: `${item.name} Case Study | Muxair` },
+        { title: fitTitle(`${item.name} Case Study`, "| Muxair") },
         { name: "description", content: metaDescription },
         { property: "og:title", content: item.name },
         { property: "og:description", content: metaDescription },
