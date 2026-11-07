@@ -160,16 +160,24 @@ function BlogCoverArt({ category, size = "md" }: { category: string; size?: "md"
 function PostCover({ post, size = "md" }: { post: BlogPostRow; size?: "md" | "lg" }) {
   if (post.cover_image) {
     return (
-      // Cover images are 1200x630, so the frame uses that ratio and the image is shown whole
-      // (object-contain): nothing gets cropped on the sides or top.
+      // The frame is always 1200x630 and the image is shown whole (object-contain), so nothing is
+      // cropped whatever size was uploaded. Any spare space is filled with a soft blurred copy of
+      // the same image instead of plain bars, so every card still looks full.
       <div className="relative aspect-[1200/630] overflow-hidden bg-[#0f0f12]">
+        <img
+          src={post.cover_image}
+          alt=""
+          aria-hidden
+          loading="lazy"
+          className="absolute inset-0 h-full w-full scale-125 object-cover opacity-70 blur-2xl"
+        />
         <img
           src={post.cover_image}
           alt=""
           loading="lazy"
           width={1200}
           height={630}
-          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+          className="relative h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
         />
       </div>
     );
