@@ -160,17 +160,19 @@ function BlogCoverArt({ category, size = "md" }: { category: string; size?: "md"
 function PostCover({ post, size = "md" }: { post: BlogPostRow; size?: "md" | "lg" }) {
   if (post.cover_image) {
     return (
-      // The image keeps its own proportions (full width, height follows), so whatever size is
-      // uploaded is shown whole: nothing is cropped and there are no bars. Cards in a row line up
-      // at the bottom because the text block stretches (see the grid cards below).
-      <div className="relative overflow-hidden">
+      <div
+        className={cn(
+          "relative overflow-hidden",
+          size === "lg" ? "aspect-[21/9]" : "aspect-[16/9]",
+        )}
+      >
         <img
           src={post.cover_image}
           alt=""
           loading="lazy"
           width={1200}
-          height={630}
-          className="block h-auto w-full transition-transform duration-500 group-hover:scale-105"
+          height={675}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
     );
