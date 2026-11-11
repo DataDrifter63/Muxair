@@ -1,9 +1,10 @@
 import { Fragment, useState, type ComponentPropsWithoutRef, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { MagneticButton } from "./primitives";
 import { slugifyHeading } from "@/lib/markdown-headings";
+import { parseFaqBlock, type FaqItem } from "@/lib/faq-blocks";
 
 /**
  * Renders blog post content written in Markdown, with two custom block
@@ -68,6 +69,31 @@ import { slugifyHeading } from "@/lib/markdown-headings";
  *   :::
  *
  * ...renders a vertical timeline (`when | title | description`).
+ *
+ *   :::formula Monthly budget
+ *   booked jobs wanted ÷ book rate × cost per lead
+ *   ---
+ *   10 booked jobs ÷ 40% book rate | 25 leads needed
+ *   25 leads × $104 per lead | $2,600 a month
+ *   :::
+ *
+ * ...renders a calculation card: the inline label in orange, the formula in
+ * large type, then (after the `---` line) worked-example rows as
+ * `calculation | result`, with the result highlighted. The `---` and rows
+ * are optional — a formula on its own works too.
+ *
+ *   :::faq
+ *   How long does it take?
+ *   A few weeks of data, usually.
+ *
+ *   Is it worth it?
+ *   Judge it by cost per booked job.
+ *   :::
+ *
+ * ...renders a collapsible FAQ list. Separate questions with a blank line;
+ * the first line of each group is the question, the rest is the answer.
+ * The answers stay in the page HTML, and `extractFaqs()` lets the blog route
+ * emit FAQPage structured data from the same block.
  */
 
 type CtaBlock = { title?: string; text?: string; button?: string; href?: string };
@@ -202,7 +228,11 @@ function parseStatsBlock(raw: string): StatItem[] {
 
 function StatsRow({ items }: { items: StatItem[] }) {
   return (
-    <div className="not-prose my-8 grid grid-cols-2 gap-4 rounded-2xl border border-border bg-surface/40 p-6 backdrop-blur-md sm:grid-cols-4">
+    <div
+      className={`not-prose my-8 grid grid-cols-2 gap-4 rounded-2xl border border-border bg-surface/40 p-6 backdrop-blur-md ${
+        items.length === 3 ? "sm:grid-cols-3" : items.length === 2 ? "" : "sm:grid-cols-4"
+      }`}
+    >
       {items.map((s, i) => (
         <div key={i} className="text-center">
           <p className="font-display text-2xl font-bold text-primary sm:text-3xl">{s.value}</p>
@@ -323,6 +353,81 @@ function TimelineList({ items }: { items: TimelineItem[] }) {
   );
 }
 
+type FormulaBlock = { formula: string; rows: { calc: string; result: string }[] };
+
+function parseFormulaBlock(raw: string): FormulaBlock {
+  const [head, ...rest] = raw.split(/\n-{3,}[ \t]*\n?/);
+  const formula = (head ?? "")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .join(" ");
+  const rows = rest
+    .join("\n")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [calc, result] = line.split("|").map((x) => x.trim());
+      return { calc: calc ?? "", result: result ?? "" };
+    });
+  return { formula, rows };
+}
+
+function FormulaCard({ label, formula, rows }: { label: string } & FormulaBlock) {
+  return (
+    <div className="not-prose my-8 overflow-hidden rounded-2xl border border-primary/30 bg-surface/40 backdrop-blur-md">
+      <div className="relative px-6 pb-5 pt-6 sm:px-8">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-primary/15 blur-3xl"
+        />
+        {label ? (
+          <p className="relative mb-2 text-[13px] font-bold uppercase tracking-wide text-primary">
+            {label}
+          </p>
+        ) : null}
+        <p className="relative font-display text-xl font-bold leading-snug text-foreground sm:text-2xl">
+          {formula}
+        </p>
+      </div>
+      {rows.length ? (
+        <div className="border-t border-border bg-background/40">
+          {rows.map((row, i) => (
+            <div
+              key={i}
+              className={`flex flex-col gap-0.5 px-6 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-8 ${
+                i < rows.length - 1 ? "border-b border-border" : ""
+              }`}
+            >
+              <span className="text-sm text-muted-foreground">{row.calc}</span>
+              <span className="font-display text-base font-bold text-primary sm:text-right">
+                {row.result}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function FaqList({ items }: { items: FaqItem[] }) {
+  return (
+    <div className="not-prose my-8 divide-y divide-border overflow-hidden rounded-2xl border border-border">
+      {items.map((item, i) => (
+        <details key={i} className="group bg-surface/30 open:bg-surface/50">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[15.5px] font-semibold leading-snug text-foreground [&::-webkit-details-marker]:hidden">
+            {item.question}
+            <ChevronDown className="h-4 w-4 flex-none text-primary transition-transform duration-200 group-open:rotate-180" />
+          </summary>
+          <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  );
+}
+
 function nodeText(node: ReactNode): string {
   if (typeof node === "string" || typeof node === "number") return String(node);
   if (Array.isArray(node)) return node.map(nodeText).join("");
@@ -410,7 +515,8 @@ const markdownComponents = {
   ),
 };
 
-const BLOCK_RE = /:::(cta|checklist|compare|stats|bars|timeline)( [^\n]*)?\n([\s\S]*?)\n:::/g;
+const BLOCK_RE =
+  /:::(cta|checklist|compare|stats|bars|timeline|formula|faq)( [^\n]*)?\n([\s\S]*?)\n:::/g;
 
 export function MarkdownContent({ content, className }: { content: string; className?: string }) {
   const nodes: React.ReactNode[] = [];
@@ -454,6 +560,16 @@ export function MarkdownContent({ content, className }: { content: string; class
       );
     } else if (type === "timeline") {
       nodes.push(<TimelineList key={key++} items={parseTimelineBlock(body ?? "")} />);
+    } else if (type === "formula") {
+      nodes.push(
+        <FormulaCard
+          key={key++}
+          label={(inlineArg ?? "").trim()}
+          {...parseFormulaBlock(body ?? "")}
+        />,
+      );
+    } else if (type === "faq") {
+      nodes.push(<FaqList key={key++} items={parseFaqBlock(body ?? "")} />);
     }
 
     cursor = match.index + full.length;

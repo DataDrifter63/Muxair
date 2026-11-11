@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, CalendarDays, Clock } from "lucide-react";
 import { MagneticButton, Reveal } from "@/components/site/primitives";
 import { fitDescription, fitTitle } from "@/lib/seo";
 import { MarkdownContent } from "@/components/site/MarkdownContent";
+import { extractFaqs } from "@/lib/faq-blocks";
 import { CTASection } from "@/components/site/CTASection";
 import type { BlogPostRow } from "@/lib/supabase";
 import { services, SITE_URL } from "@/lib/site-data";
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/blog/$slug")({
     // meta_description is the SEO-specific field (can differ from the
     // card-preview excerpt) — falls back to excerpt if not set.
     const metaDescription = fitDescription(post.meta_description || post.excerpt || "");
+    const faqs = extractFaqs(post.content);
     return {
       meta: [
         { title: fitTitle(post.title, "| Muxair Blog") },
@@ -77,6 +79,22 @@ export const Route = createFileRoute("/blog/$slug")({
             ],
           }),
         },
+        ...(faqs.length
+          ? [
+              {
+                type: "application/ld+json",
+                children: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: faqs.map((f) => ({
+                    "@type": "Question",
+                    name: f.question,
+                    acceptedAnswer: { "@type": "Answer", text: f.answer },
+                  })),
+                }),
+              },
+            ]
+          : []),
       ],
     };
   },
