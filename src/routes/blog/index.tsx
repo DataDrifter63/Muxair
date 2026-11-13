@@ -119,10 +119,7 @@ function formatDate(iso: string) {
 function BlogCoverArt({ category, size = "md" }: { category: string; size?: "md" | "lg" }) {
   const { icon: Icon, tone } = categoryStyle[category] ?? { icon: Newspaper, tone: "cool" };
   return (
-    <div
-      className={cn("relative overflow-hidden", size === "lg" ? "aspect-[21/9]" : "aspect-[16/9]")}
-      aria-hidden
-    >
+    <div className={cn("relative overflow-hidden", "aspect-[16/9]")} aria-hidden>
       <div className="absolute inset-0 bg-surface" />
       <div className="absolute inset-0 grid-tech opacity-25" />
       <div
@@ -160,12 +157,7 @@ function BlogCoverArt({ category, size = "md" }: { category: string; size?: "md"
 function PostCover({ post, size = "md" }: { post: BlogPostRow; size?: "md" | "lg" }) {
   if (post.cover_image) {
     return (
-      <div
-        className={cn(
-          "relative overflow-hidden",
-          size === "lg" ? "aspect-[21/9]" : "aspect-[16/9]",
-        )}
-      >
+      <div className={cn("relative overflow-hidden", "aspect-[16/9]")}>
         <img
           src={post.cover_image}
           alt=""

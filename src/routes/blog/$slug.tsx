@@ -209,7 +209,7 @@ function BlogPostPage() {
                   alt=""
                   width={1600}
                   height={686}
-                  className="mt-10 aspect-[21/9] w-full rounded-2xl border border-border object-cover"
+                  className="mt-10 aspect-[16/9] w-full rounded-2xl border border-border object-cover"
                 />
               </Reveal>
             ) : null}
